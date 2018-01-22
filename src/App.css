@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 5px;  /* remove scrollbar space */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #494A4A;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill  {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.activeLinkButton {
+	background-color: #20ADBF;
+}
+
+.propChildrenContainer {
+	padding-top: 64px;
+	overflow-x: hidden;
+}

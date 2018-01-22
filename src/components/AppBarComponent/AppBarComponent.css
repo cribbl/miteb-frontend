@@ -1,0 +1,7 @@
+.avatar {
+	margin-top: 5px;
+	display: inline-flex;
+}
+.avatar:hover {
+	cursor: pointer;
+}
