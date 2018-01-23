@@ -34,7 +34,7 @@ class Reg extends Component {
     const {dispatch} = this.props
     firebaseAuth.onAuthStateChanged(function(user) {
     if (user) {
-        hashHistory.push('/classroom')
+        hashHistory.push('/dashboard')
     } 
     else {
       console.log('user dne')
