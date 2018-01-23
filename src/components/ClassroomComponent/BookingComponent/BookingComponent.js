@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class AnalyticsComponent extends Component {
+class BookingComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -8,10 +8,10 @@ class AnalyticsComponent extends Component {
   render() {
     return (
     	<div>
-      		<h1> Analytics </h1>
+      		<h1> Boooking </h1>
 	    </div>
     );
   }
 }
 
-export default AnalyticsComponent
+export default BookingComponent

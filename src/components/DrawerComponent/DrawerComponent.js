@@ -47,7 +47,7 @@ class DrawerComponent extends Component {
     this.closeSideNav = this.closeSideNav.bind(this);
 
     this.state = {
-      menuIndex: 1
+      menuIndex: 0
     }
   }
 
@@ -68,8 +68,6 @@ class DrawerComponent extends Component {
 
   }
 
-
-
   render() {
     return (
       <div className="drawer-div">
@@ -78,54 +76,24 @@ class DrawerComponent extends Component {
 
           <Menu style={menuStyle} onItemClick={this.menuItemClicked}>
 
-            <MenuItem style={menuItemStyle} primaryText="Dashboard" disabled />
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 1 ? active:'', menuItemStyle)}
-                key="/classroom/courses"
-                primaryText="My Courses"
+                style={Object.assign(this.state.menuIndex == 0 ? active:'', menuItemStyle)}
+                key="/dashboard"
+                primaryText="Dashboard"
                 leftIcon={<IconDashboard color={'#FFFFFF'} />} />
 
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 2 ? active:'', menuItemStyle)}
-                key="/classroom/scores"
-                primaryText="Test Scores"
+                style={Object.assign(this.state.menuIndex == 1 ? active:'', menuItemStyle)}
+                key="/dashboard/book_room"
+                primaryText="Room Booking"
                 leftIcon={<IconTest color={'#FFFFFF'} />} />
 
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 3 ? active:'', menuItemStyle)}
-                key="/classroom/analytics"
-                primaryText="Analytics"
+                style={Object.assign(this.state.menuIndex == 2 ? active:'', menuItemStyle)}
+                key="/dashboard/myEvents"
+                primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
             
-            <MenuItem style={menuItemStyle} primaryText="News" disabled />
-
-            <MenuItem
-                style={Object.assign(this.state.menuIndex == 5 ? active:'', menuItemStyle)}
-                key="/classroom/news"
-                primaryText="Latest News"
-                leftIcon={<IconNews color={'#FFFFFF'}/>} />
-
-            <MenuItem
-                style={Object.assign(this.state.menuIndex == 6 ? active:'', menuItemStyle)}
-                key="/classroom/updates"
-                primaryText="Updates"
-                leftIcon={<IconUpdates color={'#FFFFFF'}/>} />
-
-            <br /><br /><br />
-            <Divider />
-
-            <MenuItem
-                style={Object.assign(this.state.menuIndex == 11 ? active:'', menuItemStyle)}
-                key="/classroom/settings"
-                primaryText="Settings"
-                leftIcon={<IconSettings color={'#FFFFFF'}/>} />
-
-            <MenuItem
-                style={Object.assign(this.state.menuIndex == 12 ? active:'', menuItemStyle)}
-                key="/classroom/support"
-                primaryText="Support"
-                leftIcon={<IconHelp color={'#FFFFFF'}/>} />
-
           </Menu>
         </Drawer>
       </div>
