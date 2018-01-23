@@ -14,19 +14,8 @@ import Paper from 'material-ui/Paper'
 import {tableData} from './data'
 
 import {connect} from 'react-redux'
-
+import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
-
-const styles = {
-  propContainer: {
-    width: 200,
-    overflow: 'hidden',
-    margin: '20px auto 0',
-  },
-  propToggleHeader: {
-    margin: '20px auto 10px',
-  },
-};
 
 class MyEventsComponent extends Component {
  state = {
@@ -36,6 +25,24 @@ class MyEventsComponent extends Component {
     showRowHover: true,
     showCheckboxes: false,
   };
+
+  componentWillMount() {
+    var arr = [];
+        firebaseDB.ref('/clubs/Fq10VDgTdAf7t4o4sEUrgY08rGg2').on('value',
+          function(snapshot) {
+            console.log('club change')
+            let events = snapshot.val().my_events
+            for(event in events) {
+              firebaseDB.ref('/events/' + events[event]).on('value',
+              function(snapshot) {
+                console.log('event change')
+                arr.push(snapshot.val())
+              })
+            }
+          })
+    this.setState({myArr: arr})
+}
+
 
   render() {
     return (
@@ -71,13 +78,25 @@ class MyEventsComponent extends Component {
             showRowHover={this.state.showRowHover}
             stripedRows={this.state.stripedRows}
           >
-            {tableData.map( (row, index) => (
+
+          
+          {this.state.myArr.map( (row, index) => (
+              <TableRow key={index}>
+                <TableRowColumn>{row.start_date}</TableRowColumn>
+                <TableRowColumn>{row.title}</TableRowColumn>
+                <TableRowColumn>{row.status}</TableRowColumn>
+              </TableRow>
+              ))
+            }
+
+{/*            {tableData.map( (row, index) => (
               <TableRow key={index}>
                 <TableRowColumn>{index}</TableRowColumn>
                 <TableRowColumn>{row.name}</TableRowColumn>
                 <TableRowColumn>{row.status}</TableRowColumn>
               </TableRow>
               ))}
+*/}
           </TableBody>
         </Table>
         </Paper>
