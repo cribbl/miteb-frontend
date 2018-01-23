@@ -1,4 +1,5 @@
 import { authenticateUser, signOut, fetchUser } from '../Services/firebaseAuthService'
+import { getMyEvents } from '../Services/firebaseDBService'
 import {hashHistory} from 'react-router'
 
 export const userActions = {
@@ -48,6 +49,7 @@ function getUser() {
         fetchUser(user => {
             if(user) {
                 dispatch(success(user))
+                getMyEvents(user.uid)
             }
         })
     }
