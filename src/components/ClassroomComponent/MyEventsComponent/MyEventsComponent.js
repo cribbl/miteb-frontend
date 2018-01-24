@@ -12,6 +12,7 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper'
 import {tableData} from './data'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
@@ -24,23 +25,23 @@ class MyEventsComponent extends Component {
     stripedRows: false,
     showRowHover: true,
     showCheckboxes: false,
+    myArr: [],
   };
 
-  componentWillMount() {
+  componentDidMount() {
     var arr = [];
-        firebaseDB.ref('/clubs/Fq10VDgTdAf7t4o4sEUrgY08rGg2').on('value',
-          function(snapshot) {
+    var cont = this;
+        firebaseDB.ref('/clubs/Fq10VDgTdAf7t4o4sEUrgY08rGg2').on('value', function(snapshot) {
             console.log('club change')
             let events = snapshot.val().my_events
             for(event in events) {
-              firebaseDB.ref('/events/' + events[event]).on('value',
-              function(snapshot) {
+              firebaseDB.ref('/events/' + events[event]).on('value', function(snapshot) {
                 console.log('event change')
                 arr.push(snapshot.val())
+                cont.setState({myArr: arr})
               })
             }
           })
-    this.setState({myArr: arr})
 }
 
 
@@ -67,9 +68,11 @@ class MyEventsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >TITLE</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >{this.state.hihi}</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >START DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >STATUS</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >FA</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >AD</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >SO</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -84,7 +87,9 @@ class MyEventsComponent extends Component {
               <TableRow key={index}>
                 <TableRowColumn>{row.start_date}</TableRowColumn>
                 <TableRowColumn>{row.title}</TableRowColumn>
-                <TableRowColumn>{row.status}</TableRowColumn>
+                <TableRowColumn>{row.FA_appr ? 'Yes' : 'No'}</TableRowColumn>
+                <TableRowColumn>{row.AD_appr ? 'Yes' : 'No'}</TableRowColumn>
+                <TableRowColumn>{row.SO_appr ? 'Yes' : 'No'}</TableRowColumn>
               </TableRow>
               ))
             }
