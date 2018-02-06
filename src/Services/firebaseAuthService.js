@@ -1,5 +1,4 @@
 import {firebaseAuth} from '../firebaseConfig'
-
 export const authenticateUser = (email, password, callback) => {
     
     firebaseAuth.signInWithEmailAndPassword(email, password)

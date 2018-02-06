@@ -13,9 +13,9 @@ class SearchSortContainer extends Component {
     }
   }
 
-  filterClicked(filterx) {
-    console.log(this.state.filter)
-    this.setState({filter: filterx})
+  filterClicked(filter) {
+    const {dispatch} = this.props
+    dispatch({type: 'FILTER', filter})
   }
 
   render() {
@@ -23,15 +23,15 @@ class SearchSortContainer extends Component {
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
        <ToolbarGroup firstChild={true}>
-          <span onClick={()=>{this.filterClicked('pending')}} style={{fontWeight: this.state.filter == 'pending' ? 700 : 100}}>Pending (7)</span>
+          <span onClick={()=>{this.filterClicked('pending')}} style={{fontWeight: this.props.filter == 'pending' ? 700 : 100}}>Pending (7)</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('approved')}} style={{fontWeight: this.state.filter == 'approved' ? 700 : 100}}>Approved (14)</span>
+          <span onClick={()=>{this.filterClicked('approved')}} style={{fontWeight: this.props.filter == 'approved' ? 700 : 100}}>Approved (14)</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.state.filter == 'all' ? 700 : 100}}>All (21)</span>
+          <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.props.filter == 'all' ? 700 : 100}}>All (21)</span>
         </ToolbarGroup>
         {!this.props.isMobile ? 
         <ToolbarGroup>
-          <TextField hintText="Search"/>
+          <TextField hintText={this.props.filter}/>
         </ToolbarGroup>
         : '' }
        </Toolbar>
@@ -41,13 +41,14 @@ class SearchSortContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const {openSideNav, isMobile} = state.toggler
+  const {openSideNav, isMobile, filter} = state.toggler
   const {user, verified} = state.authentication
   return {
     user,
     openSideNav,
     verified,
-    isMobile
+    isMobile,
+    filter
   }
 }
 

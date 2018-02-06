@@ -8,44 +8,89 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import CircularProgress from 'material-ui/CircularProgress'
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper'
 import {tableData} from './data'
 import RaisedButton from 'material-ui/RaisedButton'
-
+import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 
 class MyEventsComponent extends Component {
- state = {
-    fixedHeader: true,
-    fixedFooter: false,
-    stripedRows: false,
-    showRowHover: true,
-    showCheckboxes: false,
-    myArr: [],
-  };
-
-  componentDidMount() {
-    var arr = [];
-    var cont = this;
-        firebaseDB.ref('/clubs/Fq10VDgTdAf7t4o4sEUrgY08rGg2').on('value', function(snapshot) {
-            console.log('club change')
-            let events = snapshot.val().my_events
-            for(event in events) {
-              firebaseDB.ref('/events/' + events[event]).on('value', function(snapshot) {
-                console.log('event change')
-                arr.push(snapshot.val())
-                cont.setState({myArr: arr})
-              })
-            }
-          })
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      fixedHeader: true,
+      fixedFooter: false,
+      stripedRows: false,
+      showRowHover: true,
+      showCheckboxes: false,
+      myArr: {},
+      pendingArr: {},
+      approvedArr: {}
+    }
 }
 
+  filterAndStore(arr) {
+    for(let item of arr) {
+      var x = item.key
+      debugger
+      if(item.FA_appr && item.AD_appr && item.SO_appr) {
+        const {approvedArr} = this.state
+        approvedArr[x] = item
+      }
+      else if(!item.FA_appr || !item.AD_appr || !item.SO_appr) {
+        const {pendingArr} = this.state
+        pendingArr[x] = item
+      }
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    debugger
+    if(newProps.filter == 'pending'){
+      const {pendingArr} = this.state
+      this.setState({myArr: pendingArr})
+    }
+    else if(newProps.filter == 'approved') {
+      const {approvedArr} = this.state
+      this.setState({myArr: approvedArr})
+    }
+    else if(newProps.filter == 'all') {
+      const {myArr} = this.state
+      this.setState({myArr})
+    }
+  }
+
+  componentDidMount() {
+    if(!this.props.user){
+      hashHistory.push('/dashboard')
+      return
+    }
+    this.setState({fetching: true})
+    firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
+    function(snapshot) {
+      let events = snapshot.val().my_events
+      for(event in events) {
+        firebaseDB.ref('/events/' + events[event]).on('value',
+        function(snapshot) {
+          console.log(snapshot.val())
+          const {myArr} = this.state
+          myArr[snapshot.key] = snapshot.val()
+          this.setState({myArr, fetching: false})
+          this.filterAndStore(myArr)
+          console.log(this.state.myArr)
+        }, this)
+      }
+    }, this)
+  }
 
   render() {
+
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
@@ -68,11 +113,12 @@ class MyEventsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >{this.state.hihi}</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >START DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >FA</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >AD</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} >SO</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>INDEX</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>FA</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>AD</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>SO</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -82,26 +128,20 @@ class MyEventsComponent extends Component {
             stripedRows={this.state.stripedRows}
           >
 
-          
-          {this.state.myArr.map( (row, index) => (
-              <TableRow key={index}>
-                <TableRowColumn>{row.start_date}</TableRowColumn>
-                <TableRowColumn>{row.title}</TableRowColumn>
-                <TableRowColumn>{row.FA_appr ? 'Yes' : 'No'}</TableRowColumn>
-                <TableRowColumn>{row.AD_appr ? 'Yes' : 'No'}</TableRowColumn>
-                <TableRowColumn>{row.SO_appr ? 'Yes' : 'No'}</TableRowColumn>
-              </TableRow>
-              ))
-            }
+          {this.state.fetching && <CircularProgress />}
 
-{/*            {tableData.map( (row, index) => (
-              <TableRow key={index}>
-                <TableRowColumn>{index}</TableRowColumn>
-                <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.status}</TableRowColumn>
-              </TableRow>
-              ))}
-*/}
+          { Object.values(this.state.myArr).map((event, index) => (
+                  <TableRow key={index}>
+                    <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn>{event.start_date}</TableRowColumn>
+                    <TableRowColumn>{event.FA_appr ? 'Yes' : 'No'}</TableRowColumn>
+                    <TableRowColumn>{event.AD_appr ? 'Yes' : 'No'}</TableRowColumn>
+                    <TableRowColumn>{event.SO_appr ? 'Yes' : 'No'}</TableRowColumn>
+                    <TableRowColumn>{<RaisedButton label="View" primary={true}/>}</TableRowColumn>
+                  </TableRow>
+            ))
+          }
+          
           </TableBody>
         </Table>
         </Paper>
@@ -111,13 +151,15 @@ class MyEventsComponent extends Component {
 }
 
 function mapStateToProps(state) {
-  const {openSideNav, isMobile} = state.toggler
-  const {user, verified} = state.authentication
+  const {openSideNav, isMobile, filter} = state.toggler
+  const {user, verified, vals} = state.authentication
   return {
     user,
     openSideNav,
     verified,
-    isMobile
+    isMobile,
+    vals,
+    filter
   }
 }
 
