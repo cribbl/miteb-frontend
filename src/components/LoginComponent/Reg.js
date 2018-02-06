@@ -28,21 +28,17 @@ class Reg extends Component {
       loading: false,
       signup: false,
     }
-  }
-
-  componentDidMount() {
-    const {dispatch} = this.props
-    firebaseAuth.onAuthStateChanged(function(user) {
-    if (user) {
-        hashHistory.push('/dashboard')
-    } 
-    else {
-      console.log('user dne')
+  firebaseAuth.onAuthStateChanged(function (user) {
+    if(user) {
+      hashHistory.push('/dashboard')
     }
-  });
-  
+    else {
+      hashHistory.push('/auth')
+    }
+  })
   }
 
+  
   render () {
     return (
       <div className="row authPage">

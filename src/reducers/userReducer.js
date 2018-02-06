@@ -17,6 +17,10 @@ export function authentication(state = initialState, action) {
       return {
         error: action.error,
       };
+    case "SUCCESS_FETCH":
+      return Object.assign({}, state, {
+        vals: action.result
+      })
     case "LOGOUT":
       return {};
     case "REQUEST_EMAIL_VERIFICATION":

@@ -9,6 +9,7 @@
     "firebase": "^4.9.0",
     "history": "^4.7.2",
     "material-ui": "^0.20.0",
+    "material-ui-datatables": "^0.18.2",
     "moment": "^2.19.4",
     "react": "^15.4.2",
     "react-collapsible": "^2.0.3",
@@ -28,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && git add build && git commit -m 'pushing build' && git subtree push --prefix build origin gh-pages"
   },
-  "homepage": "http://bhawesh96.github.com/edutech"
+  "homepage": "http://bhawesh96.github.com/MIT-Event-Booking"
 }
