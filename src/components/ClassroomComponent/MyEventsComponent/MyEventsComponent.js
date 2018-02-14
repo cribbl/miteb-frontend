@@ -30,28 +30,32 @@ class MyEventsComponent extends Component {
       showRowHover: true,
       showCheckboxes: false,
       myArr: {},
+      myArrx: {},
+      allArr: {},
       pendingArr: {},
       approvedArr: {}
     }
 }
 
   filterAndStore(arr) {
-    for(let item of arr) {
-      var x = item.key
-      debugger
-      if(item.FA_appr && item.AD_appr && item.SO_appr) {
-        const {approvedArr} = this.state
-        approvedArr[x] = item
+    debugger
+    for(let [key, value] of Object.entries(arr)) {
+      var x = key
+      if(value.FA_appr && value.AD_appr && value.SO_appr) {
+        this.state.approvedArr[key] = value
       }
-      else if(!item.FA_appr || !item.AD_appr || !item.SO_appr) {
-        const {pendingArr} = this.state
-        pendingArr[x] = item
+      else if(!value.FA_appr || !value.AD_appr || !value.SO_appr) {
+        this.state.pendingArr[key] = value
       }
+      this.state.allArr[key] = value
     }
+
+    // console.log(this.state.approvedArr)
+    // console.log(this.state.pendingArr)
+    // console.log(this.state.allArr)
   }
 
   componentWillReceiveProps(newProps) {
-    debugger
     if(newProps.filter == 'pending'){
       const {pendingArr} = this.state
       this.setState({myArr: pendingArr})
@@ -61,8 +65,8 @@ class MyEventsComponent extends Component {
       this.setState({myArr: approvedArr})
     }
     else if(newProps.filter == 'all') {
-      const {myArr} = this.state
-      this.setState({myArr})
+      const {allArr} = this.state
+      this.setState({myArr: allArr})
     }
   }
 
@@ -72,6 +76,7 @@ class MyEventsComponent extends Component {
       return
     }
     this.setState({fetching: true})
+    
     firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
     function(snapshot) {
       let events = snapshot.val().my_events
@@ -79,11 +84,11 @@ class MyEventsComponent extends Component {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
           console.log(snapshot.val())
-          const {myArr} = this.state
-          myArr[snapshot.key] = snapshot.val()
-          this.setState({myArr, fetching: false})
-          this.filterAndStore(myArr)
-          console.log(this.state.myArr)
+          const {myArrx} = this.state
+          myArrx[snapshot.key] = snapshot.val()
+          this.setState({myArrx, fetching: false})
+          this.filterAndStore(myArrx)
+          console.log(this.state.myArrx)
         }, this)
       }
     }, this)
@@ -95,7 +100,7 @@ class MyEventsComponent extends Component {
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
       <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer />
+        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
       </div>
       
       <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
