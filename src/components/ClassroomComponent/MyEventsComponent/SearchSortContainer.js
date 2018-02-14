@@ -8,6 +8,8 @@ class SearchSortContainer extends Component {
   constructor (props) {
     super(props)
     this.filterClicked = this.filterClicked.bind(this)
+    console.log('IPHONE')
+    console.log(props)
     this.state = {
       filter: 'all'
     }
@@ -23,11 +25,11 @@ class SearchSortContainer extends Component {
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
        <ToolbarGroup firstChild={true}>
-          <span onClick={()=>{this.filterClicked('pending')}} style={{fontWeight: this.props.filter == 'pending' ? 700 : 100}}>Pending (7)</span>
+          <span onClick={()=>{this.filterClicked('pending')}} style={{fontWeight: this.props.filter == 'pending' ? 700 : 100}}>Pending ({this.props.pendingLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('approved')}} style={{fontWeight: this.props.filter == 'approved' ? 700 : 100}}>Approved (14)</span>
+          <span onClick={()=>{this.filterClicked('approved')}} style={{fontWeight: this.props.filter == 'approved' ? 700 : 100}}>Approved ({this.props.approvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.props.filter == 'all' ? 700 : 100}}>All (21)</span>
+          <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.props.filter == 'all' ? 700 : 100}}>All ({this.props.allLength})</span>
         </ToolbarGroup>
         {!this.props.isMobile ? 
         <ToolbarGroup>
