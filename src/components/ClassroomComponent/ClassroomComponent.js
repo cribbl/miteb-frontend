@@ -12,7 +12,7 @@ const astyle = {
 
 const bstyle = {
   minWidth: '100%',
-  paddingLeft: 230,
+  paddingLeft: 20,
 }
 
 class ClassroomComponent extends Component {
