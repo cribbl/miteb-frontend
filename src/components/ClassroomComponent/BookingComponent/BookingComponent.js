@@ -16,7 +16,7 @@ import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
 import CheckboxGroup from './Checkbox';
 import CheckboxField from './Checkbox';
-
+import axios from 'axios';
 
 const styles = {
   customWidth: {
@@ -36,6 +36,8 @@ class HorizontalLinearStepper extends React.Component {
   constructor(props){
        super(props);
 
+       this.handleRoomButton=this.handleRoomButton.bind(this);
+
        this.state = {
            fields: {},
            errors: {},
@@ -45,23 +47,16 @@ class HorizontalLinearStepper extends React.Component {
            checked: false,
            start_date: null,
            end_date:null,
-           checkbox:null
+           checkbox:null,
+           roomStatusArray:{'0101': true}
 
        }
 
 
        this.handleStartDate=this.handleStartDate.bind(this);
        this.handleEndDate=this.handleEndDate.bind(this);
-
-
   }
-  updateCheck() {
-    this.setState((oldState) => {
-      return {
-        checked: !oldState.checked,
-      };
-    });
-  }
+
   handleStartDate(event, start_date){
     this.setState({start_date: start_date})
     console.log(start_date);
@@ -80,6 +75,8 @@ class HorizontalLinearStepper extends React.Component {
             finished: stepIndex >= 2,
             });
            }
+           if(this.state.stepIndex==1)
+            console.log("should make API call....");
            if(this.state.stepIndex==2)
            this.handleSubmit();
   };
@@ -93,8 +90,6 @@ class HorizontalLinearStepper extends React.Component {
   };
 
   handleChange(field, e){  
-
-
         let fields = this.state.fields;
         fields[field] = e.target.value;        
         this.setState({fields});
@@ -107,13 +102,25 @@ class HorizontalLinearStepper extends React.Component {
     console.log(" " + this.state.start_date + " " +this.state.end_date);
     console.log("Submitted form");
   }
-    handleCheckbox(event, isChecked, value) {
-    console.log(isChecked, value); 
-    this.res.add(value);
-    if (this.res.size === 3) console.log(this.res);
-  }
 
-  labelList = [{id: 1, category: 'a'}, {id: 2, category: 'b'}, {id: 3, category: 'c'}]; // your data
+  handleRoomButton()
+  {   let scope = this;
+      console.log('hi',this.state.start_date);
+      console.log('hey',this.state.end_date);
+      axios.post('http://demo4467000.mockable.io/post_fetch_rooms', {
+         startDate: this.state.start_date,
+         endDate: this.state.end_date
+      })
+      .then(function (res) {
+            console.log('hi',res.data.roomCode);
+           scope.setState({ roomStatusArray: (res.data.roomCode) })
+           console.log('hello', scope.state.roomStatusArray)
+      })
+      .catch(function (error) {
+           console.log(error);
+      });
+
+  }
 
   handleValidation(n,field){
 
@@ -173,8 +180,8 @@ class HorizontalLinearStepper extends React.Component {
             errors["desc"]="Cannot be empty";
           }
       }
-       this.setState({errors: errors});
-       return formIsValid;
+        this.setState({errors: errors});
+        return formIsValid;
    }
   getStepContent(stepIndex) {
 
@@ -237,11 +244,11 @@ class HorizontalLinearStepper extends React.Component {
                           value="external"
                           label="External Workshop"
                        />
-                      </RadioButtonGroup>             
+                      </RadioButtonGroup> 
+    
                </div>);
       case 2:
         return (<div> 
-
                       <div className="Row" style={{ display: "flex" , flexDirection:"row"}}>
                          <Subheader> Start </Subheader>            
                          <DatePicker 
@@ -259,7 +266,8 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleEndDate}
                            value={this.state.end_date} 
                          />
-                      </div>
+                      </div>        
+                      <RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>
                       <div className="Row" >
                          <Card style={{padding:"0", width: '100%', maxWidth: 1000}}>
                             <CardHeader
@@ -286,7 +294,7 @@ class HorizontalLinearStepper extends React.Component {
                                              >
 
                                                 <CheckboxGroup
-                                                 n={"1"} b={"0"}
+                                                 n={"1"} b={"0"} a={this.state.roomStatusArray}
                                                  /> 
                                             </CardText>
                                       </Card>
