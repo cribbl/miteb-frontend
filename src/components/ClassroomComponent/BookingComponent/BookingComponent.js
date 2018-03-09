@@ -193,28 +193,32 @@ class HorizontalLinearStepper extends React.Component {
                             type="text" 
                             onChange={this.handleChange.bind(this, "booker_name")} 
                             value={this.state.fields["booker_name"]}
-                            errorText={this.state.errors["booker_name"]} />
+                            errorText={this.state.errors["booker_name"]} 
+                            errorStyle={{position: 'absolute', bottom: '-8'}}/>
 
                        <TextField
                            floatingLabelText="Email"
                            type="text"  
                            onChange={this.handleChange.bind(this, "booker_email")} 
                            value={this.state.fields["booker_email"]}
-                           errorText={this.state.errors["booker_email"]} />
+                           errorText={this.state.errors["booker_email"]} 
+                           errorStyle={{position: 'absolute', bottom: '-8'}}/>
 
                        <TextField 
                            floatingLabelText="Contact Number" 
                            type="text"
                            onChange={this.handleChange.bind(this, "booker_contact")}
                            value={this.state.fields["booker_contact"]}
-                            errorText={this.state.errors["booker_contact"]} />
+                            errorText={this.state.errors["booker_contact"]} 
+                            errorStyle={{position: 'absolute', bottom: '-8'}}/>
 
                        <TextField  
                            floatingLabelText="Registration Number" 
                            type="text" 
                            onChange={this.handleChange.bind(this, "booker_reg_no")}
                            value={this.state.fields["booker_reg_no"]}
-                           errorText={this.state.errors["booker_reg_no"]} />
+                           errorText={this.state.errors["booker_reg_no"]} 
+                           errorStyle={{position: 'absolute', bottom: '-8'}}/>
                 </div>);
       case 1:
         return (<div>  
