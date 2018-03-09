@@ -16,28 +16,36 @@ class CheckboxGroup extends React.Component {
        this.state={
         disable:false,
         checkboxes:[],
-        checked:false
+        checker:false,
+        roomCode: {'0101':true, '0102':false, '0103':true}
        }
       }
-
+    // getInitialState(b,s) {
+    //   console.log(b);
+    //   console.log('hi');
+    //   console.log(s);
+    //   set
+    //   this.state.roomCode[b,s]=true;
+    // }
     updateCheck(b,s) {
-    this.setState((oldState) => {
-      return {
-        checked: !oldState.checked,
+      let x=(b)+(s);
+      console.log(this.state.roomCode[x]);
+       this.state.roomCode[x] = !this.state.roomCode[x];
+       this.state.checker = !this.state.checker;
+    // this.setState({this.state.roomCode[x]})
+      // this.state.checked1[b,s]=true;
 
-      };
+    };
+  //   if(!this.state.checked)
+  //     {
+  //       this.onCheckBox("true",b,s);
+  //     }
+  //   else
+  //     {
+  //       this.onCheckBox("false",b,s); 
+  //     }
 
-    });
-    if(!this.state.checked)
-      {
-        this.onCheckBox("true",b,s);
-      }
-    else
-      {
-        this.onCheckBox("false",b,s); 
-      }
-
-  }
+  // }
 
       checkDisable(b,s) {
         //updates available list array for every room code such that end date is over (?)
@@ -48,12 +56,12 @@ class CheckboxGroup extends React.Component {
           
        };
        onCheckBox(a,b,s) {
-        let checkboxes = this.state.checkboxes;
+     console.log('ONCHECKBOX');
         //room is available
         //push that room code to unavailable room array
        }
 
-       render(){  
+       render(){
 
         switch(this.props.b){
             case "0": return(<div className="Row" style={{display:"flex",flexDirection:"row",padding:"0"}}>
@@ -65,7 +73,7 @@ class CheckboxGroup extends React.Component {
                          style={styles.checkbox}
                          disabled={this.checkDisable(this.props.b,this.props.n+"01")}
                          onCheck={ () => this.updateCheck(this.props.b,this.props.n+"01")}
-                         checked={this.state.checked}
+                         checked={this.state.roomCode[this.props.b+this.props.n+"01"]}
                         />
                       </td>
                       <td>
@@ -73,8 +81,8 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "02"}
                         style={styles.checkbox}
                         disabled={ this.checkDisable(this.props.b,this.props.n+"02") }
-                        onCheck={ () => this.updateCheck(this.props.b,this.props.n+"02")}
-                        checked={this.state.checked}
+                        onCheck={ this.updateCheck2.bind(this)}
+                        checked={this.state.checker}
                          />    
                       </td>
                        <td>
@@ -82,6 +90,8 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "03"}
                         style={styles.checkbox}
                         disabled={this.checkDisable(this.props.b,this.props.n+"03")}
+                        onCheck={ () => this.updateCheck(this.props.b,this.props.n+"03")}
+                        checked={this.state.roomCode[this.props.b,this.props.n,"03"]}
                         />
                       </td>
                        <td>
@@ -89,6 +99,8 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "04"}
                         style={styles.checkbox}
                          disabled={this.checkDisable(this.props.b,this.props.n+"04")}
+                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"04")}
+                        checked={this.state.roomCode[this.props.b,this.props.n,"04"]}
                         />
                       </td>
                        <td>
@@ -96,6 +108,8 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "05"}
                         style={styles.checkbox}
                         disabled={this.checkDisable(this.props.b,this.props.n+"05")}
+                        onCheck={ () => this.updateCheck(this.props.b,this.props.n+"05")}
+                        checked={this.state.roomCode[this.props.b,this.props.n,"05"]}
                        />
                        </td>
                       <td>
@@ -103,6 +117,8 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "06"}
                         style={styles.checkbox}
                          disabled={this.checkDisable(this.props.b,this.props.n+"06")}
+                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"06")}
+                        checked={this.state.roomCode[this.props.b,this.props.n,"06"]}
                        />
                       </td>
                       </tr>
@@ -111,12 +127,16 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "07"}
                         style={styles.checkbox}
                          disabled={this.checkDisable(this.props.b,this.props.n+"07")}
+                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"07")}
+                        checked={this.state.roomCode[this.props.b,this.props.n,"07"]}
                       />
                       </td>
                        <td><Checkbox labelPosition="left" 
                         label={this.props.n + "08"}
                         style={styles.checkbox}
                          disabled={this.checkDisable(this.props.b,this.props.n+"08")}
+                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"08")}
+                        checked={this.state.roomCode[this.props.b,this.props.n,"08"]}
 
                       />
                       </td>
@@ -124,6 +144,8 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "09"}
                         style={styles.checkbox}
                          disabled={this.checkDisable(this.props.b,this.props.n+"09")}
+                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"09")}
+                        checked={this.state.roomCode[this.props.b,this.props.n,"09"]}
                       />
                       </td>
                  
