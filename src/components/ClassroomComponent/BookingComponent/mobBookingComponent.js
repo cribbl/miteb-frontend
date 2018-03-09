@@ -10,10 +10,13 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
+<<<<<<< HEAD
+=======
 
 
 
 
+>>>>>>> 117b32e1a451082186ad7b953450e180c4e3661c
 const styles = {
   block: {
     maxWidth: 250,
@@ -170,8 +173,12 @@ class VerticalLinearStepper extends React.Component {
         <Stepper activeStep={stepIndex} orientation="vertical">
           <Step>
             <StepLabel>Booker Details</StepLabel>
+<<<<<<< HEAD
+            <StepContent style={{backgroundColor:'#e9ff91'}}>             
+=======
             <StepContent style={{backgroundColor:'#e9ff91'}}>
               
+>>>>>>> 117b32e1a451082186ad7b953450e180c4e3661c
                  <div>	        
            	           	<TextField floatingLabelText="Name"  type="text" onChange={this.handleChange.bind(this, "name")} value={this.state.fields["name"]}/>
                          <br/><span style={{color: "blue"}}>{this.state.errors["name"]}</span>
@@ -187,11 +194,16 @@ class VerticalLinearStepper extends React.Component {
                          <TextField floatingLabelText="Registration Number" type="text" onChange={this.handleChange.bind(this, "regno")} value={this.state.fields["regno"]}/>
                          <br/>
                          <span style={{color: "blue"}}>{this.state.errors["regno"]}</span>
+<<<<<<< HEAD
+                         <br/>       
+                 </div>    
+=======
                          <br/>
                      
                   
               </div>
               
+>>>>>>> 117b32e1a451082186ad7b953450e180c4e3661c
               {this.renderStepActions(0)}
             </StepContent>
           </Step>
@@ -218,9 +230,15 @@ class VerticalLinearStepper extends React.Component {
                           value="external"
                           label="External Workshop"
                         />
+<<<<<<< HEAD
+                        </RadioButtonGroup>          
+                   
+              		</div>
+=======
                       </RadioButtonGroup>          
                    
               </div>
+>>>>>>> 117b32e1a451082186ad7b953450e180c4e3661c
               {this.renderStepActions(1)}
             </StepContent>
           </Step>
@@ -239,7 +257,11 @@ class VerticalLinearStepper extends React.Component {
                         />
 
                       </RadioButtonGroup>          
+<<<<<<< HEAD
+             </div>
+=======
             </div>
+>>>>>>> 117b32e1a451082186ad7b953450e180c4e3661c
               {this.renderStepActions(2)}
             </StepContent>
           </Step>
