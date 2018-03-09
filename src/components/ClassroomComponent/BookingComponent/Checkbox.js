@@ -16,7 +16,8 @@ class CheckboxGroup extends React.Component {
        this.state={
         disable:false,
         checkboxes:[],
-        checked:false
+        checked:false,
+        checked1:[]
        }
       }
 
@@ -26,6 +27,7 @@ class CheckboxGroup extends React.Component {
         checked: !oldState.checked,
 
       };
+      this.state.checked1[b,s]=true;
 
     });
     if(!this.state.checked)
@@ -65,7 +67,7 @@ class CheckboxGroup extends React.Component {
                          style={styles.checkbox}
                          disabled={this.checkDisable(this.props.b,this.props.n+"01")}
                          onCheck={ () => this.updateCheck(this.props.b,this.props.n+"01")}
-                         checked={this.state.checked}
+                         checked={this.state.checked1[this.props.b,this.props.n,"01"]}
                         />
                       </td>
                       <td>
