@@ -13,10 +13,10 @@ const styles={
 class CheckboxGroup extends React.Component {
   constructor(props){
        super(props);
+    this.updateCheck=this.updateCheck.bind(this);
        this.state={
         disable:false,
         checkboxes:[],
-        checker:false,
         roomCode: {'0101':true, '0102':false, '0103':true}
        }
       }
@@ -30,9 +30,11 @@ class CheckboxGroup extends React.Component {
     updateCheck(b,s) {
       let x=(b)+(s);
       console.log(this.state.roomCode[x]);
-       this.state.roomCode[x] = !this.state.roomCode[x];
-       this.state.checker = !this.state.checker;
-    // this.setState({this.state.roomCode[x]})
+      let arr = this.state.roomCode
+      arr[x] = !arr[x]
+      this.setState({roomCode:arr})
+       
+
       // this.state.checked1[b,s]=true;
 
     };
@@ -81,8 +83,8 @@ class CheckboxGroup extends React.Component {
                         label={this.props.n + "02"}
                         style={styles.checkbox}
                         disabled={ this.checkDisable(this.props.b,this.props.n+"02") }
-                        onCheck={ this.updateCheck2.bind(this)}
-                        checked={this.state.checker}
+                        onCheck={ () => this.updateCheck(this.props.b,this.props.n+"02")}
+                        checked={this.state.roomCode[this.props.b+this.props.n+"02"]}
                          />    
                       </td>
                        <td>

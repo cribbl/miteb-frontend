@@ -441,8 +441,8 @@ class HorizontalLinearStepper extends React.Component {
     
     return (
       <div style={{width: '100%', maxWidth: 700,margin:'auto'}}>
-        <Stepper activeStep={stepIndex} >
-          <Step  linear={false} >
+        <Stepper linear={false} activeStep={stepIndex} >
+          <Step>
             <StepLabel>Booker Details </StepLabel>
           </Step>
           <Step>
