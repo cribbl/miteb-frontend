@@ -52,7 +52,7 @@ class HorizontalLinearStepper extends React.Component {
            end_date:null,
            checkbox:null,
            roomStatusArray:{'0101': true},
-           fieldTouch:{}
+           fieldTouch:{},
 
        }
 
@@ -70,8 +70,12 @@ class HorizontalLinearStepper extends React.Component {
     this.setState({end_date: end_date})
     console.log(end_date);
   }
+  handleDisableNext()
+  {
+    if(!this.handleEmptyValidation(this.state.stepIndex))
+        return true;
+  }
   handleNext = () => {
-
 
           if(this.handleValidation(this.state.stepIndex)){
             const {stepIndex} = this.state;
@@ -80,8 +84,6 @@ class HorizontalLinearStepper extends React.Component {
             finished: stepIndex >= 2,
             });
            }
-           if(this.state.stepIndex==1)
-            console.log("should make API call....");
            if(this.state.stepIndex==2)
            this.handleSubmit();
   };
@@ -132,31 +134,49 @@ class HorizontalLinearStepper extends React.Component {
       });
 
   }
+   handleEmptyValidation(n){
+      let fields =this.state.fields;
+      console.log(n);
+  
+                 if(n==0) {
+                   
+                    if(!fields["booker_name"] || !fields["booker_email"] || !fields["booker_contact"] 
+                      || !fields["booker_reg_no"])  
+                       return false;
+                    else 
+                       return true;
+                 }
+                 else if(n==1){
+                    if(!fields["title"] || !fields["desc"])
+                      return false;
+                    else
+                      return true;
 
+                }
+    
+
+  }
   handleValidation(n,field){
 
         let fields = this.state.fields;
         let fieldTouch = this.state.fieldTouch;
         let errors = {};
         let formIsValid=true;
-
         if(n==0)
-        {   
+        {    
             //Name
-           
-
             if(!fields["booker_name"] && fieldTouch["booker_name"] ){
                formIsValid = false;
                errors["booker_name"] = "Cannot be empty";
-               console.log(fieldTouch);
+            
             }
 
             //Email
             if( (!fields["booker_email"] || errors['booker_email'])&& fieldTouch["booker_email"]){
                formIsValid = false;
                errors["booker_email"] = "Cannot be empty";
+            
             }
-
             if(typeof fields["booker_email"] !== "undefined" ){
                 let lastAtPos = fields["booker_email"].lastIndexOf('@');
                 let lastDotPos = fields["booker_email"].lastIndexOf('.');
@@ -180,20 +200,24 @@ class HorizontalLinearStepper extends React.Component {
             }
 
          }
-         else if(n==1){
-
-          //Title
-          if(!fields["title"]){
-            formIsValid=false;
-            errors["title"]="Cannot be empty";
-          }
-          //Event Description
-           if(!fields["desc"]){
-            formIsValid=false;
-            errors["desc"]="Cannot be empty";
-          }
-      }
+        if(n==1)
+        {  console.log('inside n=1')
+            //Title
+              if(!fields["title"] ){
+                console.log('inside check for title')
+                formIsValid=false;
+                errors["title"]="Cannot be empty";
+                console.log(fieldTouch);
+              }
+              //Event Description
+               if(!fields["desc"] && fieldTouch["desc"]){
+                formIsValid=false;
+                errors["desc"]="Cannot be empty";
+            
+              }
+        }
         this.setState({errors: errors});
+        console.log(errors);
         return formIsValid;
    }
   getStepContent(stepIndex) {
@@ -204,12 +228,11 @@ class HorizontalLinearStepper extends React.Component {
                        <TextField
                             floatingLabelText="Name"
                             type="text" 
-                    
                             onChange={this.handleChange.bind(this, "booker_name")} 
                             value={this.state.fields["booker_name"]}
                             errorText={this.state.errors["booker_name"]} 
                             errorStyle={{position: 'absolute', bottom: '-8'}}
-                            required 
+                            required
 
                             />
 
@@ -220,7 +243,7 @@ class HorizontalLinearStepper extends React.Component {
                            value={this.state.fields["booker_email"]}
                            errorText={this.state.errors["booker_email"]} 
                            errorStyle={{position: 'absolute', bottom: '-8'}}
-                           required
+                           required 
                            />
 
                        <TextField 
@@ -247,20 +270,24 @@ class HorizontalLinearStepper extends React.Component {
         return (<div>  
                      <TextField 
                        floatingLabelText="Title"
-                       errorText={this.state.errors["title"]}  
-                       type="text" onChange={this.handleChange.bind(this, "title")} 
+                       onChange={this.handleChange.bind(this, "title")} 
+                       type="text" 
                        value={this.state.fields["title"]}
+                       errorText={this.state.errors["title"]}  
+                       errorStyle={{position: 'absolute', bottom: '-8'}}
                        required
                       />
                      <TextField 
                        floatingLabelText="Event Description" 
-                       errorText={this.state.errors["desc"]} 
                        multiLine={true}
                        type="text"
                        onChange={this.handleChange.bind(this, "desc")} 
                        value={this.state.fields["desc"]}
+                       errorText={this.state.errors["desc"]} 
+                       errorStyle={{position: 'absolute', bottom: '-8'}}
                        required
                      />
+                     <br/><br/>
                       <RadioButtonGroup
                          name="Workshop" 
                          defaultSelected="external"
@@ -524,6 +551,7 @@ class HorizontalLinearStepper extends React.Component {
                   label={stepIndex === 2 ? 'Finish' : 'Next'}
                   primary={true}
                   onClick={this.handleNext}
+                  disabled={this.handleDisableNext()}
                 />
               </div>
             </div>
