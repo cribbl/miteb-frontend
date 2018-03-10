@@ -32,10 +32,10 @@ class SearchSortContainer extends Component {
           <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.props.filter == 'all' ? 700 : 100}}>All ({this.props.allLength})</span>
         </ToolbarGroup>
         {!this.props.isMobile ? 
-        <ToolbarGroup>
-          <TextField hintText={this.props.filter}/>
-        </ToolbarGroup>
-        : '' }
+          <ToolbarGroup>
+            <TextField hintText={this.props.filter}/>
+          </ToolbarGroup>
+          : '' }
        </Toolbar>
        </div>
     );
