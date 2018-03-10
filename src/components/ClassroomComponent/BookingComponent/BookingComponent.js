@@ -18,6 +18,9 @@ import CheckboxGroup from './Checkbox';
 import CheckboxField from './Checkbox';
 import axios from 'axios';
 
+var ab5="5"
+var nlh="3"
+
 const styles = {
   customWidth: {
     width: 200,
@@ -31,7 +34,7 @@ const styles = {
     marginBottom: 16,
   },
 };
-
+ 
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
        super(props);
@@ -48,11 +51,13 @@ class HorizontalLinearStepper extends React.Component {
            start_date: null,
            end_date:null,
            checkbox:null,
-           roomStatusArray:{'0101': true}
+           roomStatusArray:{'0101': true},
+           fieldTouch:{}
 
        }
 
-
+       const nlh="3";
+       const ab5="5";
        this.handleStartDate=this.handleStartDate.bind(this);
        this.handleEndDate=this.handleEndDate.bind(this);
   }
@@ -90,10 +95,16 @@ class HorizontalLinearStepper extends React.Component {
   };
 
   handleChange(field, e){  
+
         let fields = this.state.fields;
         fields[field] = e.target.value;        
         this.setState({fields});
-         this.handleValidation(0,field); 
+        let fieldTouch=this.state.fieldTouch;
+        fieldTouch[field]=true;
+        this.setState({fieldTouch:fieldTouch})
+       console.log('inside handlechange',fieldTouch);
+        this.handleValidation(0,field);
+      
   };
   handleDropDownChange = (event, index, value) => this.setState({value})
 
@@ -125,6 +136,7 @@ class HorizontalLinearStepper extends React.Component {
   handleValidation(n,field){
 
         let fields = this.state.fields;
+        let fieldTouch = this.state.fieldTouch;
         let errors = {};
         let formIsValid=true;
 
@@ -133,35 +145,36 @@ class HorizontalLinearStepper extends React.Component {
             //Name
            
 
-            if(!fields["booker_name"]){
+            if(!fields["booker_name"] && fieldTouch["booker_name"] ){
                formIsValid = false;
                errors["booker_name"] = "Cannot be empty";
+               console.log(fieldTouch);
             }
 
             //Email
-            if( !fields["booker_email"] || errors['booker_email']){
+            if( (!fields["booker_email"] || errors['booker_email'])&& fieldTouch["booker_email"]){
                formIsValid = false;
                errors["booker_email"] = "Cannot be empty";
             }
 
-            if(typeof fields["booker_email"] !== "undefined"){
+            if(typeof fields["booker_email"] !== "undefined" ){
                 let lastAtPos = fields["booker_email"].lastIndexOf('@');
                 let lastDotPos = fields["booker_email"].lastIndexOf('.');
 
                 if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["booker_email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["booker_email"].length - lastDotPos) > 2)) {
                   formIsValid = false;
-                  errors["booker_email"] = "booker_email is not valid";
+                  errors["booker_email"] = "Email is not valid";
                 }
            }
 
            //phone number
-            if(!fields["booker_contact"]){
+            if(!fields["booker_contact"] && fieldTouch["booker_contact"]){
                formIsValid = false;
                errors["booker_contact"] = "Cannot be empty";
             }
 
             //Registration Number
-               if(!fields["booker_reg_no"]){
+               if(!fields["booker_reg_no"] && fieldTouch["booker_reg_no"]){
                formIsValid = false;
                errors["booker_reg_no"] = "Cannot be empty";
             }
@@ -191,10 +204,14 @@ class HorizontalLinearStepper extends React.Component {
                        <TextField
                             floatingLabelText="Name"
                             type="text" 
+                    
                             onChange={this.handleChange.bind(this, "booker_name")} 
                             value={this.state.fields["booker_name"]}
                             errorText={this.state.errors["booker_name"]} 
-                            errorStyle={{position: 'absolute', bottom: '-8'}}/>
+                            errorStyle={{position: 'absolute', bottom: '-8'}}
+                            required 
+
+                            />
 
                        <TextField
                            floatingLabelText="Email"
@@ -202,7 +219,9 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleChange.bind(this, "booker_email")} 
                            value={this.state.fields["booker_email"]}
                            errorText={this.state.errors["booker_email"]} 
-                           errorStyle={{position: 'absolute', bottom: '-8'}}/>
+                           errorStyle={{position: 'absolute', bottom: '-8'}}
+                           required
+                           />
 
                        <TextField 
                            floatingLabelText="Contact Number" 
@@ -210,7 +229,9 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleChange.bind(this, "booker_contact")}
                            value={this.state.fields["booker_contact"]}
                             errorText={this.state.errors["booker_contact"]} 
-                            errorStyle={{position: 'absolute', bottom: '-8'}}/>
+                            errorStyle={{position: 'absolute', bottom: '-8'}}
+                            required
+                            />
 
                        <TextField  
                            floatingLabelText="Registration Number" 
@@ -218,7 +239,9 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleChange.bind(this, "booker_reg_no")}
                            value={this.state.fields["booker_reg_no"]}
                            errorText={this.state.errors["booker_reg_no"]} 
-                           errorStyle={{position: 'absolute', bottom: '-8'}}/>
+                           errorStyle={{position: 'absolute', bottom: '-8'}}
+                           required
+                           />
                 </div>);
       case 1:
         return (<div>  
@@ -227,6 +250,7 @@ class HorizontalLinearStepper extends React.Component {
                        errorText={this.state.errors["title"]}  
                        type="text" onChange={this.handleChange.bind(this, "title")} 
                        value={this.state.fields["title"]}
+                       required
                       />
                      <TextField 
                        floatingLabelText="Event Description" 
@@ -235,6 +259,7 @@ class HorizontalLinearStepper extends React.Component {
                        type="text"
                        onChange={this.handleChange.bind(this, "desc")} 
                        value={this.state.fields["desc"]}
+                       required
                      />
                       <RadioButtonGroup
                          name="Workshop" 
@@ -298,7 +323,7 @@ class HorizontalLinearStepper extends React.Component {
                                              >
 
                                                 <CheckboxGroup
-                                                 n={"1"} b={"0"} a={this.state.roomStatusArray}
+                                                 n={"1"}b={ab5} a={this.state.roomStatusArray}
                                                  /> 
                                             </CardText>
                                       </Card>
@@ -314,7 +339,7 @@ class HorizontalLinearStepper extends React.Component {
                                              style={{padding:"1"}}
                                              >
                                               <CheckboxGroup 
-                                              n={"2"} b={"0"}
+                                              n={"2"}b={ab5} a={this.state.roomStatusArray}
                                               />
                                             </CardText>
                                       </Card>
@@ -330,7 +355,7 @@ class HorizontalLinearStepper extends React.Component {
                                            style={{padding:"1"}}
                                            >
                                             <CheckboxGroup 
-                                            n={"3"} b={"0"}
+                                            n={"3"}b={ab5} a={this.state.roomStatusArray}
                                             />
                                           </CardText>
                                       </Card>
@@ -346,7 +371,7 @@ class HorizontalLinearStepper extends React.Component {
                                            style={{padding:"1"}}
                                            >
                                             <CheckboxGroup 
-                                            n={"4"} b={"0"}
+                                            n={"4"}b={ab5} a={this.state.roomStatusArray}
                                             />
                                           </CardText>
                                       </Card>
@@ -362,7 +387,7 @@ class HorizontalLinearStepper extends React.Component {
                                            style={{padding:"1"}}
                                            >
                                            <CheckboxGroup 
-                                           n={"5"} b={"0"}
+                                           n={"5"}b={ab5} a={this.state.roomStatusArray}
                                            />
                                           </CardText>
                                      </Card>
@@ -387,7 +412,9 @@ class HorizontalLinearStepper extends React.Component {
                                            />
                                            <CardText expandable={true}
                                            style={{padding:"3"}}>
-                                           <CheckboxGroup n={"1"} b={"1"} /> 
+                                           <CheckboxGroup 
+                                           n={"1"} b={nlh} a={this.state.roomStatusArray}
+                                           /> 
                                         </CardText>
                                     </Card>
                                     <Card>
@@ -399,7 +426,8 @@ class HorizontalLinearStepper extends React.Component {
                                            />
                                            <CardText expandable={true}
                                            style={{padding:"1"}}>
-                                           <CheckboxGroup n={"2"} b={"1"}/> 
+                                           <CheckboxGroup n={"2"} b={nlh} a={this.state.roomStatusArray}
+                                           /> 
                                         </CardText>
                                     </Card>
                                     <Card>
@@ -411,7 +439,8 @@ class HorizontalLinearStepper extends React.Component {
                                          />
                                          <CardText expandable={true}
                                          style={{padding:"1"}}>
-                                           <CheckboxGroup n={"3"} b={"1"}/> 
+                                           <CheckboxGroup n={"3"} b={nlh} a={this.state.roomStatusArray}
+                                           /> 
                                         </CardText>
                                     </Card>
                                     <Card>
@@ -423,7 +452,8 @@ class HorizontalLinearStepper extends React.Component {
                                          />
                                          <CardText expandable={true}
                                          style={{padding:"1"}}>
-                                           <CheckboxGroup n={"3"} b={"1"}/> 
+                                           <CheckboxGroup n={"3"} b={nlh} a={this.state.roomStatusArray}
+                                           /> 
                                         </CardText>
                                     </Card>
                                     <Card>
@@ -435,7 +465,8 @@ class HorizontalLinearStepper extends React.Component {
                                          />
                                          <CardText expandable={true}
                                          style={{padding:"1"}}>
-                                         <CheckboxGroup n={"5"} b={"1"}/> 
+                                         <CheckboxGroup n={"5"} b={nlh} a={this.state.roomStatusArray}
+                                         /> 
                                         </CardText>
                                    </Card>
                              </CardText>
