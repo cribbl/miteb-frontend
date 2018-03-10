@@ -30,20 +30,7 @@ class CheckboxGroup extends React.Component {
       arr[x] = !arr[x]
       this.setState({roomCode:arr})
     };
- 
 
-      checkDisable(b,s,a) {
-        console.log(b,s);
-        console.log(a);
-        
-        //updates available list array for every room code such that end date is over (?)
-        //check for availability by checking room code against available rooms array
-        //if available, push to available array and return false.
-        //if not available, return true.
-        return false;
-          
-       };
-      
 
        render(){
 
@@ -82,7 +69,7 @@ class CheckboxGroup extends React.Component {
                         <Checkbox id="4" labelPosition="left"
                         label={this.props.n + "04"}
                         style={styles.checkbox}
-                         disabled={this.checkDisable(this.props.b,this.props.n+"04")}
+                         disabled={this.state.roomStatus[this.props.b+this.props.n+"04"]}
                          onCheck={ () => this.updateCheck(this.props.b,this.props.n+"04")}
                         checked={this.state.roomCode[this.props.b+this.props.n+"04"]}
                         />
@@ -91,7 +78,8 @@ class CheckboxGroup extends React.Component {
                         <Checkbox id="5" labelPosition="left"
                         label={this.props.n + "05"}
                         style={styles.checkbox}
-                        disabled={this.checkDisable(this.props.b,this.props.n+"05")}
+
+                          disabled={this.state.roomStatus[this.props.b+this.props.n+"05"]}
                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"05")}
                         checked={this.state.roomCode[this.props.b+this.props.n+"05"]}
                        />
@@ -100,7 +88,7 @@ class CheckboxGroup extends React.Component {
                         <Checkbox id="6" labelPosition="left" 
                         label={this.props.n + "06"}
                         style={styles.checkbox}
-                         disabled={this.checkDisable(this.props.b,this.props.n+"06")}
+                           disabled={this.state.roomStatus[this.props.b+this.props.n+"06"]}
                          onCheck={ () => this.updateCheck(this.props.b,this.props.n+"06")}
                         checked={this.state.roomCode[this.props.b+this.props.n+"06"]}
                        />
@@ -110,7 +98,7 @@ class CheckboxGroup extends React.Component {
                       <td><Checkbox labelPosition="left"
                         label={this.props.n + "07"}
                         style={styles.checkbox}
-                         disabled={this.checkDisable(this.props.b,this.props.n+"07")}
+                        disabled={this.state.roomStatus[this.props.b+this.props.n+"07"]}
                          onCheck={ () => this.updateCheck(this.props.b,this.props.n+"07")}
                         checked={this.state.roomCode[this.props.b+this.props.n+"07"]}
                       />
@@ -118,7 +106,7 @@ class CheckboxGroup extends React.Component {
                        <td><Checkbox labelPosition="left" 
                         label={this.props.n + "08"}
                         style={styles.checkbox}
-                         disabled={this.checkDisable(this.props.b,this.props.n+"08")}
+                         disabled={this.state.roomStatus[this.props.b+this.props.n+"08"]}
                          onCheck={ () => this.updateCheck(this.props.b,this.props.n+"08")}
                         checked={this.state.roomCode[this.props.b+this.props.n+"08"]}
 
@@ -127,7 +115,7 @@ class CheckboxGroup extends React.Component {
                       <td><Checkbox labelPosition="left"
                         label={this.props.n + "09"}
                         style={styles.checkbox}
-                         disabled={this.checkDisable(this.props.b,this.props.n+"09")}
+                          disabled={this.state.roomStatus[this.props.b+this.props.n+"09"]}
                          onCheck={ () => this.updateCheck(this.props.b,this.props.n+"09")}
                         checked={this.state.roomCode[this.props.b,this.props.n,"09"]}
                       />
