@@ -38,7 +38,6 @@ class MyEventsComponent extends Component {
 }
 
   filterAndStore(arr) {
-    debugger
     for(let [key, value] of Object.entries(arr)) {
       var x = key
       if(value.FA_appr && value.AD_appr && value.SO_appr) {

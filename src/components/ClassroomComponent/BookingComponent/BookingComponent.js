@@ -231,8 +231,8 @@ class HorizontalLinearStepper extends React.Component {
                      <TextField 
                        floatingLabelText="Event Description" 
                        errorText={this.state.errors["desc"]} 
-                       multiLine="true"  
-                       type="text"  
+                       multiLine={true}
+                       type="text"
                        onChange={this.handleChange.bind(this, "desc")} 
                        value={this.state.fields["desc"]}
                      />
@@ -256,9 +256,9 @@ class HorizontalLinearStepper extends React.Component {
                       <div className="Row" style={{ display: "flex" , flexDirection:"row"}}>
                          <Subheader> Start </Subheader>            
                          <DatePicker 
-                           container="inline" 
-                           mode="landscape" 
-                           autoOk="true"    
+                           container="inline"
+                           mode="landscape"
+                           autoOk={true}
                            onChange={this.handleStartDate}
                            value={this.state.start_date}
                          />
@@ -266,7 +266,7 @@ class HorizontalLinearStepper extends React.Component {
                          <DatePicker  
                            container="inline" 
                            mode="landscape" 
-                           autoOk="true"   
+                           autoOk={true}   
                            onChange={this.handleEndDate}
                            value={this.state.end_date} 
                          />
@@ -455,7 +455,7 @@ class HorizontalLinearStepper extends React.Component {
       <div style={{width: '100%', maxWidth: 700,margin:'auto'}}>
         <Stepper linear={false} activeStep={stepIndex} >
           <Step>
-            <StepLabel>Booker Details </StepLabel>
+            <StepLabel>Booker Details</StepLabel>
           </Step>
           <Step>
             <StepLabel>Event Description</StepLabel>
