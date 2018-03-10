@@ -39,6 +39,14 @@ class HorizontalLinearStepper extends React.Component {
   constructor(props){
        super(props);
 
+          const minDate = new Date();
+          const maxDate = new Date();
+          maxDate.setMonth(maxDate.getMonth() + 1);
+          maxDate.setHours(0, 0, 0, 0);
+       
+          
+
+
        this.handleRoomButton=this.handleRoomButton.bind(this);
 
        this.state = {
@@ -53,7 +61,9 @@ class HorizontalLinearStepper extends React.Component {
            checkbox:null,
            roomStatusArray:{'0101': true},
            fieldTouch:{},
-           today: new Date()
+           today: new Date(),
+           minDate: minDate,
+           maxDate: maxDate,
 
        }
 
@@ -63,6 +73,18 @@ class HorizontalLinearStepper extends React.Component {
        this.handleEndDate=this.handleEndDate.bind(this);
   }
 
+  handleChangeMinDate = (event, date) => {
+    this.setState({
+      minDate: date,
+    });
+  };
+
+  handleChangeMaxDate = (event, date) => {
+    this.setState({
+      maxDate: date,
+    });
+  };
+ 
   handleStartDate(event, start_date){
     this.setState({start_date: start_date})
     console.log(start_date);
@@ -105,7 +127,6 @@ class HorizontalLinearStepper extends React.Component {
         let fieldTouch=this.state.fieldTouch;
         fieldTouch[field]=true;
         this.setState({fieldTouch:fieldTouch})
-       console.log('inside handlechange',fieldTouch);
         this.handleValidation(0,field);
       
   };
@@ -126,7 +147,6 @@ class HorizontalLinearStepper extends React.Component {
          endDate: this.state.end_date
       })
       .then(function (res) {
-            console.log('hi',res.data.roomCode);
            scope.setState({ roomStatusArray: (res.data.roomCode) })
            console.log('hello', scope.state.roomStatusArray)
       })
@@ -136,7 +156,6 @@ class HorizontalLinearStepper extends React.Component {
 
   }
    day(day){
-    console.log(day);
     return false;
    }
    handleEmptyValidation(n){
@@ -234,6 +253,7 @@ class HorizontalLinearStepper extends React.Component {
                             floatingLabelText="Name"
                             type="text" 
                             onChange={this.handleChange.bind(this, "booker_name")} 
+                            onBlur={this.handleChange.bind(this,"booker_name")}
                             value={this.state.fields["booker_name"]}
                             errorText={this.state.errors["booker_name"]} 
                             errorStyle={{position: 'absolute', bottom: '-8'}}
@@ -245,6 +265,7 @@ class HorizontalLinearStepper extends React.Component {
                            floatingLabelText="Email"
                            type="text"  
                            onChange={this.handleChange.bind(this, "booker_email")} 
+                           onBlur={this.handleChange.bind(this,"booker_email")}
                            value={this.state.fields["booker_email"]}
                            errorText={this.state.errors["booker_email"]} 
                            errorStyle={{position: 'absolute', bottom: '-8'}}
@@ -254,6 +275,7 @@ class HorizontalLinearStepper extends React.Component {
                        <TextField 
                            floatingLabelText="Contact Number" 
                            type="text"
+                           onBlur={this.handleChange.bind(this,"booker_contact")}
                            onChange={this.handleChange.bind(this, "booker_contact")}
                            value={this.state.fields["booker_contact"]}
                             errorText={this.state.errors["booker_contact"]} 
@@ -264,6 +286,7 @@ class HorizontalLinearStepper extends React.Component {
                        <TextField  
                            floatingLabelText="Registration Number" 
                            type="text" 
+                           onBlur={this.handleChange.bind(this,"booker_reg_no")}
                            onChange={this.handleChange.bind(this, "booker_reg_no")}
                            value={this.state.fields["booker_reg_no"]}
                            errorText={this.state.errors["booker_reg_no"]} 
@@ -319,6 +342,8 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleStartDate}
                            value={this.state.start_date}
                            shouldDisableDate={this.day}
+                           minDate={this.state.minDate}
+                           maxDate={this.state.maxDate}
                          />
                          <Subheader> End </Subheader> 
                          <DatePicker  
@@ -328,6 +353,8 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleEndDate}
                            value={this.state.end_date} 
                            shouldDisableDate={this.day}
+                           minDate={this.state.minDate}
+                           maxDate={this.state.maxDate}
                          />
                       </div>        
                       <RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>
