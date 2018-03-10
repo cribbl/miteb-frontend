@@ -53,6 +53,7 @@ class HorizontalLinearStepper extends React.Component {
            checkbox:null,
            roomStatusArray:{'0101': true},
            fieldTouch:{},
+           today: new Date()
 
        }
 
@@ -134,6 +135,10 @@ class HorizontalLinearStepper extends React.Component {
       });
 
   }
+   day(day){
+    console.log(day);
+    return false;
+   }
    handleEmptyValidation(n){
       let fields =this.state.fields;
       console.log(n);
@@ -313,6 +318,7 @@ class HorizontalLinearStepper extends React.Component {
                            autoOk={true}
                            onChange={this.handleStartDate}
                            value={this.state.start_date}
+                           shouldDisableDate={this.day}
                          />
                          <Subheader> End </Subheader> 
                          <DatePicker  
@@ -321,6 +327,7 @@ class HorizontalLinearStepper extends React.Component {
                            autoOk={true}   
                            onChange={this.handleEndDate}
                            value={this.state.end_date} 
+                           shouldDisableDate={this.day}
                          />
                       </div>        
                       <RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>
