@@ -48,7 +48,7 @@ class CheckboxGroup extends React.Component {
        render(){
 
         switch(this.props.b){
-            case "0": return(<div className="Row" style={{display:"flex",flexDirection:"row",padding:"0"}}>
+            case "5": return(<div className="Row" style={{display:"flex",flexDirection:"row",padding:"0"}}>
                       <table>
                       <tr>
                       <td>
@@ -138,7 +138,7 @@ class CheckboxGroup extends React.Component {
                       </table>
                   </div>     
                   );
-            case "1": return(<div className="Row" style={{display:"flex",flexDirection:"row",padding:"0"}}>
+            case "3": return(<div className="Row" style={{display:"flex",flexDirection:"row",padding:"0"}}>
                       <Checkbox 
                         label={this.props.n + "01"}
                         style={styles.checkbox}
