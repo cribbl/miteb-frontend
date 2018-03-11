@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # API
-/functions
+/API/functions/node_modules
 
 # dependencies
 /node_modules
