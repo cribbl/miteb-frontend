@@ -4,8 +4,8 @@ import Checkbox from 'material-ui/Checkbox';
 const styles={
   checkbox: {
     marginBottom:10,
-    padding:0
-
+    padding:0,
+ 
   }
 };
 
@@ -13,144 +13,226 @@ const styles={
 class CheckboxGroup extends React.Component {
   constructor(props){
        super(props);
+
+       if (props.getCheckedBoxes){
+      props.getCheckedBoxes(this.getCheckedBox.bind(this));
+    }
+    
+
     this.updateCheck=this.updateCheck.bind(this);
        this.state={
         disable:false,
         checkboxes:[],
-        roomCode: {'0101':false, '0102':false, '0103':false, '0104':false, '0105':false, '0106': false,
-                  '0107':false, '0108': false, '0108':false, '0109':false
+        roomCode: { 
+                    '3101':false, '3102':false, '3103':false, '3104':false, '3105':false,
+                    '3201':false, '3202':false, '3203':false, '3204':false, '3205':false, 
+                    '3301':false, '3302':false, '3303':false, '3304':false, '3305':false, 
+                    '3401':false, '3402':false, '3403':false, '3404':false, '3405':false, 
+                    '5101':false, '5102':false, '5103':false, '5104':false, '5105':false, 
+                    '5106':false, '5107':false, '5108':false, '5109':false, '5201':false, 
+                    '5202':false, '5203':false, '5204':false, '5205':false, '5206':false, 
+                    '5207':false, '5208':false, '5209':false, '5301':false, '5302':false, 
+                    '5303':false, '5304':false, '5305':false, '5306':false, '5307':false, 
+                    '5308':false, '5309':false, '5401':false, '5402':false, '5403':false, 
+                    '5404':false, '5405':false, '5406':false, '5407':false,' 5408':false, 
+                    '5409':false,   
                   },
         roomStatus: this.props.a
        }
       }
+     getCheckedBox(){
+      this.props.sendData(this.state.roomCode);
+    }
     updateCheck(b,s) {
       let x=(b)+(s);
-      console.log(this.state.roomCode[x]);
       let arr = this.state.roomCode
       arr[x] = !arr[x]
       this.setState({roomCode:arr})
+      console.log(arr);
     };
 
 
        render(){
-
+     
+        var self=this;
         switch(this.props.b){
-            case "5": return(<div className="Row" style={{display:"flex",flexDirection:"row",padding:"0"}}>
-                      <table>
-                      <tr>
-                      <td>
-                        <Checkbox id="1" labelPosition="left"  
-                         label={this.props.n + "01" + " "} 
-                         style={styles.checkbox}
-                         disabled={this.state.roomStatus[this.props.b+this.props.n+"01"]}
-                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"01")}
-                         checked={this.state.roomCode[this.props.b+this.props.n+"01"]}
-                        />
-                      </td>
-                      <td>
-                        <Checkbox id="2" labelPosition="left"
-                        label={this.props.n + "02"}
-                        style={styles.checkbox}
-                        disabled={this.state.roomStatus[this.props.b+this.props.n+"02"]}
-                        onCheck={ () => this.updateCheck(this.props.b,this.props.n+"02")}
-                        checked={this.state.roomCode[this.props.b+this.props.n+"02"]}
-                         />    
-                      </td>
-                       <td>
-                        <Checkbox id="3" labelPosition="left" 
-                        label={this.props.n + "03"}
-                        style={styles.checkbox}
-                        disabled={this.state.roomStatus[this.props.b+this.props.n+"03"]}
-                        onCheck={ () => this.updateCheck(this.props.b,this.props.n+"03")}
-                        checked={this.state.roomCode[this.props.b+this.props.n+"03"]}
-                        />
-                      </td>
-                       <td>
-                        <Checkbox id="4" labelPosition="left"
-                        label={this.props.n + "04"}
-                        style={styles.checkbox}
-                         disabled={this.state.roomStatus[this.props.b+this.props.n+"04"]}
-                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"04")}
-                        checked={this.state.roomCode[this.props.b+this.props.n+"04"]}
-                        />
-                      </td>
-                       <td>
-                        <Checkbox id="5" labelPosition="left"
-                        label={this.props.n + "05"}
-                        style={styles.checkbox}
+            case "3":  {var f=[1,2,3,4,5]} 
+                          return(
 
-                          disabled={this.state.roomStatus[this.props.b+this.props.n+"05"]}
-                        onCheck={ () => this.updateCheck(this.props.b,this.props.n+"05")}
-                        checked={this.state.roomCode[this.props.b+this.props.n+"05"]}
-                       />
-                       </td>
-                      <td>
-                        <Checkbox id="6" labelPosition="left" 
-                        label={this.props.n + "06"}
-                        style={styles.checkbox}
-                           disabled={this.state.roomStatus[this.props.b+this.props.n+"06"]}
-                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"06")}
-                        checked={this.state.roomCode[this.props.b+this.props.n+"06"]}
-                       />
-                      </td>
-                      </tr>
-                      <tr>
-                      <td><Checkbox labelPosition="left"
-                        label={this.props.n + "07"}
-                        style={styles.checkbox}
-                        disabled={this.state.roomStatus[this.props.b+this.props.n+"07"]}
-                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"07")}
-                        checked={this.state.roomCode[this.props.b+this.props.n+"07"]}
-                      />
-                      </td>
-                       <td><Checkbox labelPosition="left" 
-                        label={this.props.n + "08"}
-                        style={styles.checkbox}
-                         disabled={this.state.roomStatus[this.props.b+this.props.n+"08"]}
-                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"08")}
-                        checked={this.state.roomCode[this.props.b+this.props.n+"08"]}
+                                  <div className="Row" style={{display:"flex",flexDirection:"row",padding:0}}>
+                                  <table>
+                                    {f.map(function(f,index){
+                                      return <div key={index}> <tr> 
+                                                  <td> <Checkbox  id="1" labelPosition="left"  
+                                                     label={f + "01"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"01"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"01"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"01")}
+                                                     checked={self.state.roomCode[self.props.b+f+"01"]}
+                                                   
+                                                    /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "02"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"02"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"02"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"02")}
+                                                     checked={self.state.roomCode[self.props.b+f+"02"]}
+                                                     
+                                                    /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "03"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"03"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"03"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"03")}
+                                                     checked={self.state.roomCode[self.props.b+f+"03"]}
+                                             
+                                                    /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "04"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"04"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"04"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"04")}
+                                                     checked={self.state.roomCode[self.props.b+f+"04"]}
+                                         
+                                                    /> 
+                                                    </td>
+                                                     <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "05"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"05"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"05"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"05")}
+                                                     checked={self.state.roomCode[self.props.b+f+"05"]}
+                                                    
+                                                    /> 
+                                                    </td>
+                                              </tr>
+                                            </div>
+                                  })}
+                                 </table>
+                                 </div> 
+                       );
+            case "5":{   var f=[1,2];}
+                          return(
 
-                      />
-                      </td>
-                      <td><Checkbox labelPosition="left"
-                        label={this.props.n + "09"}
-                        style={styles.checkbox}
-                          disabled={this.state.roomStatus[this.props.b+this.props.n+"09"]}
-                         onCheck={ () => this.updateCheck(this.props.b,this.props.n+"09")}
-                        checked={this.state.roomCode[this.props.b,this.props.n,"09"]}
-                      />
-                      </td>
-                 
-                   
-                      </tr>
-                      </table>
-                  </div>     
-                  );
-            case "3": return(<div className="Row" style={{display:"flex",flexDirection:"row",padding:"0"}}>
-                      <Checkbox 
-                        label={this.props.n + "01"}
-                        style={styles.checkbox}
-                      />
-                      <Checkbox 
-                        label={this.props.n + "02"}
-                        style={styles.checkbox}
-                      />
-                       <Checkbox 
-                        label={this.props.n + "03"}
-                        style={styles.checkbox}
-                      />
-                       <Checkbox 
-                        label={this.props.n + "04"}
-                        style={styles.checkbox}
-                      />
-                  </div>)
+                                  <div className="Row" style={{display:"flex",flexDirection:"row",padding:0}}>
+                                  <table>
+                                    {f.map(function(f,index){
+                                      return <div key={index}> <tr > 
+                                                  <td> <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "01"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"01"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"01"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"01")}
+                                                     checked={self.state.roomCode[self.props.b+f+"01"]}
+                                                     
+                                                    /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "02"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"02"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"02"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"02")}
+                                                     checked={self.state.roomCode[self.props.b+f+"02"]}
+                                                  
+                                                    /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "03"} 
+                                                    style={{display: self.state.roomStatus[self.props.b+f+"03"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"03"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"03")}
+                                                     checked={self.state.roomCode[self.props.b+f+"03"]}
+                                              
+                                                    /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "04"} 
+                                                   style={{display: self.state.roomStatus[self.props.b+f+"04"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"04"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"04")}
+                                                     checked={self.state.roomCode[self.props.b+f+"04"]}
+                                                     hidden={self.state.roomStatus[self.props.b+f+"04"]}
+                                                    /> 
+                                                    </td>
+                                                     <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "05"} 
+                                                   style={{display: self.state.roomStatus[self.props.b+f+"05"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"05"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"05")}
+                                                     checked={self.state.roomCode[self.props.b+f+"05"]}
+                                                
+                                                    /> 
+                                                    </td>
+                                                     <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "06"} 
+                                                    style={{display: self.state.roomStatus[self.props.b+f+"06"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"06"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"06")}
+                                                     checked={self.state.roomCode[self.props.b+f+"06"]}
+                                                   
+                                                    /> 
+                                                    </td>
+                                                  </tr>
+                                                   <tr>
+                                                   <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "07"} 
+                                                     style={{display: self.state.roomStatus[self.props.b+f+"07"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"07"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"07")}
+                                                     checked={self.state.roomCode[self.props.b+f+"07"]}
+                                                     
+                                                  /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "08"} 
+                                                    style={{display: self.state.roomStatus[self.props.b+f+"08"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"08"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"08")}
+                                                     checked={self.state.roomCode[self.props.b+f+"08"]}
+                                                  
+                                                    /> 
+                                                  </td>
+                                                  <td>
+                                                    <Checkbox id="1" labelPosition="left"  
+                                                     label={f + "09"} 
+                                                      style={{display: self.state.roomStatus[self.props.b+f+"09"]? 'none' : 'styles.checkbox'}}
+                                                     disabled={self.state.roomStatus[self.props.b+f+"09"]}
+                                                     onCheck={ () => self.updateCheck(self.props.b,f+"09")}
+                                                     checked={self.state.roomCode[self.props.b+f+"09"]}
+                                                
+                                                    /> 
+                                                  </td>
+                                                  </tr>
+                                             </div>
+                                  })}
+                                 </table>
+                                 </div> 
+                     );
+
+            
+
+            default: console.log('invalid building')
                 }
               }
  }           
 CheckboxGroup.propTypes={
-        n:React.PropTypes.string,
         b:React.PropTypes.string,
-        a: React.PropTypes.object
+        a: React.PropTypes.object,
+        sendData: React.PropTypes.object
        }
        
 
