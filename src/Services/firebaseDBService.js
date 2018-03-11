@@ -28,7 +28,7 @@ var bhawesh;
 
 function fetch(dateArr) {
 	return Promise.all(dateArr.map(date =>
-	        new Promise((resolve, reject) => 
+	        new Promise((resolve, reject) =>
 	            firebaseDB.ref('rooms/'+date).once('value', snapshot =>
 	                resolve ([date, snapshot.val()])
 	            )
@@ -41,7 +41,8 @@ function fetch(dateArr) {
 	    );
 }
 
-let allRoomArr = {
+function prm(avl) {
+	let allRoomArr = {
       "3101" : true,
       "3102" : true,
       "3103" : true,
@@ -83,17 +84,15 @@ let allRoomArr = {
       "5309" : true,
       "5310" : true
 }
-
-function prm(avl) { 
 	return new Promise(function(resolve, reject) {
 	for(let date in avl){
-    	for(let roomArr in avl[date]) {
+		for(let roomArr in avl[date]) {
             allRoomArr[roomArr] = (Boolean(avl[date][roomArr] & allRoomArr[roomArr]));
         }
     }
     for(let room in allRoomArr)
       allRoomArr[room] = !allRoomArr[room]
-  
+
     resolve(allRoomArr);
 	reject('rejected')
 });
@@ -102,7 +101,6 @@ function prm(avl) {
 export const fetchRooms = (start_date, end_date, callback) => {
 	debugger
 	var date = start_date
-	var avl = {}
 	var dateArr = [];
 
 	do {
