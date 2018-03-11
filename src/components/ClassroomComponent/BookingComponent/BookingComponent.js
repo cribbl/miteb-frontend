@@ -19,6 +19,7 @@ import CheckboxField from './Checkbox';
 import BookerDetails from './BookerDetails'
 import axios from 'axios';
 import firebase from 'firebase';
+import {fetchRooms} from '../../../Services/firebaseDBService'
 
 var moment = require("moment")
 var ab5="5"
@@ -149,12 +150,13 @@ class HorizontalLinearStepper extends React.Component {
       let scope = this;
       console.log('hi',this.state.start_date);
       console.log('hey',this.state.end_date);
-      axios.post('http://demo4467000.mockable.io/post_fetch_rooms', {
-         startDate: this.state.start_date,
-         endDate: this.state.end_date
-      })
+      // axios.post('http://demo4467000.mockable.io/post_fetch_rooms', {
+      //    startDate: this.state.start_date,
+      //    endDate: this.state.end_date
+      // })
+      fetchRooms(this.state.start_date, this.state.end_date)
       .then(function (res) {
-           scope.setState({ roomStatusArray: (res.data.roomCode) })
+           scope.setState({ roomStatusArray: (res) })
            console.log('hello', scope.state.roomStatusArray)
       })
       .catch(function (error) {
