@@ -16,8 +16,11 @@ import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
 import CheckboxGroup from './Checkbox';
 import CheckboxField from './Checkbox';
+import BookerDetails from './BookerDetails'
 import axios from 'axios';
+import firebase from 'firebase';
 
+var moment = require("moment")
 var ab5="5"
 var nlh="3"
 
@@ -37,17 +40,13 @@ const styles = {
  
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
+
        super(props);
 
           const minDate = new Date();
           const maxDate = new Date();
           maxDate.setMonth(maxDate.getMonth() + 1);
           maxDate.setHours(0, 0, 0, 0);
-       
-          
-
-
-       this.handleRoomButton=this.handleRoomButton.bind(this);
 
        this.state = {
            fields: {},
@@ -66,37 +65,15 @@ class HorizontalLinearStepper extends React.Component {
            maxDate: maxDate,
 
        }
-
-       const nlh="3";
-       const ab5="5";
        this.handleStartDate=this.handleStartDate.bind(this);
-       this.handleEndDate=this.handleEndDate.bind(this);
+       this.handleEndDate=this.handleEndDate.bind(this);          
+       this.handleRoomButton=this.handleRoomButton.bind(this);
+       this.getData=this.getData.bind(this);
   }
 
-  handleChangeMinDate = (event, date) => {
-    this.setState({
-      minDate: date,
-    });
-  };
-
-  handleChangeMaxDate = (event, date) => {
-    this.setState({
-      maxDate: date,
-    });
-  };
- 
-  handleStartDate(event, start_date){
-    this.setState({start_date: start_date})
-    console.log(start_date);
-  }
-    handleEndDate(event, end_date){
-    this.setState({end_date: end_date})
-    console.log(end_date);
-  }
-  handleDisableNext()
-  {
-    if(!this.handleEmptyValidation(this.state.stepIndex))
-        return true;
+  getData(val){
+    console.log('heyy');
+    console.log(val);
   }
   handleNext = () => {
 
@@ -130,16 +107,46 @@ class HorizontalLinearStepper extends React.Component {
         this.handleValidation(0,field);
       
   };
-  handleDropDownChange = (event, index, value) => this.setState({value})
 
-  handleSubmit=()=>{
-    console.log(this.state.fields);
-    console.log(" " + this.state.start_date + " " +this.state.end_date);
-    console.log("Submitted form");
+  handleDisableNext()
+  {
+     if(!this.handleEmptyValidation(this.state.stepIndex)&&this.state.stepIndex!=2)
+        return true;
+
   }
 
+  handleDropDownChange = (event, index, value) => this.setState({value})
+
+  handleStartDate(event, start_date){
+
+    this.setState({start_date: start_date})
+    let start__date=start_date;
+    start__date=start_date.toISOString();
+
+    console.log(start__date);
+  }
+
+  handleEndDate(event, end_date){
+    this.setState({end_date: end_date})
+    console.log(end_date);
+  }
+  
+
+  handleChangeMinDate = (event, date) => {
+    this.setState({
+      minDate: date,
+    });
+  };
+
+  handleChangeMaxDate = (event, date) => {
+    this.setState({
+      maxDate: date,
+    });
+  };
+ 
   handleRoomButton()
-  {   let scope = this;
+  {   
+      let scope = this;
       console.log('hi',this.state.start_date);
       console.log('hey',this.state.end_date);
       axios.post('http://demo4467000.mockable.io/post_fetch_rooms', {
@@ -153,15 +160,13 @@ class HorizontalLinearStepper extends React.Component {
       .catch(function (error) {
            console.log(error);
       });
-
   }
-   day(day){
+
+  day(day){
     return false;
    }
    handleEmptyValidation(n){
       let fields =this.state.fields;
-      console.log(n);
-  
                  if(n==0) {
                    
                     if(!fields["booker_name"] || !fields["booker_email"] || !fields["booker_contact"] 
@@ -177,8 +182,6 @@ class HorizontalLinearStepper extends React.Component {
                       return true;
 
                 }
-    
-
   }
   handleValidation(n,field){
 
@@ -225,7 +228,7 @@ class HorizontalLinearStepper extends React.Component {
 
          }
         if(n==1)
-        {  console.log('inside n=1')
+        { 
             //Title
               if(!fields["title"] ){
                 console.log('inside check for title')
@@ -241,14 +244,33 @@ class HorizontalLinearStepper extends React.Component {
               }
         }
         this.setState({errors: errors});
-        console.log(errors);
         return formIsValid;
    }
+  handleSubmit=()=>{
+
+  
+    let field=this.state.fields;
+    let start__date=this.state.start_date;
+    let end__date=this.state.end_date;
+    let start_date=start__date.toISOString();
+    let end_date=end__date.toISOString();
+    // let booker_name=field["booker_name"];
+    // let booker_email=field["booker_email"];
+    // let booker_contact=field["booker_contact"];
+    // let booker_reg_no=field["booker_reg_no"];
+    // let title=field["title"];
+    // let desc=field["desc"];
+
+    field["start_date"]=start_date;
+    field["end_date"]=end_date;
+    console.log(field);
+    console.log("Submitted form");
+  }
   getStepContent(stepIndex) {
 
     switch (stepIndex) {
       case 0:
-        return (<div>  
+        return (<div>   
                        <TextField
                             floatingLabelText="Name"
                             type="text" 
@@ -272,7 +294,7 @@ class HorizontalLinearStepper extends React.Component {
                            required 
                            />
 
-                       <TextField 
+                       <TextField
                            floatingLabelText="Contact Number" 
                            type="text"
                            onBlur={this.handleChange.bind(this,"booker_contact")}
@@ -283,7 +305,7 @@ class HorizontalLinearStepper extends React.Component {
                             required
                             />
 
-                       <TextField  
+                       <TextField
                            floatingLabelText="Registration Number" 
                            type="text" 
                            onBlur={this.handleChange.bind(this,"booker_reg_no")}
@@ -364,96 +386,18 @@ class HorizontalLinearStepper extends React.Component {
                               title="AB5"
                               actAsExpander={true}
                               showExpandableButton={true}
-                              style={{padding:"3"}}
+                              style={{padding:2}}
                             /> 
                             <CardText 
                             expandable={true}
                             >
-                                      <Card 
-                                      style={{padding:"0"}}
-                                      > 
-                                             <CardHeader
-                                             title="1st Floor"
-                                             actAsExpander={true}
-                                             showExpandableButton={true}
-                                             style={{padding:"3"}}
-                                             />
-                                             <CardText 
-                                             expandable={true}
-                                             style={{padding:"1"}}
-                                             >
-
                                                 <CheckboxGroup
-                                                 n={"1"}b={ab5} a={this.state.roomStatusArray}
-                                                 /> 
-                                            </CardText>
-                                      </Card>
-                                      <Card>
-                                              <CardHeader
-                                             title="2nd Floor"
-                                             actAsExpander={true}
-                                             showExpandableButton={true}
-                                             style={{padding:"3"}}
-                                             />
-                                             <CardText 
-                                             expandable={true}
-                                             style={{padding:"1"}}
-                                             >
-                                              <CheckboxGroup 
-                                              n={"2"}b={ab5} a={this.state.roomStatusArray}
-                                              />
-                                            </CardText>
-                                      </Card>
-                                      <Card>
-                                            <CardHeader
-                                           title="3rd Floor"
-                                           actAsExpander={true}
-                                           showExpandableButton={true}
-                                           style={{padding:"3"}}
-                                           />
-                                           <CardText 
-                                           expandable={true}
-                                           style={{padding:"1"}}
-                                           >
-                                            <CheckboxGroup 
-                                            n={"3"}b={ab5} a={this.state.roomStatusArray}
-                                            />
-                                          </CardText>
-                                      </Card>
-                                      <Card>
-                                            <CardHeader
-                                           title="4th Floor"
-                                           actAsExpander={true}
-                                           showExpandableButton={true}
-                                           style={{padding:"3"}}
-                                           />
-                                           <CardText 
-                                           expandable={true}
-                                           style={{padding:"1"}}
-                                           >
-                                            <CheckboxGroup 
-                                            n={"4"}b={ab5} a={this.state.roomStatusArray}
-                                            />
-                                          </CardText>
-                                      </Card>
-                                      <Card>
-                                            <CardHeader
-                                           title="5th Floor"
-                                           actAsExpander={true}
-                                           showExpandableButton={true}
-                                           style={{padding:"3"}}
-                                           />
-                                           <CardText 
-                                           expandable={true}
-                                           style={{padding:"1"}}
-                                           >
-                                           <CheckboxGroup 
-                                           n={"5"}b={ab5} a={this.state.roomStatusArray}
-                                           />
-                                          </CardText>
-                                     </Card>
+                                              
+                                                 b={ab5} a={this.state.roomStatusArray}
+                                                />                            
                             </CardText>
-                         </Card>
+                          </Card>
+
                          
   
                          <Card style ={{padding:"0", width: '100%', maxWidth: 1000}}>
@@ -461,80 +405,20 @@ class HorizontalLinearStepper extends React.Component {
                            title="NLH" 
                            actAsExpander={true}
                            showExpandableButton={true}
-                           style={{padding:"3"}}
+                           style={{padding:"2"}}
                             />
                             <CardText expandable={true}> 
-                                    <Card>
-                                           <CardHeader
-                                           title="1st Floor"
-                                           actAsExpander={true}
-                                           showExpandableButton={true}
-                                           style={{padding:"3"}}
-                                           />
-                                           <CardText expandable={true}
-                                           style={{padding:"3"}}>
                                            <CheckboxGroup 
-                                           n={"1"} b={nlh} a={this.state.roomStatusArray}
-                                           /> 
-                                        </CardText>
-                                    </Card>
-                                    <Card>
-                                            <CardHeader
-                                           title="2nd Floor"
-                                           actAsExpander={true}
-                                           showExpandableButton={true}
-                                           style={{padding:"3"}}
-                                           />
-                                           <CardText expandable={true}
-                                           style={{padding:"1"}}>
-                                           <CheckboxGroup n={"2"} b={nlh} a={this.state.roomStatusArray}
-                                           /> 
-                                        </CardText>
-                                    </Card>
-                                    <Card>
-                                          <CardHeader
-                                         title="3rd Floor"
-                                         actAsExpander={true}
-                                         showExpandableButton={true}
-                                         style={{padding:"3"}}
-                                         />
-                                         <CardText expandable={true}
-                                         style={{padding:"1"}}>
-                                           <CheckboxGroup n={"3"} b={nlh} a={this.state.roomStatusArray}
-                                           /> 
-                                        </CardText>
-                                    </Card>
-                                    <Card>
-                                          <CardHeader
-                                         title="4th Floor"
-                                         actAsExpander={true}
-                                         showExpandableButton={true}
-                                         style={{padding:"3"}}
-                                         />
-                                         <CardText expandable={true}
-                                         style={{padding:"1"}}>
-                                           <CheckboxGroup n={"3"} b={nlh} a={this.state.roomStatusArray}
-                                           /> 
-                                        </CardText>
-                                    </Card>
-                                    <Card>
-                                          <CardHeader
-                                         title="5th Floor"
-                                         actAsExpander={true}
-                                         showExpandableButton={true}
-                                         style={{padding:"3"}}
-                                         />
-                                         <CardText expandable={true}
-                                         style={{padding:"1"}}>
-                                         <CheckboxGroup n={"5"} b={nlh} a={this.state.roomStatusArray}
-                                         /> 
-                                        </CardText>
-                                   </Card>
+                                           b={nlh} a={this.state.roomStatusArray}
+                                           />       
+                                   
                              </CardText>
                            </Card>
                       </div>
 
              </div>);
+
+        default: console.log('hey');
     }
   }
 
@@ -559,7 +443,7 @@ class HorizontalLinearStepper extends React.Component {
         <div style={contentStyle}>
           {finished ? (
 
-            <p>
+            <div>
               <a
                 href="#"
                 onClick={(event) => {
@@ -570,10 +454,9 @@ class HorizontalLinearStepper extends React.Component {
               >
                 Click here
               </a> to book another room! :)
-            </p>
-          ) : (
+            </div>          ) : (
             <div>
-              <p>{this.getStepContent(stepIndex)}</p>
+              <div>{this.getStepContent(stepIndex)}</div>
               <div style={{marginTop: 12}}>
                 <FlatButton
                   label="Back"
