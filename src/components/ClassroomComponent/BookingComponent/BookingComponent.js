@@ -43,7 +43,7 @@ class HorizontalLinearStepper extends React.Component {
   constructor(props){
 
        super(props);
-
+          this.handleData = this.handleData.bind(this);
           const minDate = new Date();
           const maxDate = new Date();
           maxDate.setMonth(maxDate.getMonth() + 1);
@@ -64,14 +64,60 @@ class HorizontalLinearStepper extends React.Component {
            today: new Date(),
            minDate: minDate,
            maxDate: maxDate,
+           fromChild:null,
+           convertedObj:{}
 
        }
+       
        this.handleStartDate=this.handleStartDate.bind(this);
        this.handleEndDate=this.handleEndDate.bind(this);          
        this.handleRoomButton=this.handleRoomButton.bind(this);
-       this.getData=this.getData.bind(this);
+    
   }
+  handleData= (obj) =>{
 
+        this.setState({
+          fromChild:obj
+        })
+        let convertToObj=this.state.fromChild;
+        convertToObj=this.toObject(convertToObj);
+        console.log('from child',convertToObj);
+        this.setState({
+          convertedObj: convertToObj
+        })
+        console.log('convertedObj',this.state.convertedObj)
+       }
+
+  //convert array to object
+     toObject(arr){
+          var rv={};
+          var j=0;
+          var i;
+          for(i=3101;i<=3105;i++,j++)
+           
+              rv[i]=arr[j];
+           for( i=3201;i<=3205;i++,j++)
+            
+              rv[i]=arr[j];
+              for( i=3301;i<=3305;i++,j++)
+  
+              rv[i]=arr[j];
+              for( i=3401;i<=3405;i++,j++)
+        
+              rv[i]=arr[j];
+              for( i=3501;i<=3505;i++,j++)
+       
+              rv[i]=arr[j];
+              for( i=5101;i<=3109;i++,j++)
+   
+              rv[i]=arr[j];
+              for( i=5201;i<=5209;i++,j++)
+      
+              rv[i]=arr[j];
+            return rv;
+
+        }
+       
   getData(val){
     console.log('heyy');
     console.log(val);
@@ -254,6 +300,7 @@ class HorizontalLinearStepper extends React.Component {
     let field=this.state.fields;
     let start__date=this.state.start_date;
     let end__date=this.state.end_date;
+    let roomStatus=this.state.convertedObj;
     let start_date=start__date.toISOString();
     let end_date=end__date.toISOString();
     // let booker_name=field["booker_name"];
@@ -265,6 +312,7 @@ class HorizontalLinearStepper extends React.Component {
 
     field["start_date"]=start_date;
     field["end_date"]=end_date;
+    field["roomStatus"]=roomStatus;
     console.log(field);
     console.log("Submitted form");
   }
@@ -393,10 +441,10 @@ class HorizontalLinearStepper extends React.Component {
                             <CardText 
                             expandable={true}
                             >
-                                                <CheckboxGroup
-                                              
+                                                <CheckboxGroup handlerFromParent={this.handleData}
                                                  b={ab5} a={this.state.roomStatusArray}
                                                 />                            
+                                                <h5> Received by parent: <br/> {this.state.fromChild}</h5>
                             </CardText>
                           </Card>
 
@@ -410,7 +458,7 @@ class HorizontalLinearStepper extends React.Component {
                            style={{padding:"2"}}
                             />
                             <CardText expandable={true}> 
-                                           <CheckboxGroup 
+                                           <CheckboxGroup handlerFromParent={this.handleData}
                                            b={nlh} a={this.state.roomStatusArray}
                                            />       
                                    
