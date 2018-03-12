@@ -24,6 +24,7 @@ export const fetchUser = (callback) => {
   firebaseAuth.onAuthStateChanged(function(user) {
     if (user) {
       callback(user)
+      localStorage.setItem('clubID', user.uid)
       console.log('user exists')
     } 
     else {
