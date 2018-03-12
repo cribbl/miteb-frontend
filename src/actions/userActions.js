@@ -34,6 +34,7 @@ function login(email, password) {
 
 function logout() {
     signOut();
+    localStorage.clear();
     hashHistory.push('/auth')
     return { type: "LOGOUT" };
 }
