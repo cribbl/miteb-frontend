@@ -303,10 +303,13 @@ class HorizontalLinearStepper extends React.Component {
             .filter( key => predicate(obj[key]) )
             .reduce( (res, key) => (res[key] = obj[key], res), {} );
       var filtered = Object.filter(roomStatus, checked => checked>0);
+    
+  var myRef = firebaseDB.ref('/events/').push();
+  var key = myRef.key
 
-      var ref = firebaseDB.ref('/events/')
-      ref.push({
-        "start_date":field["start_date"],
+
+  var newData={
+      "start_date":field["start_date"],
         "end_date":field["end_date"],
         "roomStatus":filtered,
         "AD_appr":false,
@@ -323,8 +326,17 @@ class HorizontalLinearStepper extends React.Component {
         "end_time":"7:45pm",
         "start_time":"5:45pm",
         "clubID": "randomvalue"
+   }
 
-      });
+   myRef.push(newData);
+   var myRef2=firebaseDB.ref('/clubs/')
+   myRef2.push(
+   {
+      "my_events":key
+   });
+
+
+
       console.log(field);
     
       console.log("Submitted form");
