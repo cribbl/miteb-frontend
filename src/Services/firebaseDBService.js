@@ -99,7 +99,7 @@ function prm(avl) {
 }
 
 export const fetchRooms = (start_date, end_date, callback) => {
-	debugger
+
 	var date = start_date
 	var dateArr = [];
 

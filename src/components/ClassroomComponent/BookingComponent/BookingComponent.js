@@ -18,7 +18,8 @@ import CheckboxGroup from './Checkbox';
 import CheckboxField from './Checkbox';
 import BookerDetails from './BookerDetails'
 import axios from 'axios';
-import firebase from 'firebase';
+import {firebaseDB} from '../../../firebaseConfig'
+import firebase from 'firebase'
 import {fetchRooms} from '../../../Services/firebaseDBService'
 
 var moment = require("moment")
@@ -65,7 +66,8 @@ class HorizontalLinearStepper extends React.Component {
            minDate: minDate,
            maxDate: maxDate,
            fromChild:'',
-           convertedObj:{}
+           convertedObj:{},
+
 
        }
        
@@ -80,7 +82,6 @@ class HorizontalLinearStepper extends React.Component {
         //ask about setState
         let convertToObj=this.state.fromChild;
         convertToObj=this.toObject(convertToObj);
-      
         this.state.convertedObj=convertToObj
         
        }
@@ -90,26 +91,19 @@ class HorizontalLinearStepper extends React.Component {
           var rv={};
           var j=0;
           var i;
-          for(i=3101;i<=3105;i++,j++)
-           
+             for(i=3101;i<=3105;i++,j++)         
               rv[i]=arr[j];
-           for( i=3201;i<=3205;i++,j++)
-            
+             for( i=3201;i<=3205;i++,j++)            
               rv[i]=arr[j];
               for( i=3301;i<=3305;i++,j++)
-  
               rv[i]=arr[j];
               for( i=3401;i<=3405;i++,j++)
-        
               rv[i]=arr[j];
               for( i=3501;i<=3505;i++,j++)
-       
               rv[i]=arr[j];
-              for( i=5101;i<=3109;i++,j++)
-   
+              for( i=5101;i<=5109;i++,j++)
               rv[i]=arr[j];
               for( i=5201;i<=5209;i++,j++)
-      
               rv[i]=arr[j];
             return rv;
 
@@ -273,10 +267,9 @@ class HorizontalLinearStepper extends React.Component {
         { 
             //Title
               if(!fields["title"] ){
-                console.log('inside check for title')
                 formIsValid=false;
                 errors["title"]="Cannot be empty";
-                console.log(fieldTouch);
+                
               }
               //Event Description
                if(!fields["desc"] && fieldTouch["desc"]){
@@ -284,27 +277,59 @@ class HorizontalLinearStepper extends React.Component {
                 errors["desc"]="Cannot be empty";
             
               }
+              if(!fields["workshop"])
+                fields["workshop"]="external"
         }
         this.setState({errors: errors});
         return formIsValid;
    }
   handleSubmit=()=>{
+      let field=this.state.fields;
+      let start__date=this.state.start_date;
+      let end__date=this.state.end_date;
+      let roomStatus=this.state.convertedObj;
+      let start_date=start__date.toISOString();
+      let end_date=end__date.toISOString();
+      field["start_date"]=start_date;
+      field["end_date"]=end_date;
+      field["roomStatus"]=roomStatus;
+      field["AD_appr"]=false;
+      field["FA_appr"]=false;
+      field["SO_appr"]=false;
+      field["notes"]=field["notes"]
+      //filtering roomstatus rooms -->true
+      Object.filter = (obj, predicate) => 
+      Object.keys(obj)
+            .filter( key => predicate(obj[key]) )
+            .reduce( (res, key) => (res[key] = obj[key], res), {} );
+      var filtered = Object.filter(roomStatus, checked => checked>0);
 
-  
-    let field=this.state.fields;
-    let start__date=this.state.start_date;
-    let end__date=this.state.end_date;
-    let roomStatus=this.state.convertedObj;
-    let start_date=start__date.toISOString();
-    let end_date=end__date.toISOString();
-    field["start_date"]=start_date;
-    field["end_date"]=end_date;
-    field["roomStatus"]=roomStatus;
-    console.log(field);
-    var ref = firebase.database().ref('mit-clubs-management');
-    console.log(ref)
-    console.log("Submitted form");
-  }
+      var ref = firebaseDB.ref('/events/')
+      ref.push({
+        "start_date":field["start_date"],
+        "end_date":field["end_date"],
+        "roomStatus":filtered,
+        "AD_appr":false,
+        "FA_appr":false,
+        "SO_appr":false,
+        "booker_name":field["booker_name"],
+        "booker_contact":field["booker_contact"],
+        "booker_reg_no":field["booker_reg_no"],
+        "booker_email":field["booker_email"],
+        "title":field["title"],
+        "desc":field["desc"],
+        "type":field["workshop"],
+        "notes":field["notes"],
+        "end_time":"7:45pm",
+        "start_time":"5:45pm",
+        "clubID": "randomvalue"
+
+      });
+      console.log(field);
+    
+      console.log("Submitted form");
+    }
+
   getStepContent(stepIndex) {
 
     switch (stepIndex) {
@@ -356,43 +381,53 @@ class HorizontalLinearStepper extends React.Component {
                            />
                 </div>);
       case 1:
-        return (<div>  
-                     <TextField 
-                       floatingLabelText="Title"
-                       onChange={this.handleChange.bind(this, "title")} 
-                       type="text" 
-                       value={this.state.fields["title"]}
-                       errorText={this.state.errors["title"]}  
-                       errorStyle={{position: 'absolute', bottom: '-8'}}
-                       required
-                      />
-                     <TextField 
-                       floatingLabelText="Event Description" 
-                       multiLine={true}
-                       type="text"
-                       onChange={this.handleChange.bind(this, "desc")} 
-                       value={this.state.fields["desc"]}
-                       errorText={this.state.errors["desc"]} 
-                       errorStyle={{position: 'absolute', bottom: '-8'}}
-                       required
-                     />
-                     <br/><br/>
-                      <RadioButtonGroup
-                         name="Workshop" 
-                         defaultSelected="external"
-                         onChange={this.handleChange.bind(this,"workshop")}>
-                       <RadioButton
-                          value="internal"
-                          label="Internal Workshop"
+          return (<div>  
+                       <TextField 
+                         floatingLabelText="Title"
+                         onChange={this.handleChange.bind(this, "title")} 
+                         type="text" 
+                         value={this.state.fields["title"]}
+                         errorText={this.state.errors["title"]}  
+                         errorStyle={{position: 'absolute', bottom: '-8'}}
+                         required
+                        />
+                       <TextField 
+                         floatingLabelText="Event Description" 
+                         multiLine={true}
+                         type="text"
+                         onChange={this.handleChange.bind(this, "desc")} 
+                         value={this.state.fields["desc"]}
+                         errorText={this.state.errors["desc"]} 
+                         errorStyle={{position: 'absolute', bottom: '-8'}}
+                         required
                        />
-                       <RadioButton
-                          value="external"
-                          label="External Workshop"
+                         <TextField 
+                         floatingLabelText="Notes" 
+                         multiLine={true}
+                         type="text"
+                         onChange={this.handleChange.bind(this, "notes")} 
+                         value={this.state.fields["notes"]}
+                         errorText={this.state.errors["notes"]} 
+                         errorStyle={{position: 'absolute', bottom: '-8'}}
+                         required
                        />
-                      </RadioButtonGroup> 
-    
+                       <br/><br/>
+                        <RadioButtonGroup
+                           name="Workshop" 
+                           defaultSelected="external"
+                           onChange={this.handleChange.bind(this,"workshop")}>
+                         <RadioButton
+                            value="internal"
+                            label="Internal Workshop"
+                         />
+                         <RadioButton
+                            value="external"
+                            label="External Workshop"
+                         />
+                        </RadioButtonGroup> 
+      
                </div>);
-      case 2:
+      case 2:  {var self=this}
         return (<div> 
                       <div className="Row" style={{ display: "flex" , flexDirection:"row"}}>
                          <Subheader> Start </Subheader>            
@@ -405,8 +440,10 @@ class HorizontalLinearStepper extends React.Component {
                            shouldDisableDate={this.day}
                            minDate={this.state.minDate}
                            maxDate={this.state.maxDate}
+                           required
                          />
-                         <Subheader> End </Subheader> 
+                         <Subheader> End </Subheader>
+                        
                          <DatePicker  
                            container="inline" 
                            mode="landscape" 
@@ -414,46 +451,28 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleEndDate}
                            value={this.state.end_date} 
                            shouldDisableDate={this.day}
-                           minDate={this.state.minDate}
+                           minDate={self.state.start_date?self.state.start_date:self.state.minDate}
                            maxDate={this.state.maxDate}
+                           required
                          />
                       </div>        
                       <RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>
-                      <div className="Row" >
-                         <Card style={{padding:"0", width: '100%', maxWidth: 1000}}>
-                            <CardHeader
-                              title="AB5"
-                              actAsExpander={true}
-                              showExpandableButton={true}
-                              style={{padding:2}}
-                            /> 
-                            <CardText 
-                            expandable={true}
-                            >
-                                                <CheckboxGroup handlerFromParent={this.handleData}
-                                                 b={ab5} a={this.state.roomStatusArray}
-                                                />                            
-                                            
-                            </CardText>
-                          </Card>
-
-                         
-  
+                      <br/>
                          <Card style ={{padding:"0", width: '100%', maxWidth: 1000}}>
                             <CardHeader 
-                           title="NLH" 
+                           title="Building" 
                            actAsExpander={true}
                            showExpandableButton={true}
-                           style={{padding:"2"}}
+                           style={{padding:"1"}}
                             />
                             <CardText expandable={true}> 
                                            <CheckboxGroup handlerFromParent={this.handleData}
-                                           b={nlh} a={this.state.roomStatusArray}
+                                            a={this.state.roomStatusArray}
                                            />       
                                    
                              </CardText>
                            </Card>
-                      </div>
+                      
 
              </div>);
 
