@@ -64,7 +64,7 @@ class HorizontalLinearStepper extends React.Component {
            today: new Date(),
            minDate: minDate,
            maxDate: maxDate,
-           fromChild:null,
+           fromChild:'',
            convertedObj:{}
 
        }
@@ -75,17 +75,14 @@ class HorizontalLinearStepper extends React.Component {
     
   }
   handleData= (obj) =>{
-
-        this.setState({
-          fromChild:obj
-        })
+ 
+        this.state.fromChild=obj;
+        //ask about setState
         let convertToObj=this.state.fromChild;
         convertToObj=this.toObject(convertToObj);
-        console.log('from child',convertToObj);
-        this.setState({
-          convertedObj: convertToObj
-        })
-        console.log('convertedObj',this.state.convertedObj)
+      
+        this.state.convertedObj=convertToObj
+        
        }
 
   //convert array to object
@@ -118,10 +115,7 @@ class HorizontalLinearStepper extends React.Component {
 
         }
        
-  getData(val){
-    console.log('heyy');
-    console.log(val);
-  }
+  
   handleNext = () => {
 
           if(this.handleValidation(this.state.stepIndex)){
@@ -303,17 +297,12 @@ class HorizontalLinearStepper extends React.Component {
     let roomStatus=this.state.convertedObj;
     let start_date=start__date.toISOString();
     let end_date=end__date.toISOString();
-    // let booker_name=field["booker_name"];
-    // let booker_email=field["booker_email"];
-    // let booker_contact=field["booker_contact"];
-    // let booker_reg_no=field["booker_reg_no"];
-    // let title=field["title"];
-    // let desc=field["desc"];
-
     field["start_date"]=start_date;
     field["end_date"]=end_date;
     field["roomStatus"]=roomStatus;
     console.log(field);
+    var ref = firebase.database().ref('mit-clubs-management');
+    console.log(ref)
     console.log("Submitted form");
   }
   getStepContent(stepIndex) {
@@ -444,7 +433,7 @@ class HorizontalLinearStepper extends React.Component {
                                                 <CheckboxGroup handlerFromParent={this.handleData}
                                                  b={ab5} a={this.state.roomStatusArray}
                                                 />                            
-                                                <h5> Received by parent: <br/> {this.state.fromChild}</h5>
+                                            
                             </CardText>
                           </Card>
 
