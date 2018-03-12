@@ -325,15 +325,15 @@ class HorizontalLinearStepper extends React.Component {
         "notes":field["notes"],
         "end_time":"7:45pm",
         "start_time":"5:45pm",
-        "clubID": "randomvalue"
+        "clubID": localStorage.getItem('clubID')
    }
 
    myRef.push(newData);
-   var myRef2=firebaseDB.ref('/clubs/')
-   myRef2.push(
-   {
-      "my_events":key
-   });
+   // var myRef2=firebaseDB.ref('/clubs/')
+   // myRef2.push(
+   // {
+   //    "my_events":key
+   // });
 
 
 
