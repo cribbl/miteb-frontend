@@ -18,7 +18,7 @@ class CheckboxGroup extends React.Component {
       props.getCheckedBoxes(this.getCheckedBox.bind(this));
     }
     
-
+    
     this.updateCheck=this.updateCheck.bind(this);
        this.state={
         disable:false,
@@ -44,11 +44,19 @@ class CheckboxGroup extends React.Component {
       this.props.sendData(this.state.roomCode);
     }
     updateCheck(b,s) {
+    
       let x=(b)+(s);
       let arr = this.state.roomCode
       arr[x] = !arr[x]
       this.setState({roomCode:arr})
-      console.log(arr);
+ 
+      var obj=arr;
+      var result=Object.values(arr);
+      // var result=Object.keys(obj).map(function(key){
+      //   return [Number(key),obj[key]];
+      // })
+      const arr2=result;
+      this.props.handlerFromParent(arr2);
     };
 
 
@@ -232,7 +240,7 @@ class CheckboxGroup extends React.Component {
 CheckboxGroup.propTypes={
         b:React.PropTypes.string,
         a: React.PropTypes.object,
-        sendData: React.PropTypes.object
+        handlerFromParent: React.PropTypes.function
        }
        
 
