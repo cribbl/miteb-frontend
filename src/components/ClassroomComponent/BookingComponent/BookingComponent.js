@@ -181,6 +181,8 @@ class HorizontalLinearStepper extends React.Component {
  
   handleRoomButton()
   {   
+     console.log(localStorage.getItem('clubID'));
+
       let scope = this;
       console.log('hi',this.state.start_date);
       console.log('hey',this.state.end_date);
@@ -322,7 +324,7 @@ class HorizontalLinearStepper extends React.Component {
         "notes":field["notes"],
         "end_time":"7:45pm",
         "start_time":"5:45pm",
-        "clubID": "randomvalue"
+        "clubID": localStorage.getItem('clubID')
 
       });
       console.log(field);
