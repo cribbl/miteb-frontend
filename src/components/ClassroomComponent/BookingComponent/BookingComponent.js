@@ -304,9 +304,6 @@ class HorizontalLinearStepper extends React.Component {
             .reduce( (res, key) => (res[key] = obj[key], res), {} );
       var filtered = Object.filter(roomStatus, checked => checked>0);
     
-  var myRef = firebaseDB.ref('/events/').push();
-  var key = myRef.key
-
 
   var newData={
       "start_date":field["start_date"],
@@ -327,8 +324,10 @@ class HorizontalLinearStepper extends React.Component {
         "start_time":"5:45pm",
         "clubID": localStorage.getItem('clubID')
    }
+  var myRef = firebaseDB.ref('/events/').push(newData);
+  var key = myRef.key
 
-   myRef.push(newData);
+   // myRef.push(newData);
    // var myRef2=firebaseDB.ref('/clubs/')
    // myRef2.push(
    // {
