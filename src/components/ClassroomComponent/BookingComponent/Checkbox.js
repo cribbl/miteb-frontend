@@ -40,21 +40,17 @@ class CheckboxGroup extends React.Component {
         roomStatus: this.props.a
        }
       }
-     getCheckedBox(){
-      this.props.sendData(this.state.roomCode);
-    }
+    
     updateCheck(b,s) {
     
       let x=(b)+(s);
       let arr = this.state.roomCode
       arr[x] = !arr[x]
       this.setState({roomCode:arr})
- 
-      var obj=arr;
+      console.log('inside updatecheck',arr);
+      
       var result=Object.values(arr);
-      // var result=Object.keys(obj).map(function(key){
-      //   return [Number(key),obj[key]];
-      // })
+      console.log('result inside updatecheck',Object.values(arr));
       const arr2=result;
       this.props.handlerFromParent(arr2);
     };
