@@ -1,5 +1,6 @@
 import {firebaseDB} from '../firebaseConfig'
 import moment from 'moment'
+import {store} from '../store'
 
 export const getMyEvents = (clubId, callback) => {
 	if(!clubId) {
@@ -24,13 +25,12 @@ export const getMyEvents = (clubId, callback) => {
 	})
 }
 
-var bhawesh;
-
 function fetch(dateArr) {
 	return Promise.all(dateArr.map(date =>
 	        new Promise((resolve, reject) =>
-	            firebaseDB.ref('rooms/'+date).once('value', snapshot =>
-	                resolve ([date, snapshot.val()])
+	            firebaseDB.ref('rooms/'+date).on('value', function(snapshot){
+                        resolve ([date, snapshot.val()])
+                  }
 	            )
 	        )
 	    )).then(results =>
@@ -110,4 +110,26 @@ export const fetchRooms = (start_date, end_date, callback) => {
 	} while(moment(date).format('DD-MM-YYYY') != moment(end_date).add(1, 'days').format('DD-MM-YYYY'))
 
 	return (fetch(dateArr).then(res => prm(res)))
+}
+
+export const updateDates = (start_date, end_date, rooms) => {
+      var date = start_date
+      var dateArr = [];
+
+      do {
+            var datex = moment(date).format('DD-MM-YYYY');
+            date = moment(date).add(1, 'days');
+            dateArr.push(datex)
+      } while(moment(date).format('DD-MM-YYYY') != moment(end_date).add(1, 'days').format('DD-MM-YYYY'))
+
+      updateDatesDB(dateArr, rooms)
+}
+
+function updateDatesDB(dateArr, rooms) {
+      debugger
+      for(let date of dateArr) {
+            for(let room in rooms) {
+                  firebaseDB.ref('/rooms/').child(date+'/'+room).set(false);
+            }
+      }
 }
