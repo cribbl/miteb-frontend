@@ -19,7 +19,7 @@ import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 
-class MyEventsComponent extends Component {
+class SO_EventsComponent extends Component {
   constructor(props) {
     super(props)
     
@@ -74,20 +74,6 @@ class MyEventsComponent extends Component {
       debugger
       hashHistory.push('/dashboard')
       return
-    }
-    else {
-      if(this.props.user.isFA) {
-        hashHistory.replace('/dashboard/faEvents')
-        return
-      }
-      if(this.props.user.isAD) {
-        hashHistory.replace('/dashboard/adEvents')
-        return
-      }
-      if(this.props.user.isSO) {
-        hashHistory.replace('/dashboard/soEvents')
-        return
-      }
     }
     this.setState({fetching: true})
     
@@ -183,4 +169,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(MyEventsComponent)
+export default connect(mapStateToProps)(SO_EventsComponent)

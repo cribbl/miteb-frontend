@@ -21,6 +21,7 @@ function login(email, password) {
             }
             else {
                 getUserDetails(result.uid, (user) => {
+                    localStorage.setItem('clubID', user.uid)
                     dispatch(success(user));
                     debugger
                     hashHistory.push('/dashboard')
@@ -54,6 +55,7 @@ function errorNuller() {
 function getUser() {
     var arr =[];
     var obj = {};
+    var clubID = '';
     return dispatch => {
         fetchUser(user => {
             dispatch(sessionCheck(false))
@@ -61,8 +63,12 @@ function getUser() {
                 dispatch(successUser(user))
                 // user is not logged in
                 console.log("User's session exists. Redirecting to /dashboard")
+                clubID = user.uid;
+                if(user.isFA)
+                    clubID = user.clubID;
+                localStorage.setItem('clubID', clubID)
                 hashHistory.push('/dashboard')
-                getMyEvents(user.uid, (key, val) => {
+                getMyEvents(clubID, (key, val) => {
                     if(val == null) {
                         dispatch(success('NO_EVENTS'))
                         return
