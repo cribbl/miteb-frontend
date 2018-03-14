@@ -28,7 +28,7 @@ import axios from 'axios'
                             onBlur={this.handleChange.bind(this,"booker_name")}
                             value={this.state.fields["booker_name"]}
                             errorText={this.state.errors["booker_name"]} 
-                            errorStyle={{position: 'absolute', bottom: '-8'}}
+                            errorStyle={{position: 'absolute', bottom: -8}}
                             required
 
                             />
@@ -40,7 +40,7 @@ import axios from 'axios'
                            onBlur={this.handleChange.bind(this,"booker_email")}
                            value={this.state.fields["booker_email"]}
                            errorText={this.state.errors["booker_email"]} 
-                           errorStyle={{position: 'absolute', bottom: '-8'}}
+                           errorStyle={{position: 'absolute', bottom: -8}}
                            required 
                            />
 
@@ -51,7 +51,7 @@ import axios from 'axios'
                            onChange={this.handleChange.bind(this, "booker_contact")}
                            value={this.state.fields["booker_contact"]}
                             errorText={this.state.errors["booker_contact"]} 
-                            errorStyle={{position: 'absolute', bottom: '-8'}}
+                            errorStyle={{position: 'absolute', bottom: -8}}
                             required
                             />
 
@@ -62,7 +62,7 @@ import axios from 'axios'
                            onChange={this.handleChange.bind(this, "booker_reg_no")}
                            value={this.state.fields["booker_reg_no"]}
                            errorText={this.state.errors["booker_reg_no"]} 
-                           errorStyle={{position: 'absolute', bottom: '-8'}}
+                           errorStyle={{position: 'absolute', bottom: -8}}
                            required
                            />
                 </div>);

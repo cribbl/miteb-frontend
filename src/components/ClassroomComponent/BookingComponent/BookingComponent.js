@@ -20,7 +20,7 @@ import BookerDetails from './BookerDetails'
 import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
 import firebase from 'firebase'
-import {fetchRooms} from '../../../Services/firebaseDBService'
+import {fetchRooms, updateDates} from '../../../Services/firebaseDBService'
 
 var moment = require("moment")
 var ab5="5"
@@ -28,7 +28,7 @@ var nlh="3"
 
 const styles = {
   customWidth: {
-    width: 200,
+    width: 210,
   },
    block: {
     maxWidth: 250,
@@ -327,10 +327,9 @@ class HorizontalLinearStepper extends React.Component {
   var myRef = firebaseDB.ref('/events/').push(newData);
   var key = myRef.key
   firebaseDB.ref('/clubs/'+localStorage.getItem('clubID')+'/my_events/').push(key);
-   
+  updateDates(field["start_date"], field["end_date"], filtered)
 
-
-
+  
       console.log(field);
     
       console.log("Submitted form");
@@ -348,7 +347,7 @@ class HorizontalLinearStepper extends React.Component {
                             onBlur={this.handleChange.bind(this,"booker_name")}
                             value={this.state.fields["booker_name"]}
                             errorText={this.state.errors["booker_name"]} 
-                            errorStyle={{position: 'absolute', bottom: '-8'}}
+                            errorStyle={{position: 'absolute', bottom: -8}}
                             required
 
                             />
@@ -360,7 +359,7 @@ class HorizontalLinearStepper extends React.Component {
                            onBlur={this.handleChange.bind(this,"booker_email")}
                            value={this.state.fields["booker_email"]}
                            errorText={this.state.errors["booker_email"]} 
-                           errorStyle={{position: 'absolute', bottom: '-8'}}
+                           errorStyle={{position: 'absolute', bottom: -8}}
                            required 
                            />
 
@@ -371,7 +370,7 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleChange.bind(this, "booker_contact")}
                            value={this.state.fields["booker_contact"]}
                             errorText={this.state.errors["booker_contact"]} 
-                            errorStyle={{position: 'absolute', bottom: '-8'}}
+                            errorStyle={{position: 'absolute', bottom: -8}}
                             required
                             />
 
@@ -382,7 +381,7 @@ class HorizontalLinearStepper extends React.Component {
                            onChange={this.handleChange.bind(this, "booker_reg_no")}
                            value={this.state.fields["booker_reg_no"]}
                            errorText={this.state.errors["booker_reg_no"]} 
-                           errorStyle={{position: 'absolute', bottom: '-8'}}
+                           errorStyle={{position: 'absolute', bottom: -8}}
                            required
                            />
                 </div>);
@@ -394,7 +393,7 @@ class HorizontalLinearStepper extends React.Component {
                          type="text" 
                          value={this.state.fields["title"]}
                          errorText={this.state.errors["title"]}  
-                         errorStyle={{position: 'absolute', bottom: '-8'}}
+                         errorStyle={{position: 'absolute', bottom: -8}}
                          required
                         />
                        <TextField 
@@ -404,7 +403,7 @@ class HorizontalLinearStepper extends React.Component {
                          onChange={this.handleChange.bind(this, "desc")} 
                          value={this.state.fields["desc"]}
                          errorText={this.state.errors["desc"]} 
-                         errorStyle={{position: 'absolute', bottom: '-8'}}
+                         errorStyle={{position: 'absolute', bottom: -8}}
                          required
                        />
                          <TextField 
@@ -414,7 +413,7 @@ class HorizontalLinearStepper extends React.Component {
                          onChange={this.handleChange.bind(this, "notes")} 
                          value={this.state.fields["notes"]}
                          errorText={this.state.errors["notes"]} 
-                         errorStyle={{position: 'absolute', bottom: '-8'}}
+                         errorStyle={{position: 'absolute', bottom: -8}}
                          required
                        />
                        <br/><br/>
