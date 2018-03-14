@@ -4,6 +4,7 @@ import AppBarComponent from './components/AppBarComponent/AppBarComponent';
 import AppBarMobile from './components/AppBarComponent/AppBarMobile'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent';
 import CircularProgress from 'material-ui/CircularProgress'
+import ReactLoading from 'react-loading';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 import {store} from './store'
@@ -26,7 +27,7 @@ class App extends Component {
       <MuiThemeProvider>
     	<div>
     	{this.props.isMobile ? <AppBarMobile /> : <AppBarComponent />}
-      {this.props.sessionCheck ? <CircularProgress style={{position: 'absolute', padding: '27px 5px', paddingLeft: 500}} size={300}/> : (
+      {this.props.sessionCheck ? <ReactLoading type={'cylon'} color={'#FF0000'} height='667' width='375' /> : (
         <div className="propChildrenContainer">
     	   {this.props.children}
         </div>
