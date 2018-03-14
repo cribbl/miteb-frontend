@@ -3,6 +3,7 @@ import { hashHistory, Router, Route} from 'react-router';
 import AppBarComponent from './components/AppBarComponent/AppBarComponent';
 import AppBarMobile from './components/AppBarComponent/AppBarMobile'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent';
+import ReactLoading from 'react-loading';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 import {store} from './store'
@@ -25,9 +26,11 @@ class App extends Component {
       <MuiThemeProvider>
     	<div>
     	{this.props.isMobile ? <AppBarMobile /> : <AppBarComponent />}
+      {this.props.sessionCheck ? <ReactLoading type={'cylon'} color={'#FF0000'} height='667' width='375' /> : (
         <div className="propChildrenContainer">
     	   {this.props.children}
         </div>
+        )}
       </div>
       </MuiThemeProvider>
     );
