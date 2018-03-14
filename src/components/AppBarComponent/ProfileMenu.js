@@ -40,7 +40,7 @@ class ProfileMenu extends Component {
       return (
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div>
-        <Avatar src={require('../../assets/photo.jpg')} size={70} />
+        <Avatar src={this.props.user.profilePicURL} size={70} />
         </div>
         <div style={{textAlign: 'center', color: 'black', width: '100%'}}>
         <p style={{height: 10}}>{this.props.user.email}</p>

@@ -80,14 +80,14 @@ class DrawerComponent extends Component {
                 style={Object.assign(this.state.menuIndex == 0 ? active:'', menuItemStyle)}
                 key="/dashboard"
                 primaryText="Dashboard"
-                leftIcon={<IconDashboard color={'#FFFFFF'} />}
-                hidden={true} />
+                leftIcon={<IconDashboard color={'#FFFFFF'} />} />
 
             <MenuItem
                 style={Object.assign(this.state.menuIndex == 1 ? active:'', menuItemStyle)}
                 key="/dashboard/book_room"
                 primaryText="Room Booking"
-                leftIcon={<IconTest color={'#FFFFFF'} />} />
+                leftIcon={<IconTest color={'#FFFFFF'} />}
+                hidden={this.props.user && !this.props.user.isClub} />
 
             <MenuItem
                 style={Object.assign(this.state.menuIndex == 2 ? active:'', menuItemStyle)}
@@ -103,10 +103,12 @@ class DrawerComponent extends Component {
 }
 
 function mapStateToProps(state) {
+  const {user} = state.authentication
   const {openSideNav, isMobile} = state.toggler
   return {
     openSideNav,
-    isMobile
+    isMobile,
+    user
   }
 }
 

@@ -19,9 +19,10 @@ import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 
-class MyEventsComponent extends Component {
+class FA_MyEventsComponent extends Component {
   constructor(props) {
     super(props)
+    this.approve = this.approve.bind(this)
     
     this.state = {
       fixedHeader: true,
@@ -36,6 +37,10 @@ class MyEventsComponent extends Component {
       approvedArr: {}
     }
 }
+  
+  approve(event) {
+    firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true)
+  }
 
   filterAndStore(arr) {
     for(let [key, value] of Object.entries(arr)) {
@@ -75,35 +80,24 @@ class MyEventsComponent extends Component {
       hashHistory.push('/dashboard')
       return
     }
-    else {
-      if(this.props.user.isFA) {
-        hashHistory.replace('/dashboard/faEvents')
-        return
-      }
-      if(this.props.user.isAD) {
-        hashHistory.replace('/dashboard/adEvents')
-        return
-      }
-      if(this.props.user.isSO) {
-        hashHistory.replace('/dashboard/soEvents')
-        return
-      }
-    }
     this.setState({fetching: true})
     
-    firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
+    firebaseDB.ref('/clubs/' + this.props.user.clubId).on('value',
     function(snapshot) {
       this.setState({fetching: false})
       let events = snapshot.val().my_events
       for(event in events) {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
-          console.log(snapshot.val())
-          const {myArrx} = this.state
-          myArrx[snapshot.key] = snapshot.val()
-          this.setState({myArrx})
-          this.filterAndStore(myArrx)
-          console.log(this.state.myArrx)
+          if(!snapshot.val().FA_appr) {
+            console.log(snapshot.val())
+            const {myArrx} = this.state
+            myArrx[snapshot.key] = snapshot.val()
+            myArrx[snapshot.key].key = snapshot.key
+            this.setState({myArrx})
+            this.filterAndStore(myArrx)
+            console.log(this.state.myArrx)
+          }
         }, this)
       }
     }, this)
@@ -113,10 +107,6 @@ class MyEventsComponent extends Component {
 
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
-      
-      <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
-      </div>
       
       <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
         <Table
@@ -133,11 +123,9 @@ class MyEventsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>INDEX</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>FA</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>AD</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>SO</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>END DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -154,10 +142,8 @@ class MyEventsComponent extends Component {
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn>{event.FA_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{event.AD_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{event.SO_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true}/>}</TableRowColumn>
+                    <TableRowColumn>{event.end_date}</TableRowColumn>
+                    <TableRowColumn>{<div><RaisedButton label="Reject" primary={true}/><RaisedButton label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
                   </TableRow>
             ))
           }
@@ -183,4 +169,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(MyEventsComponent)
+export default connect(mapStateToProps)(FA_MyEventsComponent)

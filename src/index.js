@@ -9,6 +9,9 @@ import DrawerComponent from './components/DrawerComponent/DrawerComponent'
 
 import ClassroomComponent from './components/ClassroomComponent/ClassroomComponent'
 import MyEventsComponent from './components/ClassroomComponent/MyEventsComponent/MyEventsComponent'
+import FA_MyEventsComponent from './components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent'
+import AD_EventsComponent from './components/ClassroomComponent/MyEventsComponent/AD_EventsComponent'
+import SO_EventsComponent from './components/ClassroomComponent/MyEventsComponent/SO_EventsComponent'
 import DashboardComponent from './components/ClassroomComponent/DashboardComponent/DashboardComponent'
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
 
@@ -33,6 +36,9 @@ ReactDOM.render(
         <Route path="dashboard" component={ClassroomComponent}>
             <IndexRoute component={DashboardComponent}></IndexRoute>
             <Route path="myEvents" component={MyEventsComponent}></Route>
+            <Route path="faEvents" component={FA_MyEventsComponent}></Route>
+            <Route path="adEvents" component={AD_EventsComponent}></Route>
+            <Route path="soEvents" component={SO_EventsComponent}></Route>
             <Route path="book_room" component={BookingComponent}></Route>
         </Route>
     	</Route>

@@ -19,7 +19,7 @@ import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 
-class MyEventsComponent extends Component {
+class AD_EventsComponent extends Component {
   constructor(props) {
     super(props)
     
@@ -75,38 +75,20 @@ class MyEventsComponent extends Component {
       hashHistory.push('/dashboard')
       return
     }
-    else {
-      if(this.props.user.isFA) {
-        hashHistory.replace('/dashboard/faEvents')
-        return
-      }
-      if(this.props.user.isAD) {
-        hashHistory.replace('/dashboard/adEvents')
-        return
-      }
-      if(this.props.user.isSO) {
-        hashHistory.replace('/dashboard/soEvents')
-        return
-      }
-    }
     this.setState({fetching: true})
     
-    firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
-    function(snapshot) {
-      this.setState({fetching: false})
-      let events = snapshot.val().my_events
-      for(event in events) {
-        firebaseDB.ref('/events/' + events[event]).on('value',
+        firebaseDB.ref('/events/').on('value',
         function(snapshot) {
-          console.log(snapshot.val())
-          const {myArrx} = this.state
-          myArrx[snapshot.key] = snapshot.val()
-          this.setState({myArrx})
-          this.filterAndStore(myArrx)
-          console.log(this.state.myArrx)
+        this.setState({fetching: false})
+          if(snapshot.val().AD_appr) {
+            console.log(snapshot.val())
+            const {myArrx} = this.state
+            myArrx[snapshot.key] = snapshot.val()
+            this.setState({myArrx})
+            this.filterAndStore(myArrx)
+            console.log(this.state.myArrx)
+          }
         }, this)
-      }
-    }, this)
   }
 
   render() {
@@ -183,4 +165,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(MyEventsComponent)
+export default connect(mapStateToProps)(AD_EventsComponent)
