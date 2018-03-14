@@ -28,14 +28,23 @@ class Reg extends Component {
       loading: false,
       signup: false,
     }
-  firebaseAuth.onAuthStateChanged(function (user) {
-    if(user) {
-      hashHistory.push('/dashboard')
-    }
+  // firebaseAuth.onAuthStateChanged(function (user) {
+  //   debugger
+  //   if(user) {
+  //   }
+  //   else {
+  //     debugger
+  //     hashHistory.push('/auth')
+  //   }
+  // })
+  }
+
+  componentWillMount() {
+    if(this.props.user)
+      console.log('user prop exists')
     else {
-      hashHistory.push('/auth')
+      console.log('user prop DNE')
     }
-  })
   }
 
   

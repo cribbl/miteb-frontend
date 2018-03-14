@@ -2,6 +2,19 @@ import {firebaseDB} from '../firebaseConfig'
 import moment from 'moment'
 import {store} from '../store'
 
+export const getUserDetails = (clubId, callback) => {
+      if(!clubId) {
+            console.log('return since no clubId')
+            return
+      }
+      firebaseDB.ref('/clubs/' + clubId).on('value',
+            function(snapshot) {
+                  let user = snapshot.val();
+                  user['uid'] = snapshot.key;
+                  callback(user);
+            })
+}
+
 export const getMyEvents = (clubId, callback) => {
 	if(!clubId) {
 		console.log('return since no clubId')

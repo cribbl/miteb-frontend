@@ -1,5 +1,5 @@
 import { authenticateUser, signOut, fetchUser } from '../Services/firebaseAuthService'
-import { getMyEvents } from '../Services/firebaseDBService'
+import { getMyEvents, getUserDetails } from '../Services/firebaseDBService'
 import {hashHistory} from 'react-router'
 
 import {store} from '../store'
@@ -20,10 +20,14 @@ function login(email, password) {
                 dispatch(failure(error));
             }
             else {
-                dispatch(success(result));
-                hashHistory.push('/dashboard')
-                console.log('redirect to dashboard');
-                }
+                getUserDetails(result.uid, (user) => {
+                    dispatch(success(user));
+                    debugger
+                    hashHistory.push('/dashboard')
+                    console.log('USER');
+                    console.log(user);
+                })
+            }
         })
     };
 
@@ -52,8 +56,12 @@ function getUser() {
     var obj = {};
     return dispatch => {
         fetchUser(user => {
+            dispatch(sessionCheck(false))
             if(user) {
                 dispatch(successUser(user))
+                // user is not logged in
+                console.log("User's session exists. Redirecting to /dashboard")
+                hashHistory.push('/dashboard')
                 getMyEvents(user.uid, (key, val) => {
                     if(val == null) {
                         dispatch(success('NO_EVENTS'))
@@ -64,8 +72,14 @@ function getUser() {
                     dispatch(success(obj))
                 })
             }
+            else {
+                // user is not logged in
+                console.log('User is not logged in. Redirecting to /auth')
+                hashHistory.push('/auth')
+            }
         })
     }
     function successUser(result) { return { type: "SUCCESS_LOGIN", result } }
     function success(result) { return { type: "SUCCESS_FETCH", result } }
+    function sessionCheck(result) { return { type: "SESSION_CHECK", result } }
 }

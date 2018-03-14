@@ -80,7 +80,8 @@ class DrawerComponent extends Component {
                 style={Object.assign(this.state.menuIndex == 0 ? active:'', menuItemStyle)}
                 key="/dashboard"
                 primaryText="Dashboard"
-                leftIcon={<IconDashboard color={'#FFFFFF'} />} />
+                leftIcon={<IconDashboard color={'#FFFFFF'} />}
+                hidden={true} />
 
             <MenuItem
                 style={Object.assign(this.state.menuIndex == 1 ? active:'', menuItemStyle)}

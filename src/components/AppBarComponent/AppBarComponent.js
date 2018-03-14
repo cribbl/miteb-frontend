@@ -96,7 +96,7 @@ class AppBarComponent extends Component {
         ) : (
         <AppBar
           style={{position: "fixed"}}
-          title={<MyTitle content="Edutech" hidden={this.state.showMenuIcon}/>}
+          title={<MyTitle content={this.props.user.name} hidden={this.state.showMenuIcon}/>}
           zDepth={1}
           iconElementLeft={<IconButton>{this.props.openSideNav ? <CloseIcon /> : <MenuIcon />}</IconButton>}
           showMenuIconButton={this.state.showMenuIcon}

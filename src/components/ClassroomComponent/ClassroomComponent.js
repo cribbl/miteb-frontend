@@ -23,9 +23,11 @@ class ClassroomComponent extends Component {
   componentDidMount() {
     const {dispatch} = this.props
     dispatch(toggleActions.closeProfileMenu());
-    if(!this.props.user) {
-      console.log('user dne still tried to access classroom')
-      hashHistory.push('/auth')
+    if(this.props.user) {
+      console.log('User prop exists')
+    }
+    else {
+      console.log('User prop DNE')
     }
   }
 

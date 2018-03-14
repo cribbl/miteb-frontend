@@ -14,16 +14,17 @@ firebase.initializeApp(config);
 export const firebaseDB = firebase.database();
 export const firebaseAuth = firebase.auth();
 
-firebaseAuth.onAuthStateChanged(function(user) {
-    if (user) {
-      return function(dispatch) {
-        dispatch(login(user))
-        console.log('user exists')
-      } 
-      function login(user) { return {type: "SUCCESS_LOGIN", user}}
-    } 
-    else {
-      console.log('user dne')
-      return
-    }
-  });
+// firebaseAuth.onAuthStateChanged(function(user) {
+//     debugger;
+//     if (user) {
+//       return function(dispatch) {
+//         dispatch(login(user))
+//         console.log('user exists')
+//       } 
+//       function login(user) { return {type: "SUCCESS_LOGIN", user}}
+//     } 
+//     else {
+//       console.log('user dne')
+//       return
+//     }
+//   });
