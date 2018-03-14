@@ -306,8 +306,8 @@ class HorizontalLinearStepper extends React.Component {
     
 
   var newData={
-      "start_date":field["start_date"],
-        "end_date":field["end_date"],
+        "start_date":moment(field["start_date"]).format('DD-MM-YYYY'),
+        "end_date":moment(field["end_date"]).format('DD-MM-YYYY'),
         "roomStatus":filtered,
         "AD_appr":false,
         "FA_appr":false,

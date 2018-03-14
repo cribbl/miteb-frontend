@@ -71,6 +71,7 @@ class MyEventsComponent extends Component {
 
   componentDidMount() {
     if(!this.props.user){
+      debugger
       hashHistory.push('/dashboard')
       return
     }

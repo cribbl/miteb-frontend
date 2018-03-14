@@ -1,4 +1,6 @@
 import {firebaseAuth} from '../firebaseConfig'
+import {getUserDetails} from './firebaseDBService'
+
 export const authenticateUser = (email, password, callback) => {
     
     firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -23,13 +25,15 @@ export const signOut = () => {
 export const fetchUser = (callback) => {
   firebaseAuth.onAuthStateChanged(function(user) {
     if (user) {
-      callback(user)
-      localStorage.setItem('clubID', user.uid)
-      console.log('user exists')
+        getUserDetails(user.uid, (userx) => {
+        userx['uid'] = user.uid
+        // console.log('user exists')
+        callback(userx)
+      })
     } 
     else {
       callback(null)
-      console.log('user dne')
+      // console.log('user dne')
     }
   });
 }

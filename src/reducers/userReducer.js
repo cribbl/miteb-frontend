@@ -1,9 +1,13 @@
 import {getUser} from '../Services/firebaseAuthService'
 
-const initialState = {}
+const initialState = {sessionCheck: true}
 
 export function authentication(state = initialState, action) {
   switch (action.type) {
+    case "SESSION_CHECK":
+      return {
+        sessionCheck: action.result
+      }
     case "REQUEST_LOGIN":
       return {
         logging: true,
