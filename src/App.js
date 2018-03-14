@@ -3,7 +3,6 @@ import { hashHistory, Router, Route} from 'react-router';
 import AppBarComponent from './components/AppBarComponent/AppBarComponent';
 import AppBarMobile from './components/AppBarComponent/AppBarMobile'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent';
-import CircularProgress from 'material-ui/CircularProgress'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 import {store} from './store'
@@ -26,11 +25,9 @@ class App extends Component {
       <MuiThemeProvider>
     	<div>
     	{this.props.isMobile ? <AppBarMobile /> : <AppBarComponent />}
-      {this.props.sessionCheck ? <CircularProgress style={{position: 'absolute', padding: '27px 5px', paddingLeft: 500}} size={300}/> : (
         <div className="propChildrenContainer">
     	   {this.props.children}
         </div>
-      )}
       </div>
       </MuiThemeProvider>
     );
