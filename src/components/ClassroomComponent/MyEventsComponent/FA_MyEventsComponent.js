@@ -18,12 +18,19 @@ import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
+import Snackbar from 'material-ui/Snackbar';
+import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
+
+import {approveEvent, rejectEvent} from '../../../Services/firebaseDBService'
 
 class FA_MyEventsComponent extends Component {
   constructor(props) {
     super(props)
     this.approve = this.approve.bind(this)
-    
+    this.showDialog = this.showDialog.bind(this)
+    this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.nextEvent = this.nextEvent.bind(this)
+
     this.state = {
       fixedHeader: true,
       fixedFooter: false,
@@ -34,16 +41,44 @@ class FA_MyEventsComponent extends Component {
       myArrx: {},
       allArr: {},
       pendingArr: {},
-      approvedArr: {}
+      approvedArr: {},
+      SnackBarmessage: '',
+      openSnackBar: false,
+      autoHideDuration: 3000,
+      dialogOpen: false,
+      currentEvent: {}
     }
 }
+
+  showDialog(event) {
+    this.setState({dialogOpen: true})
+    this.setState({currentEvent: event})
+  }
   
   approve(event) {
-    firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true);
-    const {myArrx} = this.state
+    console.log(event)
+    this.handleDialogClose()
+    let scope = this;
+    approveEvent(event)
+    const {myArrx} = scope.state
     delete myArrx[event.key]
-    this.setState({myArrx})
+    scope.setState({myArrx})
+    scope.setState({SnackBarmessage: 'Event successfully approved', openSnackBar: true})
+  }
 
+  handleDialogClose() {
+    this.setState({dialogOpen: false})
+  }
+
+  nextEvent() {
+    let keys = Object.keys(this.state.myArrx)
+    let pos = keys.indexOf(this.state.currentEvent.key) + 1
+    if(pos == Object.keys(this.state.myArrx).length){
+      pos = 0;
+    }
+    let nextKey = keys[pos]
+    let nextEvent = this.state.myArrx[nextKey]
+    this.setState({currentEvent: nextEvent})
   }
 
   filterAndStore(arr) {
@@ -101,11 +136,23 @@ class FA_MyEventsComponent extends Component {
     }, this)
   }
 
+  myClick() {
+    console.log('clicked');
+  }
+
   render() {
 
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
+      <Snackbar
+          open={this.state.openSnackBar}
+          message={this.state.SnackBarmessage}
+          autoHideDuration={this.state.autoHideDuration}
+        />
+
+      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveEvent={this.approve}/>
+
       <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
         <Table
           style={{backgroundColor: ''}}
@@ -123,7 +170,7 @@ class FA_MyEventsComponent extends Component {
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>END DATE</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>END DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -136,15 +183,15 @@ class FA_MyEventsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
-          { Object.values(this.state.myArrx).map(function(event, index) {
+          { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
             return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn>{event.end_date}</TableRowColumn>
-                    <TableRowColumn>{<div><RaisedButton label="Reject" primary={true}/><RaisedButton label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.end_date}</TableRowColumn>
+                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
                   </TableRow>
-            )}, this)
+            )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
           }
           
           </TableBody>
