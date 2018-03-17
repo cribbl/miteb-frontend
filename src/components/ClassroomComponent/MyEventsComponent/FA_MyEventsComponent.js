@@ -18,19 +18,17 @@ import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
-import Snackbar from 'material-ui/Snackbar';
 import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
 import FlagDialog from '../../Dialogs/FlagDialog'
-
-import {approveEvent, rejectEvent, flagEvent} from '../../../Services/firebaseDBService'
+import Snackbar from 'material-ui/Snackbar';
+import {approveEvent, flagRejectEvent} from '../../../Services/firebaseDBService'
 
 class FA_MyEventsComponent extends Component {
   constructor(props) {
     super(props)
     this.approve = this.approve.bind(this)
-    this.reject = this.reject.bind(this)
-    this.flag = this.flag.bind(this)
-    this.flagConfirm = this.flagConfirm.bind(this)
+    this.flagReject = this.flagReject.bind(this)
+    this.flagRejectConfirm = this.flagRejectConfirm.bind(this)
     this.showDialog = this.showDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
@@ -72,24 +70,15 @@ class FA_MyEventsComponent extends Component {
     this.nextEvent()
   }
 
-  reject(event) {
-    let scope = this;
-    rejectEvent(event, 'FA')
-    const {myArrx} = scope.state
-    delete myArrx[event.key]
-    scope.setState({myArrx})
-    scope.setState({SnackBarmessage: 'Event successfully rejected', openSnackBar: true})
-    this.nextEvent()
-  }
-
-  flagConfirm(event) {
+  flagRejectConfirm(event, mode) {
     this.setState({FlagDialogOpen: true})
     this.setState({currentEvent: event})
+    this.setState({flagRejectMode: mode})
   }
 
-  flag(event, message) {
+  flagReject(event, message, mode) {
     let scope = this;
-    flagEvent(event, message, 'FA')
+    flagRejectEvent(event, message, mode, 'FA')
     const {myArrx} = scope.state
     delete myArrx[event.key]
     scope.setState({myArrx})
@@ -190,9 +179,9 @@ class FA_MyEventsComponent extends Component {
           onRequestClose={this.handleSnackBarClose}
         />
 
-      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject} flagHandler={this.flagConfirm}/>
+      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject} flagRejectHandler={this.flagRejectConfirm}/>
 
-      <FlagDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} flagHandler={this.flag} />
+      <FlagDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} mode={this.state.flagRejectMode} flagRejectHandler={this.flagReject} />
 
       <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
         <Table

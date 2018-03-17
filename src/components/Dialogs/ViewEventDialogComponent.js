@@ -42,12 +42,12 @@ class Dialogxx extends Component {
       <FlatButton
         label="Reject"
         primary={false}
-        onClick={() => this.props.rejectHandler(this.props.currentEvent)}
+        onClick={() => this.props.flagRejectHandler(this.props.currentEvent, 'reject')}
       />,
       <FlatButton
         label="Flag"
         primary={true}
-        onClick={() => this.props.flagHandler(this.props.currentEvent)}
+        onClick={() => this.props.flagRejectHandler(this.props.currentEvent, 'flag')}
       />,
       <FlatButton
         label="Approve"
@@ -79,7 +79,6 @@ class Dialogxx extends Component {
         <Dialog
           title={this.props.currentEvent.title}
           actions={this.props.user && this.props.user.isClub ? Club_actions : FA_actions}
-          modal={false}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
@@ -106,6 +105,18 @@ class Dialogxx extends Component {
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>End Date</p>
             <p style={styles.value}>{this.props.currentEvent.end_date}</p>
+          </div>
+          <div hidden={!((this.props.currentEvent.FA_appr == 'flagged') || (this.props.currentEvent.FA_appr == 'rejected'))} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>{this.props.currentEvent.FA_appr} by FA</p>
+            <p style={styles.value}>{this.props.currentEvent.FA_msg}</p>
+          </div>
+          <div hidden={!((this.props.currentEvent.AD_appr == 'flagged') || (this.props.currentEvent.AD_appr == 'rejected'))} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>{this.props.currentEvent.AD_appr} by AD</p>
+            <p style={styles.value}>{this.props.currentEvent.AD_msg}</p>
+          </div>
+          <div hidden={!((this.props.currentEvent.SO_appr == 'flagged') || (this.props.currentEvent.SO_appr == 'rejected'))} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>{this.props.currentEvent.SO_appr} by SO</p>
+            <p style={styles.value}>{this.props.currentEvent.SO_msg}</p>
           </div>
         </div>
 

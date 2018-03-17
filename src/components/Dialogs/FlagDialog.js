@@ -2,15 +2,21 @@ import React, {Component} from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField'
 import {connect} from 'react-redux'
 
 class FlagDialog extends Component {
   constructor(props){
     super(props)
+    this.changeMessage = this.changeMessage.bind(this)
     this.state = {
       open: this.props.open,
-      message: 'MESSAGE'
+      message: '',
     };
+  }
+
+  changeMessage (e) {
+    this.setState({ message: e.target.value })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,7 +34,7 @@ class FlagDialog extends Component {
       <FlatButton
         label={this.props.mode == 'flag' ? 'Flag' : 'Reject'}
         primary={true}
-        onClick={() => this.props.flagHandler(this.props.currentEvent, this.state.message)}
+        onClick={() => this.props.flagRejectHandler(this.props.currentEvent, this.state.message, this.props.mode)}
       />,
     ];
 
@@ -37,13 +43,18 @@ class FlagDialog extends Component {
         <Dialog
           title={this.props.currentEvent.title}
           actions={Flag_actions}
-          modal={false}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
           contentStyle={{width: this.props.isMobile ? '97%' : '60%', maxWidth: 'none'}}
         >
-        <p>Are you sure you wanna flag this event?</p>
+        <TextField 
+          floatingLabelText="Message" 
+          multiLine={true}
+          value={this.state.message}
+          onChange={this.changeMessage}
+          required
+        />
 
         </Dialog>
       </div>

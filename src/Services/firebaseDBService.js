@@ -167,38 +167,22 @@ export const approveEvent = (event, user) => {
       }
 }
 
-export const rejectEvent = (event, user) => {
-      switch(user) {
-            case 'FA': {
-                  firebaseDB.ref('/events/').child(event.key+'/FA_appr').set('rejected');
-                  return
-            }
-            case 'AD': {
-                  firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('rejected');
-                  return
-            }
-            case 'SO': {
-                  firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('rejected');
-                  return
-            }
-      }
-}
-
-export const flagEvent = (event, message, user) => {
+export const flagRejectEvent = (event, message, mode, user) => {
       debugger
+      let _mode = mode == 'flag' ? 'flagged' : 'rejected';
       switch(user) {
             case 'FA': {
-                  firebaseDB.ref('/events/').child(event.key+'/FA_appr').set('flagged');
+                  firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/FA_msg').set(message);
                   return
             }
             case 'AD': {
-                  firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('flagged');
+                  firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/AD_msg').set(message);
                   return
             }
             case 'SO': {
-                  firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('flagged');
+                  firebaseDB.ref('/events/').child(event.key+'/SO_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/SO_msg').set(message);
                   return
             }
