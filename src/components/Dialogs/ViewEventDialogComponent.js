@@ -42,7 +42,7 @@ class Dialogxx extends Component {
       <FlatButton
         label="Reject"
         primary={false}
-        onClick={this.props.rejectEvent}
+        onClick={() => this.props.rejectHandler(this.props.currentEvent)}
       />,
       <FlatButton
         label="Flag"
@@ -52,7 +52,7 @@ class Dialogxx extends Component {
       <FlatButton
         label="Approve"
         primary={true}
-        onClick={() => this.props.approveEvent(this.props.currentEvent)}
+        onClick={() => this.props.approveHandler(this.props.currentEvent)}
       />,
       <FlatButton
         label="Next"

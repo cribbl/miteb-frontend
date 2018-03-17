@@ -148,10 +148,16 @@ function updateDatesDB(dateArr, rooms) {
 }
 
 
-export const approveEvent = (event) => {
-      return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true);
+export const approveEvent = (event, user) => {
+      switch(user) {
+            case 'FA': return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true);
+            case 'AD': return firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(true);
+      }
 }
 
-export const rejectEvent = (event) => {
-      return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(false);
+export const rejectEvent = (event, user) => {
+      switch(user) {
+            case 'FA': return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(false);
+            case 'AD': return firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(false);
+      }
 }
