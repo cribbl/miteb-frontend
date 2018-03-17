@@ -18,10 +18,19 @@ import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
+import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
+import Snackbar from 'material-ui/Snackbar';
+import {approveEvent, rejectEvent} from '../../../Services/firebaseDBService'
 
 class SO_EventsComponent extends Component {
   constructor(props) {
     super(props)
+    this.approve = this.approve.bind(this)
+    this.reject = this.reject.bind(this)
+    this.showDialog = this.showDialog.bind(this)
+    this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
+    this.nextEvent = this.nextEvent.bind(this)
     
     this.state = {
       fixedHeader: true,
@@ -33,66 +42,84 @@ class SO_EventsComponent extends Component {
       myArrx: {},
       allArr: {},
       pendingArr: {},
-      approvedArr: {}
+      approvedArr: {},
+      SnackBarmessage: '',
+      openSnackBar: false,
+      autoHideDuration: 3000,
+      dialogOpen: false,
+      currentEvent: {}
     }
 }
 
-  filterAndStore(arr) {
-    for(let [key, value] of Object.entries(arr)) {
-      var x = key
-      if(value.FA_appr && value.AD_appr && value.SO_appr) {
-        this.state.approvedArr[key] = value
-      }
-      else if(!value.FA_appr || !value.AD_appr || !value.SO_appr) {
-        this.state.pendingArr[key] = value
-      }
-      this.state.allArr[key] = value
-    }
-
-    // console.log(this.state.approvedArr)
-    // console.log(this.state.pendingArr)
-    // console.log(this.state.allArr)
+  showDialog(event) {
+    this.setState({dialogOpen: true})
+    this.setState({currentEvent: event})
+  }
+  
+  approve(event) {
+    let scope = this;
+    approveEvent(event, 'SO')
+    const {myArrx} = scope.state
+    delete myArrx[event.key]
+    scope.setState({myArrx})
+    scope.setState({SnackBarmessage: 'Event successfully approved', openSnackBar: true})
+    this.nextEvent()
   }
 
-  componentWillReceiveProps(newProps) {
-    if(newProps.filter == 'pending'){
-      const {pendingArr} = this.state
-      this.setState({myArr: pendingArr})
-    }
-    else if(newProps.filter == 'approved') {
-      const {approvedArr} = this.state
-      this.setState({myArr: approvedArr})
-    }
-    else if(newProps.filter == 'all') {
-      const {allArr} = this.state
-      this.setState({myArr: allArr})
-    }
+  reject(event) {
+    let scope = this;
+    rejectEvent(event, 'SO')
+    const {myArrx} = scope.state
+    delete myArrx[event.key]
+    scope.setState({myArrx})
+    scope.setState({SnackBarmessage: 'Event successfully rejected', openSnackBar: true})
+    this.nextEvent()
   }
+
+  handleDialogClose() {
+    this.setState({dialogOpen: false})
+  }
+
+  handleSnackBarClose() {
+    this.setState({openSnackBar: false}) 
+  }
+
+  nextEvent() {
+    let keys = Object.keys(this.state.myArrx)
+    if(keys.length == 0){
+      this.handleDialogClose()
+      return
+    }
+    let pos = keys.indexOf(this.state.currentEvent.key) + 1
+    if(pos == Object.keys(this.state.myArrx).length){
+      pos = 0;
+    }
+    let nextKey = keys[pos]
+    let nextEvent = this.state.myArrx[nextKey]
+    this.setState({currentEvent: nextEvent})
+  }
+
 
   componentDidMount() {
     if(!this.props.user){
-      debugger
       hashHistory.push('/dashboard')
       return
     }
     this.setState({fetching: true})
-    
-    firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
-    function(snapshot) {
-      this.setState({fetching: false})
-      let events = snapshot.val().my_events
-      for(event in events) {
-        firebaseDB.ref('/events/' + events[event]).on('value',
+        var scope = this;
+        firebaseDB.ref().child('events').on('value',
         function(snapshot) {
-          console.log(snapshot.val())
-          const {myArrx} = this.state
-          myArrx[snapshot.key] = snapshot.val()
-          this.setState({myArrx})
-          this.filterAndStore(myArrx)
-          console.log(this.state.myArrx)
+          snapshot.forEach(function(child) {
+            scope.setState({fetching: false})
+              if(!child.val().SO_appr) {
+                const {myArrx} = scope.state
+                myArrx[child.key] = child.val()
+                myArrx[child.key].key = child.key
+                scope.setState({myArrx})
+                console.log(scope.state.myArrx)
+              }
+          })
         }, this)
-      }
-    }, this)
   }
 
   render() {
@@ -100,9 +127,18 @@ class SO_EventsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
+      {/*<div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
-      </div>
+      </div>*/}
+
+      <Snackbar
+          open={this.state.openSnackBar}
+          message={this.state.SnackBarmessage}
+          autoHideDuration={this.state.autoHideDuration}
+          onRequestClose={this.handleSnackBarClose}
+        />
+
+      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject}/>
       
       <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
         <Table
@@ -119,11 +155,9 @@ class SO_EventsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>INDEX</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>CLUB NAME</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>FA</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>AD</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>SO</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -136,16 +170,15 @@ class SO_EventsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
-          { Object.values(this.state.myArr).map((event, index) => (
+          { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
+              return (
                   <TableRow key={index}>
+                    <TableRowColumn>{event.clubName}</TableRowColumn>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn>{event.FA_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{event.AD_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{event.SO_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true}/>}</TableRowColumn>
+                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
                   </TableRow>
-            ))
+            )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
           }
           
           </TableBody>
