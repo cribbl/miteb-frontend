@@ -293,9 +293,9 @@ class HorizontalLinearStepper extends React.Component {
       field["start_date"]=start_date;
       field["end_date"]=end_date;
       field["roomStatus"]=roomStatus;
-      field["AD_appr"]=false;
-      field["FA_appr"]=false;
-      field["SO_appr"]=false;
+      field["AD_appr"]="NA";
+      field["FA_appr"]="pending";
+      field["SO_appr"]="NA";
       field["notes"]=field["notes"]
       //filtering roomstatus rooms -->true
       Object.filter = (obj, predicate) => 
