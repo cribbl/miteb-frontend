@@ -8,6 +8,9 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
+import CrossCircleIcon from 'material-ui/svg-icons/action/highlight-off';
+import IconButton from 'material-ui/IconButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
@@ -18,11 +21,12 @@ import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
+import Dialogx from '../../Dialogs/ViewEventDialogComponent'
 
 class MyEventsComponent extends Component {
   constructor(props) {
     super(props)
-    
+
     this.state = {
       fixedHeader: true,
       fixedFooter: false,
@@ -48,10 +52,6 @@ class MyEventsComponent extends Component {
       }
       this.state.allArr[key] = value
     }
-
-    // console.log(this.state.approvedArr)
-    // console.log(this.state.pendingArr)
-    // console.log(this.state.allArr)
   }
 
   componentWillReceiveProps(newProps) {
@@ -71,7 +71,6 @@ class MyEventsComponent extends Component {
 
   componentDidMount() {
     if(!this.props.user){
-      debugger
       hashHistory.push('/dashboard')
       return
     }
@@ -89,7 +88,7 @@ class MyEventsComponent extends Component {
         return
       }
     }
-    this.setState({fetching: true})
+    // this.setState({fetching: true})
     
     firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
     function(snapshot) {
@@ -98,12 +97,12 @@ class MyEventsComponent extends Component {
       for(event in events) {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
-          console.log(snapshot.val())
+          // console.log(snapshot.val())
           const {myArrx} = this.state
           myArrx[snapshot.key] = snapshot.val()
           this.setState({myArrx})
           this.filterAndStore(myArrx)
-          console.log(this.state.myArrx)
+          // console.log(this.state.myArrx)
         }, this)
       }
     }, this)
@@ -114,11 +113,11 @@ class MyEventsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
+      {<div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
-      </div>
+      </div>}
       
-      <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
+      <Paper style={{width: '98%', height: 500, overflow: 'hidden', marginTop: 20}} zDepth={2}>
         <Table
           style={{backgroundColor: ''}}
           height={'440px'}
@@ -150,16 +149,18 @@ class MyEventsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
-          { Object.values(this.state.myArr).map((event, index) => (
+          {
+             Object.values(this.state.myArrx).map(function(event, index) {
+              return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn>{event.FA_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{event.AD_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{event.SO_appr ? 'Yes' : 'No'}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true}/>}</TableRowColumn>
+                    <TableRowColumn>{event.FA_appr ? <IconButton iconStyle={{color: 'green'}}><CheckCircleIcon /></IconButton> : <IconButton iconStyle={{color: 'red'}}><CrossCircleIcon /></IconButton>}</TableRowColumn>
+                    <TableRowColumn>{event.AD_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
+                    <TableRowColumn>{event.SO_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
+                    <TableRowColumn>{<RaisedButton label="View" primary={true} />}</TableRowColumn>
                   </TableRow>
-            ))
+              )}, this)
           }
           
           </TableBody>
