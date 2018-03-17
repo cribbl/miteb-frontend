@@ -21,11 +21,14 @@ import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
-import Dialogx from '../../Dialogs/ViewEventDialogComponent'
+import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
 
 class MyEventsComponent extends Component {
   constructor(props) {
     super(props)
+    this.showDialog = this.showDialog.bind(this)
+    this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.nextEvent = this.nextEvent.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -37,9 +40,31 @@ class MyEventsComponent extends Component {
       myArrx: {},
       allArr: {},
       pendingArr: {},
-      approvedArr: {}
+      approvedArr: {},
+      dialogOpen: false,
+      currentEvent: {}
     }
 }
+
+  showDialog(event) {
+    this.setState({dialogOpen: true})
+    this.setState({currentEvent: event})
+  }
+
+  handleDialogClose() {
+    this.setState({dialogOpen: false})
+  }
+
+  nextEvent() {
+    let keys = Object.keys(this.state.myArrx)
+    let pos = keys.indexOf(this.state.currentEvent.key) + 1
+    if(pos == Object.keys(this.state.myArrx).length){
+      pos = 0;
+    }
+    let nextKey = keys[pos]
+    let nextEvent = this.state.myArrx[nextKey]
+    this.setState({currentEvent: nextEvent})
+  }
 
   filterAndStore(arr) {
     for(let [key, value] of Object.entries(arr)) {
@@ -69,7 +94,7 @@ class MyEventsComponent extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if(!this.props.user){
       hashHistory.push('/dashboard')
       return
@@ -100,6 +125,7 @@ class MyEventsComponent extends Component {
           // console.log(snapshot.val())
           const {myArrx} = this.state
           myArrx[snapshot.key] = snapshot.val()
+          myArrx[snapshot.key].key = snapshot.key
           this.setState({myArrx})
           this.filterAndStore(myArrx)
           // console.log(this.state.myArrx)
@@ -113,9 +139,11 @@ class MyEventsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      {<div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
+      {/*<div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
-      </div>}
+      </div>*/}
+
+      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent}/>
       
       <Paper style={{width: '98%', height: 500, overflow: 'hidden', marginTop: 20}} zDepth={2}>
         <Table
@@ -132,11 +160,11 @@ class MyEventsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>INDEX</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>FA</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>AD</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>SO</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>START DATE</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>FA</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>AD</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>SO</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -154,11 +182,11 @@ class MyEventsComponent extends Component {
               return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
-                    <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn>{event.FA_appr ? <IconButton iconStyle={{color: 'green'}}><CheckCircleIcon /></IconButton> : <IconButton iconStyle={{color: 'red'}}><CrossCircleIcon /></IconButton>}</TableRowColumn>
-                    <TableRowColumn>{event.AD_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
-                    <TableRowColumn>{event.SO_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true} />}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.FA_appr ? <IconButton iconStyle={{color: 'green'}}><CheckCircleIcon /></IconButton> : <IconButton iconStyle={{color: 'red'}}><CrossCircleIcon /></IconButton>}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.AD_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.SO_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
+                    <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
                   </TableRow>
               )}, this)
           }
