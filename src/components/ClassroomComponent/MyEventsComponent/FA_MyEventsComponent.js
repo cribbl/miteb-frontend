@@ -59,7 +59,7 @@ class FA_MyEventsComponent extends Component {
     console.log(event)
     this.handleDialogClose()
     let scope = this;
-    approveEvent(event)
+    approveEvent(event, 'FA')
     const {myArrx} = scope.state
     delete myArrx[event.key]
     scope.setState({myArrx})
@@ -136,10 +136,6 @@ class FA_MyEventsComponent extends Component {
     }, this)
   }
 
-  myClick() {
-    console.log('clicked');
-  }
-
   render() {
 
     return (
@@ -171,7 +167,7 @@ class FA_MyEventsComponent extends Component {
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>END DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>ACTIONS</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
