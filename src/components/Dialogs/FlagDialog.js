@@ -21,7 +21,7 @@ class FlagDialog extends Component {
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps)
-    this.setState({open: nextProps.open})
+    this.setState({open: nextProps.open, message: ''})
   }
 
   render() {

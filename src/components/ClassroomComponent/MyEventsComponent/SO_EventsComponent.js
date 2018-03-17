@@ -50,6 +50,7 @@ class SO_EventsComponent extends Component {
       openSnackBar: false,
       autoHideDuration: 3000,
       dialogOpen: false,
+      FlagDialogOpen: false,
       currentEvent: {}
     }
 }
@@ -93,6 +94,8 @@ class SO_EventsComponent extends Component {
   handleSnackBarClose() {
     this.setState({openSnackBar: false}) 
   }
+
+  handleFlagDialogClose() { this.setState({FlagDialogOpen: false}) }
 
   nextEvent() {
     let keys = Object.keys(this.state.myArrx)
