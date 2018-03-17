@@ -150,16 +150,57 @@ function updateDatesDB(dateArr, rooms) {
 
 export const approveEvent = (event, user) => {
       switch(user) {
-            case 'FA': return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true);
-            case 'AD': return firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(true);
-            case 'SO': return firebaseDB.ref('/events/').child(event.key+'/SO_appr').set(true);
+            case 'FA': {
+                  firebaseDB.ref('/events/').child(event.key+'/FA_appr').set('approved');
+                  firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('pending');
+                  return
+            }
+            case 'AD': {
+                  firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('approved');
+                  firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('pending');
+                  return
+            }
+            case 'SO': {
+                  firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('approved');
+                  return
+            }
       }
 }
 
 export const rejectEvent = (event, user) => {
       switch(user) {
-            case 'FA': return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(false);
-            case 'AD': return firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(false);
-            case 'SO': return firebaseDB.ref('/events/').child(event.key+'/SO_appr').set(false);
+            case 'FA': {
+                  firebaseDB.ref('/events/').child(event.key+'/FA_appr').set('rejected');
+                  return
+            }
+            case 'AD': {
+                  firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('rejected');
+                  return
+            }
+            case 'SO': {
+                  firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('rejected');
+                  return
+            }
+      }
+}
+
+export const flagEvent = (event, message, user) => {
+      debugger
+      switch(user) {
+            case 'FA': {
+                  firebaseDB.ref('/events/').child(event.key+'/FA_appr').set('flagged');
+                  firebaseDB.ref('/events/').child(event.key+'/FA_msg').set(message);
+                  return
+            }
+            case 'AD': {
+                  firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('flagged');
+                  firebaseDB.ref('/events/').child(event.key+'/AD_msg').set(message);
+                  return
+            }
+            case 'SO': {
+                  firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('flagged');
+                  firebaseDB.ref('/events/').child(event.key+'/SO_msg').set(message);
+                  return
+            }
       }
 }

@@ -20,15 +20,21 @@ import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 import Snackbar from 'material-ui/Snackbar';
 import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
+import FlagDialog from '../../Dialogs/FlagDialog'
 
-import {approveEvent, rejectEvent} from '../../../Services/firebaseDBService'
+import {approveEvent, rejectEvent, flagEvent} from '../../../Services/firebaseDBService'
 
 class FA_MyEventsComponent extends Component {
   constructor(props) {
     super(props)
     this.approve = this.approve.bind(this)
+    this.reject = this.reject.bind(this)
+    this.flag = this.flag.bind(this)
+    this.flagConfirm = this.flagConfirm.bind(this)
     this.showDialog = this.showDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
+    this.handleFlagDialogClose = this.handleFlagDialogClose.bind(this)
     this.nextEvent = this.nextEvent.bind(this)
 
     this.state = {
@@ -46,6 +52,7 @@ class FA_MyEventsComponent extends Component {
       openSnackBar: false,
       autoHideDuration: 3000,
       dialogOpen: false,
+      FlagDialogOpen: false,
       currentEvent: {}
     }
 }
@@ -56,22 +63,57 @@ class FA_MyEventsComponent extends Component {
   }
   
   approve(event) {
-    console.log(event)
-    this.handleDialogClose()
     let scope = this;
     approveEvent(event, 'FA')
     const {myArrx} = scope.state
     delete myArrx[event.key]
     scope.setState({myArrx})
     scope.setState({SnackBarmessage: 'Event successfully approved', openSnackBar: true})
+    this.nextEvent()
   }
 
+  reject(event) {
+    let scope = this;
+    rejectEvent(event, 'FA')
+    const {myArrx} = scope.state
+    delete myArrx[event.key]
+    scope.setState({myArrx})
+    scope.setState({SnackBarmessage: 'Event successfully rejected', openSnackBar: true})
+    this.nextEvent()
+  }
+
+  flagConfirm(event) {
+    this.setState({FlagDialogOpen: true})
+    this.setState({currentEvent: event})
+  }
+
+  flag(event, message) {
+    let scope = this;
+    flagEvent(event, message, 'FA')
+    const {myArrx} = scope.state
+    delete myArrx[event.key]
+    scope.setState({myArrx})
+    scope.setState({SnackBarmessage: 'Event successfully flagged', openSnackBar: true})
+    this.setState({FlagDialogOpen: false})
+    this.nextEvent()
+  }
+  
   handleDialogClose() {
     this.setState({dialogOpen: false})
   }
 
+  handleSnackBarClose() {
+    this.setState({openSnackBar: false}) 
+  }
+
+  handleFlagDialogClose() { this.setState({FlagDialogOpen: false}) }
+
   nextEvent() {
     let keys = Object.keys(this.state.myArrx)
+    if(keys.length == 0){
+      this.handleDialogClose()
+      return
+    }
     let pos = keys.indexOf(this.state.currentEvent.key) + 1
     if(pos == Object.keys(this.state.myArrx).length){
       pos = 0;
@@ -124,7 +166,7 @@ class FA_MyEventsComponent extends Component {
       for(event in events) {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
-          if(!snapshot.val().FA_appr) {
+          if(snapshot.val().FA_appr == 'pending') {
             const {myArrx} = this.state
             myArrx[snapshot.key] = snapshot.val()
             myArrx[snapshot.key].key = snapshot.key
@@ -145,9 +187,12 @@ class FA_MyEventsComponent extends Component {
           open={this.state.openSnackBar}
           message={this.state.SnackBarmessage}
           autoHideDuration={this.state.autoHideDuration}
+          onRequestClose={this.handleSnackBarClose}
         />
 
-      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveEvent={this.approve}/>
+      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject} flagHandler={this.flagConfirm}/>
+
+      <FlagDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} flagHandler={this.flag} />
 
       <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
         <Table

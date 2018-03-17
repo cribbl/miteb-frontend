@@ -111,7 +111,7 @@ class SO_EventsComponent extends Component {
         function(snapshot) {
           snapshot.forEach(function(child) {
             scope.setState({fetching: false})
-              if(!child.val().SO_appr) {
+              if(child.val().SO_appr == 'pending') {
                 const {myArrx} = scope.state
                 myArrx[child.key] = child.val()
                 myArrx[child.key].key = child.key

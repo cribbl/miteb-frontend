@@ -47,7 +47,7 @@ class Dialogxx extends Component {
       <FlatButton
         label="Flag"
         primary={true}
-        onClick={this.props.flagEvent}
+        onClick={() => this.props.flagHandler(this.props.currentEvent)}
       />,
       <FlatButton
         label="Approve"

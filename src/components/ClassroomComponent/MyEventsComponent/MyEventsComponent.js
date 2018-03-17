@@ -177,15 +177,29 @@ class MyEventsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
+          {/*
+             Object.values(this.state.myArrx).map(function(event, index) {
+              return(
+                  <TableRow key={index}>
+                    <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.FA_appr == 'approved' ? <IconButton iconStyle={{color: 'green'}}><CheckCircleIcon /></IconButton> : <IconButton iconStyle={{color: 'red'}}><CrossCircleIcon /></IconButton>}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.AD_appr == 'approved' ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.SO_appr == 'approved' ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
+                    <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
+                  </TableRow>
+              )}, this)
+          */}
+
           {
              Object.values(this.state.myArrx).map(function(event, index) {
               return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.FA_appr ? <IconButton iconStyle={{color: 'green'}}><CheckCircleIcon /></IconButton> : <IconButton iconStyle={{color: 'red'}}><CrossCircleIcon /></IconButton>}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.AD_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.SO_appr ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.FA_appr}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.AD_appr}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.SO_appr}</TableRowColumn>
                     <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
                   </TableRow>
               )}, this)
