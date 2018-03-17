@@ -152,6 +152,7 @@ export const approveEvent = (event, user) => {
       switch(user) {
             case 'FA': return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true);
             case 'AD': return firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(true);
+            case 'SO': return firebaseDB.ref('/events/').child(event.key+'/SO_appr').set(true);
       }
 }
 
@@ -159,5 +160,6 @@ export const rejectEvent = (event, user) => {
       switch(user) {
             case 'FA': return firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(false);
             case 'AD': return firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(false);
+            case 'SO': return firebaseDB.ref('/events/').child(event.key+'/SO_appr').set(false);
       }
 }
