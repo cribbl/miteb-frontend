@@ -171,7 +171,7 @@ class AD_EventsComponent extends Component {
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>CLUB NAME</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
             </TableRow>
@@ -189,9 +189,9 @@ class AD_EventsComponent extends Component {
               return (
                   <TableRow key={index}>
                     <TableRowColumn>{event.clubName}</TableRowColumn>
-                    <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
+                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton hidden={this.props.isMobile} label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
                   </TableRow>
             )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
           }

@@ -219,7 +219,7 @@ class FA_MyEventsComponent extends Component {
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile}>{event.end_date}</TableRowColumn>
-                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
+                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton hidden={this.props.isMobile} label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
                   </TableRow>
             )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
           }
