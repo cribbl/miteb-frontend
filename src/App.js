@@ -26,7 +26,7 @@ class App extends Component {
       <MuiThemeProvider>
     	<div>
     	{this.props.isMobile ? <AppBarMobile /> : <AppBarComponent />}
-      {this.props.sessionCheck ? <ReactLoading type={'cylon'} color={'#FF0000'} height='667' width='375' /> : (
+      {this.props.sessionCheck ? <div style={{display: 'flex', justifyContent: 'center'}}><ReactLoading type={'cylon'} color={'#00bcd4'} height='667' width='50%' /></div> : (
         <div className="propChildrenContainer">
     	   {this.props.children}
         </div>
