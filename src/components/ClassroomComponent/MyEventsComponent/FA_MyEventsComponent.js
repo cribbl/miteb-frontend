@@ -39,7 +39,11 @@ class FA_MyEventsComponent extends Component {
 }
   
   approve(event) {
-    firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true)
+    firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(true);
+    const {myArrx} = this.state
+    delete myArrx[event.key]
+    this.setState({myArrx})
+
   }
 
   filterAndStore(arr) {
@@ -53,10 +57,6 @@ class FA_MyEventsComponent extends Component {
       }
       this.state.allArr[key] = value
     }
-
-    // console.log(this.state.approvedArr)
-    // console.log(this.state.pendingArr)
-    // console.log(this.state.allArr)
   }
 
   componentWillReceiveProps(newProps) {
@@ -74,9 +74,9 @@ class FA_MyEventsComponent extends Component {
     }
   }
 
+  
   componentDidMount() {
     if(!this.props.user){
-      debugger
       hashHistory.push('/dashboard')
       return
     }
@@ -90,13 +90,11 @@ class FA_MyEventsComponent extends Component {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
           if(!snapshot.val().FA_appr) {
-            console.log(snapshot.val())
             const {myArrx} = this.state
             myArrx[snapshot.key] = snapshot.val()
             myArrx[snapshot.key].key = snapshot.key
             this.setState({myArrx})
             this.filterAndStore(myArrx)
-            console.log(this.state.myArrx)
           }
         }, this)
       }
@@ -138,14 +136,15 @@ class FA_MyEventsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
-          { Object.values(this.state.myArr).map((event, index) => (
+          { Object.values(this.state.myArrx).map(function(event, index) {
+            return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
                     <TableRowColumn>{event.end_date}</TableRowColumn>
                     <TableRowColumn>{<div><RaisedButton label="Reject" primary={true}/><RaisedButton label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
                   </TableRow>
-            ))
+            )}, this)
           }
           
           </TableBody>
