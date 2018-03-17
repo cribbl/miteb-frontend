@@ -65,10 +65,6 @@ class ProfileMenu extends Component {
           }
             <Divider hidden={!this.props.user}/>
             
-            <MenuItem key="/catalogue" primaryText="Catalogue" leftIcon={<CatalogueIcon />} hidden={!this.props.isMobile}/>
-
-            <MenuItem key="/pricing" primaryText="Pricing" leftIcon={<DashboardIcon />} hidden={!this.props.isMobile}/>
-
             <MenuItem
               key="/auth"
               primaryText="Login"
@@ -81,7 +77,13 @@ class ProfileMenu extends Component {
               key="/classroom"
               primaryText="Dashboard"
               leftIcon={<DashboardIcon />}
-              hidden={!this.props.isMobile|| !this.props.user}/>
+              hidden={!this.props.isMobile || !this.props.user}/>
+
+            <MenuItem
+              key="/classroom/myEvents"
+              primaryText="My Events"
+              leftIcon={<DashboardIcon />}
+              hidden={!this.props.isMobile || !this.props.user}/>
 
             <MenuItem key="logout" primaryText="Logout" leftIcon={<LogoutIcon />} hidden={!this.props.user}/>
 
