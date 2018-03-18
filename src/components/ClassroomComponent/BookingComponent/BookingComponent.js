@@ -20,6 +20,7 @@ import BookerDetails from './BookerDetails'
 import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
 import firebase from 'firebase'
+import {connect} from 'react-redux'
 import {fetchRooms, updateDates} from '../../../Services/firebaseDBService'
 
 var moment = require("moment")
@@ -67,8 +68,6 @@ class HorizontalLinearStepper extends React.Component {
            maxDate: maxDate,
            fromChild:'',
            convertedObj:{},
-
-
        }
        
        this.handleStartDate=this.handleStartDate.bind(this);
@@ -433,7 +432,7 @@ class HorizontalLinearStepper extends React.Component {
       
                </div>);
       case 2:  {var self=this}
-        return (<div> 
+        return (<div style={{marginLeft: -40}}> 
                       <div className="Row" style={{ display: "flex" , flexDirection:"row"}}>
                          <Subheader> Start </Subheader>            
                          <DatePicker 
@@ -488,11 +487,11 @@ class HorizontalLinearStepper extends React.Component {
   render() {
    
     const {finished, stepIndex} = this.state;
-    const contentStyle = {marginLeft:"30%", fontFamily:"monospace"}
+    const contentStyle = {backgroundColor: 'green', width: this.props.isMobile ? '100%' : '50%', alignSelf: 'center', display: 'flex', textAlign: 'center'}
     
     return (
-      <div style={{width: '100%', maxWidth: 700,margin:'auto'}}>
-        <Stepper linear={false} activeStep={stepIndex} >
+      <div style={{width: '100%', maxWidth: 700,margin:'auto', backgroundColor: 'red', display: 'flex', flexDirection: 'column'}}>
+        <Stepper linear={false} activeStep={stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>Booker Details</StepLabel>
           </Step>
@@ -523,7 +522,7 @@ class HorizontalLinearStepper extends React.Component {
               <div style={{marginTop: 12}}>
                 <FlatButton
                   label="Back"
-                  disabled={stepIndex === 0}
+                  hidden={stepIndex === 0}
                   onClick={this.handlePrev}
                   style={{marginRight: 12}}
                 />
@@ -542,4 +541,11 @@ class HorizontalLinearStepper extends React.Component {
   }
 }
 
-export default HorizontalLinearStepper;
+function mapStateToProps(state) {
+  const {isMobile} = state.toggler
+  return {
+    isMobile
+  }
+}
+
+export default connect(mapStateToProps)(HorizontalLinearStepper);
