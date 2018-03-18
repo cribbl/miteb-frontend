@@ -487,10 +487,10 @@ class HorizontalLinearStepper extends React.Component {
   render() {
    
     const {finished, stepIndex} = this.state;
-    const contentStyle = {backgroundColor: 'green', width: this.props.isMobile ? '100%' : '50%', alignSelf: 'center', display: 'flex', textAlign: 'center'}
+    const contentStyle = {backgroundColor: '', width: this.props.isMobile ? '100%' : '50%', alignSelf: 'center', display: 'flex', textAlign: 'center'}
     
     return (
-      <div style={{width: '100%', maxWidth: 700,margin:'auto', backgroundColor: 'red', display: 'flex', flexDirection: 'column'}}>
+      <div style={{width: '100%', maxWidth: 700,margin:'auto', backgroundColor: '', display: 'flex', flexDirection: 'column'}}>
         <Stepper linear={false} activeStep={stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>Booker Details</StepLabel>
