@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FaceIcon from 'material-ui/svg-icons/action/face'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import LogoutIcon from 'material-ui/svg-icons/action/exit-to-app'
+import IconTest from 'material-ui/svg-icons/editor/mode-edit'
 import DashboardIcon from 'material-ui/svg-icons/action/dashboard'
 import CatalogueIcon from 'material-ui/svg-icons/av/library-books'
 
@@ -43,8 +44,8 @@ class ProfileMenu extends Component {
         <Avatar src={this.props.user.profilePicURL} size={70} />
         </div>
         <div style={{textAlign: 'center', color: 'black', width: '100%'}}>
-        <p style={{height: 10}}>{this.props.user.email}</p>
-        <p style={{height: 30, color: 'grey', fontSize: 15}}>{this.props.user.email}</p>
+        <p style={{height: 10}}>{this.props.user.name}</p>
+        <p style={{height: 60, color: 'grey', fontSize: 15, lineHeight: 5}}>{this.props.user.email}</p>
         </div>
       </div>
       )
@@ -63,7 +64,6 @@ class ProfileMenu extends Component {
             <Hihi />
             </MenuItem>
           }
-            <Divider hidden={!this.props.user}/>
             
             <MenuItem
               key="/auth"
@@ -73,18 +73,6 @@ class ProfileMenu extends Component {
 
             <Divider hidden={!this.props.isMobile || !this.props.user}/>
             
-            <MenuItem
-              key="/classroom"
-              primaryText="Dashboard"
-              leftIcon={<DashboardIcon />}
-              hidden={!this.props.isMobile || !this.props.user}/>
-
-            <MenuItem
-              key="/classroom/myEvents"
-              primaryText="My Events"
-              leftIcon={<DashboardIcon />}
-              hidden={!this.props.isMobile || !this.props.user}/>
-
             <MenuItem key="logout" primaryText="Logout" leftIcon={<LogoutIcon />} hidden={!this.props.user}/>
 
           </Menu>
