@@ -55,7 +55,7 @@ class HorizontalLinearStepper extends React.Component {
            fields: {},
            errors: {},
            finished: false,
-           stepIndex: 0,
+           stepIndex: 2,
            value:1,
            checked: false,
            start_date: null,
@@ -139,7 +139,6 @@ class HorizontalLinearStepper extends React.Component {
         fieldTouch[field]=true;
         this.setState({fieldTouch:fieldTouch})
         this.handleValidation(0,field);
-      
   };
 
   handleDisableNext()
@@ -158,11 +157,15 @@ class HorizontalLinearStepper extends React.Component {
     start__date=start_date.toISOString();
 
     console.log(start__date);
+    if(this.state.end_date)
+      this.handleRoomButton()
   }
 
   handleEndDate(event, end_date){
     this.setState({end_date: end_date})
     console.log(end_date);
+    if(this.state.start_date)
+      this.handleRoomButton()
   }
   
 
@@ -397,7 +400,6 @@ class HorizontalLinearStepper extends React.Component {
                         />
                        <TextField 
                          floatingLabelText="Event Description" 
-                         multiLine={true}
                          type="text"
                          onChange={this.handleChange.bind(this, "desc")} 
                          value={this.state.fields["desc"]}
@@ -407,7 +409,6 @@ class HorizontalLinearStepper extends React.Component {
                        />
                          <TextField 
                          floatingLabelText="Notes" 
-                         multiLine={true}
                          type="text"
                          onChange={this.handleChange.bind(this, "notes")} 
                          value={this.state.fields["notes"]}
@@ -432,16 +433,17 @@ class HorizontalLinearStepper extends React.Component {
       
                </div>);
       case 2:  {var self=this}
-        return (<div style={{marginLeft: -40}}> 
-                      <div className="Row" style={{ display: "flex" , flexDirection:"row"}}>
+        return (<div> 
+                      <div className="Row" style={{ display: "flex" , flexDirection: this.props.isMobile ? 'column' : 'row'}}>
                          <Subheader> Start </Subheader>            
                          <DatePicker 
                            container="inline"
-                           mode="landscape"
+                           mode={this.props.isMobile ? 'portrait' : 'landscape'}
                            autoOk={true}
                            onChange={this.handleStartDate}
                            value={this.state.start_date}
                            shouldDisableDate={this.day}
+                           disableYearSelection
                            minDate={this.state.minDate}
                            maxDate={this.state.maxDate}
                            required
@@ -450,7 +452,7 @@ class HorizontalLinearStepper extends React.Component {
                         
                          <DatePicker  
                            container="inline" 
-                           mode="landscape" 
+                           mode={this.props.isMobile ? 'portrait' : 'landscape'}
                            autoOk={true}   
                            onChange={this.handleEndDate}
                            value={this.state.end_date} 
@@ -460,7 +462,7 @@ class HorizontalLinearStepper extends React.Component {
                            required
                          />
                       </div>        
-                      <RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>
+                      {/*<RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>*/}
                       <br/>
                          <Card style ={{padding:"0", width: '100%', maxWidth: 1000}}>
                             <CardHeader 
