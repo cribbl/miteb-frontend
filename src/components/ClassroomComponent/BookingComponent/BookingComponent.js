@@ -399,6 +399,7 @@ class HorizontalLinearStepper extends React.Component {
                          required
                         />
                        <TextField 
+                        style={{textAlign: 'left'}}
                          floatingLabelText="Event Description" 
                          multiLine={true}
                          key={2}
@@ -411,6 +412,7 @@ class HorizontalLinearStepper extends React.Component {
                        />
                          <TextField 
                          multiLine={true}
+                          style={{textAlign: 'left'}}
                          floatingLabelText="Notes" 
                          type="text"
                          onChange={this.handleChange.bind(this, "notes")} 
