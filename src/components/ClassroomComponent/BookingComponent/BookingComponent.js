@@ -433,8 +433,8 @@ class HorizontalLinearStepper extends React.Component {
                </div>);
       case 2:  {var self=this}
         return (<div className="locationContainer"> 
-                      <div className="row" style={{ display: "flex" , flexDirection: this.props.isMobile ? 'column' : 'row', backgroundColor: 'red'}}>
-                         <div>
+                      <div className="row" style={{ display: "flex" , flexDirection: this.props.isMobile ? 'column' : 'row', backgroundColor: ''}}>
+                         <div style={{width: '100%', display: 'flex'}}>
                          <Subheader> Start </Subheader>            
                          <DatePicker 
                            container="inline"
@@ -449,7 +449,8 @@ class HorizontalLinearStepper extends React.Component {
                            required
                          />
                          </div>
-                         
+
+                         <div style={{width: '100%', display: 'flex'}}>
                          <Subheader> End </Subheader>
                          <DatePicker  
                            container="inline" 
@@ -462,6 +463,7 @@ class HorizontalLinearStepper extends React.Component {
                            maxDate={this.state.maxDate}
                            required
                          />
+                         </div>
                       </div>        
                       {/*<RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>*/}
                       <br/>
