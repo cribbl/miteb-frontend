@@ -442,8 +442,9 @@ class HorizontalLinearStepper extends React.Component {
         return (<div className="locationContainer"> 
                       <div className="row" style={{ display: "flex" , flexDirection: this.props.isMobile ? 'column' : 'row', backgroundColor: ''}}>
                          <div style={{width: '100%', display: 'flex'}}>
-                         <Subheader> Start </Subheader>            
+                             
                          <DatePicker 
+                           hintText="Start"
                            container="inline"
                            mode={this.props.isMobile ? 'portrait' : 'landscape'}
                            autoOk={true}
@@ -458,8 +459,9 @@ class HorizontalLinearStepper extends React.Component {
                          </div>
 
                          <div style={{width: '100%', display: 'flex'}}>
-                         <Subheader> End </Subheader>
+                   
                          <DatePicker  
+                           hintText="End"
                            container="inline" 
                            mode={this.props.isMobile ? 'portrait' : 'landscape'}
                            autoOk={true}   
