@@ -421,6 +421,7 @@ class HorizontalLinearStepper extends React.Component {
                          required
                        />
                        <br/><br/>
+                       <div style={{backgroundColor: '', width: '60%', margin: '0 auto'}}>
                         <RadioButtonGroup
                            name="Workshop" 
                            defaultSelected="external"
@@ -434,6 +435,7 @@ class HorizontalLinearStepper extends React.Component {
                             label="External Workshop"
                          />
                         </RadioButtonGroup> 
+                        </div>
       
                </div>);
       case 2:  {var self=this}
