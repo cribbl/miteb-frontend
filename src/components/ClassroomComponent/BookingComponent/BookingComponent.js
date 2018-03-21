@@ -16,7 +16,6 @@ import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
 import CheckboxGroup from './Checkbox';
 import CheckboxField from './Checkbox';
-import BookerDetails from './BookerDetails'
 import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
 import firebase from 'firebase'
@@ -433,8 +432,9 @@ class HorizontalLinearStepper extends React.Component {
       
                </div>);
       case 2:  {var self=this}
-        return (<div> 
-                      <div className="Row" style={{ display: "flex" , flexDirection: this.props.isMobile ? 'column' : 'row'}}>
+        return (<div className="locationContainer"> 
+                      <div className="row" style={{ display: "flex" , flexDirection: this.props.isMobile ? 'column' : 'row', backgroundColor: 'red'}}>
+                         <div>
                          <Subheader> Start </Subheader>            
                          <DatePicker 
                            container="inline"
@@ -448,8 +448,9 @@ class HorizontalLinearStepper extends React.Component {
                            maxDate={this.state.maxDate}
                            required
                          />
+                         </div>
+                         
                          <Subheader> End </Subheader>
-                        
                          <DatePicker  
                            container="inline" 
                            mode={this.props.isMobile ? 'portrait' : 'landscape'}
@@ -489,7 +490,7 @@ class HorizontalLinearStepper extends React.Component {
   render() {
    
     const {finished, stepIndex} = this.state;
-    const contentStyle = {backgroundColor: '', width: this.props.isMobile ? '100%' : '50%', alignSelf: 'center', display: 'flex', textAlign: 'center'}
+    const contentStyle = {backgroundColor: '', width: this.props.isMobile ? '100%' : '50%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}
     
     return (
       <div style={{width: '100%', maxWidth: 700,margin:'auto', backgroundColor: '', display: 'flex', flexDirection: 'column'}}>
