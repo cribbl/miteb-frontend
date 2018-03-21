@@ -440,7 +440,7 @@ class HorizontalLinearStepper extends React.Component {
                </div>);
       case 2:  {var self=this}
         return (<div className="locationContainer"> 
-                      <div className="row" style={{ display: "flex" , flexDirection: this.props.isMobile ? 'column' : 'row', backgroundColor: ''}}>                             
+                      <div className="row" style={{ display: "flex" , margin:"auto", width: '50%', flexDirection: this.props.isMobile ? 'column' : 'row', backgroundColor: ''}}>                             
                          <DatePicker 
                            floatingLabelText="Start"
                            container="inline"
@@ -470,15 +470,16 @@ class HorizontalLinearStepper extends React.Component {
                       </div>        
                       {/*<RaisedButton label ="Fetch Rooms" primary ={true} onClick={this.handleRoomButton}/>*/}
                       <br/>
-                         <Card style ={{padding:"0", width: '100%', maxWidth: 1000}}>
+                         <Card>
                             <CardHeader 
                            title="Building" 
                            actAsExpander={true}
                            showExpandableButton={true}
-                           style={{padding:"1"}}
+                           style={{padding:"3"}}
+                       
                             />
                             <CardText expandable={true}> 
-                                           <CheckboxGroup handlerFromParent={this.handleData}
+                                           <CheckboxGroup style={{padding:"0", width: '100%', maxWidth: 1000}} handlerFromParent={this.handleData}
                                             a={this.state.roomStatusArray}
                                            />       
                                    
@@ -488,7 +489,7 @@ class HorizontalLinearStepper extends React.Component {
 
              </div>);
 
-        default: console.log('hey');
+        default: console.log('invalid case');
     }
   }
 
