@@ -137,7 +137,7 @@ class HorizontalLinearStepper extends React.Component {
         let fieldTouch=this.state.fieldTouch;
         fieldTouch[field]=true;
         this.setState({fieldTouch:fieldTouch})
-        this.handleValidation(0,field);
+        this.handleValidation(this.state.stepIndex,field);
   };
 
   handleDisableNext()
@@ -221,66 +221,65 @@ class HorizontalLinearStepper extends React.Component {
                 }
   }
   handleValidation(n,field){
-
         let fields = this.state.fields;
         let fieldTouch = this.state.fieldTouch;
         let errors = {};
         let formIsValid=true;
-        // if(n==0)
-        // {    
-        //     //Name
-        //     if(!fields["booker_name"] && fieldTouch["booker_name"] ){
-        //        formIsValid = false;
-        //        errors["booker_name"] = "Cannot be empty";
+        if(n==0)
+        {   
+            //Name
+            if(!fields["booker_name"] && fieldTouch["booker_name"] ){
+               formIsValid = false;
+               errors["booker_name"] = "Cannot be empty";
             
-        //     }
+            }
 
-        //     //Email
-        //     if( (!fields["booker_email"] || errors['booker_email'])&& fieldTouch["booker_email"]){
-        //        formIsValid = false;
-        //        errors["booker_email"] = "Cannot be empty";
+            //Email
+            if( (!fields["booker_email"] || errors['booker_email'])&& fieldTouch["booker_email"]){
+               formIsValid = false;
+               errors["booker_email"] = "Cannot be empty";
             
-        //     }
-        //     if(typeof fields["booker_email"] !== "undefined" ){
-        //         let lastAtPos = fields["booker_email"].lastIndexOf('@');
-        //         let lastDotPos = fields["booker_email"].lastIndexOf('.');
+            }
+            if(typeof fields["booker_email"] !== "undefined" ){
+                let lastAtPos = fields["booker_email"].lastIndexOf('@');
+                let lastDotPos = fields["booker_email"].lastIndexOf('.');
 
-        //         if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["booker_email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["booker_email"].length - lastDotPos) > 2)) {
-        //           formIsValid = false;
-        //           errors["booker_email"] = "Email is not valid";
-        //         }
-        //    }
+                if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["booker_email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["booker_email"].length - lastDotPos) > 2)) {
+                  formIsValid = false;
+                  errors["booker_email"] = "Email is not valid";
+                }
+           }
 
-        //    //phone number
-        //     if(!fields["booker_contact"] && fieldTouch["booker_contact"]){
-        //        formIsValid = false;
-        //        errors["booker_contact"] = "Cannot be empty";
-        //     }
+           //phone number
+            if(!fields["booker_contact"] && fieldTouch["booker_contact"]){
+               formIsValid = false;
+               errors["booker_contact"] = "Cannot be empty";
+            }
 
-        //     //Registration Number
-        //        if(!fields["booker_reg_no"] && fieldTouch["booker_reg_no"]){
-        //        formIsValid = false;
-        //        errors["booker_reg_no"] = "Cannot be empty";
-        //     }
+            //Registration Number
+               if(!fields["booker_reg_no"] && fieldTouch["booker_reg_no"]){
+               formIsValid = false;
+               errors["booker_reg_no"] = "Cannot be empty";
+            }
 
-        //  }
-        // if(n==1)
-        // { 
-        //     //Title
-        //       if(!fields["title"] ){
-        //         formIsValid=false;
-        //         errors["title"]="Cannot be empty";
+         }
+        if(n==1)
+        { 
+            //Title
+              if(!fields["title"] ){
+                formIsValid=false;
+                errors["title"]="Cannot be empty";
                 
-        //       }
-        //       //Event Description
-        //        if(!fields["desc"] && fieldTouch["desc"]){
-        //         formIsValid=false;
-        //         errors["desc"]="Cannot be empty";
+              }
+              //Event Description
+               if(!fields["desc"] && fieldTouch["desc"]){
+                formIsValid=false;
+                errors["desc"]="Cannot be empty";
             
-        //       }
-        //       if(!fields["workshop"])
-        //         fields["workshop"]="external"
-        // }
+              }
+              if(!fields["workshop"])
+                fields["workshop"]="external"
+        }
         this.setState({errors: errors});
         return formIsValid;
    }
@@ -399,7 +398,7 @@ class HorizontalLinearStepper extends React.Component {
                          required
                         />
                        <TextField 
-                        style={{textAlign: 'left'}}
+                         style={{textAlign: 'left'}}
                          floatingLabelText="Event Description" 
                          multiLine={true}
                          key={2}
@@ -412,7 +411,7 @@ class HorizontalLinearStepper extends React.Component {
                        />
                          <TextField 
                          multiLine={true}
-                          style={{textAlign: 'left'}}
+                         style={{textAlign: 'left'}}
                          floatingLabelText="Notes" 
                          type="text"
                          onChange={this.handleChange.bind(this, "notes")} 
