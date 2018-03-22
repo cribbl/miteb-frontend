@@ -30,7 +30,7 @@ import ProfileMenu from './ProfileMenu'
 
   const MyTitle = () => (
     <div style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
-    <h2 style={{alignSelf: 'center', marginTop: 11}}><Link to="/home" style={{color: 'white'}}>Edutech</Link></h2>
+    <h2 style={{alignSelf: 'center', marginTop: 11}}><Link to="/home" style={{color: 'white'}}>Portal</Link></h2>
     </div>
   )
 

@@ -7,7 +7,7 @@ export const getUserDetails = (clubId, callback) => {
             console.log('return since no clubId')
             return
       }
-      firebaseDB.ref('/clubs/' + clubId).on('value',
+      firebaseDB.ref('/clubs/' + clubId).once('value',
             function(snapshot) {
                   let user = snapshot.val();
                   user['uid'] = snapshot.key;
@@ -139,7 +139,7 @@ export const updateDates = (start_date, end_date, rooms) => {
 }
 
 function updateDatesDB(dateArr, rooms) {
-      debugger
+      
       for(let date of dateArr) {
             for(let room in rooms) {
                   firebaseDB.ref('/rooms/').child(date+'/'+room).set(false);
@@ -168,7 +168,7 @@ export const approveEvent = (event, user) => {
 }
 
 export const flagRejectEvent = (event, message, mode, user) => {
-      debugger
+      
       let _mode = mode == 'flag' ? 'flagged' : 'rejected';
       switch(user) {
             case 'FA': {

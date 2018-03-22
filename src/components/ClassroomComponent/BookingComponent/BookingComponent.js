@@ -20,6 +20,7 @@ import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
 import firebase from 'firebase'
 import {connect} from 'react-redux'
+import Snackbar from 'material-ui/Snackbar';
 import {fetchRooms, updateDates} from '../../../Services/firebaseDBService'
 
 var moment = require("moment")
@@ -45,6 +46,7 @@ class HorizontalLinearStepper extends React.Component {
 
        super(props);
           this.handleData = this.handleData.bind(this);
+          this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
           const minDate = new Date();
           const maxDate = new Date();
           maxDate.setMonth(maxDate.getMonth() + 1);
@@ -54,7 +56,7 @@ class HorizontalLinearStepper extends React.Component {
            fields: {},
            errors: {},
            finished: false,
-           stepIndex: 0,
+           stepIndex: 2,
            value:1,
            checked: false,
            start_date: null,
@@ -67,6 +69,9 @@ class HorizontalLinearStepper extends React.Component {
            maxDate: maxDate,
            fromChild:'',
            convertedObj:{},
+           SnackBarmessage: '',
+           openSnackBar: false,
+           autoHideDuration: 3000,
        }
        
        this.handleStartDate=this.handleStartDate.bind(this);
@@ -220,6 +225,11 @@ class HorizontalLinearStepper extends React.Component {
 
                 }
   }
+
+  handleSnackBarClose() {
+    this.setState({openSnackBar: false}) 
+  }
+
   handleValidation(n,field){
         let fields = this.state.fields;
         let fieldTouch = this.state.fieldTouch;
@@ -324,15 +334,17 @@ class HorizontalLinearStepper extends React.Component {
         "start_time":"5:45pm",
         "clubID": localStorage.getItem('clubID')
    }
+   
   var myRef = firebaseDB.ref('/events/').push(newData);
   var key = myRef.key
   firebaseDB.ref('/clubs/'+localStorage.getItem('clubID')+'/my_events/').push(key);
   updateDates(field["start_date"], field["end_date"], filtered)
-
+  this.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true, fields: {}})
   
       console.log(field);
     
       console.log("Submitted form");
+      
     }
 
   getStepContent(stepIndex) {
@@ -524,6 +536,12 @@ class HorizontalLinearStepper extends React.Component {
               >
                 Click here
               </a> to book another room! :)
+          <Snackbar
+          open={this.state.openSnackBar}
+          message={this.state.SnackBarmessage}
+          autoHideDuration={this.state.autoHideDuration}
+          onRequestClose={this.handleSnackBarClose}
+        />
             </div>          ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
