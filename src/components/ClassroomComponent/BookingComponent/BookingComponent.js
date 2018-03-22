@@ -56,7 +56,7 @@ class HorizontalLinearStepper extends React.Component {
            fields: {},
            errors: {},
            finished: false,
-           stepIndex: 2,
+           stepIndex: 0,
            value:1,
            checked: false,
            start_date: null,
@@ -332,6 +332,7 @@ class HorizontalLinearStepper extends React.Component {
         "notes":field["notes"],
         "end_time":"7:45pm",
         "start_time":"5:45pm",
+        "clubName": this.props.user.name,
         "clubID": localStorage.getItem('clubID')
    }
    
@@ -570,8 +571,10 @@ class HorizontalLinearStepper extends React.Component {
 
 function mapStateToProps(state) {
   const {isMobile} = state.toggler
+  const {user} = state.authentication
   return {
-    isMobile
+    isMobile,
+    user
   }
 }
 
