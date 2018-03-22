@@ -172,11 +172,18 @@ export const flagRejectEvent = (event, message, mode, user) => {
       let _mode = mode == 'flag' ? 'flagged' : 'rejected';
       switch(user) {
             case 'FA': {
+                  if(mode == 'rejected') {
+                        firebaseDB.ref('/events/').child(event.key+'/AD_appr').set("prevRejected");
+                        firebaseDB.ref('/events/').child(event.key+'/SO_appr').set("prevRejected");
+                  }
                   firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/FA_msg').set(message);
                   return
             }
             case 'AD': {
+                  if(mode == 'rejected') {
+                        firebaseDB.ref('/events/').child(event.key+'/SO_appr').set("prevRejected");
+                  }
                   firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/AD_msg').set(message);
                   return
