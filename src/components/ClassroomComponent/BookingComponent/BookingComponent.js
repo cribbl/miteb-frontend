@@ -20,6 +20,7 @@ import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
 import firebase from 'firebase'
 import {connect} from 'react-redux'
+import Snackbar from 'material-ui/Snackbar';
 import {fetchRooms, updateDates} from '../../../Services/firebaseDBService'
 
 var moment = require("moment")
@@ -45,6 +46,7 @@ class HorizontalLinearStepper extends React.Component {
 
        super(props);
           this.handleData = this.handleData.bind(this);
+          this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
           const minDate = new Date();
           const maxDate = new Date();
           maxDate.setMonth(maxDate.getMonth() + 1);
@@ -67,6 +69,9 @@ class HorizontalLinearStepper extends React.Component {
            maxDate: maxDate,
            fromChild:'',
            convertedObj:{},
+           SnackBarmessage: '',
+           openSnackBar: false,
+           autoHideDuration: 3000,
        }
        
        this.handleStartDate=this.handleStartDate.bind(this);
@@ -220,6 +225,11 @@ class HorizontalLinearStepper extends React.Component {
 
                 }
   }
+
+  handleSnackBarClose() {
+    this.setState({openSnackBar: false}) 
+  }
+
   handleValidation(n,field){
         let fields = this.state.fields;
         let fieldTouch = this.state.fieldTouch;
@@ -309,9 +319,9 @@ class HorizontalLinearStepper extends React.Component {
         "start_date":moment(field["start_date"]).format('DD-MM-YYYY'),
         "end_date":moment(field["end_date"]).format('DD-MM-YYYY'),
         "roomStatus":filtered,
-        "AD_appr":false,
-        "FA_appr":false,
-        "SO_appr":false,
+        "AD_appr":"NA",
+        "FA_appr":"pending",
+        "SO_appr":"NA",
         "booker_name":field["booker_name"],
         "booker_contact":field["booker_contact"],
         "booker_reg_no":field["booker_reg_no"],
@@ -322,17 +332,20 @@ class HorizontalLinearStepper extends React.Component {
         "notes":field["notes"],
         "end_time":"7:45pm",
         "start_time":"5:45pm",
+        "clubName": this.props.user.name,
         "clubID": localStorage.getItem('clubID')
    }
+   
   var myRef = firebaseDB.ref('/events/').push(newData);
   var key = myRef.key
   firebaseDB.ref('/clubs/'+localStorage.getItem('clubID')+'/my_events/').push(key);
   updateDates(field["start_date"], field["end_date"], filtered)
-
+  this.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true, fields: {}})
   
       console.log(field);
     
       console.log("Submitted form");
+      
     }
 
   getStepContent(stepIndex) {
@@ -525,6 +538,12 @@ class HorizontalLinearStepper extends React.Component {
               >
                 Click here
               </a> to book another room! :)
+          <Snackbar
+          open={this.state.openSnackBar}
+          message={this.state.SnackBarmessage}
+          autoHideDuration={this.state.autoHideDuration}
+          onRequestClose={this.handleSnackBarClose}
+        />
             </div>          ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
@@ -552,8 +571,10 @@ class HorizontalLinearStepper extends React.Component {
 
 function mapStateToProps(state) {
   const {isMobile} = state.toggler
+  const {user} = state.authentication
   return {
-    isMobile
+    isMobile,
+    user
   }
 }
 

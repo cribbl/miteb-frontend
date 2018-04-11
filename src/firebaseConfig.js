@@ -15,7 +15,7 @@ export const firebaseDB = firebase.database();
 export const firebaseAuth = firebase.auth();
 
 // firebaseAuth.onAuthStateChanged(function(user) {
-//     debugger;
+//     ;
 //     if (user) {
 //       return function(dispatch) {
 //         dispatch(login(user))

@@ -22,6 +22,11 @@ import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
+import FlagIcon from 'material-ui/svg-icons/action/report-problem'
+import NAIcon from 'material-ui/svg-icons/action/restore'
+import DashIcon from 'material-ui/svg-icons/content/remove'
+import PendingIcon from 'material-ui/svg-icons/action/bookmark'
+import ReactTooltip from 'react-tooltip'
 
 class MyEventsComponent extends Component {
   constructor(props) {
@@ -29,6 +34,7 @@ class MyEventsComponent extends Component {
     this.showDialog = this.showDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.nextEvent = this.nextEvent.bind(this)
+    this.handleIcon = this.handleIcon.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -42,9 +48,25 @@ class MyEventsComponent extends Component {
       pendingArr: {},
       approvedArr: {},
       dialogOpen: false,
-      currentEvent: {}
+      currentEvent: {},
+      fetching: true
     }
 }
+
+  handleIcon(event, state, msg) {
+    if(state == 'pending')
+      return <PendingIcon style={{color: '#FBC02D'}} hoverColor={'#F57F17'} data-tip="Pending" />
+    if(state == 'approved')
+      return <CheckCircleIcon style={{color: '#558B2F'}} hoverColor={'#33691E'} data-tip="Approved"/>
+    if(state == 'flagged')
+      return <FlagIcon style={{color: '#D50000', cursor: 'pointer'}} onClick={() => {this.showDialog(event)}} data-multiline={true} data-tip={"Flagged - " + msg} hoverColor={'red'}/>
+    if(state == 'rejected')
+      return <CrossCircleIcon style={{color: '#D50000'}} data-tip={"Rejected - " + msg}/>
+    if(state == 'NA')
+      return <NAIcon style={{color: '#00BCD4'}} data-tip="Yet to reach"/>
+    if(state == 'prevRejected')
+      return <DashIcon style={{color: '#b71c1c'}} data-tip="Previously rejected"/>
+  }
 
   showDialog(event) {
     this.setState({dialogOpen: true})
@@ -117,11 +139,11 @@ class MyEventsComponent extends Component {
     
     firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
     function(snapshot) {
-      this.setState({fetching: false})
       let events = snapshot.val().my_events
       for(event in events) {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
+          this.setState({fetching: false})
           // console.log(snapshot.val())
           const {myArrx} = this.state
           myArrx[snapshot.key] = snapshot.val()
@@ -139,9 +161,9 @@ class MyEventsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      {/*<div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
+      <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
-      </div>*/}
+      </div>
 
       <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent}/>
       
@@ -160,7 +182,7 @@ class MyEventsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
+              <TableHeaderColumn data-tip="bha" style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>START DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>FA</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>AD</TableHeaderColumn>
@@ -177,29 +199,15 @@ class MyEventsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
-          {/*
-             Object.values(this.state.myArrx).map(function(event, index) {
-              return(
-                  <TableRow key={index}>
-                    <TableRowColumn>{event.title}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.FA_appr == 'approved' ? <IconButton iconStyle={{color: 'green'}}><CheckCircleIcon /></IconButton> : <IconButton iconStyle={{color: 'red'}}><CrossCircleIcon /></IconButton>}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.AD_appr == 'approved' ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.SO_appr == 'approved' ? <CheckCircleIcon style={{color: 'green'}}/> : <CrossCircleIcon style={{color: 'red'}}/>}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
-                  </TableRow>
-              )}, this)
-          */}
-
           {
              Object.values(this.state.myArrx).map(function(event, index) {
               return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.FA_appr}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.AD_appr}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.SO_appr}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
                     <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
                   </TableRow>
               )}, this)
@@ -208,6 +216,7 @@ class MyEventsComponent extends Component {
           </TableBody>
         </Table>
         </Paper>
+        <ReactTooltip effect="solid"/>
       </div>
     );
   }

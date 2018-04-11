@@ -169,6 +169,8 @@ class CheckboxGroup extends React.Component {
                                                 
                                                     /> 
                                                     </td>
+                                                  </tr>
+                                                   <tr>
                                                      <td>
                                                     <Checkbox id="1" labelPosition="left"  
                                                      label={e + "06"} 
@@ -179,8 +181,6 @@ class CheckboxGroup extends React.Component {
                                                    
                                                     /> 
                                                     </td>
-                                                  </tr>
-                                                   <tr>
                                                    <td>
                                                     <Checkbox id="1" labelPosition="left"  
                                                      label={e + "07"} 
