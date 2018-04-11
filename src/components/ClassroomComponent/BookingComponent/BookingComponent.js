@@ -422,19 +422,19 @@ class HorizontalLinearStepper extends React.Component {
                        />
                        <br/><br/>
                        <div style={{backgroundColor: '', width: '60%', margin: '0 auto'}}>
-                        <RadioButtonGroup
-                           name="Workshop" 
-                           defaultSelected="external"
-                           onChange={this.handleChange.bind(this,"workshop")}>
-                         <RadioButton
-                            value="internal"
-                            label="Internal Workshop"
-                         />
-                         <RadioButton
-                            value="external"
-                            label="External Workshop"
-                         />
-                        </RadioButtonGroup> 
+                          <RadioButtonGroup
+                             name="Workshop" 
+                             defaultSelected="external"
+                             onChange={this.handleChange.bind(this,"workshop")}>
+                           <RadioButton
+                              value="internal"
+                              label="Internal Workshop"
+                           />
+                           <RadioButton
+                              value="external"
+                              label="External Workshop"
+                           />
+                          </RadioButtonGroup> 
                         </div>
       
                </div>);
