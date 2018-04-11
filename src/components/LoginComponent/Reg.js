@@ -29,11 +29,11 @@ class Reg extends Component {
       signup: false,
     }
   // firebaseAuth.onAuthStateChanged(function (user) {
-  //   debugger
+  //   
   //   if(user) {
   //   }
   //   else {
-  //     debugger
+  //     
   //     hashHistory.push('/auth')
   //   }
   // })

@@ -27,7 +27,6 @@ export const fetchUser = (callback) => {
     if (user) {
         getUserDetails(user.uid, (userx) => {
         userx['uid'] = user.uid
-        // console.log('user exists')
         callback(userx)
       })
     } 

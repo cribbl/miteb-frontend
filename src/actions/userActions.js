@@ -23,7 +23,7 @@ function login(email, password) {
                 getUserDetails(result.uid, (user) => {
                     localStorage.setItem('clubID', user.uid)
                     dispatch(success(user));
-                    debugger
+                    
                     hashHistory.push('/dashboard')
                     console.log('USER');
                     console.log(user);
@@ -57,15 +57,15 @@ function getUser() {
     var obj = {};
     var clubID = '';
     return dispatch => {
-        fetchUser(user => {
+        fetchUser(userx => {
             dispatch(sessionCheck(false))
-            if(user) {
-                dispatch(successUser(user))
+            if(userx) {
+                dispatch(successUser(userx))
                 // user is not logged in
                 console.log("User's session exists. Redirecting to /dashboard")
-                clubID = user.uid;
-                if(user.isFA)
-                    clubID = user.clubID;
+                clubID = userx.uid;
+                if(userx.isFA)
+                    clubID = userx.clubID;
                 localStorage.setItem('clubID', clubID)
                 hashHistory.push('/dashboard')
                 getMyEvents(clubID, (key, val) => {
