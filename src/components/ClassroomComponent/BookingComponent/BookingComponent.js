@@ -242,19 +242,15 @@ class HorizontalLinearStepper extends React.Component {
                formIsValid = false;
                errors["booker_name"] = "Cannot be empty";
             
-            }
-
-            //Email
+          }
+          
             if( (!fields["booker_email"] || errors['booker_email'])&& fieldTouch["booker_email"]){
                formIsValid = false;
                errors["booker_email"] = "Cannot be empty";
             
             }
-            if(typeof fields["booker_email"] !== "undefined" ){
-                let lastAtPos = fields["booker_email"].lastIndexOf('@');
-                let lastDotPos = fields["booker_email"].lastIndexOf('.');
-
-                if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["booker_email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["booker_email"].length - lastDotPos) > 2)) {
+            if(typeof fields["booker_email"] !== "undefined" ){                
+            if (!/^(([^[<>()\[\]\\.,;:@"]+(\.[^<>()\[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\.-0-9])+[a-zA-Z]))$/.test(fields["booker_email"])){
                   formIsValid = false;
                   errors["booker_email"] = "Email is not valid";
                 }
@@ -265,12 +261,25 @@ class HorizontalLinearStepper extends React.Component {
                formIsValid = false;
                errors["booker_contact"] = "Cannot be empty";
             }
+            if(typeof fields["booker_contact"]!=="undefined"){
+              if(!/^[0-9]{10}$/.test(fields["booker_contact"])){
+                formIsValid = false;
+                errors["booker_contact"]="Invalid contact number"
+              }
+
+            }
 
             //Registration Number
                if(!fields["booker_reg_no"] && fieldTouch["booker_reg_no"]){
                formIsValid = false;
                errors["booker_reg_no"] = "Cannot be empty";
             }
+             if(typeof fields["booker_reg_no"] !== "undefined" ){                
+              if (!/^1[1-8][0-9]{7}$/.test(fields["booker_reg_no"])){
+                  formIsValid = false;
+                  errors["booker_reg_no"] = "Registration number is not valid";
+                }
+           }
 
          }
         if(n==1)
