@@ -4,9 +4,9 @@ node_js:
 cache:
   directories:
   - node_modules
-before_script:
-  - export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start
+sudo: enabled
 script:
+  - npm install
   - npm run build
 deploy:
   skip_cleanup: true
