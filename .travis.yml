@@ -15,3 +15,5 @@ deploy:
   local_dir: build
   on:
     branch: master
+notifications:
+  slack: miteventbooking:GCnSH8zQZglw0gNxg5yWAUQw
