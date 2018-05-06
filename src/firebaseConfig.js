@@ -16,7 +16,7 @@ export const firebaseAuth = firebase.auth();
 export const firebaseMessaging = firebase.messaging();
 
 firebaseMessaging.onMessage(function(payload) {
-	console.log("Message" + payload);	
+    alert(payload.notification.title);
 })
 // firebaseAuth.onAuthStateChanged(function(user) {
 //     ;
