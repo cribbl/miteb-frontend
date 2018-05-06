@@ -1,5 +1,5 @@
-import {firebaseAuth} from '../firebaseConfig'
-import {getUserDetails} from './firebaseDBService'
+import {firebaseAuth, firebaseMessaging} from '../firebaseConfig'
+import {getUserDetails, updateToken} from './firebaseDBService'
 
 export const authenticateUser = (email, password, callback) => {
     
@@ -28,6 +28,7 @@ export const fetchUser = (callback) => {
         getUserDetails(user.uid, (userx) => {
         userx['uid'] = user.uid
         callback(userx)
+        messaging(user.uid);
       })
     } 
     else {
@@ -35,4 +36,15 @@ export const fetchUser = (callback) => {
       // console.log('user dne')
     }
   });
+}
+
+const messaging = (uid) => {
+  firebaseMessaging.requestPermission().then(function(){
+    console.log("perm granted");
+    return firebaseMessaging.getToken();
+  })
+  .then(function(token) {
+    const data = {[uid]:token}
+    updateToken(data);
+  })
 }
