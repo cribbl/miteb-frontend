@@ -195,3 +195,7 @@ export const flagRejectEvent = (event, message, mode, user) => {
             }
       }
 }
+
+export const updateToken = (data) => {
+      firebaseDB.ref('/fcmTokens').update(data);
+}

@@ -13,7 +13,11 @@ firebase.initializeApp(config);
 
 export const firebaseDB = firebase.database();
 export const firebaseAuth = firebase.auth();
+export const firebaseMessaging = firebase.messaging();
 
+firebaseMessaging.onMessage(function(payload) {
+	console.log("Message" + payload);	
+})
 // firebaseAuth.onAuthStateChanged(function(user) {
 //     ;
 //     if (user) {
