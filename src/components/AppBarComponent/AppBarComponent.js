@@ -11,6 +11,7 @@ import ExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import FaceIcon from 'material-ui/svg-icons/action/face'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import LogoutIcon from 'material-ui/svg-icons/action/exit-to-app'
+import Snackbar from 'material-ui/Snackbar';
 
 import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
@@ -22,7 +23,7 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import axios from 'axios';
 import { Link, hashHistory } from 'react-router'
 import DrawerComponent from './../DrawerComponent/DrawerComponent'
-
+import {notif} from '../../Services/firebaseAuthService'
 import {connect} from 'react-redux'
 import { toggleActions } from '../../actions/toggleActions'
 import { userActions } from '../../actions/userActions'
@@ -50,11 +51,25 @@ class AppBarComponent extends Component {
   constructor (props) {
     super(props)
     this.changeProfileMenu = this.changeProfileMenu.bind(this);
+    this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
         
     this.state = {
-      showMenuIcon: false
+      showMenuIcon: false,
+      SnackBarmessage: '',
+      openSnackBar: false,
+      autoHideDuration: 3000
     }
   }
+  
+  handleSnackBarClose() {
+    this.setState({openSnackBar: false}) 
+  }
+
+  notif(not) {
+    console.log(not);
+    this.setState({SnackBarmessage: 'not', openSnackBar: true})
+  }
+
 
   changeProfileMenu (event) {
     const { dispatch } = this.props;
