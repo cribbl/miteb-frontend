@@ -27,7 +27,7 @@ componentWillReceiveProps(newProps) {
         <Snackbar
           open={this.props.toast_open}
           message={this.props.toast_message}
-          autoHideDuration={300000}
+          autoHideDuration={3000}
           onRequestClose={this.handleSnackBarClose}
         />
       </span>
