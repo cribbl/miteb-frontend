@@ -1,4 +1,7 @@
 import axios from 'axios'
+import {firebaseMessaging} from '../firebaseConfig'
+import {store} from '../store'
+import {toggleActions} from '../actions/toggleActions'
 
 export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=null, text=null, html=null) => {
 
@@ -20,3 +23,7 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 		console.log(err);
 	})
 }
+
+firebaseMessaging.onMessage(function(payload) {
+    store.dispatch(toggleActions.toggleToaster(payload.notification.title, true));
+})
