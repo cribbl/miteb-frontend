@@ -200,12 +200,12 @@ class ProfileComponent extends Component {
             
            <Toggle
             label="Would you like emails after every approval/reject?"
-            defaultToggled={true}
+            defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}
             style={styles.toggle}
            />
             <Toggle
             label="Want instant SMS after every approval/reject?"
-            defaultToggled={true}
+            defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1}
             style={styles.toggle}
            />
 
