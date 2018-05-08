@@ -71,7 +71,7 @@ class ProfileComponent extends Component {
   
   componentWillMount(){
     this.setState({
-      imagePreviewUrl:this.props.user.profilePicURL
+      imagePreviewUrl:this.props.user && this.props.user.profilePicURL
     })
   }
 
@@ -120,7 +120,7 @@ class ProfileComponent extends Component {
         return(
           <div style={{marginLeft:70,textAlign: 'left', color: 'black', width: '100%'}}>
              <h6> Name </h6>
-             <input value={this.props.user.name} style={styles.rinput} />    
+             <input value={this.props.user && this.props.user.name} style={styles.rinput} />    
              <h6> Password </h6>
              <div style={{display:'flex',flexDirection:'Row'}}>
              <input defaultValue="*******" type="password" style={styles.input} required/>
@@ -138,7 +138,7 @@ class ProfileComponent extends Component {
              />
              </div>
              <h6> Email </h6>
-             <input value={this.props.user.email} type="email" style={styles.rinput} required />
+             <input value={this.props.user && this.props.user.email} type="email" style={styles.rinput} required />
            </div>
 
           
