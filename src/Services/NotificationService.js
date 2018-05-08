@@ -24,6 +24,29 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 	})
 }
 
+export const sendNotification = (token, payload) => {
+
+	let params = {
+		token: token,
+		payload: {
+	        notification: {
+	          title: 'My Title',
+	          body: 'Message body',
+	          icon: 'https://laracasts.com/images/series/circles/do-you-react.png'
+	        }
+	    }
+    };
+
+    axios.post('http://localhost:9000/send-notif', params)
+	.then(function(resp) {
+		console.log(resp);
+	})
+	.catch(function(err) {
+		console.log(err);
+	})
+
+}
+
 firebaseMessaging.onMessage(function(payload) {
     store.dispatch(toggleActions.toggleToaster(payload.notification.title, true));
 })
