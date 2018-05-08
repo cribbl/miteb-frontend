@@ -140,6 +140,9 @@ class MyEventsComponent extends Component {
     firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
     function(snapshot) {
       let events = snapshot.val().my_events
+      if(!events) {
+          this.setState({fetching: false})
+      }
       for(event in events) {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
@@ -182,7 +185,7 @@ class MyEventsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn data-tip="bha" style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
+              <TableHeaderColumn data-tip="" style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>START DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>FA</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>AD</TableHeaderColumn>
@@ -200,7 +203,7 @@ class MyEventsComponent extends Component {
           {this.state.fetching && <CircularProgress />}
 
           {
-             Object.values(this.state.myArrx).map(function(event, index) {
+             Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
               return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
@@ -210,7 +213,7 @@ class MyEventsComponent extends Component {
                     <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
                     <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
                   </TableRow>
-              )}, this)
+              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>No Events Yet</p>
           }
           
           </TableBody>
