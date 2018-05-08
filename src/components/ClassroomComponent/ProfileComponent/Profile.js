@@ -6,6 +6,8 @@ import firebase from 'firebase'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import {getUserDetails} from '../../../Services/firebaseDBService'
+import {sendPasswordResetEmail} from '../../../Services/firebaseAuthService'
+
 import {connect} from 'react-redux'
 import Avatar from 'material-ui/Avatar'
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -64,7 +66,8 @@ class ProfileComponent extends Component {
         file: '',
         imagePreviewUrl: '',
         slideIndex: 0,
-         open: false
+         open: false,
+         message: ""
       };
        
     }
@@ -75,11 +78,15 @@ class ProfileComponent extends Component {
     })
   }
 
-  handleClick = () => {
-    this.setState({
-      open: true,
-    });
+  handleResetClick = () => {
+    sendPasswordResetEmail(this.props.user.email, (err, res) => {
+      let msg = "Password reset email sent";
+      if(err)
+        msg="Password reset email couldn't be send" + err;
+      this.setState({open: true, message: msg})
+    })
   };
+
 
   handleRequestClose = () => {
     this.setState({
@@ -126,13 +133,13 @@ class ProfileComponent extends Component {
              <input defaultValue="*******" type="password" style={styles.input} required/>
              <RaisedButton
                label="Reset"
-               onClick={this.handleClick}
+               onClick={this.handleResetClick}
                style={{float:'right'}}
                primary={true}
              />
              <Snackbar
               open={this.state.open}
-              message="Confirmation mail has been sent! :-)"
+              message={this.state.message}
               autoHideDuration={4000}
               onRequestClose={this.handleRequestClose}
              />
