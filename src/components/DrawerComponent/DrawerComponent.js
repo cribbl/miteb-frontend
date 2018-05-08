@@ -13,6 +13,9 @@ import IconNews from 'material-ui/svg-icons/action/info'
 import IconUpdates from 'material-ui/svg-icons/action/update'
 import IconSettings from 'material-ui/svg-icons/action/settings'
 import IconHelp from 'material-ui/svg-icons/action/help'
+import IconProfile from 'material-ui/svg-icons/social/person'
+
+
 
 import {connect} from 'react-redux'
 import {toggleActions} from '../../actions/toggleActions'
@@ -94,6 +97,11 @@ class DrawerComponent extends Component {
                 key="/dashboard/myEvents"
                 primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
+             <MenuItem
+                style={Object.assign(this.state.menuIndex == 3 ? active:'', menuItemStyle)}
+                key="/dashboard/profile_section"
+                primaryText="Profile"
+                leftIcon={<IconProfile color={'#FFFFFF'} />} />
             
           </Menu>
         </Drawer>

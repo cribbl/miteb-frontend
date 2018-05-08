@@ -62,7 +62,7 @@ class AD_EventsComponent extends Component {
   
   approve(event) {
     let scope = this;
-    approveEvent(event, 'AD')
+    approveEvent(event, 'AD', this.props.user)
     const {myArrx} = scope.state
     delete myArrx[event.key]
     scope.setState({myArrx})
@@ -78,7 +78,7 @@ class AD_EventsComponent extends Component {
 
   flagReject(event, message, mode) {
     let scope = this;
-    flagRejectEvent(event, message, mode, 'AD')
+    flagRejectEvent(event, message, mode, 'AD', this.props.user)
     const {myArrx} = scope.state
     delete myArrx[event.key]
     scope.setState({myArrx})
