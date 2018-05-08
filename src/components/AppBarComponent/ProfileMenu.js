@@ -60,7 +60,7 @@ class ProfileMenu extends Component {
           animation={PopoverAnimationVertical}>
           <Menu onItemClick={this.menuItemClicked} style={{maxWidth: 350}}>
           {this.props.user &&
-            <MenuItem key="/classroom/profile">
+            <MenuItem key="/dashboard/profile">
             <Hihi />
             </MenuItem>
           }

@@ -99,7 +99,7 @@ class DrawerComponent extends Component {
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
              <MenuItem
                 style={Object.assign(this.state.menuIndex == 3 ? active:'', menuItemStyle)}
-                key="/dashboard/profile_section"
+                key="/dashboard/profile"
                 primaryText="Profile"
                 leftIcon={<IconProfile color={'#FFFFFF'} />} />
             
