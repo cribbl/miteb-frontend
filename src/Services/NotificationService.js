@@ -47,6 +47,21 @@ export const sendNotification = (token, payload) => {
 
 }
 
+export const getNotificationRequestPermission = (uid) => {
+  firebaseMessaging.requestPermission()
+  .then(function(){
+    console.log("perm granted");
+    return firebaseMessaging.getToken();
+  })
+  .then(function(token) {
+    const data = {[uid]:token}
+    updateToken(data);
+  })
+  .catch(function() {
+    console.log("permission denied for push notifications");
+  })
+}
+
 firebaseMessaging.onMessage(function(payload) {
     store.dispatch(toggleActions.toggleToaster(payload.notification.title, true));
 })

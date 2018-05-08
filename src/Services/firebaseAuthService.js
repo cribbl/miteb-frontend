@@ -28,7 +28,7 @@ export const fetchUser = (callback) => {
         getUserDetails(user.uid, (userx) => {
         userx['uid'] = user.uid
         callback(userx)
-        messaging(user.uid);
+        messaging(user.uid); // request permission for notifications
       })
     } 
     else {
@@ -39,7 +39,8 @@ export const fetchUser = (callback) => {
 }
 
 const messaging = (uid) => {
-  firebaseMessaging.requestPermission().then(function(){
+  firebaseMessaging.requestPermission()
+  .then(function(){
     console.log("perm granted");
     return firebaseMessaging.getToken();
   })
@@ -47,4 +48,19 @@ const messaging = (uid) => {
     const data = {[uid]:token}
     updateToken(data);
   })
+  .catch(function() {
+    console.log("permission denied for push notifications");
+  })
+}
+
+const getNotificationPermissionState = () => {
+  navigator.permissions.query({name:'notifications'})
+  .then(function(permissionStatus) {
+    console.log('notifications permission status is ', permissionStatus.state);
+    
+    permissionStatus.onchange = function() {
+      console.log('notifications permission status has changed to ', this.state);
+    };
+    
+  });
 }
