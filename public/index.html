@@ -18,8 +18,10 @@
   <script>
     if('serviceWorker' in navigator) {
       navigator.serviceWorker.register('%PUBLIC_URL%/firebase-messaging-sw.js')
-        .then(function() {
+        .then(function(registration) {
               console.log('Service Worker Registered');
+              console.log(registration);
+              // now go to firebaseAuthService to requestPermission()
         });
     }
 </script>
