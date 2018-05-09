@@ -72,6 +72,10 @@ class HorizontalLinearStepper extends React.Component {
            SnackBarmessage: '',
            openSnackBar: false,
            autoHideDuration: 3000,
+           notificationSettings: {
+            email:{app:1,rej:1,fla:1},
+            sms:{app:1,rej:1,fla:1}
+           }
        }
        
        this.handleStartDate=this.handleStartDate.bind(this);
@@ -303,6 +307,8 @@ class HorizontalLinearStepper extends React.Component {
         return formIsValid;
    }
   handleSubmit=()=>{
+      let notificationSettings=this.state.notificationSettings;
+      console.log(notificationSettings);
       let field=this.state.fields;
       let start__date=this.state.start_date;
       let end__date=this.state.end_date;
@@ -342,7 +348,8 @@ class HorizontalLinearStepper extends React.Component {
         "end_time":"7:45pm",
         "start_time":"5:45pm",
         "clubName": this.props.user.name,
-        "clubID": localStorage.getItem('clubID')
+        "clubID": localStorage.getItem('clubID'),
+        "notificationSettings": notificationSettings
    }
    
   var myRef = firebaseDB.ref('/events/').push(newData);
@@ -497,7 +504,7 @@ class HorizontalLinearStepper extends React.Component {
                            title="Building" 
                            actAsExpander={true}
                            showExpandableButton={true}
-                           style={{padding:"3"}}
+                           style={{padding:3}}
                        
                             />
                             <CardText expandable={true}> 
@@ -547,12 +554,12 @@ class HorizontalLinearStepper extends React.Component {
               >
                 Click here
               </a> to book another room! :)
-          <Snackbar
-          open={this.state.openSnackBar}
-          message={this.state.SnackBarmessage}
-          autoHideDuration={this.state.autoHideDuration}
-          onRequestClose={this.handleSnackBarClose}
-        />
+              <Snackbar
+              open={this.state.openSnackBar}
+              message={this.state.SnackBarmessage}
+              autoHideDuration={this.state.autoHideDuration}
+              onRequestClose={this.handleSnackBarClose}
+              />
             </div>          ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
