@@ -209,7 +209,6 @@ class ProfileComponent extends Component {
               </Tab>
         <Tab label="Notification" value={1}>
           
-            <h2 style={styles.headline}>Customize your settings!</h2>
               
               <List>
                 <Subheader>Email Notification Settings</Subheader>
