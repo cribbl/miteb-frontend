@@ -233,7 +233,7 @@ class ProfileComponent extends Component {
                     <List style={{marginLeft:20}}>
                       <Subheader>Email Notifications</Subheader> 
                       <ListItem
-                        rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}  />}
+                        rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} onToggle={this.handleEmailToggle}/>}
                         primaryText="Every Stage"
                         secondaryText="Otherwise, only at final approval"
                       />
@@ -241,7 +241,7 @@ class ProfileComponent extends Component {
 
                       <Subheader>SMS Notifications</Subheader> 
                       <ListItem
-                        rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
+                        rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} onToggle={this.handleSMSToggle} />}
                         primaryText="Every Stage"
                         secondaryText="Otherwise, only at final approval"
                       />
