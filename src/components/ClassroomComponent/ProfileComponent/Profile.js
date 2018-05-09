@@ -226,24 +226,24 @@ class ProfileComponent extends Component {
                 />
                 <ListItem
                   rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
-                  primaryText="Security Guard"
+                  primaryText="Security Officer"
                   secondaryText="notify at SO's response"
                 />
 
                 </div>
                 <ListItem
-                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  leftCheckbox={<Checkbox checked={this.props.user && this.props.user.notificationSettings.email == 1} />}
                   primaryText="Approval"
                  
                   
                 />
                 <ListItem
-                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}/>}
+                  leftCheckbox={<Checkbox checked={this.props.user && this.props.user.notificationSettings.email == 1}/>}
                   primaryText="Reject"
                   
                 />
                 <ListItem
-                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  leftCheckbox={<Checkbox checked={this.props.user && this.props.user.notificationSettings.email == 1} />}
                   primaryText="Flag"
                   
                 />
@@ -265,24 +265,24 @@ class ProfileComponent extends Component {
                 />
                 <ListItem
                   rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
-                  primaryText="Security Guard"
+                  primaryText="Security Officer"
                   secondaryText="notify at SO's response"
                 />
 
                 </div>
                 <ListItem
-                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
+                  leftCheckbox={<Checkbox checked={this.props.user && this.props.user.notificationSettings.sms == 1} />}
                   primaryText="Approval"
                   
                   
                 />
                 <ListItem
-                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1}/>}
+                  leftCheckbox={<Checkbox checked={this.props.user && this.props.user.notificationSettings.sms == 1}/>}
                   primaryText="Reject"
                   
                 />
                 <ListItem
-                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
+                  leftCheckbox={<Checkbox checked={this.props.user && this.props.user.notificationSettings.sms == 1} />}
                   primaryText="Flag"
                   
                 />
