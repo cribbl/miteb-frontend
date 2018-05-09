@@ -210,7 +210,7 @@ class ProfileComponent extends Component {
         <Tab label="Notification" value={1}>
           
               
-              <List>
+              <List style = {{marginLeft:20}}>
                 <Subheader>Email Notification Settings</Subheader>
                 <div style={styles.root}>
                 <ListItem
