@@ -150,6 +150,10 @@ class ProfileComponent extends Component {
 
         console.log('state',this.state.notificationSettings)
     };
+
+    handleChangesButton = () => {
+      console.log('saved!');
+    }
  
     render() {
       const TextFields=()=>{
@@ -246,6 +250,7 @@ class ProfileComponent extends Component {
                   <RaisedButton label="Save Changes"
                 primary={true}
                 style={{marginLeft:20}}
+                onClick={this.handleChangesButton}
                 />
                 </div>
             
