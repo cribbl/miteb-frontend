@@ -20,11 +20,9 @@ import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox';
 //import SwipeableViews from 'react-swipeable-views';
 
+
+
 const styles = {
-   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
  headline: {
     fontSize: 24,
     paddingTop: 16,
@@ -74,7 +72,11 @@ class ProfileComponent extends Component {
         imagePreviewUrl: '',
         slideIndex: 0,
          open: false,
-         message: ""
+         message: "",
+          notificationSettings: {
+            email:{app:1,rej:1,fla:1},
+            sms:{app:1,rej:1,fla:1}
+           }
       };
        
     }
@@ -89,7 +91,7 @@ class ProfileComponent extends Component {
     sendPasswordResetEmail(this.props.user.email, (err, res) => {
       let msg = "Password reset email sent";
       if(err)
-        msg="Password reset email couldn't be send" + err;
+        msg="Password reset email couldn't be sent" + err;
       this.setState({open: true, message: msg})
     })
   };
@@ -104,6 +106,7 @@ class ProfileComponent extends Component {
   _handleSubmit(e) {
     e.preventDefault();
     console.log('uploading')
+    console.log(this.props.user)
     var newProfilePicURL=this.state.imagePreviewUrl;
     this.props.user.profilePicURL=newProfilePicURL;
   }
@@ -178,7 +181,7 @@ class ProfileComponent extends Component {
                 initialSelectedIndex={1}
              >
               <Tab label="Profile" value={0}>
-                <div>
+              <center>
                    <div className="col-md-5" style={{margin:10}}>
                      <div  style={{display:'flex', flexDirection:'row'}}>        
                       <ProfilePicture/>
@@ -199,42 +202,32 @@ class ProfileComponent extends Component {
                        />
                     </div>   
                   </div>
+                </center>
+              </Tab>
+              <Tab label="Notification" value={1}>
+                <div>
+                  <div style={styles.root}> 
+                    <List style={{marginLeft:20}}>
+                      <Subheader>Email Notifications</Subheader> 
+                      <ListItem
+                        rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}  />}
+                        primaryText="Every Stage"
+                        secondaryText="Otherwise, only at final approval"
+                      />
+                   </List>
+                   <List style={{marginLeft:20}}>
+                      <Subheader>SMS Notifications</Subheader>
+                   
+                      <ListItem
+                        rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
+                        primaryText="Every Stage"
+                        secondaryText="Otherwise, only at final approval"
+                      />
+                  </List>
+                 </div>
                 </div>
               </Tab>
-        <Tab label="Notification" value={1}>
-          <div>
-       
-
-            <div style={styles.root}> 
-            <List style={{marginLeft:20}}>
-              <Subheader>Email Notifications</Subheader>
-            
-              <ListItem
-                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}  />}
-                primaryText="Every Stage"
-                secondaryText="Otherwise, only at final approval"
-              />
-           </List>
-           <List style={{marginLeft:20}}>
-              <Subheader>SMS Notifications</Subheader>
-           
-              <ListItem
-                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
-                primaryText="Every Stage"
-                secondaryText="Otherwise, only at final approval"
-              />
-           </List>
-
-
-          </div>
-          
-
-          
-          </div>
-        </Tab>
-      </Tabs>
-          
-            
+             </Tabs>
             </Paper>
            
           

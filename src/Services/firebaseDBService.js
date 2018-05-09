@@ -25,6 +25,7 @@ export const getMyEvents = (clubId, callback) => {
 	function(snapshot) {
 		// console.log('outer snapshot')
             let user = snapshot.val();
+            user['uid'] = snapshot.key;
             store.dispatch({type: "USER_UPDATE", user})
 		let events = snapshot.val().my_events
 		if(!events) {
