@@ -166,7 +166,7 @@ class ProfileComponent extends Component {
       return (
       <div style={{display: 'flex'}}>
         <div>
-        <Avatar src={this.state.imagePreviewUrl} size={300} />
+        <Avatar src={this.state.imagePreviewUrl} size={160} />
         </div>     
       </div>
       )
@@ -184,7 +184,7 @@ class ProfileComponent extends Component {
               <center>
                    <div className="col-md-5" style={{margin:10}}>
                      <div  style={{display:'flex', flexDirection:'row'}}>        
-                      <ProfilePicture/>
+                      <ProfilePicture />
                       <TextFields />
                     </div>
                     <div className="preview">
@@ -205,7 +205,7 @@ class ProfileComponent extends Component {
                 </center>
               </Tab>
               <Tab label="Notification" value={1}>
-                <div>
+                <div style={{width: this.props.isMobile ? '100%':'50%', margin: '0px auto'}}>
                   <div style={styles.root}> 
                     <List style={{marginLeft:20}}>
                       <Subheader>Email Notifications</Subheader> 
@@ -214,10 +214,9 @@ class ProfileComponent extends Component {
                         primaryText="Every Stage"
                         secondaryText="Otherwise, only at final approval"
                       />
-                   </List>
-                   <List style={{marginLeft:20}}>
-                      <Subheader>SMS Notifications</Subheader>
-                   
+                      <Divider />
+
+                      <Subheader>SMS Notifications</Subheader> 
                       <ListItem
                         rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
                         primaryText="Every Stage"
