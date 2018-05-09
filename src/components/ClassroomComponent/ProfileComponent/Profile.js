@@ -73,12 +73,11 @@ class ProfileComponent extends Component {
         slideIndex: 0,
          open: false,
          message: "",
-          notificationSettings: {
-            email:{app:1,rej:1,fla:1},
-            sms:{app:1,rej:1,fla:1}
+         notificationSettings: {
+           'email':this.props.user&&this.props.user.notificationSettings.email,
+           'sms':this.props.user &&this.props.user.notificationSettings.sms
            }
       };
-       
     }
   
   componentWillMount(){
@@ -131,6 +130,26 @@ class ProfileComponent extends Component {
       slideIndex: value,
     });
   };
+    handleEmailToggle = () => {
+      let notificationSettings= this.state.notificationSettings;
+      console.log(notificationSettings)
+      notificationSettings['email']=notificationSettings['email']? 0:1;
+
+      this.setState({
+        notificationSettings: notificationSettings
+      });
+    };
+     handleSMSToggle = () => {
+     let notificationSettings= this.state.notificationSettings;
+      console.log(notificationSettings)
+      notificationSettings['sms']=notificationSettings['sms']? 0:1;
+
+      this.setState({
+        notificationSettings: notificationSettings
+      });
+
+        console.log('state',this.state.notificationSettings)
+    };
  
     render() {
       const TextFields=()=>{
@@ -224,7 +243,12 @@ class ProfileComponent extends Component {
                       />
                   </List>
                  </div>
+                  <RaisedButton label="Save Changes"
+                primary={true}
+                style={{marginLeft:20}}
+                />
                 </div>
+            
               </Tab>
              </Tabs>
             </Paper>
