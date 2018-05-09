@@ -15,9 +15,17 @@ import Slider from 'material-ui/Slider';
 import Divider from 'material-ui/Divider';
 import Toggle from 'material-ui/Toggle';
 import Snackbar from 'material-ui/Snackbar';
+import {List, ListItem} from 'material-ui/List';
+import Checkbox from 'material-ui/Checkbox';
+import Subheader from 'material-ui/Subheader';
 //import SwipeableViews from 'react-swipeable-views';
 
 const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+
+  },
  headline: {
     fontSize: 24,
     paddingTop: 16,
@@ -67,7 +75,11 @@ class ProfileComponent extends Component {
         imagePreviewUrl: '',
         slideIndex: 0,
          open: false,
-         message: ""
+         message: "",
+          notificationSettings: {
+            email:{app:1,rej:1,fla:1},
+            sms:{app:1,rej:1,fla:1}
+           }
       };
        
     }
@@ -82,7 +94,7 @@ class ProfileComponent extends Component {
     sendPasswordResetEmail(this.props.user.email, (err, res) => {
       let msg = "Password reset email sent";
       if(err)
-        msg="Password reset email couldn't be send" + err;
+        msg="Password reset email couldn't be sent" + err;
       this.setState({open: true, message: msg})
     })
   };
@@ -97,6 +109,7 @@ class ProfileComponent extends Component {
   _handleSubmit(e) {
     e.preventDefault();
     console.log('uploading')
+    console.log(this.props.user)
     var newProfilePicURL=this.state.imagePreviewUrl;
     this.props.user.profilePicURL=newProfilePicURL;
   }
@@ -164,14 +177,14 @@ class ProfileComponent extends Component {
       return (
         <div>    
 
-            <Paper style={{width: '80%', height:500, overflow: 'hidden',marginTop:0,position:'relative'}} zDepth={3}>
+            <Paper style={{width: '100%', height:'100%', overflow: 'hidden',marginTop:0,position:'relative'}} zDepth={3}>
              <Tabs
                 onChange={this.handleChange}
                 value={this.state.slideIndex}
                 initialSelectedIndex={1}
              >
               <Tab label="Profile" value={0}>
-                <div>
+              <center>
                    <div className="col-md-5" style={{margin:10}}>
                      <div  style={{display:'flex', flexDirection:'row'}}>        
                       <ProfilePicture/>
@@ -192,25 +205,93 @@ class ProfileComponent extends Component {
                        />
                     </div>   
                   </div>
-                </div>
+                </center>
               </Tab>
         <Tab label="Notification" value={1}>
-          <div>
-            <h2 style={styles.headline}>Customize your settings!</h2>
-            
-           <Toggle
-            label="Would you like emails after every approval/reject?"
-            defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}
-            style={styles.toggle}
-           />
-            <Toggle
-            label="Want instant SMS after every approval/reject?"
-            defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1}
-            style={styles.toggle}
-           />
-
           
-          </div>
+            <h2 style={styles.headline}>Customize your settings!</h2>
+              
+              <List>
+                <Subheader>Email Notification Settings</Subheader>
+                <div style={styles.root}>
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  primaryText="Associate Director"
+                  secondaryText="notify at AD's response"
+                  
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}/>}
+                  primaryText="Faculty Advisor"
+                  secondaryText="notify at FA's response"
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  primaryText="Security Guard"
+                  secondaryText="notify at SO's response"
+                />
+
+                </div>
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  primaryText="Approval"
+                 
+                  
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}/>}
+                  primaryText="Reject"
+                  
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  primaryText="Flag"
+                  
+                />
+              </List>
+
+               <List style={{marginLeft:20}}>
+                <Subheader>SMS Notification Settings</Subheader>
+                 <div style={styles.root}>
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  primaryText="Associate Director"
+                  secondaryText="notify at AD's response"
+                  
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}/>}
+                  primaryText="Faculty Advisor"
+                  secondaryText="notify at FA's response"
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} />}
+                  primaryText="Security Guard"
+                  secondaryText="notify at SO's response"
+                />
+
+                </div>
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
+                  primaryText="Approval"
+                  
+                  
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1}/>}
+                  primaryText="Reject"
+                  
+                />
+                <ListItem
+                  rightToggle={<Toggle  defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
+                  primaryText="Flag"
+                  
+                />
+              </List>
+
+             
+          
+        
         </Tab>
       </Tabs>
           
