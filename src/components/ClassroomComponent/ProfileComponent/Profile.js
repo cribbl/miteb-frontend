@@ -15,9 +15,16 @@ import Slider from 'material-ui/Slider';
 import Divider from 'material-ui/Divider';
 import Toggle from 'material-ui/Toggle';
 import Snackbar from 'material-ui/Snackbar';
+import {List,ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader'
+import Checkbox from 'material-ui/Checkbox';
 //import SwipeableViews from 'react-swipeable-views';
 
 const styles = {
+   root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
  headline: {
     fontSize: 24,
     paddingTop: 16,
@@ -164,7 +171,7 @@ class ProfileComponent extends Component {
       return (
         <div>    
 
-            <Paper style={{width: '80%', height:500, overflow: 'hidden',marginTop:0,position:'relative'}} zDepth={3}>
+            <Paper style={{width: '100%', height:'100%', overflow: 'hidden',marginTop:0,position:'relative'}} zDepth={3}>
              <Tabs
                 onChange={this.handleChange}
                 value={this.state.slideIndex}
@@ -196,18 +203,31 @@ class ProfileComponent extends Component {
               </Tab>
         <Tab label="Notification" value={1}>
           <div>
-            <h2 style={styles.headline}>Customize your settings!</h2>
+       
+
+            <div style={styles.root}> 
+            <List style={{marginLeft:20}}>
+              <Subheader>Email Notifications</Subheader>
             
-           <Toggle
-            label="Would you like emails after every approval/reject?"
-            defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}
-            style={styles.toggle}
-           />
-            <Toggle
-            label="Want instant SMS after every approval/reject?"
-            defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1}
-            style={styles.toggle}
-           />
+              <ListItem
+                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1}  />}
+                primaryText="Every Stage"
+                secondaryText="Otherwise, only at final approval"
+              />
+           </List>
+           <List style={{marginLeft:20}}>
+              <Subheader>SMS Notifications</Subheader>
+           
+              <ListItem
+                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} />}
+                primaryText="Every Stage"
+                secondaryText="Otherwise, only at final approval"
+              />
+           </List>
+
+
+          </div>
+          
 
           
           </div>
