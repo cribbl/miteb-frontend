@@ -3,6 +3,7 @@ import moment from 'moment'
 import {store} from '../store'
 import {sendEmail} from './NotificationService'
 
+
 export const getUserDetails = (clubId, callback) => {
       if(!clubId) {
             console.log('return since no clubId')
@@ -207,4 +208,15 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
                   return
             }
       }
+}
+
+export const updateNotificationSettings=(data) => {
+      var clubID = localStorage.getItem('clubID');
+      firebaseDB.ref('/clubs/'+clubID).child('/notificationSettings/').set(newData);
+
+}
+
+export const updateProfilePicURL=(data)=>{
+      var clubID = localStorage.getItem('clubID')
+      firebaseDB.ref('/clubs/'+clubID).child('/profilePicURL/').set(newData);
 }

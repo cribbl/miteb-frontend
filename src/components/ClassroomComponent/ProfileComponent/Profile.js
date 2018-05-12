@@ -3,6 +3,8 @@ import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
 
 import firebase from 'firebase'
+import updateNotificationSettings from '../../../Services/firebaseDBService';
+import updateProfilePicURL from '../../../Services/firebaseDBService';
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
@@ -109,8 +111,7 @@ class ProfileComponent extends Component {
     console.log(this.props.user)
     var newProfilePicURL=this.state.imagePreviewUrl;
     var newData= newProfilePicURL;
-    var clubID = localStorage.getItem('clubID')
-    firebaseDB.ref('/clubs/'+clubID).child('/profilePicURL/').set(newData);
+    profilePicURL(newData);
 
   }
 
@@ -128,9 +129,9 @@ class ProfileComponent extends Component {
     }
      
     reader.readAsDataURL(file)
-  }
+   }
     handleChange = (value) => {
-    this.setState({
+     this.setState({
       slideIndex: value,
     });
   };
@@ -143,7 +144,7 @@ class ProfileComponent extends Component {
         notificationSettings: notificationSettings
       });
     };
-     handleSMSToggle = () => {
+    handleSMSToggle = () => {
      let notificationSettings= this.state.notificationSettings;
       console.log(notificationSettings)
       notificationSettings['sms']=notificationSettings['sms']? 0:1;
@@ -151,12 +152,16 @@ class ProfileComponent extends Component {
       this.setState({
         notificationSettings: notificationSettings
       });
-
-        console.log('state',this.state.notificationSettings)
     };
 
     handleChangesButton = () => {
       console.log('saved!');
+      var notificationSettings=this.state.notificationSettings;
+      var newData=notificationSettings;
+      updateNotificationSettings(newData);
+
+        
+
     }
  
     render() {
