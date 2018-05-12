@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
-import RaisedButton from 'material-ui/RaisedButton'
+
 import firebase from 'firebase'
+import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import {getUserDetails} from '../../../Services/firebaseDBService'
@@ -107,7 +108,10 @@ class ProfileComponent extends Component {
     console.log('uploading')
     console.log(this.props.user)
     var newProfilePicURL=this.state.imagePreviewUrl;
-    this.props.user.profilePicURL=newProfilePicURL;
+    var newData= newProfilePicURL;
+    var clubID = localStorage.getItem('clubID')
+    firebaseDB.ref('/clubs/'+clubID).child('/profilePicURL/').set(newData);
+
   }
 
   _handleImageChange(e) {
