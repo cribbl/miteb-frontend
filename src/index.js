@@ -41,7 +41,7 @@ ReactDOM.render(
             <Route path="adEvents" component={AD_EventsComponent}></Route>
             <Route path="soEvents" component={SO_EventsComponent}></Route>
             <Route path="book_room" component={BookingComponent}></Route>
-            <Route path="profile_section" component={ProfileComponent}></Route>
+            <Route path="profile" component={ProfileComponent}></Route>
         </Route>
     	</Route>
     </Router>
