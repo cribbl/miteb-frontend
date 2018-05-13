@@ -215,8 +215,3 @@ export const updateNotificationSettings=(data) => {
       firebaseDB.ref('/clubs/'+clubID).child('/notificationSettings/').set(newData);
 
 }
-
-export const updateProfilePicURL=(data)=>{
-      var clubID = localStorage.getItem('clubID')
-      firebaseDB.ref('/clubs/'+clubID).child('/profilePicURL/').set(newData);
-}

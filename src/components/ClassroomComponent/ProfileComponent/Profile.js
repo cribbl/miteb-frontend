@@ -4,7 +4,6 @@ import {firebaseDB} from '../../../firebaseConfig'
 
 import firebase from 'firebase'
 import updateNotificationSettings from '../../../Services/firebaseDBService';
-import updateProfilePicURL from '../../../Services/firebaseDBService';
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
@@ -71,7 +70,7 @@ class ProfileComponent extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        file: '',
+        file: this.props.user && this.props.user.profilePicURL,
         imagePreviewUrl: '',
         slideIndex: 0,
          open: false,
@@ -109,10 +108,16 @@ class ProfileComponent extends Component {
     e.preventDefault();
     console.log('uploading')
     console.log(this.props.user)
+    var file =this.state.file;
+    console.log('fie',file);
     var newProfilePicURL=this.state.imagePreviewUrl;
     var newData= newProfilePicURL;
-    profilePicURL(newData);
+    var clubID = localStorage.getItem('clubID')
+    firebaseDB.ref('/clubs/'+clubID).child('/profilePicURL/').set(newData);
+    var storageRef=firebase.storage().ref('profilepictures/'+clubID+'/'+file.name);
+    var task = storageRef.put(file);
 
+    
   }
 
   _handleImageChange(e) {
