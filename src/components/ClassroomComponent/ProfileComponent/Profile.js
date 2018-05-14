@@ -168,7 +168,7 @@ class ProfileComponent extends Component {
     render() {
       const TextFields=()=>{
         return(
-          <div style={{backgroundColor: '', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '70%'}}>
+          <div style={{backgroundColor: '', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%'}}>
              <TextField
               floatingLabelText="Name"
               type="text"
@@ -176,20 +176,24 @@ class ProfileComponent extends Component {
               />
 
             <TextField
+              floatingLabelText="Name Abbreviation"
+              type="text"
+              value={this.props.user && this.props.user.nameAbbrv}
+              />
+
+            <TextField
               floatingLabelText="Email"
               type="text"
               value={this.props.user && this.props.user.email}
+              disabled={true}
               />
-            <RaisedButton
-              label ="Upload"
-              type="submit"
-              onClick={(e)=>this._handleSubmit(e)}
-              primary={true}
-              style={{width: '30%'}}
-              />
-           </div>
 
-          
+            <TextField
+              floatingLabelText="Primary Contact"
+              type="text"
+              value={this.props.user && this.props.user.primaryContact}
+              />
+           </div>   
           )
       }
 
@@ -197,7 +201,7 @@ class ProfileComponent extends Component {
       return (
       <div style={{display: 'flex'}}>
         <div>
-        <Avatar src={this.state.imagePreviewUrl} size={160}  onClick={this.handlePicUpload}/>
+        <Avatar src={this.state.imagePreviewUrl} size={160} onClick={this.handlePicUpload}/>
         </div>     
       </div>
       )
@@ -212,16 +216,30 @@ class ProfileComponent extends Component {
                 initialSelectedIndex={1}
              >
               <Tab label="Profile" value={0}>
-                   <div style={{background: '', width: '80%', padding: 10}}>
-                     <div style={{display:'flex', flexDirection:'row', justifyContent: 'space-around'}}>
-                      <ProfilePicture />
-                      <TextFields />
-                      <input ref={input => this.inputElement = input} type="file" id="media-upload" onChange={(e)=>this._handleImageChange(e)} accept="video/*,image/*" style={{display: 'none'}}/>
+                  <Paper zDepth={3} style={{height: 420, display: 'flex', justifyContent: 'center', width: '100%', padding: 10}}>
+                    
+                    <div style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
+                       <div style={{display:'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-around', alignItems: this.props.isMobile ? 'center': '', width: '80%', backgroundColor: ''}}>
+                        <ProfilePicture />
+                        <TextFields />
+                        <input ref={input => this.inputElement = input} type="file" id="media-upload" onChange={(e)=>this._handleImageChange(e)} accept="video/*,image/*" style={{display: 'none'}}/>
+                      </div>
+                    
+                      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <p>Note: An OTP will be sent to the Primary Contact</p>
+                        <RaisedButton
+                          label="Save Changes"
+                          primary={true}
+                          onClick={this.handleChangesButton}
+                          style={{width: '70%'}}
+                        />
+                      </div>
                     </div>
-                  </div>
+                </Paper>
               </Tab>
               
               <Tab label="Notification" value={1}>
+              <Paper zDepth={3} style={{height: 420, display: 'flex', justifyContent: 'center'}}>
                 <div style={{width: this.props.isMobile ? '100%':'50%', margin: '0px auto'}}>
                   <div style={styles.root}> 
                     <List style={{marginLeft:20}}>
@@ -247,6 +265,7 @@ class ProfileComponent extends Component {
                     />
                  </div>
                 </div>
+                </Paper>
             
               </Tab>
              </Tabs>
