@@ -68,6 +68,7 @@ const styles = {
 class ProfileComponent extends Component {
     constructor(props) {
       super(props);
+      this.handlePicUpload = this.handlePicUpload.bind(this);
       this.state = {
         file: '',
         imagePreviewUrl: '',
@@ -85,6 +86,10 @@ class ProfileComponent extends Component {
     this.setState({
       imagePreviewUrl:this.props.user && this.props.user.profilePicURL
     })
+  }
+
+  handlePicUpload() {
+    this.inputElement.click()
   }
 
   handleResetClick = () => {
@@ -129,6 +134,7 @@ class ProfileComponent extends Component {
      
     reader.readAsDataURL(file)
   }
+
     handleChange = (value) => {
     this.setState({
       slideIndex: value,
@@ -162,27 +168,25 @@ class ProfileComponent extends Component {
     render() {
       const TextFields=()=>{
         return(
-          <div style={{marginLeft:70,textAlign: 'left', color: 'black', width: '100%'}}>
-             <h6> Name </h6>
-             <input value={this.props.user && this.props.user.name} style={styles.rinput} />    
-             <h6> Password </h6>
-             <div style={{display:'flex',flexDirection:'Row'}}>
-             <input defaultValue="*******" type="password" style={styles.input} required/>
-             <RaisedButton
-               label="Reset"
-               onClick={this.handleResetClick}
-               style={{float:'right'}}
-               primary={true}
-             />
-             <Snackbar
-              open={this.state.open}
-              message={this.state.message}
-              autoHideDuration={4000}
-              onRequestClose={this.handleRequestClose}
-             />
-             </div>
-             <h6> Email </h6>
-             <input value={this.props.user && this.props.user.email} type="email" style={styles.rinput} required />
+          <div style={{backgroundColor: '', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '70%'}}>
+             <TextField
+              floatingLabelText="Name"
+              type="text"
+              value={this.props.user && this.props.user.name}
+              />
+
+            <TextField
+              floatingLabelText="Email"
+              type="text"
+              value={this.props.user && this.props.user.email}
+              />
+            <RaisedButton
+              label ="Upload"
+              type="submit"
+              onClick={(e)=>this._handleSubmit(e)}
+              primary={true}
+              style={{width: '30%'}}
+              />
            </div>
 
           
@@ -193,44 +197,30 @@ class ProfileComponent extends Component {
       return (
       <div style={{display: 'flex'}}>
         <div>
-        <Avatar src={this.state.imagePreviewUrl} size={160} />
+        <Avatar src={this.state.imagePreviewUrl} size={160}  onClick={this.handlePicUpload}/>
         </div>     
       </div>
       )
       }
       return (
-        <div>    
-
-            <Paper style={{width: '100%', height:'100%', overflow: 'hidden',marginTop:0,position:'relative'}} zDepth={3}>
+        <div style={{display: 'flex', justifyContent: 'center', padding: 15}}>    
+            <Paper style={{background: '', width: '90%', height: '500px', display: 'flex', justifyContent: 'center'}} zDepth={0}>
+            <div style={{width: '100%', margin: '0 auto'}}>
              <Tabs
                 onChange={this.handleChange}
                 value={this.state.slideIndex}
                 initialSelectedIndex={1}
              >
               <Tab label="Profile" value={0}>
-              <center>
-                   <div className="col-md-5" style={{margin:10}}>
-                     <div  style={{display:'flex', flexDirection:'row'}}>        
+                   <div style={{background: '', width: '80%', padding: 10}}>
+                     <div style={{display:'flex', flexDirection:'row', justifyContent: 'space-around'}}>
                       <ProfilePicture />
                       <TextFields />
+                      <input ref={input => this.inputElement = input} type="file" id="media-upload" onChange={(e)=>this._handleImageChange(e)} accept="video/*,image/*" style={{display: 'none'}}/>
                     </div>
-                    <div className="preview">
-                       <input className="fileInput" 
-                        type="file" 
-                        onChange={(e)=>this._handleImageChange(e)} 
-                       />
-                       <RaisedButton label ="Upload" 
-                           type="submit"
-                           onClick={(e)=>this._handleSubmit(e)}
-                           id="submit" 
-                           name="submit"
-                           primary={true}
-                           style={{marginTop:50,float:'right'}}
-                       />
-                    </div>   
                   </div>
-                </center>
               </Tab>
+              
               <Tab label="Notification" value={1}>
                 <div style={{width: this.props.isMobile ? '100%':'50%', margin: '0px auto'}}>
                   <div style={styles.root}> 
@@ -250,16 +240,17 @@ class ProfileComponent extends Component {
                         secondaryText="Otherwise, only at final approval"
                       />
                   </List>
+                    <RaisedButton label="Save Changes"
+                      primary={true}
+                      style={{marginLeft:20}}
+                      onClick={this.handleChangesButton}
+                    />
                  </div>
-                  <RaisedButton label="Save Changes"
-                primary={true}
-                style={{marginLeft:20}}
-                onClick={this.handleChangesButton}
-                />
                 </div>
             
               </Tab>
              </Tabs>
+             </div>
             </Paper>
            
           
