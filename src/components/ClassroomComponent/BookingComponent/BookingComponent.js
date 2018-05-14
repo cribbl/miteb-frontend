@@ -4,6 +4,7 @@ import {
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper';
+import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -26,20 +27,6 @@ import {fetchRooms, updateDates} from '../../../Services/firebaseDBService'
 var moment = require("moment")
 var ab5="5"
 var nlh="3"
-
-const styles = {
-  customWidth: {
-    width: 210,
-  },
-   block: {
-    maxWidth: 250,
-    display:"flex",
-    flexDirection:"row",
-  },
-  checkbox: {
-    marginBottom: 16,
-  },
-};
  
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
@@ -373,6 +360,7 @@ class HorizontalLinearStepper extends React.Component {
                             required
 
                             />
+                            <br />
 
                        <TextField
                            floatingLabelText="Email"
@@ -384,6 +372,7 @@ class HorizontalLinearStepper extends React.Component {
                            errorStyle={{position: 'absolute', bottom: -8}}
                            required 
                            />
+                           <br />
 
                        <TextField
                            floatingLabelText="Contact Number" 
@@ -395,6 +384,7 @@ class HorizontalLinearStepper extends React.Component {
                             errorStyle={{position: 'absolute', bottom: -8}}
                             required
                             />
+                            <br />
 
                        <TextField
                            floatingLabelText="Registration Number" 
@@ -406,6 +396,7 @@ class HorizontalLinearStepper extends React.Component {
                            errorStyle={{position: 'absolute', bottom: -8}}
                            required
                            />
+                           <br />
                 </div>);
       case 1:
           return (<div>  
@@ -419,6 +410,7 @@ class HorizontalLinearStepper extends React.Component {
                          errorStyle={{position: 'absolute', bottom: -8}}
                          required
                         />
+                        <br />
                        <TextField 
                          style={{textAlign: 'left'}}
                          floatingLabelText="Event Description" 
@@ -431,6 +423,7 @@ class HorizontalLinearStepper extends React.Component {
                          errorStyle={{position: 'absolute', bottom: -8}}
                          required
                        />
+                       <br />
                          <TextField 
                          multiLine={true}
                          style={{textAlign: 'left'}}
@@ -442,9 +435,10 @@ class HorizontalLinearStepper extends React.Component {
                          errorStyle={{position: 'absolute', bottom: -8}}
                          required
                        />
-                       <br/><br/>
+                       <br />
+                       
                        <div style={{backgroundColor: '', width: '60%', margin: '0 auto'}}>
-                          <RadioButtonGroup
+                          <RadioButtonGroup style={{marginTop:40}}
                              name="Workshop" 
                              defaultSelected="external"
                              onChange={this.handleChange.bind(this,"workshop")}>
@@ -452,11 +446,14 @@ class HorizontalLinearStepper extends React.Component {
                               value="internal"
                               label="Internal Workshop"
                            />
+                           
                            <RadioButton
                               value="external"
                               label="External Workshop"
                            />
+
                           </RadioButtonGroup> 
+                          <br />
                         </div>
       
                </div>);
@@ -518,10 +515,11 @@ class HorizontalLinearStepper extends React.Component {
   render() {
    
     const {finished, stepIndex} = this.state;
-    const contentStyle = {backgroundColor: '', width: this.props.isMobile ? '100%' : '50%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}
+    const contentStyle = {backgroundColor: '', width: this.props.isMobile ? '100%' : '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}
     
     return (
-      <div style={{width: '100%', maxWidth: 700,margin:'auto', backgroundColor: '', display: 'flex', flexDirection: 'column'}}>
+      <div>
+      <Paper style={{width: '98%', height: 700, margin: 10}} zDepth={2}>
         <Stepper linear={false} activeStep={stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>Booker Details</StepLabel>
@@ -556,12 +554,12 @@ class HorizontalLinearStepper extends React.Component {
             </div>          ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
-              <div style={{marginTop: 12}}>
+              <div style={{marginTop: 20}}>
                 <FlatButton
                   label="Back"
                   hidden={stepIndex === 0}
                   onClick={this.handlePrev}
-                  style={{marginRight: 12}}
+                  style={{marginRight:50}}
                 />
                 <RaisedButton
                   label={stepIndex === 2 ? 'Finish' : 'Next'}
@@ -573,6 +571,7 @@ class HorizontalLinearStepper extends React.Component {
             </div>
           )}
         </div>
+        </Paper>
       </div>
     );
   }
