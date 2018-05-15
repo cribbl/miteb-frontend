@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import {getUserDetails} from '../../../Services/firebaseDBService'
 import {sendPasswordResetEmail} from '../../../Services/firebaseAuthService'
-
+import {red500,indigo500} from 'material-ui/styles/colors';
 import {connect} from 'react-redux'
 import Avatar from 'material-ui/Avatar'
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -20,57 +20,22 @@ import Snackbar from 'material-ui/Snackbar';
 import {List,ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox';
+import IconProfile from 'material-ui/svg-icons/social/person'
+import IconPassword from 'material-ui/svg-icons/action/lock'
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
+import IconUpload from 'material-ui/svg-icons/file/cloud-upload';
+import IconButton from 'material-ui/IconButton';
 //import SwipeableViews from 'react-swipeable-views';
 
 
 
 const styles = {
- headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
- block: {
-    width: 1000,
-    height:50,
-    display: 'flex'
- },
- text:{
-  marginLeft:20,
-  borderStyle:'solid',
-  borderRadius: 3
- },
- input:{
-  boxSizing: 'borderBox',
-  position: 'relative',
-  lineHeight: 'normal',
-  padding: 5,
-  backgroundColor: '#fff',
-  color: 'inherit',
-  borderRadius: 2,
-  borderStyle:'solid'
- },
- rinput:{
-  boxSizing: 'borderBox',
-  position: 'relative',
-  lineHeight: 'normal',
-  padding: 5,
-  backgroundColor: '#eee',
-  color: 'inherit',
-  borderRadius: 2,
-  borderStyle:'solid'
- },
-   toggle: {
-    marginBottom: 16,
-  }
-};
-
+}
 class ProfileComponent extends Component {
     constructor(props) {
       super(props);
-      this.state = {
-        file: this.props.user && this.props.user.profilePicURL,
+     this.state = {
+        file: '',
         imagePreviewUrl: '',
         slideIndex: 0,
          open: false,
@@ -78,17 +43,17 @@ class ProfileComponent extends Component {
          notificationSettings: {
            'email':this.props.user&&this.props.user.notificationSettings.email,
            'sms':this.props.user &&this.props.user.notificationSettings.sms
-           }
+           },
+        dialogOpen: false,
+        userDetails: this.props.user
       };
     }
-  
-  componentWillMount(){
+   componentWillMount(){
     this.setState({
       imagePreviewUrl:this.props.user && this.props.user.profilePicURL
     })
   }
-
-  handleResetClick = () => {
+   handleResetClick = () => {
     sendPasswordResetEmail(this.props.user.email, (err, res) => {
       let msg = "Password reset email sent";
       if(err)
@@ -96,15 +61,12 @@ class ProfileComponent extends Component {
       this.setState({open: true, message: msg})
     })
   };
-
-
-  handleRequestClose = () => {
+   handleRequestClose = () => {
     this.setState({
       open: false,
     });
   };
-
-  _handleSubmit(e) {
+   _handleSubmit(e) {
     e.preventDefault();
     console.log('uploading')
     console.log(this.props.user)
@@ -117,10 +79,9 @@ class ProfileComponent extends Component {
     var storageRef=firebase.storage().ref('profilepictures/'+clubID+'/'+file.name);
     var task = storageRef.put(file);
 
-    
-  }
 
-  _handleImageChange(e) {
+  }
+   _handleImageChange(e) {
     e.preventDefault();
 
     let reader = new FileReader();
@@ -132,7 +93,7 @@ class ProfileComponent extends Component {
         imagePreviewUrl: reader.result
       });
     }
-     
+
     reader.readAsDataURL(file)
    }
     handleChange = (value) => {
@@ -158,94 +119,111 @@ class ProfileComponent extends Component {
         notificationSettings: notificationSettings
       });
     };
-
     handleChangesButton = () => {
       console.log('saved!');
       var notificationSettings=this.state.notificationSettings;
       var newData=notificationSettings;
       updateNotificationSettings(newData);
 
-        
+
 
     }
- 
+    handlePicUpload = () =>  {
+        this.inputElement.click()
+    }
+   showDialog = () => {
+     var scope = this;
+     requestOTP(this.props.user.uid, this.props.user.primaryContact, (err) => {
+       if(err) {
+         return
+       }
+       scope.setState({dialogOpen: true});
+     })
+    }
+   handleDialogClose = () => {
+   this.setState({dialogOpen: false})
+ }
     render() {
       const TextFields=()=>{
         return(
-          <div style={{marginLeft:70,textAlign: 'left', color: 'black', width: '100%'}}>
-             <h6> Name </h6>
-             <input value={this.props.user && this.props.user.name} style={styles.rinput} />    
-             <h6> Password </h6>
-             <div style={{display:'flex',flexDirection:'Row'}}>
-             <input defaultValue="*******" type="password" style={styles.input} required/>
-             <RaisedButton
-               label="Reset"
-               onClick={this.handleResetClick}
-               style={{float:'right'}}
-               primary={true}
-             />
-             <Snackbar
-              open={this.state.open}
-              message={this.state.message}
-              autoHideDuration={4000}
-              onRequestClose={this.handleRequestClose}
-             />
-             </div>
-             <h6> Email </h6>
-             <input value={this.props.user && this.props.user.email} type="email" style={styles.rinput} required />
-           </div>
+          <div style={{padding:20,textAlign: 'left', color: 'black', width: '100%'}}>
+             <List>
+                 <ListItem
+                   leftIcon={<IconProfile color={indigo500} />}
+                  primaryText={this.props.user && this.props.user.name}
+                   secondaryText="DummyClubAbr"
+                 />
+                 <ListItem
+                   leftIcon={<IconPassword color={indigo500} />}
+                   primaryText="Password"
+                   secondaryText="Click to reset"
+                   onClick={this.handleResetClick}
+                 />
+                <ListItem
+                  leftIcon={<CommunicationEmail color={indigo500} />}
+                  primaryText="Email"
+                  secondaryText={this.props.user && this.props.user.email}
+                />
+            </List>
+            <Snackbar
+               open={this.state.open}
+               message={this.state.message}
+               autoHideDuration={4000}
+               onRequestClose={this.handleRequestClose}
+            />
+          </div>
 
-          
+
           )
       }
 
       const ProfilePicture = () => {
-      return (
-      <div style={{display: 'flex'}}>
-        <div>
-        <Avatar src={this.state.imagePreviewUrl} size={160} />
-        </div>     
-      </div>
-      )
+        return (
+          <div style={{display: 'flex', padding:20}}>
+            <div>
+            <Avatar src={this.state.imagePreviewUrl} size={160} onClick={this.handlePicUpload}/>
+            </div>
+
+    </div>
+        )
       }
       return (
-        <div>    
+        <div style={{display: 'flex', justifyContent: 'center', padding: 15}}>
 
-            <Paper style={{width: '100%', height:'100%', overflow: 'hidden',marginTop:0,position:'relative'}} zDepth={3}>
+            <Paper style= {{background: '', width: '90%', height: '500px', display: 'flex', justifyContent: 'center'}}   zDepth={3}>
+            <div style = {{width: '100%', margin: '0 auto'}}>
              <Tabs
                 onChange={this.handleChange}
                 value={this.state.slideIndex}
                 initialSelectedIndex={1}
              >
               <Tab label="Profile" value={0}>
-              <center>
-                   <div className="col-md-5" style={{margin:10}}>
-                     <div  style={{display:'flex', flexDirection:'row'}}>        
-                      <ProfilePicture />
-                      <TextFields />
+                     <div  style={{display:'flex', flexDirection:'row'}}>
+                        <TextFields />
+                        <input ref={input => this.inputElement = input} type="file" id="media-upload" onChange={(e)=>this._handleImageChange(e)} accept="video/*,image/*" style={{display: 'none'}}/>
+                        <ProfilePicture />
+                        <IconButton type ="submit"
+                            onClick={(e)=>this._handleSubmit(e)}
+                            id="submit"
+                            name="submit"
+                            primary={true}
+                            style={{float:'right',marginRight:20}}
+                            tooltip="Upload"
+                            tooltipPosition="bottom-right"
+                            touch={true}
+                          >
+                          <IconUpload color={indigo500}
+                             hoverColor={red500}/>
+                          </IconButton>
+
                     </div>
-                    <div className="preview">
-                       <input className="fileInput" 
-                        type="file" 
-                        onChange={(e)=>this._handleImageChange(e)} 
-                       />
-                       <RaisedButton label ="Upload" 
-                           type="submit"
-                           onClick={(e)=>this._handleSubmit(e)}
-                           id="submit" 
-                           name="submit"
-                           primary={true}
-                           style={{marginTop:50,float:'right'}}
-                       />
-                    </div>   
-                  </div>
-                </center>
+
               </Tab>
               <Tab label="Notification" value={1}>
                 <div style={{width: this.props.isMobile ? '100%':'50%', margin: '0px auto'}}>
-                  <div style={styles.root}> 
+                  <div style={styles.root}>
                     <List style={{marginLeft:20}}>
-                      <Subheader>Email Notifications</Subheader> 
+                      <Subheader>Email Notifications</Subheader>
                       <ListItem
                         rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} onToggle={this.handleEmailToggle}/>}
                         primaryText="Every Stage"
@@ -253,7 +231,7 @@ class ProfileComponent extends Component {
                       />
                       <Divider />
 
-                      <Subheader>SMS Notifications</Subheader> 
+                      <Subheader>SMS Notifications</Subheader>
                       <ListItem
                         rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} onToggle={this.handleSMSToggle} />}
                         primaryText="Every Stage"
@@ -267,12 +245,13 @@ class ProfileComponent extends Component {
                 onClick={this.handleChangesButton}
                 />
                 </div>
-            
+
               </Tab>
              </Tabs>
+             </div>
             </Paper>
-           
-          
+
+
         </div>
       )
     }
