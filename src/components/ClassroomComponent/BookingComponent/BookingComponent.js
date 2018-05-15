@@ -348,7 +348,7 @@ class HorizontalLinearStepper extends React.Component {
 
     switch (stepIndex) {
       case 0:
-        return (<div>   
+        return (<div style = {{marginBottom: 60}}>   
                        <TextField
                             floatingLabelText="Name"
                             type="text" 
@@ -415,7 +415,7 @@ class HorizontalLinearStepper extends React.Component {
                          style={{textAlign: 'left'}}
                          floatingLabelText="Event Description" 
                          multiLine={true}
-                         rows={2}
+                         rows={1}
                          rowsMax={this.props.isMobile ? 3 : 5}
                          key={2}
                          type="text"
@@ -428,7 +428,7 @@ class HorizontalLinearStepper extends React.Component {
                        <br />
                          <TextField 
                          multiLine={true}
-                         rows={2}
+                         rows={1}
                          rowsMax={this.props.isMobile ? 3 : 5}
                          style={{textAlign: 'left'}}
                          floatingLabelText="Notes" 
@@ -442,18 +442,20 @@ class HorizontalLinearStepper extends React.Component {
                        <br />
                        
                        <div style={{backgroundColor: '', width: '60%', margin: '0 auto'}}>
-                          <RadioButtonGroup style={{marginTop:40}}
+                          <RadioButtonGroup style={{marginTop: 40}}
                              name="Workshop" 
                              defaultSelected="external"
                              onChange={this.handleChange.bind(this,"workshop")}>
                            <RadioButton
                               value="internal"
                               label="Internal Workshop"
+                              style={{marginBottom:30, textAlign:'left'}}
                            />
                            
                            <RadioButton
                               value="external"
                               label="External Workshop"
+                               style={{marginBottom:20, textAlign:'left'}}
                            />
 
                           </RadioButtonGroup> 
@@ -462,7 +464,7 @@ class HorizontalLinearStepper extends React.Component {
       
                </div>);
       case 2:  {var self=this}
-        return (<div className="locationContainer"> 
+        return (<div className="locationContainer" style={{marginBottom:30}}> 
                       <div className="row" style={{ display: "flex" , margin:"auto", width: '50%', flexDirection: this.props.isMobile ? 'column' : 'row', backgroundColor: ''}}>                             
                          <DatePicker 
                            floatingLabelText="Start"
@@ -519,12 +521,12 @@ class HorizontalLinearStepper extends React.Component {
   render() {
    
     const {finished, stepIndex} = this.state;
-    const contentStyle = {backgroundColor: '', width: this.props.isMobile ? '100%' : '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}
+    const contentStyle = {backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}
     
     return (
       <div>
       <center>
-      <Paper style={{width: '75%', height: '100%', margin: 'auto', marginTop: '5%'}} zDepth={3}>
+      <Paper style={{width: '75%', height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%'}} zDepth={3}>
         <Stepper linear={false} activeStep={stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>Booker Details</StepLabel>
@@ -559,12 +561,12 @@ class HorizontalLinearStepper extends React.Component {
             </div>          ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
-              <div style={{marginTop: 20}}>
+              <div style={{marginBottom:20}}>
                 <FlatButton
                   label="Back"
                   hidden={stepIndex === 0}
                   onClick={this.handlePrev}
-                  style={{marginRight:50}}
+                  style={{marginRight:80}}
                 />
                 <RaisedButton
                   label={stepIndex === 2 ? 'Finish' : 'Next'}
