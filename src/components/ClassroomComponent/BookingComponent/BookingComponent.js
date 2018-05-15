@@ -194,7 +194,7 @@ class HorizontalLinearStepper extends React.Component {
   day(day){
     return false;
    }
-   handleEmptyValidation(n){
+  handleEmptyValidation(n){
       let fields =this.state.fields;
                  if(n==0) {
                    
@@ -415,6 +415,8 @@ class HorizontalLinearStepper extends React.Component {
                          style={{textAlign: 'left'}}
                          floatingLabelText="Event Description" 
                          multiLine={true}
+                         rows={2}
+                         rowsMax={this.props.isMobile ? 3 : 5}
                          key={2}
                          type="text"
                          onChange={this.handleChange.bind(this, "desc")} 
@@ -426,6 +428,8 @@ class HorizontalLinearStepper extends React.Component {
                        <br />
                          <TextField 
                          multiLine={true}
+                         rows={2}
+                         rowsMax={this.props.isMobile ? 3 : 5}
                          style={{textAlign: 'left'}}
                          floatingLabelText="Notes" 
                          type="text"
@@ -519,7 +523,8 @@ class HorizontalLinearStepper extends React.Component {
     
     return (
       <div>
-      <Paper style={{width: '98%', height: 700, margin: 10}} zDepth={2}>
+      <center>
+      <Paper style={{width: '75%', height: '100%', margin: 'auto', marginTop: '5%'}} zDepth={3}>
         <Stepper linear={false} activeStep={stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>Booker Details</StepLabel>
@@ -572,6 +577,7 @@ class HorizontalLinearStepper extends React.Component {
           )}
         </div>
         </Paper>
+        </center>
       </div>
     );
   }
