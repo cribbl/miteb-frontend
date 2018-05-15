@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import {getUserDetails} from '../../../Services/firebaseDBService'
 import {sendPasswordResetEmail} from '../../../Services/firebaseAuthService'
+import {requestOTP} from '../../../Services/NotificationService'
 
 import {connect} from 'react-redux'
 import Avatar from 'material-ui/Avatar'
@@ -19,6 +20,8 @@ import Snackbar from 'material-ui/Snackbar';
 import {List,ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox';
+
+import OtpDialog from '../../Dialogs/OtpDialog'
 //import SwipeableViews from 'react-swipeable-views';
 
 
@@ -40,27 +43,7 @@ const styles = {
   borderStyle:'solid',
   borderRadius: 3
  },
- input:{
-  boxSizing: 'borderBox',
-  position: 'relative',
-  lineHeight: 'normal',
-  padding: 5,
-  backgroundColor: '#fff',
-  color: 'inherit',
-  borderRadius: 2,
-  borderStyle:'solid'
- },
- rinput:{
-  boxSizing: 'borderBox',
-  position: 'relative',
-  lineHeight: 'normal',
-  padding: 5,
-  backgroundColor: '#eee',
-  color: 'inherit',
-  borderRadius: 2,
-  borderStyle:'solid'
- },
-   toggle: {
+  toggle: {
     marginBottom: 16,
   }
 };
@@ -68,7 +51,6 @@ const styles = {
 class ProfileComponent extends Component {
     constructor(props) {
       super(props);
-      this.handlePicUpload = this.handlePicUpload.bind(this);
       this.state = {
         file: '',
         imagePreviewUrl: '',
@@ -78,7 +60,9 @@ class ProfileComponent extends Component {
          notificationSettings: {
            'email':this.props.user&&this.props.user.notificationSettings.email,
            'sms':this.props.user &&this.props.user.notificationSettings.sms
-           }
+           },
+        dialogOpen: false,
+        userDetails: this.props.user
       };
     }
   
@@ -88,8 +72,22 @@ class ProfileComponent extends Component {
     })
   }
 
-  handlePicUpload() {
+  handlePicUpload = () => {
     this.inputElement.click()
+  }
+
+  showDialog = () => {
+    var scope = this;
+    requestOTP(this.props.user.uid, this.props.user.primaryContact, (err) => {
+      if(err) {
+        return
+      }
+      scope.setState({dialogOpen: true});
+    })
+  }
+
+  handleDialogClose = () => {
+    this.setState({dialogOpen: false})
   }
 
   handleResetClick = () => {
@@ -116,7 +114,6 @@ class ProfileComponent extends Component {
     var newData= newProfilePicURL;
     var clubID = localStorage.getItem('clubID')
     firebaseDB.ref('/clubs/'+clubID).child('/profilePicURL/').set(newData);
-
   }
 
   _handleImageChange(e) {
@@ -162,7 +159,7 @@ class ProfileComponent extends Component {
     };
 
     handleChangesButton = () => {
-      console.log('saved!');
+
     }
  
     render() {
@@ -207,7 +204,7 @@ class ProfileComponent extends Component {
       )
       }
       return (
-        <div style={{display: 'flex', justifyContent: 'center', padding: 15}}>    
+        <div style={{display: 'flex', justifyContent: 'center', padding: 15}}>
             <Paper style={{background: '', width: '90%', height: '500px', display: 'flex', justifyContent: 'center'}} zDepth={0}>
             <div style={{width: '100%', margin: '0 auto'}}>
              <Tabs
@@ -216,7 +213,7 @@ class ProfileComponent extends Component {
                 initialSelectedIndex={1}
              >
               <Tab label="Profile" value={0}>
-                  <Paper zDepth={3} style={{height: 420, display: 'flex', justifyContent: 'center', width: '100%', padding: 10}}>
+                  <Paper zDepth={3} style={{height:'calc(100% - 1px)', display: 'flex', justifyContent: 'center', width: '100%', padding: 10}}>
                     
                     <div style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
                        <div style={{display:'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-around', alignItems: this.props.isMobile ? 'center': '', width: '80%', backgroundColor: ''}}>
@@ -228,9 +225,9 @@ class ProfileComponent extends Component {
                       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <p>Note: An OTP will be sent to the Primary Contact</p>
                         <RaisedButton
-                          label="Save Changes"
+                          label="Request OTP"
                           primary={true}
-                          onClick={this.handleChangesButton}
+                          onClick={this.showDialog}
                           style={{width: '70%'}}
                         />
                       </div>
@@ -272,6 +269,7 @@ class ProfileComponent extends Component {
              </div>
             </Paper>
            
+           <OtpDialog open={this.state.dialogOpen} userDetails={this.state.userDetails} handleClose={this.handleDialogClose}/>
           
         </div>
       )
