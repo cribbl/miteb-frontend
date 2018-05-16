@@ -77,6 +77,10 @@ class MyEventsComponent extends Component {
     this.setState({dialogOpen: false})
   }
 
+  my_function() {
+    // this is to write the code for search bar
+  }
+
   nextEvent() {
     let keys = Object.keys(this.state.myArrx)
     let pos = keys.indexOf(this.state.currentEvent.key) + 1
