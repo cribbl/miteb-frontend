@@ -3,6 +3,7 @@ import moment from 'moment'
 import {store} from '../store'
 import {sendEmail} from './NotificationService'
 
+
 export const getUserDetails = (clubId, callback) => {
       if(!clubId) {
             console.log('return since no clubId')
@@ -24,6 +25,9 @@ export const getMyEvents = (clubId, callback) => {
 	firebaseDB.ref('/clubs/' + clubId).on('value',
 	function(snapshot) {
 		// console.log('outer snapshot')
+            let user = snapshot.val();
+            user['uid'] = snapshot.key;
+            store.dispatch({type: "USER_UPDATE", user})
 		let events = snapshot.val().my_events
 		if(!events) {
 			callback(null, null)
@@ -204,4 +208,10 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
                   return
             }
       }
+}
+
+export const updateNotificationSettings=(data) => {
+      var clubID = localStorage.getItem('clubID');
+      firebaseDB.ref('/clubs/'+clubID).child('/notificationSettings/').set(newData);
+
 }
