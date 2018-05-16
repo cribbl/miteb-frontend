@@ -438,7 +438,7 @@ class HorizontalLinearStepper extends React.Component {
                 <RadioButton
                   value="internal"
                   label="Internal Workshop"
-                  style={{marginBottom:30, textAlign:'left'}}
+                  style={{textAlign:'left'}}
                 />
                    
                 <RadioButton
@@ -482,15 +482,15 @@ class HorizontalLinearStepper extends React.Component {
           </div>        
           <br/>
           <Card style= {{marginTop: 30}}>
-            <CardHeader 
+            <CardHeader
               title="Building" 
               actAsExpander={true}
               showExpandableButton={true}
-              style={{padding:"3"}}
+              style={{padding:"3",marginLeft: '27%'}}
          
               />
             <CardText expandable={true}> 
-              <CheckboxGroup style={{padding:"0", width: '100%', maxWidth: 1000}} handlerFromParent={this.handleData}
+              <CheckboxGroup style={{padding:"0",width:'100%', maxWidth: 1000}} handlerFromParent={this.handleData}
                 a={this.state.roomStatusArray}
               />       
                      
@@ -512,7 +512,7 @@ class HorizontalLinearStepper extends React.Component {
     return (
       <div>
       <center>
-        <Paper style={{width: '75%', height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%'}} zDepth={3}>
+        <Paper style={{width: this.props.isMobile? '98%':'75%' , height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%'}} zDepth={3}>
           <Stepper linear={false} activeStep={stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'}>
             <Step>
               <StepLabel>Booker Details</StepLabel>
@@ -552,7 +552,7 @@ class HorizontalLinearStepper extends React.Component {
                     label="Back"
                     hidden={stepIndex === 0}
                     onClick={this.handlePrev}
-                    style={{marginRight:80}}
+                    style={{marginRight:60}}
                   />
                   <RaisedButton
                     label={stepIndex === 2 ? 'Finish' : 'Next'}

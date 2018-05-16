@@ -99,6 +99,7 @@ class CheckboxGroup extends React.Component {
                                          
                                                     /> 
                                                     </td>
+
                                                      <td>
                                                     <Checkbox id="1" labelPosition="left"  
                                                      label={f + "05"} 
