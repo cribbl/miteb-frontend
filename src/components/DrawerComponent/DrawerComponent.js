@@ -79,25 +79,25 @@ class DrawerComponent extends Component {
 
           <Menu style={menuStyle} onItemClick={this.menuItemClicked}>
 
-            <Link to = "/dashboard"><MenuItem
+            <Link to = "/ashboard"><MenuItem
                 style={Object.assign(this.state.menuIndex == 0 ? active:'', menuItemStyle)}
                 key="/dashboard"
                 primaryText="Dashboard"
                 leftIcon={<IconDashboard color={'#FFFFFF'} />} /></Link>
 
-            <Link to = "/book_room"><MenuItem
+            <Link to = "book_room"><MenuItem
                 style={Object.assign(this.state.menuIndex == 1 ? active:'', menuItemStyle)}
                 key="/dashboard/book_room"
                 primaryText="Room Booking"
                 leftIcon={<IconTest color={'#FFFFFF'} />}
                 hidden={this.props.user && !this.props.user.isClub} /></Link>
 
-            <Link to = "/myEvents"><MenuItem
+            <Link to = "myEvents"><MenuItem
                 style={Object.assign(this.state.menuIndex == 2 ? active:'', menuItemStyle)}
                 key="/dashboard/myEvents"
                 primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} /></Link>
-            <Link to = "/Profile"><MenuItem
+            <Link to = "profile"><MenuItem
                 style={Object.assign(this.state.menuIndex == 3 ? active:'', menuItemStyle)}
                 key="/dashboard/profile"
                 primaryText="Profile"
