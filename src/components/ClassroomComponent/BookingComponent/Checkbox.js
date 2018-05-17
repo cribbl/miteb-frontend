@@ -98,9 +98,8 @@ class CheckboxGroup extends React.Component {
                                                      checked={self.state.roomCode[nlh+f+"04"]}
                                          
                                                     /> 
-                                                    </td>
-
-                                                     <td>
+                                                  </td>
+                                                  <td>
                                                     <Checkbox id="1" labelPosition="left"  
                                                      label={f + "05"} 
                                                      style={{display: self.state.roomStatus[nlh+f+"05"]? 'none' : 'styles.checkbox'}}
@@ -109,7 +108,7 @@ class CheckboxGroup extends React.Component {
                                                      checked={self.state.roomCode[nlh+f+"05"]}
                                                     
                                                     /> 
-                                                    </td>
+                                                  </td>
                                               </tr>
                                             </div>
                                   })}
