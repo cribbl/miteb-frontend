@@ -79,7 +79,7 @@ class DrawerComponent extends Component {
 
           <Menu style={menuStyle} onItemClick={this.menuItemClicked}>
 
-            <Link to = "/ashboard"><MenuItem
+            <Link to = "/dashboard"><MenuItem
                 style={Object.assign(this.state.menuIndex == 0 ? active:'', menuItemStyle)}
                 key="/dashboard"
                 primaryText="Dashboard"

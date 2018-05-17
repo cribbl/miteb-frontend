@@ -158,11 +158,12 @@ class CheckboxGroup extends React.Component {
                                                      checked={self.state.roomCode[ab5+e+"04"]}
                                                      hidden={self.state.roomStatus[ab5+e+"04"]}
                                                     /> 
-                                                    </td>
-                                                     <td>
+                                                  </td>
+                                                     
+                                                  <td>
                                                     <Checkbox id="1" labelPosition="left"  
                                                      label={e + "05"} 
-                                                   style={{display: self.state.roomStatus[ab5+e+"05"]? 'none' : 'styles.checkbox'}}
+                                                     style={{display: self.state.roomStatus[ab5+e+"05"]? 'none' : 'styles.checkbox'}}
                                                      disabled={self.state.roomStatus[ab5+e+"05"]}
                                                      onCheck={ () => self.updateCheck(ab5,e+"05")}
                                                      checked={self.state.roomCode[ab5+e+"05"]}
