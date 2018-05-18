@@ -34,14 +34,14 @@ ReactDOM.render(
     			<IndexRoute component={LoginComponent} />
     			<Route path="signin" component={LoginComponent}></Route>
     		</Route>
-        <Route path="/dashboard" component={ClassroomComponent}>
+        <Route path="dashboard" component={ClassroomComponent}>
             <IndexRoute component={DashboardComponent}></IndexRoute>
-            <Route path="/myEvents" component={MyEventsComponent}></Route>
+            <Route path="myEvents" component={MyEventsComponent}></Route>
             <Route path="faEvents" component={FA_MyEventsComponent}></Route>
             <Route path="adEvents" component={AD_EventsComponent}></Route>
             <Route path="soEvents" component={SO_EventsComponent}></Route>
-            <Route path="/book_room" component={BookingComponent}></Route>
-            <Route path="/profile" component={ProfileComponent}></Route>
+            <Route path="book_room" component={BookingComponent}></Route>
+            <Route path="profile" component={ProfileComponent}></Route>
         </Route>
     	</Route>
     </Router>
