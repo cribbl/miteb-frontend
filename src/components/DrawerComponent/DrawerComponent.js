@@ -79,29 +79,29 @@ class DrawerComponent extends Component {
 
           <Menu style={menuStyle} onItemClick={this.menuItemClicked}>
 
-            <Link to = "/dashboard"><MenuItem
+            <MenuItem
                 style={Object.assign(this.state.menuIndex == 0 ? active:'', menuItemStyle)}
                 key="/dashboard"
                 primaryText="Dashboard"
-                leftIcon={<IconDashboard color={'#FFFFFF'} />} /></Link>
+                leftIcon={<IconDashboard color={'#FFFFFF'} />} />
 
-            <Link to = "book_room"><MenuItem
+            <MenuItem
                 style={Object.assign(this.state.menuIndex == 1 ? active:'', menuItemStyle)}
                 key="/dashboard/book_room"
                 primaryText="Room Booking"
                 leftIcon={<IconTest color={'#FFFFFF'} />}
-                hidden={this.props.user && !this.props.user.isClub} /></Link>
+                hidden={this.props.user && !this.props.user.isClub} />
 
-            <Link to = "myEvents"><MenuItem
+            <MenuItem
                 style={Object.assign(this.state.menuIndex == 2 ? active:'', menuItemStyle)}
                 key="/dashboard/myEvents"
                 primaryText="My Events"
-                leftIcon={<IconAnalytics color={'#FFFFFF'} />} /></Link>
-            <Link to = "profile"><MenuItem
+                leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
+            <MenuItem
                 style={Object.assign(this.state.menuIndex == 3 ? active:'', menuItemStyle)}
                 key="/dashboard/profile"
                 primaryText="Profile"
-                leftIcon={<IconProfile color={'#FFFFFF'} />} /></Link>
+                leftIcon={<IconProfile color={'#FFFFFF'} />} />
             
           </Menu>
         </Drawer>
