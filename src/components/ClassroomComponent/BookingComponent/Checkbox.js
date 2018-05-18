@@ -159,7 +159,6 @@ class CheckboxGroup extends React.Component {
                                                      hidden={self.state.roomStatus[ab5+e+"04"]}
                                                     /> 
                                                   </td>
-                                                     
                                                   <td>
                                                     <Checkbox id="1" labelPosition="left"  
                                                      label={e + "05"} 

@@ -5,6 +5,7 @@ import {
   StepLabel,
 } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
+import { Route , Link } from 'react-router-dom';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -526,7 +527,6 @@ class HorizontalLinearStepper extends React.Component {
           </Stepper>
           <div style={contentStyle}>
             {finished ? (
-
               <div>
                 <a
                   href="#"
@@ -538,12 +538,12 @@ class HorizontalLinearStepper extends React.Component {
                 >
                   Click here
                 </a> to book another room! :)
-            <Snackbar
-            open={this.state.openSnackBar}
-            message={this.state.SnackBarmessage}
-            autoHideDuration={this.state.autoHideDuration}
-            onRequestClose={this.handleSnackBarClose}
-          />
+                <Snackbar
+                open={this.state.openSnackBar}
+                message={this.state.SnackBarmessage}
+                autoHideDuration={this.state.autoHideDuration}
+                onRequestClose={this.handleSnackBarClose}
+                />
               </div>          ) : (
               <div>
                 <div>{this.getStepContent(stepIndex)}</div>
