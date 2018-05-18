@@ -528,16 +528,18 @@ class HorizontalLinearStepper extends React.Component {
           <div style={contentStyle}>
             {finished ? (
               <div>
-                <a
-                  href="#"
-                  onClick={(event) => {
-                    event.preventDefault();
+                <div>
+                  Sit back and relax! Your event titled ' {this.state.fields.title} ' has been sent for approvals from the 
+                  authorities concerned.
+                  You can track your application under 'My Events' and we'll notify you via email and sms.
+                </div>
+                <div style = {{marginTop: 20, marginBottom:20}}>
+                <Link to = "dashboard/myEvents"><RaisedButton label="My Events" primary={true} style = {{marginRight:'10%'}} /></Link>
+                <Link to = "dashboard/book_room"><RaisedButton label="Book Another Event"
+                  primary={true} onClick={(event) => {
                     this.setState({stepIndex: 0, finished: false});
-                    
-                  }}
-                >
-                  Click here
-                </a> to book another room! :)
+                    }} /></Link>
+                </div>
                 <Snackbar
                 open={this.state.openSnackBar}
                 message={this.state.SnackBarmessage}
