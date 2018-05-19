@@ -1,0 +1,573 @@
+[33mcommit 5f8a67475c5cc01815a7d3d5e50729833e64ef59[m[33m ([m[1;36mHEAD -> [m[1;32mprofile[m[33m, [m[1;31morigin/profile[m[33m)[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed May 9 23:49:21 2018 +0530
+
+    notificationSettings UI
+
+[33mcommit 3e90cca0dabc12c009c2ec9b7331098b4f21655d[m
+Merge: 3fb9bdc f929858
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed May 9 23:25:56 2018 +0530
+
+    final settings
+
+[33mcommit 3fb9bdcb33e951f117114a43e63c80a4a87750d1[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed May 9 22:48:15 2018 +0530
+
+    settings
+
+[33mcommit f9298583a089c763de539c3e5860ffbc5ee72ecc[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed May 9 22:06:44 2018 +0530
+
+    user.uid in USER_UPDATE
+
+[33mcommit 2bcdc890fde2e35b4410227d150efbfc81e21eb4[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed May 9 21:46:22 2018 +0530
+
+    removed travis
+
+[33mcommit 81284bce76bd11a08dda8a2fbb2c237225067c54[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed May 9 21:45:18 2018 +0530
+
+    fixing security guard :P
+
+[33mcommit ce26b3b03e2976d9199ffa644267b5ba045511c2[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed May 9 21:38:52 2018 +0530
+
+    styling
+
+[33mcommit 819b3da5661f02939c8a5fdc13ff0ab0ea30af34[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed May 9 21:38:08 2018 +0530
+
+    notifss
+
+[33mcommit 5c7335fc11f2adaf7120b1f5fcc8ebc78d20a5dc[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed May 9 21:37:24 2018 +0530
+
+    notifs
+
+[33mcommit 0c3682487793ec55662f157298e4f4d68eb9ff93[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed May 9 02:11:45 2018 +0530
+
+    default toggle according to user.notificationSettings
+
+[33mcommit acadeeeca755ea60db81d58278cc5ea89837b4e8[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed May 9 02:05:58 2018 +0530
+
+    send password reset email
+
+[33mcommit fa066078e4daf8ebf19ee502b90b69d6d36ada84[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed May 9 01:47:05 2018 +0530
+
+    UPDATE_USER reducer for realtime userinfo
+
+[33mcommit 833a3ff075a4a99406263808941d89bb181c0a14[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed May 9 00:31:54 2018 +0530
+
+    this.props.user && ..
+
+[33mcommit e2b913740496d23eef2864174e8719a95465b709[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed May 9 00:17:10 2018 +0530
+
+    updating profile
+
+[33mcommit fef2a1854df6e35ea63b2c0bc99cd961b0b259de[m[33m ([m[1;32mdev[m[33m)[m
+Merge: 41d294d c3473c6
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Tue May 8 15:58:43 2018 +0530
+
+    Merge branch 'dev' of github.com:bhawesh96/MIT-Event-Booking into dev
+
+[33mcommit c3473c68bfa4d7742881ce2a44b7721ed8c7b6b1[m[33m ([m[1;31morigin/dev[m[33m)[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Mon May 7 12:19:49 2018 +0530
+
+    emails branch merged
+
+[33mcommit 41d294df1a603f1779236dc69e84e215b3d84c96[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 21:21:13 2018 +0530
+
+    slack notifications
+
+[33mcommit 196875240fac1f40ac6277730e9393dda3619f66[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 21:15:06 2018 +0530
+
+    proivder:pages added
+
+[33mcommit 222bf546895b0425ce35c6103c6a8e530998c02c[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 20:46:54 2018 +0530
+
+    proivder:pages added
+
+[33mcommit 96ee951b20e42753b22347375fc4eaafbbfce999[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 20:42:29 2018 +0530
+
+    eslintignore added
+
+[33mcommit 831bd0aefd261743b7b953e15eb37c21bd34e085[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 20:17:02 2018 +0530
+
+    npm -i added
+
+[33mcommit 4b601dacbfe8509d0bddd79dcc6fa7eaac0c71c8[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 19:55:51 2018 +0530
+
+    figuring travis
+
+[33mcommit 37831db0c3924fd03f7b1cb95bce3c1519e19641[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 19:38:16 2018 +0530
+
+    node version changed to 9
+
+[33mcommit 95bbf51ec04883a3b8f782e7a723bbfb0ec23ec2[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 19:35:35 2018 +0530
+
+    node version changed:
+
+[33mcommit a24963b4a2080e324eee2a89929b5846417ce270[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 19:28:31 2018 +0530
+
+    added further info
+
+[33mcommit 64bed264435fa48fb3d5b4f8b60e32b290dd26f2[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 19:21:03 2018 +0530
+
+    travis.yml added
+
+[33mcommit 13bb4f79e1ca5b9f0de3122f8cb31d2c9d1b72a5[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat May 5 19:17:39 2018 +0530
+
+    meta data added
+
+[33mcommit ae20460944db7792479679e93a494a2393e34d31[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Thu Apr 12 14:17:13 2018 +0530
+
+    empty state for my_events added
+
+[33mcommit ddd703de8498cc3cf73c0b22969c18c2b6e0105d[m[33m ([m[1;31morigin/final[m[33m, [m[1;32mfinal[m[33m)[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Thu Apr 12 00:05:22 2018 +0530
+
+    profile
+
+[33mcommit ca501e576144d71cba3052d3f9b8a933a241b8e9[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Apr 11 21:41:24 2018 +0530
+
+    validation fix
+
+[33mcommit 5d65034d35432fdfd8efeebb66feda2f8c7b7ef3[m
+Merge: 5cfc5ab 83a0886
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Apr 11 20:01:12 2018 +0530
+
+    Merge branch 'master' of github.com:bhawesh96/MIT-Event-Booking
+
+[33mcommit 5cfc5ab86e5b8c0dfbf748927d6abe73a82c656b[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Apr 11 20:01:02 2018 +0530
+
+    add
+
+[33mcommit 83a0886659ad59822bd5a60c3bc0df9c7771065a[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Thu Mar 22 11:34:32 2018 +0530
+
+    Event state icons and popovers
+
+[33mcommit 5d1778ac91c7750c33f4de6328d18183bb597713[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Thu Mar 22 11:34:01 2018 +0530
+
+    set prevRejected
+
+[33mcommit 5b0a0eb823355e6745e658720f345b0d1ea83ada[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Thu Mar 22 11:33:30 2018 +0530
+
+    clubName added
+
+[33mcommit b8935fa506b24fff01cd9f7cbae57a3bdcd67c10[m
+Merge: 1a0e2eb 8236a9d
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Thu Mar 22 08:17:02 2018 +0530
+
+    Merge branch 'master' of github.com:bhawesh96/MIT-Event-Booking
+
+[33mcommit 1a0e2eb8a04bf06449ab0604e8a0074826e2523a[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Thu Mar 22 08:10:42 2018 +0530
+
+    pushing build
+
+[33mcommit 5aaae56daba30f6744923af2a2eae89a295e1558[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Thu Mar 22 08:08:58 2018 +0530
+
+    final working before demo
+
+[33mcommit dce250aa79d4c1ab062b616274c6785d6f6b5914[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 19:32:36 2018 +0530
+
+    event_status
+
+[33mcommit 8d56cc4e3d32b02cb32d9f4879af3df032c5e76c[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 17:13:43 2018 +0530
+
+    build
+
+[33mcommit 8236a9d4dd94f9caf90b66af966e9147bde712be[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 17:04:58 2018 +0530
+
+    fixing css
+
+[33mcommit 8a6d6eb9e025ca6635bbc8ffca7cba1225807d47[m
+Merge: cff64fc 8343771
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 16:51:17 2018 +0530
+
+    Merge branch 'master' of github.com:bhawesh96/MIT-Event-Booking
+
+[33mcommit 8343771e8fa5c3ba84a27e7a2f860f6b753c4db8[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:49:47 2018 +0530
+
+    fixing label
+
+[33mcommit 2a47773a28bb29c35d171d9e24b30ffca3b820dd[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:44:32 2018 +0530
+
+    cssss
+
+[33mcommit cff64fcd14adc70164b845c77f8112dc40ce9841[m
+Merge: e05e306 d6f98fb
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 16:43:08 2018 +0530
+
+    Merge branch 'master' of github.com:bhawesh96/MIT-Event-Booking
+
+[33mcommit d6f98fb9846e8d1b7b91b84f1c8d65f6b0842d6f[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:42:37 2018 +0530
+
+    fixing css
+
+[33mcommit e05e306d97395a2b231b202bed3eebb977286e88[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 16:39:41 2018 +0530
+
+    build
+
+[33mcommit 4be69da32b80778d291851acfb8cb1b1a81b18f5[m
+Merge: 9197121 ad69253
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:30:24 2018 +0530
+
+    Merge branch 'master' of github.com:bhawesh96/MIT-Event-Booking
+
+[33mcommit 91971211b454c17e2854532223b3e69c940adc83[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:29:51 2018 +0530
+
+    fixing index2
+
+[33mcommit ad692531e2ecee0844b70acefc3c7b3529a9f7b2[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 16:29:25 2018 +0530
+
+    radio width decreased
+
+[33mcommit 45711ecf8c312c0c0d5585633caaf21747f70fe5[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:23:32 2018 +0530
+
+    fixing label
+
+[33mcommit cff51edf7b12ae860c6095874d9b7b1885633baa[m
+Merge: a1092f1 1f3e9f2
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:17:33 2018 +0530
+
+    Merge branch 'master' of github.com:bhawesh96/MIT-Event-Booking
+
+[33mcommit a1092f10664e4fc0cccaac7f0c06bbf3b64845c7[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Wed Mar 21 16:16:34 2018 +0530
+
+    fixing weird issue
+
+[33mcommit 1f3e9f20f95a68dc191862bcb0f4ec7b2a396fdd[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 15:57:51 2018 +0530
+
+    finalised UI of location container
+
+[33mcommit beb4fc609268ce00702413b29875a5055c0ed7c3[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 15:54:33 2018 +0530
+
+    datepicker UI
+
+[33mcommit 39e6e7a1ab51b9ed392ab94b77f59d0c1998e302[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 21 15:40:25 2018 +0530
+
+    Fetch button removed
+
+[33mcommit 4199c65db0272918641df537838cdb89a3104c64[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 18 11:07:20 2018 +0530
+
+    build
+
+[33mcommit 80104c4ce85c318f54e89380757196a52a51ba80[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 18 11:05:55 2018 +0530
+
+    bg color removed
+
+[33mcommit 2bfea99a8b1021adbd4dd3b93eef85d71693d8dd[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 18 10:54:01 2018 +0530
+
+    build
+
+[33mcommit 2450249134f391c2d05289db99a770c42c327343[m
+Merge: bbcfc9b f642fd8
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 18 10:52:54 2018 +0530
+
+    Merge branch 'final' into booking-component
+
+[33mcommit f642fd82745bd74b95a6a7ab3d1e5614eb777478[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 18 09:40:55 2018 +0530
+
+    build
+
+[33mcommit bbcfc9bb6a5f7898009467c4bac783068437c4e9[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 18 09:38:33 2018 +0530
+
+    center, flex
+
+[33mcommit 5f6f0465d189a54f827cd8b93327f78bc3600a84[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 18 08:07:13 2018 +0530
+
+    profile dropdown menu solved
+
+[33mcommit 17fd0df56d2689231bf9a14425d352796fe7cbc0[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 23:26:26 2018 +0530
+
+    minor changed
+
+[33mcommit 0d0009f38590e94c6c33f27277c9c899eb5edf26[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 16:55:18 2018 +0530
+
+    loaded centerd
+
+[33mcommit de6fc6831e332f16631d34e4c386bfa37f4891e0[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 16:39:16 2018 +0530
+
+    mobile tables
+
+[33mcommit cfcc627cdc623984c5e08bf2a567ac00606a7f97[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 16:27:50 2018 +0530
+
+    flagRejct comined, take Reason in flag/reject
+
+[33mcommit 7be28700fc911d4ade8b78bc02448a5fe08b1b6f[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 15:35:28 2018 +0530
+
+    temp commit
+
+[33mcommit e624770233e233aa53b0ad81a45c69921f057f6e[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 14:36:37 2018 +0530
+
+    SO-portal done
+
+[33mcommit ed747c22421e52cc26a2e41cb8c57ec23c691e3a[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 14:28:59 2018 +0530
+
+    AD portal done
+
+[33mcommit da6dde3f475873e77f137a31de33a7f82c9f99dd[m
+Merge: 51a8203 c85e6c9
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 13:08:55 2018 +0530
+
+    Merge branch 'CLUB-MyEvents' into final
+
+[33mcommit 51a82039e64e05639c11dad216eb272c001021e1[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 13:08:07 2018 +0530
+
+    Dialog added, DB service to approve and reject
+
+[33mcommit c85e6c90af5311b381d433c29bcee8dafd748f6a[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 13:07:18 2018 +0530
+
+    Dialog added
+
+[33mcommit 51d1a8073de6b09cd259209389dd8547be597e0a[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 12:04:06 2018 +0530
+
+    temp build
+
+[33mcommit 4a75d617e6ffd6ef15efde5c4668cbb5693f47e5[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 09:05:22 2018 +0530
+
+    cleanup, map() changed
+
+[33mcommit 8095e4cb50b7033b193b65d3df9d0a9b5bf7bbb9[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sat Mar 17 08:49:03 2018 +0530
+
+    FA Approve event
+
+[33mcommit b504f3e374c2a4b519392d69d8c83cd758cf0e2b[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 14 20:43:29 2018 +0530
+
+    FA portal ready
+
+[33mcommit 73506fb583398c54a5796f241bc8e51e4d56b441[m
+Merge: 0efff6f 36cd4b9
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 14 18:33:22 2018 +0530
+
+    loading merged
+
+[33mcommit 0efff6f07ed1c3f8fb844d9ea385e0e3e9007d90[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 14 18:27:28 2018 +0530
+
+    loader removed
+
+[33mcommit 36cd4b956bdc5cb81b32bd2afca3654bf5962e26[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 14 18:22:40 2018 +0530
+
+    loader added
+
+[33mcommit 6e03c2f2cfc4b0bd49108bc1b51e781be0dfd174[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 14 18:14:55 2018 +0530
+
+    ongoing
+
+[33mcommit dbb990576824d2c6fc595f8e04f9c21a1eb609c9[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Wed Mar 14 12:27:59 2018 +0530
+
+    update /rooms/ added
+
+[33mcommit 8ff5e692d1d5f8f4f68b0402100e1768e5af95b2[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Tue Mar 13 01:53:21 2018 +0530
+
+    working!!!!!!!
+
+[33mcommit 482312914cc11c2640eca8971fdfdee312d9ea21[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Tue Mar 13 01:27:14 2018 +0530
+
+    minor change to push to db correctly
+
+[33mcommit fed30518c0942028d49cc8ed8a176ce4bcc35097[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Tue Mar 13 01:22:47 2018 +0530
+
+    firebase 2
+
+[33mcommit 562054af1b04dc2d6c1a4c824de128a7d2c3429b[m
+Merge: 28b8764 40301b2
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Tue Mar 13 01:04:37 2018 +0530
+
+    he
+
+[33mcommit 28b8764b86a9ce264180b2b6991f969cd81ec582[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Tue Mar 13 00:54:11 2018 +0530
+
+    firebase
+
+[33mcommit 40301b2f3a1192b24a4fa8b966969857b604c198[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Tue Mar 13 00:32:39 2018 +0530
+
+    clubID added to localStorage
+
+[33mcommit 5308e82ec991a3e3d1e3435fce651ac842741a25[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Tue Mar 13 00:11:48 2018 +0530
+
+    final object
+
+[33mcommit 2ab805cadc5f9da32587eb696e6c28af21211faa[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Mon Mar 12 21:51:57 2018 +0530
+
+    fix
+
+[33mcommit eb6b9e6e63cead841dce5773fe407a65c56c8274[m
+Author: arushi1912 <arushi_nigam@hotmail.com>
+Date:   Mon Mar 12 19:57:17 2018 +0530
+
+    added roomStatus to object
+
+[33mcommit 67f7c4bcf755a7d1abe529e9c6c11fb0c4ec0b8a[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 11 23:52:22 2018 +0530
+
+    var allRoomArr repositioned
+
+[33mcommit 74d05c32445b7a1bdabe013a1d7b7918a0f51daa[m
+Author: bhawesh96 <bhansalibhawesh@yahoo.com>
+Date:   Sun Mar 11 18:31:50 2018 +0530
+
+    fetch roomStatus
+
+[33mcommit 8e30eafd10cdf4ee149e9c09836a4e684a41fbf2[m
+Merge: ac1ae92 109faad
+Author: bhawesh96 <bhansalibha

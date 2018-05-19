@@ -24,6 +24,9 @@ export const getMyEvents = (clubId, callback) => {
 	firebaseDB.ref('/clubs/' + clubId).on('value',
 	function(snapshot) {
 		// console.log('outer snapshot')
+            let user = snapshot.val();
+            user['uid'] = snapshot.key;
+            store.dispatch({type: "USER_UPDATE", user})
 		let events = snapshot.val().my_events
 		if(!events) {
 			callback(null, null)
@@ -204,4 +207,9 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
                   return
             }
       }
+}
+
+export const updateUser = (uid, tempUser) => {
+      debugger
+      firebaseDB.ref('clubs/' + uid).update(tempUser);
 }
