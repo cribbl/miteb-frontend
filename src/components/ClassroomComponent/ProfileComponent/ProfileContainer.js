@@ -33,6 +33,8 @@ class ProfileContainer extends Component {
     super(props)
     this.handleChange = this.handleChange.bind(this);
     this._updateUser = this._updateUser.bind(this);
+    this.handlePicUpload = this.handlePicUpload.bind(this);
+    this._handleImageChange = this._handleImageChange.bind(this);
     this.state = {
       tempUser: null,
       hasChanged: false
@@ -65,6 +67,23 @@ class ProfileContainer extends Component {
     else {
       this.setState({hasChanged: false})
     }
+  }
+
+  handlePicUpload() {
+    this.inputElement.click()
+  }
+
+  _handleImageChange(e) {
+    const file = e.target.files[0]
+    this.setState({mediaFile: file, mediaType: file.type})
+    uploadProfilePic(this.props.user.uid, file, (err, res) => {
+      if(err) {
+        console.log(err)
+      }
+      else {
+        updateUser(this.props.user.uid, {profilePicURL: res.downloadURL})
+      }
+    })
   }
   
   render() {
