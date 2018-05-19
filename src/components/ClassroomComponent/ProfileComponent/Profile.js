@@ -39,7 +39,7 @@ class ProfileComponent extends Component {
   render() {
     return (
       <div style={{display: 'flex', justifyContent: 'center', padding: 15}}>
-        <Paper style={{background: '', width: '90%', height: '500px', display: 'flex', justifyContent: 'center'}} zDepth={0}>
+        <Paper style={{background: '', width: this.props.isMobile? '98%': '90%', height: '500px', display: 'flex', justifyContent: 'center'}} zDepth={0}>
           <div style={{width: '100%', margin: '0 auto'}}>
             <Tabs onChange={this.handleTabChange} value={this.state.tabIndex}>
             

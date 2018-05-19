@@ -6,7 +6,7 @@ import firebase from 'firebase'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
-import {getUserDetails} from '../../../Services/firebaseDBService'
+import {getUserDetails, updateUser} from '../../../Services/firebaseDBService'
 import {sendPasswordResetEmail} from '../../../Services/firebaseAuthService'
 import {uploadProfilePic} from '../../../Services/firebaseStorageService'
 import {requestOTP} from '../../../Services/NotificationService'
@@ -23,46 +23,57 @@ import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox';
 
 import OtpDialog from '../../Dialogs/OtpDialog'
-//import SwipeableViews from 'react-swipeable-views';
-
-
-const styles = {
- headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
- block: {
-    width: 1000,
-    height:50,
-    display: 'flex'
- },
- text:{
-  marginLeft:20,
-  borderStyle:'solid',
-  borderRadius: 3
- },
-  toggle: {
-    marginBottom: 16,
-  }
-};
 
 class NotificationsContainer extends Component {
   constructor (props) {
     super(props)
+    this.handleChange = this.handleChange.bind(this);
+    this._updateUser = this._updateUser.bind(this);
+    this.state = {
+      tempSettings: null,
+      hasChanged: false,
+    }
   }
 
+  componentWillMount() {
+    this.props.user && this.setState({
+        tempSettings: {
+          email: this.props.user.notificationSettings.email,
+          sms: this.props.user.notificationSettings.sms,
+        }
+    })
+  }
+
+  handleChange(event, isChecked, field) {
+    let temp = this.state.tempSettings
+    temp[field] = isChecked ? 1:0
+    this.setState({tempSettings: temp})
+
+    if(this.state.tempSettings[field] != this.props.user.notificationSettings[field]) {
+      this.setState({hasChanged: true})
+    }
+    else {
+      this.setState({hasChanged: false})
+    }
+  }
+
+  _updateUser() {
+    console.log('update')
+    let finalSettings = {
+      notificationSettings: this.state.tempSettings
+    }
+    updateUser(this.props.user.uid, finalSettings)
+  }
   
   render() {
     return (
-       <Paper zDepth={3} style={{height: 420, display: 'flex', justifyContent: 'center'}}>
-        <div style={{width: this.props.isMobile ? '100%':'50%', margin: '0px auto'}}>
-          <div style={styles.root}> 
-            <List style={{marginLeft:20}}>
+      <Paper zDepth={3} style={{minHeight: 380, display: 'flex', justifyContent: 'center', width: '100%', padding: 10}}>
+
+        <div style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
+            <List>
               <Subheader>Email Notifications</Subheader> 
               <ListItem
-                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} onToggle={this.handleEmailToggle}/>}
+                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} onToggle={(event, isChecked) => this.handleChange(event, isChecked, 'email')}/>}
                 primaryText="Every Stage"
                 secondaryText="Otherwise, only at final approval"
               />
@@ -70,17 +81,19 @@ class NotificationsContainer extends Component {
 
               <Subheader>SMS Notifications</Subheader> 
               <ListItem
-                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} onToggle={this.handleSMSToggle} />}
+                rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} onToggle={(event, isChecked) => this.handleChange(event, isChecked, 'sms')} />}
                 primaryText="Every Stage"
                 secondaryText="Otherwise, only at final approval"
               />
           </List>
-            <RaisedButton label="Save Changes"
+          <div>
+            <RaisedButton label="Save"
               primary={true}
+              disabled={!this.state.hasChanged}
               style={{marginLeft:20}}
-              onClick={this.handleChangesButton}
+              onClick={this._updateUser}
             />
-         </div>
+          </div>
         </div>
       </Paper>
     );
