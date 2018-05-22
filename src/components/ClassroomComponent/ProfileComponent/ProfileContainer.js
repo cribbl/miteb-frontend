@@ -29,11 +29,7 @@ import OtpDialog from '../../Dialogs/OtpDialog'
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-
-
-//import SwipeableViews from 'react-swipeable-views';
-
-
+import PhotoIcon from 'material-ui/svg-icons/image/photo'
 
 
 class ProfileContainer extends Component {
@@ -43,12 +39,12 @@ class ProfileContainer extends Component {
     this._updateUser = this._updateUser.bind(this);
     this.handlePicUpload = this.handlePicUpload.bind(this);
     this._handleImageChange = this._handleImageChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleProfilePicClick = this.handleProfilePicClick.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.state = {
       tempUser: null,
       hasChanged: false,
-      open: false
+      popOverOpen: false
     }
   }
 
@@ -81,12 +77,12 @@ class ProfileContainer extends Component {
   }
 
   handlePicUpload() {
+    this.setState({popoverOpen: false});
     this.inputElement.click()
   }
 
   _handleImageChange(e) {
     const file = e.target.files[0]
-    this.setState({mediaFile: file, mediaType: file.type})
     uploadProfilePic(this.props.user.uid, file, (err, res) => {
       if(err) {
         console.log(err)
@@ -97,20 +93,17 @@ class ProfileContainer extends Component {
     })
   }
 
-  handleClick = (event) => {
-    // This prevents ghost click.
+  handleProfilePicClick = (event) => {
     event.preventDefault();
-
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
+    this.setState({popoverOpen: true, anchorEl: event.currentTarget});
   };
 
+  handlePicRemove = () => {
+    this.setState({popoverOpen: false});
+  }
+
   handleRequestClose = () => {
-    this.setState({
-      open: false,
-    });
+    this.setState({popoverOpen: false});
   };
 
   render() {
@@ -122,23 +115,28 @@ class ProfileContainer extends Component {
             <div style={{display: 'flex'}}>
               <div className="profilePicContainer">
                 <div className="image">
-                  <Avatar 
-                  src={this.props.user && this.props.user.profilePicURL} 
-                  size={160} 
-                  onClick={this.handleClick}
+                  <Avatar
+                    className="profilePicContainer"
+                    src={this.props.user && this.props.user.profilePicURL}
+                    size={160}
+                    onClick={this.handleProfilePicClick}
                   />
                 </div>
-                <div className="middle" onClick={this.handleClick}>Change Profile Photo</div>
-                 <Popover
-                    open={this.state.open}
+                <div className="middle" onClick={this.handleProfilePicClick} hidden={this.props.isMobile}>
+                  <PhotoIcon style={{color: 'white'}}/><br />
+                  <span>Change Profile Picture</span>
+                </div>
+                  <Popover
+                    open={this.state.popoverOpen}
                     anchorEl={this.state.anchorEl}
-                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    anchorOrigin={this.props.isMobile ? {horizontal:'right',vertical:'bottom'} : {horizontal:'middle',vertical:'bottom'}}
+                    targetOrigin={this.props.isMobile ? {horizontal:'right',vertical:'bottom'} : {horizontal:'right',vertical:'top'}}
+                    canAutoPosition={this.props.isMobile}
                     onRequestClose={this.handleRequestClose}
                   >
                     <Menu>
-                      <MenuItem primaryText="Upload Photo" onClick={this.handlePicUpload} />
-                      <MenuItem primaryText="Remove Photo" />
+                      <MenuItem primaryText="Upload Picture" onClick={this.handlePicUpload} />
+                      <MenuItem primaryText="Remove Picture" onClick={this.handlePicRemove} />
                     </Menu>
                   </Popover>
               </div>     

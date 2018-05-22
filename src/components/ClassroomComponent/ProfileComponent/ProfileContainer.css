@@ -1,3 +1,9 @@
+.profilePicContainer {
+	height: 160px;
+	border-radius: 50%;
+	background-color: gray;
+}
+
 .profilePicContainer:hover .image{
   opacity: 0.1;
   cursor: pointer;
@@ -8,9 +14,16 @@
   cursor: pointer;
 }
 
-.middle{
+.middle {
   position: absolute;
-  top: 80px;
-  left: 110px;
+  top: 60px;
+  left: 122px;
+  width: 120px;
+  margin: 0 auto;
+  line-height: 18px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
   opacity: 0;
+  text-align: center;
+  text-transform: uppercase;
 }
