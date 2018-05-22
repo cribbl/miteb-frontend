@@ -11,6 +11,8 @@ import {sendPasswordResetEmail} from '../../../Services/firebaseAuthService'
 import {uploadProfilePic} from '../../../Services/firebaseStorageService'
 import {requestOTP} from '../../../Services/NotificationService'
 
+import './ProfileContainer.css';
+
 import {connect} from 'react-redux'
 import Avatar from 'material-ui/Avatar'
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -23,6 +25,12 @@ import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox';
 
 import OtpDialog from '../../Dialogs/OtpDialog'
+
+import Popover from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+
+
 //import SwipeableViews from 'react-swipeable-views';
 
 
@@ -35,9 +43,12 @@ class ProfileContainer extends Component {
     this._updateUser = this._updateUser.bind(this);
     this.handlePicUpload = this.handlePicUpload.bind(this);
     this._handleImageChange = this._handleImageChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
     this.state = {
       tempUser: null,
-      hasChanged: false
+      hasChanged: false,
+      open: false
     }
   }
 
@@ -85,22 +96,56 @@ class ProfileContainer extends Component {
       }
     })
   }
-  
+
+  handleClick = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
   render() {
     return (
       <Paper zDepth={3} style={{minHeight:380, display: 'flex', justifyContent: 'center', width: '100%', padding: 10}}>
                     
         <div style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
-           <div style={{display:'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-around', alignItems: this.props.isMobile ? 'center': '', width: '80%', backgroundColor: ''}}>
-            
+          <div style={{display:'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-around', alignItems: this.props.isMobile ? 'center': '', width: '80%', backgroundColor: ''}}>
             <div style={{display: 'flex'}}>
-              <div>
-                <Avatar src={this.props.user && this.props.user.profilePicURL} size={160} onClick={this.handlePicUpload}/>
+              <div className="profilePicContainer">
+                <div className="image">
+                  <Avatar 
+                  src={this.props.user && this.props.user.profilePicURL} 
+                  size={160} 
+                  onClick={this.handleClick}
+                  />
+                </div>
+                <div className="middle">Change Profile Photo</div>
+                 <Popover
+                    open={this.state.open}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    onRequestClose={this.handleRequestClose}
+                  >
+                    <Menu>
+                      <MenuItem primaryText="Upload Photo" onClick={this.handlePicUpload} />
+                      <MenuItem primaryText="Remove Photo" />
+                    </Menu>
+                  </Popover>
               </div>     
             </div>
             
             <div style={{backgroundColor: '', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%'}}>
-               <TextField
+              <TextField
                 floatingLabelText="Name"
                 type="text"
                 value={this.state.tempUser && this.state.tempUser.name}
@@ -127,7 +172,7 @@ class ProfileContainer extends Component {
                 value={this.state.tempUser && this.state.tempUser.primaryContact}
                 onChange={(event) => this.handleChange(event, 'primaryContact')}
                 />
-             </div>
+            </div>
             <input ref={input => this.inputElement = input} type="file" id="media-upload" onChange={(e)=>this._handleImageChange(e)} accept="video/*,image/*" style={{display: 'none'}}/>
           </div>
         

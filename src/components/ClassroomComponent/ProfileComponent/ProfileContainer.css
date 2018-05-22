@@ -1,0 +1,16 @@
+.profilePicContainer:hover .image{
+  opacity: 0.1;
+  cursor: pointer;
+}
+
+.profilePicContainer:hover .middle{
+  opacity: 1;
+  cursor: pointer;
+}
+
+.middle{
+  position: absolute;
+  top: 80px;
+  left: 110px;
+  opacity: 0;
+}
