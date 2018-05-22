@@ -128,7 +128,7 @@ class ProfileContainer extends Component {
                   onClick={this.handleClick}
                   />
                 </div>
-                <div className="middle">Change Profile Photo</div>
+                <div className="middle" onClick={this.handleClick}>Change Profile Photo</div>
                  <Popover
                     open={this.state.open}
                     anchorEl={this.state.anchorEl}
