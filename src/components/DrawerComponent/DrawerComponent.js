@@ -14,9 +14,6 @@ import IconUpdates from 'material-ui/svg-icons/action/update'
 import IconSettings from 'material-ui/svg-icons/action/settings'
 import IconHelp from 'material-ui/svg-icons/action/help'
 import IconProfile from 'material-ui/svg-icons/social/person'
-
-
-
 import {connect} from 'react-redux'
 import {toggleActions} from '../../actions/toggleActions'
 

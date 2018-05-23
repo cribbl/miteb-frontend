@@ -210,6 +210,5 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
 }
 
 export const updateUser = (uid, tempUser) => {
-      debugger
       firebaseDB.ref('clubs/' + uid).update(tempUser);
 }

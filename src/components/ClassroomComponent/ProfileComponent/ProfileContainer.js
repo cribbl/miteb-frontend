@@ -23,6 +23,7 @@ import Snackbar from 'material-ui/Snackbar';
 import {List,ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import OtpDialog from '../../Dialogs/OtpDialog'
 
@@ -44,7 +45,8 @@ class ProfileContainer extends Component {
     this.state = {
       tempUser: null,
       hasChanged: false,
-      popOverOpen: false
+      popOverOpen: false,
+      showProgress: false
     }
   }
 
@@ -77,7 +79,7 @@ class ProfileContainer extends Component {
   }
 
   handlePicUpload() {
-    this.setState({popoverOpen: false});
+    this.setState({popoverOpen: false, showProgress: true});
     this.inputElement.click()
   }
 
@@ -86,9 +88,11 @@ class ProfileContainer extends Component {
     uploadProfilePic(this.props.user.uid, file, (err, res) => {
       if(err) {
         console.log(err)
+        this.setState({showProgress: false});
       }
       else {
-        updateUser(this.props.user.uid, {profilePicURL: res.downloadURL})
+        updateUser(this.props.user.uid, {profilePicURL: res.downloadURL});
+        this.setState({showProgress: false});
       }
     })
   }
@@ -107,6 +111,7 @@ class ProfileContainer extends Component {
   };
 
   render() {
+    const progressStyle={position:"absolute", top: 60, left:'37%', visibility: this.state.showProgress?"visible":"hidden"};
     return (
       <Paper zDepth={3} style={{minHeight:380, display: 'flex', justifyContent: 'center', width: '100%', padding: 10}}>
                     
@@ -114,17 +119,21 @@ class ProfileContainer extends Component {
           <div style={{display:'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-around', alignItems: this.props.isMobile ? 'center': '', width: '80%', backgroundColor: ''}}>
             <div style={{display: 'flex'}}>
               <div className="profilePicContainer">
-                <div className="image">
+                <div className="image" style={{position:"relative"}}>
                   <Avatar
                     className="profilePicContainer"
                     src={this.props.user && this.props.user.profilePicURL}
                     size={160}
                     onClick={this.handleProfilePicClick}
+                    style={{opacity: this.state.showProgress?0.3:1}}
                   />
+                  <div>
+                    <CircularProgress style={progressStyle} />
+                  </div>
                 </div>
                 <div className="middle" onClick={this.handleProfilePicClick} hidden={this.props.isMobile}>
                   <PhotoIcon style={{color: 'white'}}/><br />
-                  <span>Change Profile Picture</span>
+                  <span>CHANGE PROFILE PICTURE</span>
                 </div>
                   <Popover
                     open={this.state.popoverOpen}
