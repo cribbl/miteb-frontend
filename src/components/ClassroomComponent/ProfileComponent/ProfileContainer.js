@@ -118,7 +118,7 @@ class ProfileContainer extends Component {
         <div style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'space-between'}}>
           <div style={{display:'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-around', alignItems: this.props.isMobile ? 'center': '', width: '80%', backgroundColor: ''}}>
             <div style={{display: 'flex'}}>
-              <div className="profilePicContainer">
+              <div className="profilePicContainer" style={{position:"relative"}}>
                 <div className="image" style={{position:"relative"}}>
                   <Avatar
                     className="profilePicContainer"
