@@ -80,26 +80,26 @@ class DrawerComponent extends Component {
           <Menu style={menuStyle} onItemClick={this.menuItemClicked}>
 
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 0 ? active:'', menuItemStyle)}
+                style={Object.assign(this.state.menuIndex == 0? active: '', menuItemStyle)}
                 key="/dashboard"
                 primaryText="Dashboard"
                 leftIcon={<IconDashboard color={'#FFFFFF'} />} />
 
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 1 ? active:'', menuItemStyle)}
+                style={Object.assign(this.state.menuIndex == 1 && window.location.hash !== "#/dashboard/myEvents" ? active:'', menuItemStyle)}
                 key="/dashboard/book_room"
                 primaryText="Room Booking"
                 leftIcon={<IconTest color={'#FFFFFF'} />}
                 hidden={this.props.user && !this.props.user.isClub} />
 
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 2 ? active:'', menuItemStyle)}
+                style={Object.assign((this.state.menuIndex == 2)||(window.location.hash === "#/dashboard/myEvents") ? active :'', menuItemStyle)}
                 key="/dashboard/myEvents"
                 primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
-             <MenuItem
-                style={Object.assign(this.state.menuIndex == 3 ? active:'', menuItemStyle)}
-                key="/dashboard/profile_section"
+            <MenuItem
+                style={Object.assign((this.state.menuIndex == 3) ? active:'', menuItemStyle)}
+                key="/dashboard/profile"
                 primaryText="Profile"
                 leftIcon={<IconProfile color={'#FFFFFF'} />} />
             

@@ -27,4 +27,5 @@ input[type=number]::-webkit-outer-spin-button {
 .propChildrenContainer {
 	padding-top: 64px;
 	overflow-x: hidden;
+	height: calc(100vh) !important;
 }
