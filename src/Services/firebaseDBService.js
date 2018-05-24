@@ -14,6 +14,12 @@ export const getUserDetails = (clubId, callback) => {
                   user['uid'] = snapshot.key;
                   callback(user);
             })
+      firebaseDB.ref('/clubs/' + clubId).on('value',
+            function(snapshot) {
+                  let user = snapshot.val();
+                  user['uid'] = snapshot.key;
+                  store.dispatch({type: "USER_UPDATE", user})
+            })
 }
 
 export const getMyEvents = (clubId, callback) => {
@@ -26,7 +32,7 @@ export const getMyEvents = (clubId, callback) => {
 		// console.log('outer snapshot')
             let user = snapshot.val();
             user['uid'] = snapshot.key;
-            store.dispatch({type: "USER_UPDATE", user})
+            // store.dispatch({type: "USER_UPDATE", user})
 		let events = snapshot.val().my_events
 		if(!events) {
 			callback(null, null)
@@ -42,10 +48,21 @@ export const getMyEvents = (clubId, callback) => {
 	})
 }
 
+export const getDisabledDates = (callback) => {
+      let temp=[];
+      firebaseDB.ref('/disabledDates/').on('value',
+            function(snapshot) {
+                  for(let date of snapshot.val()) {
+                        temp.push(date);
+                  }
+                  callback(temp)
+            })
+}
+
 function fetch(dateArr) {
 	return Promise.all(dateArr.map(date =>
 	        new Promise((resolve, reject) =>
-	            firebaseDB.ref('rooms/'+date).on('value', function(snapshot){
+	            firebaseDB.ref('roomsx/'+date).on('value', function(snapshot){
                         resolve ([date, snapshot.val()])
                   }
 	            )
@@ -59,59 +76,18 @@ function fetch(dateArr) {
 }
 
 function prm(avl) {
-	let allRoomArr = {
-      "3101" : true,
-      "3102" : true,
-      "3103" : true,
-      "3104" : true,
-      "3105" : true,
-      "3201" : true,
-      "3202" : true,
-      "3203" : true,
-      "3204" : true,
-      "3205" : true,
-      "3301" : true,
-      "3302" : true,
-      "3303" : true,
-      "3304" : true,
-      "3305" : true,
-      "3401" : true,
-      "3402" : true,
-      "3403" : true,
-      "3404" : true,
-      "3405" : true,
-      "5201" : true,
-      "5202" : true,
-      "5203" : true,
-      "5204" : true,
-      "5205" : true,
-      "5206" : true,
-      "5207" : true,
-      "5208" : true,
-      "5209" : true,
-      "5210" : true,
-      "5301" : true,
-      "5302" : true,
-      "5303" : true,
-      "5304" : true,
-      "5305" : true,
-      "5306" : true,
-      "5307" : true,
-      "5308" : true,
-      "5309" : true,
-      "5310" : true
-}
 	return new Promise(function(resolve, reject) {
+            console.log(avl)
+      let takenRooms=[]
 	for(let date in avl){
-		for(let roomArr in avl[date]) {
-            allRoomArr[roomArr] = (Boolean(avl[date][roomArr] & allRoomArr[roomArr]));
+            if(avl[date]!=null)
+      		for(let roomArr of avl[date]) {
+                        if(!takenRooms.includes(roomArr))
+                              takenRooms.push(roomArr)
         }
     }
-    for(let room in allRoomArr)
-      allRoomArr[room] = !allRoomArr[room]
-
-    resolve(allRoomArr);
-	reject('rejected')
+      resolve(takenRooms);
+      reject('rejected')
 });
 }
 
@@ -139,16 +115,12 @@ export const updateDates = (start_date, end_date, rooms) => {
             dateArr.push(datex)
       } while(moment(date).format('DD-MM-YYYY') != moment(end_date).add(1, 'days').format('DD-MM-YYYY'))
 
-      updateDatesDB(dateArr, rooms)
+      updateDatesDBx(dateArr, rooms)
 }
 
-function updateDatesDB(dateArr, rooms) {
-      
-      for(let date of dateArr) {
-            for(let room in rooms) {
-                  firebaseDB.ref('/rooms/').child(date+'/'+room).set(false);
-            }
-      }
+function updateDatesDBx(dateArr, roomArr) {
+      for(let date of dateArr)
+            firebaseDB.ref('/roomsx').child(date).set(roomArr);
 }
 
 
