@@ -24,6 +24,7 @@ import {connect} from 'react-redux'
 import Snackbar from 'material-ui/Snackbar';
 import moment from 'moment'
 import {fetchRooms, updateDates, getDisabledDates} from '../../../Services/firebaseDBService'
+import {sendPush} from '../../../Services/NotificationService'
 
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
