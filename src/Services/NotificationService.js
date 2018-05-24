@@ -2,6 +2,7 @@ import axios from 'axios'
 import {firebaseMessaging} from '../firebaseConfig'
 import {store} from '../store'
 import {toggleActions} from '../actions/toggleActions'
+import {updateToken} from './firebaseDBService'
 
 export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=null, text=null, html=null) => {
 
@@ -24,18 +25,19 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 	})
 }
 
-export const sendNotification = (token, payload) => {
+export const sendPush = (uid, title, body) => {
 
 	let params = {
-		token: token,
+		uid: uid,
 		payload: {
 	        notification: {
-	          title: 'My Title',
-	          body: 'Message body',
+	          title: title,
+	          body: body,
 	          icon: 'https://laracasts.com/images/series/circles/do-you-react.png'
 	        }
 	    }
     };
+    debugger
 
     axios.post('http://localhost:9000/send-notif', params)
 	.then(function(resp) {
@@ -54,12 +56,34 @@ export const getNotificationRequestPermission = (uid) => {
     return firebaseMessaging.getToken();
   })
   .then(function(token) {
-    const data = {[uid]:token}
-    updateToken(data);
+  	sessionStorage.setItem('fcmToken', token)
+    updateToken(uid, token, true);
   })
-  .catch(function() {
-    console.log("permission denied for push notifications");
+  .catch(function(err) {
+    console.log(err);
   })
+}
+
+firebaseMessaging.onTokenRefresh(function() {
+  firebaseMessaging.getToken()
+  .then(function(token) {
+    updateToken(sessionStorage.getItem('uid'), token, true)
+  })
+  .catch(function(err) {
+    console.log('could not retrieve new token')
+  })
+})
+
+const getNotificationPermissionState = () => {
+  navigator.permissions.query({name:'notifications'})
+  .then(function(permissionStatus) {
+    console.log('notifications permission status is ', permissionStatus.state);
+    
+    permissionStatus.onchange = function() {
+      console.log('notifications permission status has changed to ', this.state);
+    };
+    
+  });
 }
 
 firebaseMessaging.onMessage(function(payload) {
