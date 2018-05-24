@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage/LandingPage'
 import LoginComponent from './components/LoginComponent/LoginComponent'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent'
 
+//logo, name, fa, email, pass, notif settings: email after every approval/reject, sms and,aws, push notifs,   
 
 import ClassroomComponent from './components/ClassroomComponent/ClassroomComponent'
 import MyEventsComponent from './components/ClassroomComponent/MyEventsComponent/MyEventsComponent'
@@ -14,7 +15,7 @@ import AD_EventsComponent from './components/ClassroomComponent/MyEventsComponen
 import SO_EventsComponent from './components/ClassroomComponent/MyEventsComponent/SO_EventsComponent'
 import DashboardComponent from './components/ClassroomComponent/DashboardComponent/DashboardComponent'
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
-import ProfileComponent from './components/ClassroomComponent/ProfileComponent'
+import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
 
 import Reg from './components/LoginComponent/Reg'
 import {store} from './store'
@@ -41,7 +42,7 @@ ReactDOM.render(
             <Route path="adEvents" component={AD_EventsComponent}></Route>
             <Route path="soEvents" component={SO_EventsComponent}></Route>
             <Route path="book_room" component={BookingComponent}></Route>
-            <Route path="profile_section" component={ProfileComponent}></Route>
+            <Route path="profile" component={ProfileComponent}></Route>
         </Route>
     	</Route>
     </Router>

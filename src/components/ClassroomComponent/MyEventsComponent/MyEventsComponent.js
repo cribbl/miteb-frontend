@@ -143,7 +143,7 @@ class MyEventsComponent extends Component {
       if(!events) {
           this.setState({fetching: false})
       }
-      for(event in events) {
+      for(let event in events) {
         firebaseDB.ref('/events/' + events[event]).on('value',
         function(snapshot) {
           this.setState({fetching: false})

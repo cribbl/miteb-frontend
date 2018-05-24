@@ -24,6 +24,10 @@ export function authentication(state = initialState, action) {
     case "SUCCESS_FETCH":
       return Object.assign({}, state, {
         vals: action.result
+      });
+    case "USER_UPDATE":
+      return Object.assign({}, state, {
+        user: action.user
       })
     case "LOGOUT":
       return {};
