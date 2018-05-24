@@ -16,8 +16,6 @@ import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
-import CheckboxGroup from './Checkbox';
-import CheckboxField from './Checkbox';
 import RoomsContainer from './Rooms'
 import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
