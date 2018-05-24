@@ -34,6 +34,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "npm run build && git add build && git commit -m 'pushing build' && git subtree push --prefix build origin gh-pages"
-  },
-  "homepage": "http://bhawesh96.github.com/MIT-Event-Booking"
+  }
 }
