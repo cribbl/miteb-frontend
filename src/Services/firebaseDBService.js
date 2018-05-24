@@ -190,6 +190,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
 
 export const updateToken = (uid, token, bool) => {
       firebaseDB.ref('/fcmTokens/'+uid).child(token).set(bool);
+}
 
 export const updateUser = (uid, tempUser) => {
       firebaseDB.ref('clubs/' + uid).update(tempUser);
