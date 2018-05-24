@@ -14,6 +14,12 @@ export const getUserDetails = (clubId, callback) => {
                   user['uid'] = snapshot.key;
                   callback(user);
             })
+      firebaseDB.ref('/clubs/' + clubId).on('value',
+            function(snapshot) {
+                  let user = snapshot.val();
+                  user['uid'] = snapshot.key;
+                  store.dispatch({type: "USER_UPDATE", user})
+            })
 }
 
 export const getMyEvents = (clubId, callback) => {
@@ -26,7 +32,7 @@ export const getMyEvents = (clubId, callback) => {
 		// console.log('outer snapshot')
             let user = snapshot.val();
             user['uid'] = snapshot.key;
-            store.dispatch({type: "USER_UPDATE", user})
+            // store.dispatch({type: "USER_UPDATE", user})
 		let events = snapshot.val().my_events
 		if(!events) {
 			callback(null, null)
