@@ -293,7 +293,7 @@ class HorizontalLinearStepper extends React.Component {
           console.log("couldn't be booked ", err);
         else {
           updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms)
-          sendPush(this.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+this.state.fields.title+"'")
+          sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
           scope.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true, fields: {}})
           scope.setState({finished: true})
         }
