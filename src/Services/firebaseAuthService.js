@@ -14,8 +14,8 @@ export const authenticateUser = (email, password, callback) => {
 }
 
 export const signOut = () => {
-  
-  updateToken(sessionStorage.getItem('uid'), sessionStorage.getItem('fcmToken'), false)
+  if(sessionStorage.getItem('fcmToken')!=null && sessionStorage.getItem('uid')!=null)
+    updateToken(sessionStorage.getItem('uid'), sessionStorage.getItem('fcmToken'), false)
   firebaseAuth.signOut()
   .then(function() {
   })
