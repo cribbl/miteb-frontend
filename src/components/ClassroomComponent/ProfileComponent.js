@@ -6,6 +6,7 @@ import firebase from 'firebase'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import {getUserDetails} from '../../Services/firebaseDBService'
+import {sendPush} from '../../Services/NotificationService'
 import {connect} from 'react-redux'
 const style = {
   height: 100,
@@ -30,8 +31,8 @@ class ProfileComponent extends Component {
    
        this.getProfileDetails();
     }
-    updateProfile(){
-       
+    updateProfile() {
+       sendPush("Fq10VDgTdAf7t4o4sEUrgY08rGg2")
     }
  
     getProfileDetails(){
