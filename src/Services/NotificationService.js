@@ -29,14 +29,22 @@ export const sendPush = (uid, title, body) => {
 
 	let params = {
 		uid: uid,
-		payload: {
-	        notification: {
-	          title: title,
-	          body: body,
-	          icon: 'https://laracasts.com/images/series/circles/do-you-react.png'
-	        }
-	    }
-    };
+    notificationOptions: {
+      title: title,
+      body: body,
+      icon: 'https://laracasts.com/images/series/circles/do-you-react.png',
+      vibrate: [100, 50, 100],
+      data: {
+        dateOfArrival: Date.now(),
+        primaryKey: 1,
+        title: 'data -> ' + title
+      },
+      actions: [
+      	{action: 'open', title: 'Open notif', icon: 'assets/notifications/checkIcon.png'},
+      	{action: 'close', title: 'Close notification', icon: 'assets/notifications/closeIcon.png'},
+    	]
+    }
+  };
 
     axios.post('https://dev-miteventbooking.herokuapp.com/send-notif', params)
 	.then(function(resp) {
