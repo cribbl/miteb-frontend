@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import DrawerComponent from '../DrawerComponent/DrawerComponent'
+import SnackbarComponent from '../SnackbarComponent'
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {toggleActions} from '../../actions/toggleActions'
@@ -36,6 +37,7 @@ class ClassroomComponent extends Component {
     	<div className="row">
       		<div>
       		<DrawerComponent />
+          <SnackbarComponent />
           </div>
       		<div style={this.props.isMobile ? astyle : bstyle}>
       		{this.props.children}
