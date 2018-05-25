@@ -1,7 +1,7 @@
 import {firebaseDB} from '../firebaseConfig'
 import moment from 'moment'
 import {store} from '../store'
-import {sendEmail} from './NotificationService'
+import {sendEmail, sendPush} from './NotificationService'
 
 export const getUserDetails = (clubId, callback) => {
       if(!clubId) {
@@ -127,22 +127,26 @@ function updateDatesDBx(dateArr, roomArr) {
 export const approveEvent = (event, approver, user) => {
       switch(approver) {
             case 'FA': {
-                  sendEmail("FA", user.email, "dummymitclub@gmail.com", "FA_APPROVED", "Approved by Faculty Advisor", "Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".", "<p>Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".</p>");
-
+                  // sendEmail("FA", user.email, "dummymitclub@gmail.com", "FA_APPROVED", "Approved by Faculty Advisor", "Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".", "<p>Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".</p>");
+                  sendPush("AD", "Mr. AD, Request Approval", "A new event titled "+event.title+ " requires your approval");
+                  sendPush(event.clubID, "Yay! Approved by FA", "Your event titled '"+event.title+ "' has been approved by FA");
+                  
                   firebaseDB.ref('/events/').child(event.key+'/FA_appr').set('approved');
                   firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('pending');
                   return
             }
             case 'AD': {
-                  sendEmail("AD", user.email, "dummymitclub@gmail.com", "AD_APPROVED", "Approved by Associate Director", "Congratulations! Your event has been approved by the Associate Director, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Associate Director, "+user.name+".</p>");
+                  // sendEmail("AD", user.email, "dummymitclub@gmail.com", "AD_APPROVED", "Approved by Associate Director", "Congratulations! Your event has been approved by the Associate Director, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Associate Director, "+user.name+".</p>");
+                  sendPush("SO", "Mr. SO, Request Approval", "A new event titled "+event.title+ " requires your approval");
+                  sendPush(event.clubID, "Yay! Approved by AD", "Your event titled '"+event.title+ "' has been approved by AD");
 
                   firebaseDB.ref('/events/').child(event.key+'/AD_appr').set('approved');
                   firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('pending');
                   return
             }
             case 'SO': {
-                  sendEmail("SO", user.email, "dummymitclub@gmail.com", "SO_APPROVED", "Approved by Security Officer", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Security Officer, "+user.name+".</p>");
-
+                  // sendEmail("SO", user.email, "dummymitclub@gmail.com", "SO_APPROVED", "Approved by Security Officer", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Security Officer, "+user.name+".</p>");
+                  sendPush(event.clubID, "Yay! Approved by SO", "Your event titled '"+event.title+ "' has been approved by SO");
                   firebaseDB.ref('/events/').child(event.key+'/SO_appr').set('approved');
                   return
             }
@@ -158,7 +162,8 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
                         firebaseDB.ref('/events/').child(event.key+'/AD_appr').set("prevRejected");
                         firebaseDB.ref('/events/').child(event.key+'/SO_appr').set("prevRejected");
                   }
-                  sendEmail("FA", user.email, "dummymitclub@gmail.com", "FA_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Faculty Advisor", "Uh-huh! Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  // sendEmail("FA", user.email, "dummymitclub@gmail.com", "FA_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Faculty Advisor", "Uh-huh! Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  sendPush(event.clubID, "Oops! " + _mode.charAt(0).toUpperCase()+_mode.slice(1) + "by FA", "Your event titled '"+event.title+ "' has been "+_mode.charAt(0).toUpperCase()+_mode.slice(1)+ " by FA");
                   firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/FA_msg').set(message);
                   return
@@ -167,18 +172,24 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
                   if(_mode == 'rejected') {
                         firebaseDB.ref('/events/').child(event.key+'/SO_appr').set("prevRejected");
                   }
-                  sendEmail("AD", user.email, "dummymitclub@gmail.com", "AD_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Associate Director", "Uh-huh! Your event has been "+_mode+" by the Associate Director, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Associate Director, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  // sendEmail("AD", user.email, "dummymitclub@gmail.com", "AD_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Associate Director", "Uh-huh! Your event has been "+_mode+" by the Associate Director, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Associate Director, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  sendPush(event.clubID, "Oops! " + _mode.charAt(0).toUpperCase()+_mode.slice(1) + "by AD", "Your event titled '"+event.title+ "' has been "+_mode.charAt(0).toUpperCase()+_mode.slice(1)+ " by AD");
                   firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/AD_msg').set(message);
                   return
             }
             case 'SO': {
-                  sendEmail("FA", user.email, "dummymitclub@gmail.com", "SO_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Security Officer", "Uh-huh! Your event has been "+_mode+" by the Security Officer, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Security Officer, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  // sendEmail("FA", user.email, "dummymitclub@gmail.com", "SO_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Security Officer", "Uh-huh! Your event has been "+_mode+" by the Security Officer, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Security Officer, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  sendPush(event.clubID, "Oops! " + _mode.charAt(0).toUpperCase()+_mode.slice(1) + "by SO", "Your event titled '"+event.title+ "' has been "+_mode.charAt(0).toUpperCase()+_mode.slice(1)+ " by SO");
                   firebaseDB.ref('/events/').child(event.key+'/SO_appr').set(_mode);
                   firebaseDB.ref('/events/').child(event.key+'/SO_msg').set(message);
                   return
             }
       }
+}
+
+export const updateToken = (uid, token, bool) => {
+      firebaseDB.ref('/fcmTokens/'+uid).child(token).set(bool);
 }
 
 export const updateUser = (uid, tempUser) => {
