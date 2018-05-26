@@ -104,7 +104,7 @@ class AppBarComponent extends Component {
           showMenuIconButton={false}
           iconElementRight={
             <div className="avatar">
-                <Avatar src={this.props.user.profilePicURL}/>
+                <Avatar src={this.props.user.profilePicURL?this.props.user.profilePicURL:require("../../assets/personDefaultProfilePic.png")}/>
                 <div style={{paddingTop: 6}}>
                 {this.props.openProfileMenu ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </div>
