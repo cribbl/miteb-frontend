@@ -7,17 +7,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 
 import { Link } from 'react-router'
 
-import './ForgotPasswordContainer.css'
-
-
-const paperStyle = {
-  padding: 30,
-  textAlign: 'center',
-  display: 'inline-block',
-  minHeight: 470,
-  maxWidth: 315,
-  borderBottom: '6px solid #00bcd4',
-};
+import './LoginComponent.css'
 
 class ForgotPasswordContainer extends Component {
 
@@ -31,38 +21,28 @@ class ForgotPasswordContainer extends Component {
     }
   }
 
-  	changeUsername (e) {
+  changeUsername (e) {
     this.setState({ username: e.target.value })
   }
 
-  	handleForgotPasswordSubmit (e) {
+	handleForgotPasswordSubmit (e) {
 
-  	}
+  }
 
 	render() {
 		return (
-      <div className="row authPage">
-      <div className="col-md-4 offset-md-7 rightPane">
-        <Paper zDepth={5} style={paperStyle}>
-            <div>
-              	  <div style={{display: 'flex', alignItems: 'space-between'}}>
-              	  <form onSubmit={this.handleForgotPasswordSubmit}>
-              	  	
-                    <h2 >Forgot Password</h2>
-              	  	<p className="paperTitle">No worries! We'll help you retrieve your account.</p>
-                    <br />
-                    <br />
-              	  		<div className="fieldsContainer">
-              	  			<TextField hintText="Username" value={this.state.username} onChange={this.changeUsername} required />
-              	  			<RaisedButton className="submitButton" type="submit" label="Submit" primary={true}  />	
-              	  		</div>
-
-              	  		<br /><br /><br /> <Link className="bottomAlign" to="/auth/signin">Back</Link>
-              	  </form>
-              	  </div>
-            </div>
-          </Paper>
-      </div>
+      <div style={{display: 'flex', alignItems: 'space-between'}}>
+      <form onSubmit={this.handleForgotPasswordSubmit}>
+        <h2 className="paperTitle">Forgot Password</h2>
+        <h6 className="paperDesc">No worries! We'll help you retrieve your account</h6>
+          <div className="fieldsContainer">
+            <TextField hintText="Email" value={this.state.username} onChange={this.changeUsername} required />
+            <RaisedButton className="submitButton" type="submit" label="Submit" primary={true} disabled={this.props.logging} />
+            <CircularProgress style={{position: 'absolute', padding: '27px 5px'}} size={20} hidden={!this.props.logging}/>
+          </div>
+              {this.props.error && <p>{this.props.error.message}</p>}
+          <br /><br /><br /><br /><br /><br /><Link className="bottomAlign" to="/auth/signin">Back</Link>
+      </form>
       </div>
     )
 	}
