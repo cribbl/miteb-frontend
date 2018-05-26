@@ -80,11 +80,12 @@ class ProfileContainer extends Component {
   }
 
   handlePicUpload() {
-    this.setState({popoverOpen: false, showProgress: true});
+    this.setState({popoverOpen: false});
     this.inputElement.click()
   }
 
   _handleImageChange(e) {
+    this.setState({showProgress: true})
     const file = e.target.files[0]
     uploadProfilePic(this.props.user.uid, file, (err, res) => {
       if(err) {
@@ -125,7 +126,7 @@ class ProfileContainer extends Component {
                   {this.state.defaultProfilePic?
                     <Avatar
                       className="profilePicContainer" 
-                      src={require("../../../assets/personDefaultProfilePic.png")}
+                      src={ !!this.props.user.isClub ? require("../../../assets/clubDefaultProfilePicture.jpeg") : require("../../../assets/personDefaultProfilePic.png") }
                       size={160}
                       style={{opacity: this.state.showProgress?0.3:1}}
                       onClick={this.handleProfilePicClick}
@@ -156,7 +157,7 @@ class ProfileContainer extends Component {
                   >
                     <Menu>
                       <MenuItem primaryText="Upload Picture" onClick={this.handlePicUpload} />
-                      <MenuItem primaryText="Remove Picture" onClick={this.handlePicRemove} />
+                      {!this.state.defaultProfilePic?<MenuItem primaryText="Remove Picture" onClick={this.handlePicRemove} />: null}
                     </Menu>
                   </Popover>
               </div>     
