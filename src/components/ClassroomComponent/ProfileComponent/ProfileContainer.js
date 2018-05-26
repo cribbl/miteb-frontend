@@ -57,7 +57,7 @@ class ProfileContainer extends Component {
         primaryContact: this.props.user.primaryContact,
         nameAbbrv: this.props.user.nameAbbrv
       },
-      defaultProfilePic: (this.props.user.profilePicURL)?false:true
+      defaultProfilePic: (this.props.user.profilePicURL) ? false : true
     })
   }
 
@@ -123,12 +123,12 @@ class ProfileContainer extends Component {
             <div style={{display: 'flex'}}>
               <div className="profilePicContainer" style={{position:"relative"}}>
                 <div className="image" style={{position:"relative"}}>
-                  {this.state.defaultProfilePic?
+                  {this.state.defaultProfilePic ?
                     <Avatar
                       className="profilePicContainer" 
                       src={ !!this.props.user.isClub ? require("../../../assets/clubDefaultProfilePicture.jpeg") : require("../../../assets/personDefaultProfilePic.png") }
                       size={160}
-                      style={{opacity: this.state.showProgress?0.3:1}}
+                      style={{opacity: this.state.showProgress ? 0.3 : 1}}
                       onClick={this.handleProfilePicClick}
                     />
                     :
@@ -138,7 +138,8 @@ class ProfileContainer extends Component {
                     size={160}
                     onClick={this.handleProfilePicClick}
                     style={{opacity: this.state.showProgress?0.3:1}}
-                    />}
+                    />
+                  }
                   <div>
                     <CircularProgress style={progressStyle} />
                   </div>
