@@ -2,7 +2,8 @@ export const toggleActions = {
     toggleSideNav,
     toggleProfileMenu,
     closeProfileMenu,
-    closeSideNav
+    closeSideNav,
+    toggleToaster
 };
 
 function toggleSideNav() {
@@ -26,5 +27,13 @@ function toggleProfileMenu() {
 function closeProfileMenu() {
     return {
         type: "CLOSE_PROFILE_MENU"
+    }
+}
+
+function toggleToaster(msg, open) {
+    return {
+        type: "TOASTER",
+        message: msg,
+        toast_open: open
     }
 }

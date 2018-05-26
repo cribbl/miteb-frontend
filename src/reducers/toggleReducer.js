@@ -5,46 +5,38 @@ const isMobile = () => {
     return false;
   }
 
-const initialState = {openSideNav: !isMobile(), openProfileMenu: false, isMobile: isMobile(), filter: 'all'}
+const initialState = {openSideNav: !isMobile(), openProfileMenu: false, isMobile: isMobile(), filter: 'all', toast_open: false, toast_message: " "}
 
 
 export function toggler(state = initialState, action) {
   switch (action.type) {
     case "TOGGLE_SIDE_NAV":
-      return {
+      return Object.assign({}, state, {
         openSideNav: !state.openSideNav,
-        openProfileMenu: state.openProfileMenu,
-        isMobile: state.isMobile,
-        filter: state.filter
-      };
+      });
     case "TOGGLE_PROFILE_MENU":
-      return {
-        openSideNav: state.openSideNav,
+      return Object.assign({}, state, {
         openProfileMenu: !state.openProfileMenu,
-        isMobile: state.isMobile,
-        filter: state.filter
-      };
+      });
     case "CLOSE_PROFILE_MENU":
-      return {
-        openSideNav: state.openSideNav,
-        openProfileMenu: false,
-        isMobile: state.isMobile,
-        filter: state.filter
-      };
+      return Object.assign({}, state, {
+        openProfileMenu: false
+      });
     case "CLOSE_SIDE_NAV":
-      return {
+      return Object.assign({}, state, {
         openSideNav: false,
         openProfileMenu: false,
-        isMobile: state.isMobile,
-        filter: state.filter
-      }; 
+      });
     case "FILTER":
-      return {
-        openSideNav: state.openSideNav,
+      return Object.assign({}, state, {
         openProfileMenu: false,
-        isMobile: state.isMobile,
         filter: action.filter
-      }; 
+      });
+    case "TOASTER":
+      return Object.assign({}, state, {
+        toast_message: action.message,
+        toast_open: !state.toast_open
+      })
     default:
       return state
   }
