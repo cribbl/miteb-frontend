@@ -24,7 +24,6 @@ import {List,ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox';
 import CircularProgress from 'material-ui/CircularProgress';
-
 import OtpDialog from '../../Dialogs/OtpDialog'
 
 import Popover from 'material-ui/Popover';
@@ -45,8 +44,9 @@ class ProfileContainer extends Component {
     this.state = {
       tempUser: null,
       hasChanged: false,
-      popOverOpen: false,
-      showProgress: false
+      popoverOpen: false,
+      showProgress: false,
+      defaultProfilePic: true
     }
   }
 
@@ -55,8 +55,9 @@ class ProfileContainer extends Component {
       tempUser: {
         name: this.props.user.name,
         primaryContact: this.props.user.primaryContact,
-        nameAbbrv: this.props.user.nameAbbrv,
-      }
+        nameAbbrv: this.props.user.nameAbbrv
+      },
+      defaultProfilePic: (this.props.user.profilePicURL)?false:true
     })
   }
 
@@ -92,7 +93,7 @@ class ProfileContainer extends Component {
       }
       else {
         updateUser(this.props.user.uid, {profilePicURL: res.downloadURL});
-        this.setState({showProgress: false});
+        this.setState({showProgress: false, defaultProfilePic: false});
       }
     })
   }
@@ -103,7 +104,8 @@ class ProfileContainer extends Component {
   };
 
   handlePicRemove = () => {
-    this.setState({popoverOpen: false});
+    this.setState({popoverOpen: false, defaultProfilePic: true});
+    updateUser(this.props.user.uid, {profilePicURL: null}); 
   }
 
   handleRequestClose = () => {
@@ -120,13 +122,22 @@ class ProfileContainer extends Component {
             <div style={{display: 'flex'}}>
               <div className="profilePicContainer" style={{position:"relative"}}>
                 <div className="image" style={{position:"relative"}}>
-                  <Avatar
+                  {this.state.defaultProfilePic?
+                    <Avatar
+                      className="profilePicContainer" 
+                      src={require("../../../assets/personDefaultProfilePic.png")}
+                      size={160}
+                      style={{opacity: this.state.showProgress?0.3:1}}
+                      onClick={this.handleProfilePicClick}
+                    />
+                    :
+                    <Avatar
                     className="profilePicContainer"
                     src={this.props.user && this.props.user.profilePicURL}
                     size={160}
                     onClick={this.handleProfilePicClick}
                     style={{opacity: this.state.showProgress?0.3:1}}
-                  />
+                    />}
                   <div>
                     <CircularProgress style={progressStyle} />
                   </div>
