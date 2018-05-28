@@ -1,7 +1,9 @@
 import {firebaseDB} from '../firebaseConfig'
 import moment from 'moment'
 import {store} from '../store'
+import {toggleActions} from '../actions/toggleActions'
 import {sendEmail, sendPush} from './NotificationService'
+
 
 export const getUserDetails = (clubId, callback) => {
       if(!clubId) {
@@ -194,4 +196,5 @@ export const updateToken = (uid, token, bool) => {
 
 export const updateUser = (uid, tempUser) => {
       firebaseDB.ref('clubs/' + uid).update(tempUser);
+      store.dispatch(toggleActions.toggleToaster("Profile updated successfully!", true));
 }
