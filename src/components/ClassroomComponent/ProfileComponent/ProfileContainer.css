@@ -1,0 +1,30 @@
+.profilePicContainer {
+	height: 160px;
+	border-radius: 50%;
+	background-color: gray;
+}
+
+.profilePicContainer:hover .image{
+  opacity: 0.1;
+  cursor: pointer;
+}
+
+.profilePicContainer:hover .middle{
+  opacity: 1;
+  cursor: pointer;
+}
+
+.middle {
+  position: absolute;
+  top: 40px;
+  left: 13%;
+  width: 120px;
+  margin: 0 auto;
+  line-height: 18px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
