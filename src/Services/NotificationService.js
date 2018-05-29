@@ -52,7 +52,7 @@ export const sendPush = (uid, title, body) => {
     }
   };
 
-    axios.post('http://localhost:9000/send-notif', params)
+    axios.post('https://dev-miteventbooking.herokuapp.com/send-notif', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
