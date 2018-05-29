@@ -25,28 +25,34 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 	})
 }
 
+	     //  vibrate: [100, 50, 100],
+	     //  actions: [
+	     //  	{action: 'open', title: 'Open notif', icon: 'assets/notifications/checkIcon.png'},
+	     //  	{action: 'close', title: 'Close notification', icon: 'assets/notifications/closeIcon.png'},
+	    	// ],
+	     //  data: {
+	     //    dateOfArrival: Date.now(),
+	     //    primaryKey: 1,
+	     //    title: 'data -> ' + title
+	     //  }
 export const sendPush = (uid, title, body) => {
 
 	let params = {
 		uid: uid,
     notificationOptions: {
-      title: title,
-      body: body,
-      icon: 'https://laracasts.com/images/series/circles/do-you-react.png',
-      vibrate: [100, 50, 100],
-      data: {
-        dateOfArrival: Date.now(),
-        primaryKey: 1,
-        title: 'data -> ' + title
-      },
-      actions: [
-      	{action: 'open', title: 'Open notif', icon: 'assets/notifications/checkIcon.png'},
-      	{action: 'close', title: 'Close notification', icon: 'assets/notifications/closeIcon.png'},
-    	]
+    	notification: {
+	      title: title,
+	      body: body,
+	      icon: 'https://laracasts.com/images/series/circles/do-you-react.png',
+	      click_action: 'https://bookings.cribblservices.com'
+	  	},
+	  	data: {
+	  		name: 'bhawesh'
+	  	}
     }
   };
 
-    axios.post('https://dev-miteventbooking.herokuapp.com/send-notif', params)
+    axios.post('http://localhost:9000/send-notif', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
