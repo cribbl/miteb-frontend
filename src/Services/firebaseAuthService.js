@@ -43,8 +43,8 @@ export const fetchUser = (callback) => {
 
 export const sendPasswordResetEmail = (email, callback) => {
   firebaseAuth.sendPasswordResetEmail(email)
-  .then(function(res) {
-    callback(null,res);
+  .then(function() {
+    callback(null);
   }).catch(function(err) {
     callback(err)
   });
