@@ -22,6 +22,13 @@ messaging.setBackgroundMessageHandler(function(payload) {
   //     primaryKey: 1
   //   }
   // };
+  notificationOptions['vibrate'] = [100, 50, 100];
+  notificationOptions['actions'] = [
+          {action: 'open', title: 'Open in App',
+            icon: 'https://png.icons8.com/metro/1600/checkmark.png'},
+          {action: 'close', title: 'Close notification',
+            icon: 'http://wiki.augmensys.com/images/1/12/IC_Cross_Mark.png'},
+        ]
 
   return self.registration.showNotification(payload.notification.title, notificationOptions);
 });
