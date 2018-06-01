@@ -72,6 +72,12 @@ class Dialogxx extends Component {
         primary={true}
         onClick={this.props.nextEvent}
       />,
+      <FlatButton
+        label="Download Receipt"
+        primary={true}
+        hidden={!this.props.currentEvent.receiptURL}
+        onClick={() => {window.location=(this.props.currentEvent.receiptURL)}}
+      />,
     ];
 
     return (
