@@ -49,7 +49,7 @@ class HorizontalLinearStepper extends React.Component {
         booker_reg_no: '150911111',
         title: '',
         desc: 'Some random description of a random event of this random Dummy MIT Club',
-        workshop: 'external'
+        workshop: 'External'
       },
       fieldTouch: {
         booker_name: false,
@@ -281,7 +281,8 @@ class HorizontalLinearStepper extends React.Component {
       "end_time":"7:45pm",
       "start_time":"5:45pm",
       "clubName": this.props.user.name,
-      "clubID": localStorage.getItem('clubID')
+      "clubID": localStorage.getItem('clubID'),
+      "FA_name": this.props.user.fa.name
     }
    
     var myRef = firebaseDB.ref('/events/').push(newData);
@@ -398,16 +399,16 @@ class HorizontalLinearStepper extends React.Component {
           <div>
             <RadioButtonGroup style={{margin: 20}}
               name="Workshop"
-              defaultSelected="external"
+              defaultSelected="External"
               onChange={this.handleChange.bind(this,"workshop")}>
                 <RadioButton
-                  value="internal"
+                  value="Internal"
                   label="Internal Workshop"
                   labelStyle={{width: '100%'}}
                 />
                    
                 <RadioButton
-                  value="external"
+                  value="External"
                   label="External Workshop"
                   labelStyle={{width: '100%'}}
                 />
