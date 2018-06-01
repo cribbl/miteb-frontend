@@ -1,4 +1,5 @@
 import {storage} from '../firebaseConfig'
+import axios from 'axios'
 
 export const uploadProfilePic = (uid, file, callback) => {
 	storage.ref().child(uid + '/profilePic').put(file)
@@ -8,4 +9,18 @@ export const uploadProfilePic = (uid, file, callback) => {
 	.catch(function(err) {
 		callback(err)
 	})	
+}
+
+export const generatePDF = (eventID) => {
+  let params = {
+    eventID: eventID
+  }
+  axios.get("https://dev-miteventbooking.herokuapp.com/generate-pdf", {params})
+  .then(function(res) {
+    console.log(res);
+  })
+  .catch(function(err) {
+    console.log(err)
+  })
+  return
 }
