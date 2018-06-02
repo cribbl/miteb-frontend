@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './SearchSortContainer';
 import {
   Table,
   TableBody,
@@ -49,7 +50,8 @@ class MyEventsComponent extends Component {
       approvedArr: {},
       dialogOpen: false,
       currentEvent: {},
-      fetching: true
+      fetching: true,
+      search :''
     }
 }
 
@@ -216,6 +218,19 @@ class MyEventsComponent extends Component {
               )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>No Events Yet</p>
           }
           
+          {
+            this.state.search ? (Object.values(this.state.myArrx).filter(x => x.toLowerCase().includes(this.state.search)).map(function(event, index) {
+              return(
+                  <TableRow key={index}>
+                    <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
+                    <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
+                  </TableRow>
+              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>No Events for this Search</p>
+          }
           </TableBody>
         </Table>
         </Paper>
