@@ -11,12 +11,6 @@ export const getUserDetails = (clubId, callback) => {
             console.log('return since no clubId')
             return
       }
-      firebaseDB.ref('/clubs/' + clubId).once('value',
-            function(snapshot) {
-              let user = snapshot.val();
-              user['uid'] = snapshot.key;
-              callback(user);
-            })
       firebaseDB.ref('/clubs/' + clubId).on('value',
             function(snapshot) {
                   let user = snapshot.val();
@@ -27,6 +21,7 @@ export const getUserDetails = (clubId, callback) => {
                         user['fa'] = snap.val();
                     })
                   }
+                  callback(user)
                   store.dispatch({type: "USER_UPDATE", user})
             })
 }
