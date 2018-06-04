@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 
-// import check_circle_outline from 'material-ui/svg-icons/action/home';
+import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import SearchClubContainer from './SearchClubContainer';
@@ -18,11 +18,31 @@ import {
 class ApproveClubsContainer extends Component {
 	constructor(props) {
 		super(props)
+		this.handleOpen = this.handleOpen.bind(this);
+		this.handleClose = this.handleClose.bind(this);
 		this.state = {
-			clubApproved : false
+			clubApproved : false,
+			dialogOpen: false
 		}
 	}
+
+	handleOpen() {
+		this.setState({dialogOpen: true});
+	}
+
+	handleClose() {
+		this.setState({dialogOpen: false});
+	}
+
 	render() {
+		const actions = [
+	      <RaisedButton
+	        label="Approve Club"
+	        primary={true}
+	        onClick={this.handleClose}
+	      />
+	    ];
+
 		return (
 			<div style={{justifyContent: 'center'}}>
 				<div style={{ width: this.props.isMobile? '98%': '90%', backgroundColor: 'yellow', margin: 'auto', marginTop: 20}}>
@@ -41,15 +61,16 @@ class ApproveClubsContainer extends Component {
 							    <TableBody displayRowCheckbox={false}>
 							      <TableRow>
 							        <TableRowColumn>MTTN</TableRowColumn>
-							        <TableRowColumn><RaisedButton>View</RaisedButton></TableRowColumn>
-							      </TableRow>
-							      <TableRow>
-							        <TableRowColumn>LDQ</TableRowColumn>
-							        <TableRowColumn><RaisedButton>View</RaisedButton></TableRowColumn>
-							      </TableRow>
-							      <TableRow>
-							        <TableRowColumn>The Photography Club</TableRowColumn>
-							        <TableRowColumn><RaisedButton>View</RaisedButton></TableRowColumn>
+							        <TableRowColumn><RaisedButton label="View" onClick={this.handleOpen} /></TableRowColumn>
+							        <Dialog
+							          title="Club Details"
+							          actions={actions}
+							          modal={false}
+							          open={this.state.dialogOpen}
+							          onRequestClose={this.handleClose}
+							          autoScrollBodyContent={true}
+							        >
+							        </Dialog>
 							      </TableRow>
 							    </TableBody>
 							</Table>
