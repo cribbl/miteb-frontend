@@ -17,6 +17,7 @@ import SO_EventsComponent from './components/ClassroomComponent/MyEventsComponen
 import DashboardComponent from './components/ClassroomComponent/DashboardComponent/DashboardComponent'
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
+import ApproveClubsComponent from './components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer'
 
 import Reg from './components/LoginComponent/Reg'
 import {store} from './store'
@@ -45,6 +46,7 @@ ReactDOM.render(
             <Route path="soEvents" component={SO_EventsComponent}></Route>
             <Route path="book_room" component={BookingComponent}></Route>
             <Route path="profile" component={ProfileComponent}></Route>
+            <Route path="approveClubs" component={ApproveClubsComponent}></Route>
         </Route>
     	</Route>
     </Router>
