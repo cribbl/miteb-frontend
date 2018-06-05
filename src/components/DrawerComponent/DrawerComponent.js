@@ -5,6 +5,7 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 
+import IconCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import IconHome from 'material-ui/svg-icons/action/home'
 import IconDashboard from 'material-ui/svg-icons/action/dashboard'
 import IconAnalytics from 'material-ui/svg-icons/editor/insert-chart'
@@ -102,7 +103,13 @@ class DrawerComponent extends Component {
                 key="/dashboard/profile"
                 primaryText="Profile"
                 leftIcon={<IconProfile color={'#FFFFFF'} />} />
-            
+            {this.props.user.isSC?
+            <MenuItem
+                style={Object.assign((this.state.menuIndex == 4) ? active:'', menuItemStyle)}
+                key="/dashboard/approveClubs"
+                primaryText="Approve Clubs"
+                leftIcon={<IconCheckCircle color={'#FFFFFF'} />} />
+            : null}
           </Menu>
         </Drawer>
       </div>
