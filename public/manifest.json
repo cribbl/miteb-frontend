@@ -2,7 +2,7 @@
   "name": "MIT Event Booking",
   "short_name": "MIT-EB",
   "display": "minimal-ui",
-  "start_url": "/MIT-Event-Booking",
+  "start_url": ".",
   "theme_color": "#673ab6",
   "background_color": "#03A9F4",
   "display": "standalone",
