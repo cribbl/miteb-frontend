@@ -9,6 +9,7 @@ class SearchSortContainer extends Component {
   constructor (props) {
     super(props)
     this.filterClicked = this.filterClicked.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
     console.log('IPHONE')
     console.log(props)
     this.state = {
@@ -22,8 +23,12 @@ class SearchSortContainer extends Component {
     dispatch({type: 'FILTER', filter})
   }
 
+  handleSearch(e) {
+    this.setState({search: e.target.value})
+    this.props.handleSearch(e.target.value)
+  }
+
   render() {
-    
     return (
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
@@ -36,10 +41,10 @@ class SearchSortContainer extends Component {
         </ToolbarGroup>
         {!this.props.isMobile ? 
           <ToolbarGroup>
-            <TextField hintText="search" 
-                       floatingLabelText="search" 
-                       value={this.state.search} 
-                       onChange={e => this.setState({search: e.target.value})}/>
+            <TextField
+              floatingLabelText="Search"
+              value={this.state.search}
+              onChange={this.handleSearch} />
           </ToolbarGroup>
           : '' }
        </Toolbar>

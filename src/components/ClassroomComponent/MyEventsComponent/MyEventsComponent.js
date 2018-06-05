@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './SearchSortContainer';
 import {
   Table,
   TableBody,
@@ -36,6 +35,7 @@ class MyEventsComponent extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.nextEvent = this.nextEvent.bind(this)
     this.handleIcon = this.handleIcon.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -51,7 +51,7 @@ class MyEventsComponent extends Component {
       dialogOpen: false,
       currentEvent: {},
       fetching: true,
-      search :''
+      searchContent: ''
     }
 }
 
@@ -88,6 +88,13 @@ class MyEventsComponent extends Component {
     let nextKey = keys[pos]
     let nextEvent = this.state.myArrx[nextKey]
     this.setState({currentEvent: nextEvent})
+  }
+
+  handleSearch(content) {
+    this.setState({searchContent: content})
+    var myArrx = this.state.originalArr
+    myArrx = Object.values(myArrx).filter(_event => _event.title.toLowerCase().includes(content.toLowerCase()));
+    this.setState({myArrx})
   }
 
   filterAndStore(arr) {
@@ -137,7 +144,6 @@ class MyEventsComponent extends Component {
         return
       }
     }
-    // this.setState({fetching: true})
     
     firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
     function(snapshot) {
@@ -154,6 +160,7 @@ class MyEventsComponent extends Component {
           myArrx[snapshot.key] = snapshot.val()
           myArrx[snapshot.key].key = snapshot.key
           this.setState({myArrx})
+          this.setState({originalArr: myArrx})
           this.filterAndStore(myArrx)
           // console.log(this.state.myArrx)
         }, this)
@@ -167,7 +174,7 @@ class MyEventsComponent extends Component {
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
       <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
+        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
       </div>
 
       <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent}/>
@@ -215,22 +222,9 @@ class MyEventsComponent extends Component {
                     <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
                     <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
                   </TableRow>
-              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>No Events Yet</p>
+              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No Events Yet'}</p>
           }
-          
-          {
-            this.state.search ? (Object.values(this.state.myArrx).filter(x => x.toLowerCase().includes(this.state.search)).map(function(event, index) {
-              return(
-                  <TableRow key={index}>
-                    <TableRowColumn>{event.title}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
-                  </TableRow>
-              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>No Events for this Search</p>
-          }
+
           </TableBody>
         </Table>
         </Paper>
