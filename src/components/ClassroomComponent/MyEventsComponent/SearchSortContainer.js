@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './MyEventsComponent';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
@@ -11,7 +12,8 @@ class SearchSortContainer extends Component {
     console.log('IPHONE')
     console.log(props)
     this.state = {
-      filter: 'all'
+      filter: 'all',
+      search: ''
     }
   }
 
@@ -21,6 +23,7 @@ class SearchSortContainer extends Component {
   }
 
   render() {
+    
     return (
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
@@ -33,7 +36,10 @@ class SearchSortContainer extends Component {
         </ToolbarGroup>
         {!this.props.isMobile ? 
           <ToolbarGroup>
-            <TextField hintText={this.props.filter}/>
+            <TextField hintText="search" 
+                       floatingLabelText="search" 
+                       value={this.state.search} 
+                       onChange={e => this.setState({search: e.target.value})}/>
           </ToolbarGroup>
           : '' }
        </Toolbar>
