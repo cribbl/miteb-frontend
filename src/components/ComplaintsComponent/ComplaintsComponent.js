@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {firebaseDB} from '../../firebaseConfig'
 import moment from 'moment'
 import {toggleActions} from '../../actions/toggleActions'
+import {sendPush} from '../../Services/NotificationService'
 
 class ComplaintsComponent extends Component {
   constructor (props) {
@@ -66,6 +67,7 @@ class ComplaintsComponent extends Component {
     firebaseDB.ref('complaints').push(complaint);
     const {dispatch} = this.props;
     dispatch(toggleActions.toggleToaster("Complaint registered", true))
+    sendPush("SC", "New complaint lodged", this.state.subject)
   }
 
   render() {
