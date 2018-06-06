@@ -19,6 +19,7 @@ import BookingComponent from './components/ClassroomComponent/BookingComponent/B
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
 
 import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
+import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
 
 import Reg from './components/LoginComponent/Reg'
 import {store} from './store'
@@ -48,6 +49,7 @@ ReactDOM.render(
             <Route path="soEvents" component={SO_EventsComponent}></Route>
             <Route path="book_room" component={BookingComponent}></Route>
             <Route path="profile" component={ProfileComponent}></Route>
+            <Route path="viewComplaints" component={ViewComplaintsComponent}></Route>
         </Route>
     	</Route>
     </Router>
