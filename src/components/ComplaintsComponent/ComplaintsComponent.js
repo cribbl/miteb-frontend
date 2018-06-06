@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper'
 import ComplaintsContent from './ComplaintsContent'
 import RaisedButton from 'material-ui/RaisedButton'
 import {firebaseDB} from '../../firebaseConfig'
+import moment from 'moment'
 
 class ComplaintsComponent extends Component {
   constructor (props) {
@@ -53,6 +54,7 @@ class ComplaintsComponent extends Component {
       complaint['fields'] = this.state.fields;
     complaint['goAnonymous'] = this.state.goAnonymous;
     complaint['desc'] = this.state.desc;
+    complaint['dated'] = moment(new Date()).format('DD-MM-YYYY');
     firebaseDB.ref('complaints').push(complaint)
   }
 
