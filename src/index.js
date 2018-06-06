@@ -18,6 +18,8 @@ import DashboardComponent from './components/ClassroomComponent/DashboardCompone
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
 
+import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
+
 import Reg from './components/LoginComponent/Reg'
 import {store} from './store'
 
@@ -31,12 +33,13 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
     	<Route path="/" component={App}>
-    	<IndexRoute component={Reg}></IndexRoute>
-        	<Route path="auth" component={Reg}>
-    			<IndexRoute component={LoginComponent} />
-    			<Route path="signin" component={LoginComponent}></Route>
+        <Route path="complaints" component={ComplaintsComponent}></Route>
+        <IndexRoute component={Reg}></IndexRoute>
+            <Route path="auth" component={Reg}>
+                <IndexRoute component={LoginComponent} />
+                <Route path="signin" component={LoginComponent}></Route>
                 <Route path="forgot" component={ForgotPasswordContainer}></Route>
-    		</Route>
+            </Route>
         <Route path="dashboard" component={ClassroomComponent}>
             <IndexRoute component={DashboardComponent}></IndexRoute>
             <Route path="myEvents" component={MyEventsComponent}></Route>

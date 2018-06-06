@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FaceIcon from 'material-ui/svg-icons/action/face'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import LogoutIcon from 'material-ui/svg-icons/action/exit-to-app'
+import ComplaintIcon from 'material-ui/svg-icons/av/new-releases'
 import IconTest from 'material-ui/svg-icons/editor/mode-edit'
 import DashboardIcon from 'material-ui/svg-icons/action/dashboard'
 import CatalogueIcon from 'material-ui/svg-icons/av/library-books'
@@ -66,12 +67,20 @@ class ProfileMenu extends Component {
             <Hihi />
             </MenuItem>
           }
-            
+          
             <MenuItem
               key="/auth"
               primaryText="Login"
               leftIcon={<FaceIcon />}
               hidden={!this.props.isMobile || this.props.user}/>
+
+            <Divider hidden={!this.props.isMobile} />
+
+            <MenuItem
+              key="/complaints"
+              primaryText="Complaints"
+              leftIcon={<ComplaintIcon />}
+              hidden={!this.props.isMobile} />
 
             <Divider hidden={!this.props.isMobile || !this.props.user}/>
             

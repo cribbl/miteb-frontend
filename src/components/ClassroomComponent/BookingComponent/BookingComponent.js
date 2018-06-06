@@ -132,7 +132,7 @@ class HorizontalLinearStepper extends React.Component {
     }
   };
 
-  handleChange(field, e) {  
+  handleChange(field, e) {
     let fields = this.state.fields;
     fields[field] = e.target.value;        
     this.setState({fields});
