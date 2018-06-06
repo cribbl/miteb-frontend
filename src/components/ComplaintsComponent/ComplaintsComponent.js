@@ -9,12 +9,14 @@ import ComplaintsContent from './ComplaintsContent'
 import RaisedButton from 'material-ui/RaisedButton'
 import {firebaseDB} from '../../firebaseConfig'
 import moment from 'moment'
+import {toggleActions} from '../../actions/toggleActions'
 
 class ComplaintsComponent extends Component {
   constructor (props) {
     super(props);
     this.handleAnonymous = this.handleAnonymous.bind(this)
     this.handleDescChange = this.handleDescChange.bind(this)
+    this.handleSubjectChange = this.handleSubjectChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
       fields: {
@@ -24,6 +26,7 @@ class ComplaintsComponent extends Component {
         contactNo: '',
       },
       desc: '',
+      subject: '',
       goAnonymous: false,
     }
   }
@@ -48,14 +51,21 @@ class ComplaintsComponent extends Component {
     this.setState({desc: e.target.value})
   }
 
+  handleSubjectChange(value) {
+    this.setState({subject: value})
+  }
+
   handleSubmit() {
     var complaint = {};
     if(!this.state.goAnonymous)
       complaint['fields'] = this.state.fields;
     complaint['goAnonymous'] = this.state.goAnonymous;
     complaint['desc'] = this.state.desc;
+    complaint['subject'] = this.state.subject;
     complaint['dated'] = moment(new Date()).format('DD-MM-YYYY');
-    firebaseDB.ref('complaints').push(complaint)
+    firebaseDB.ref('complaints').push(complaint);
+    const {dispatch} = this.props;
+    dispatch(toggleActions.toggleToaster("Complaint registered", true))
   }
 
   render() {
@@ -129,7 +139,7 @@ class ComplaintsComponent extends Component {
           </Paper>
           </div>
           <div style={{width: this.props.isMobile ? '100%' : '60%', display: 'flex', alignItems: '', justifyContent: 'center', padding: 10}}>
-            <ComplaintsContent handleDescChange={this.handleDescChange}/>
+            <ComplaintsContent handleDescChange={this.handleDescChange} handleSubjectChange={this.handleSubjectChange}/>
           </div>
 	      </div>
         <div style={{display: 'flex', justifyContent: 'center', marginTop: 20}}>
