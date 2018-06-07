@@ -38,7 +38,6 @@ ReactDOM.render(
     			<Route path="signin" component={LoginComponent}></Route>
                 <Route path="forgot" component={ForgotPasswordContainer}></Route>
                 <Route path="signup" component={SignupContainer}></Route>
-
     		</Route>
         <Route path="dashboard" component={ClassroomComponent}>
             <IndexRoute component={DashboardComponent}></IndexRoute>
