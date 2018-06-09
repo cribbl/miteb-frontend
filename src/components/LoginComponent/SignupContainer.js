@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
+
 import {createUserWithEmailAndPassword} from '../../Services/firebaseAuthService'
 
 import { Link } from 'react-router'
@@ -100,8 +101,24 @@ class SignupContainer extends Component {
 
 
   	handlePhoneNumber (e) {
-  		this.setState({ phonenumber: e.target.value })
-  	}
+  		
+
+  		let value = e.target.value;
+  		if(value.length != 10) {
+  			this.setState(prevState => ({ newUser: {
+  				phonenumber_error: 'number must have 10 digits'
+  			}
+
+  			}),
+  			() => console.log(this.state.newUser.phonenumber_error))
+  				}
+  			else {
+  				this.setState( prevState => ({newUser:
+      {...prevState.newUser,phonenumber: value,phonenumber_error:''}
+      }), () => console.log(this.state.newUser))
+  			}
+  		}
+  	
 
 
 
@@ -122,9 +139,9 @@ class SignupContainer extends Component {
 
 }
 
-  	handleSignupSubmit(e) {
+  	handleSignupSubmit() {
 
-		createUserWithEmailAndPassword (this.state.email , this.state.password);
+		createUserWithEmailAndPassword(this.state.email , this.state.password);
 	}
 
 	
@@ -144,35 +161,35 @@ class SignupContainer extends Component {
             hintText="Club Name"
             value={this.state.clubname}
             onChange={this.handleClubName}
-            errorText= {this.state.clubname_error}
+            errorText= {this.state.newUser.clubname_error}
             required />
 
           <TextField
             hintText="Club Name Abbreviation"
             value={this.state.clubnameabbrev}
             onChange={this.handleClubNameAbbrev}
-            errorText= {this.state.clubnameabbrev_error}
+            errorText= {this.state.newUser.clubnameabbrev_error}
             required />
 
           <TextField
             hintText="Email"
             value={this.state.email}
             onChange={this.handleEmail}
-            errorText= {this.state.email_error}
+            errorText= {this.state.newUser.email_error}
             required />
 
           <TextField
             hintText="Phone Number"
             value={this.state.phonenumber}
             onChange={this.handlePhoneNumber}
-            errorText= {this.state.phonenumber_error}
+            errorText= {this.state.newUser.phonenumber_error}
             required />
 
           <TextField
             hintText="Password"
             value={this.state.password}
             onChange={this.handlePassword}
-            errorText= {this.state.password_error}
+            errorText= {this.state.newUser.password_error}
             required />
 
             <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true}  />
