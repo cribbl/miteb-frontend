@@ -17,6 +17,7 @@ class SignupContainer extends Component {
 
     this.state = {
      
+     newUser: {
         clubname: '',
         clubnameabbrev: '',
         email : '',
@@ -27,7 +28,7 @@ class SignupContainer extends Component {
         email_error: '',
         phonenumber_error: '',
         password_error:''
-        
+        }	
       
     }
       this.handleClubName = this.handleClubName.bind(this);
@@ -40,21 +41,73 @@ class SignupContainer extends Component {
 
   	handleClubName (e) {
 
+  	let value = e.target.value;  
+    if(value.length<1) {
+      this.setState( prevState => ({newUser:
+        {clubname_error : 'this field is required'}}));
+    } else {
+      this.setState( prevState => ({ newUser : 
+      {...prevState.newUser, clubname: value, clubname_error : ''} 
+      }), () => console.log(this.state.newUser))
+    }
+
   	}
 
   	handleClubNameAbbrev (e) {
 
+  	let value = e.target.value;  
+    if(value.length<1) {
+      this.setState( prevState => ({newUser:
+        {clubnameabbrev_error : 'this field is required'}}));
+    } else {
+      this.setState( prevState => ({ newUser : 
+      {...prevState.newUser, clubnameabbrev: value, clubnameabbrev_error : ''} 
+      }), () => console.log(this.state.newUser))
+    }
+  		
   	}
 
   	handleEmail (e) {
+  		
+  		let value = e.target.value;
+    let alphabet = value
+    alphabet = alphabet.replace(/[^a-zA-Z]+/g,"");
+    if(alphabet.length>0) { //contains at least one alphabet
+      if(value.length >2 && value.length <31) {
+          this.setState( prevState => ({ newUser : 
+          {...prevState.newUser, email: value, email_error: ''}
+          }), () => console.log(this.state.newUser))
+      } else {
+        this.setState( prevState => ({newUser: {
+          email_error: 'length must be between 3 to 30 characters'}
+          }), () => console.log(this.state.newUser.email_error))
+      }
+    } else {
+      this.setState( prevState => ({newUser: {
+        email_error: 'There must be atleast one character'}
+        }), () => console.log(this.state.newUser.email_error))
+    }
 
   	}
 
   	handlePhoneNumber (e) {
-
+  		this.setState({ phonenumber: e.target.value })
   	}
 
   	handlePassword (e) {
+  		
+  	let value = e.target.value;
+    if(value.length < 8) {
+      this.setState( prevState => ({newUser: {
+        password_error: 'password must have at least 8 characters'}
+      }),
+       () => console.log(this.state.newUser.password_error))
+          }
+   else {
+      this.setState( prevState => ({newUser:
+      {...prevState.newUser,password: value,password_error:''}
+      }), () => console.log(this.state.newUser))
+    }
 
   	}
 
@@ -71,39 +124,41 @@ class SignupContainer extends Component {
 			<div className="fieldsContainer">
 
 			<TextField
-              hintText="Club Name"
+              floatingLabelText="Club Name"
               value={this.state.clubname}
               onChange={this.handleClubName}
-              errorText= {this.state.clubname_error}
+              errorText= {this.state.newUser.clubname_error}
               required />
 
             <TextField
-              hintText="Club Name Abbreviation"
+              floatingLabelText="Club Name Abbreviation"
               value={this.state.clubnameabbrev}
               onChange={this.handleClubNameAbbrev}
-              errorText= {this.state.clubnameabbrev_error}
+              errorText= {this.state.newUser.clubnameabbrev_error}
               required />
 
             <TextField
-              hintText="Email"
+              floatingLabelText="Email"
               value={this.state.email}
               onChange={this.handleEmail}
-              errorText= {this.state.email_error}
+              errorText= {this.state.newUser.email_error}
               required />
 
-             <TextField
-              hintText="Phone Number"
+            <TextField
+              floatingLabelText="Phone Number"
               value={this.state.phonenumber}
               onChange={this.handlePhoneNumber}
-              errorText= {this.state.phonenumber_error}
+              errorText= {this.state.newUser.phonenumber_error}
               required />
-
-             <TextField
-              hintText="Password"
+    		
+    		<TextField
+              floatingLabelText="Password"
               value={this.state.password}
               onChange={this.handlePassword}
-              errorText= {this.state.password_error}
+              errorText= {this.state.newUser.password_error}
               required />
+
+      
 
               <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true}  />
               <br /><br /><br />
