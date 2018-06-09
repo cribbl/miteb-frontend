@@ -6,7 +6,7 @@
     "amazon-cognito-identity-js": "^1.16.0",
     "aws-sdk": "^2.36.0",
     "axios": "^0.17.1",
-    "firebase": "^4.9.0",
+    "firebase": "^4.13.1",
     "history": "^4.7.2",
     "material-ui": "^0.20.0",
     "material-ui-datatables": "^0.18.2",

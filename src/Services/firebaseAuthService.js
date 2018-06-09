@@ -2,6 +2,15 @@ import {firebaseAuth, firebaseMessaging} from '../firebaseConfig'
 import {getUserDetails, updateToken} from './firebaseDBService'
 import {getNotificationRequestPermission} from './NotificationService'
 
+export const createUserWithEmailAndPassword = (email , password ) => {
+
+  firebaseAuth.createUserWithEmailAndPassword(email, password)
+  .then((u) => {})
+  .catch((error) => {
+    console.log(error);
+  })
+}
+
 export const authenticateUser = (email, password, callback) => {
     
     firebaseAuth.signInWithEmailAndPassword(email, password)

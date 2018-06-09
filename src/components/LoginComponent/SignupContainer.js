@@ -6,6 +6,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
+import {createUserWithEmailAndPassword} from '../../Services/firebaseAuthService'
+
 import { Link } from 'react-router'
 
 import './LoginComponent.css'
@@ -113,6 +115,7 @@ class SignupContainer extends Component {
 
 	handleSignupSubmit (e) {
 
+		createUserWithEmailAndPassword (this.state.email , this.state.password);
 	}
 
 
