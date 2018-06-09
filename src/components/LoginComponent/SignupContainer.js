@@ -13,7 +13,6 @@ import { Link } from 'react-router'
 import './LoginComponent.css'
 
 class SignupContainer extends Component {
-
 	constructor(props) {
     super(props);
 
@@ -33,15 +32,17 @@ class SignupContainer extends Component {
         }	
       
     }
-      this.handleClubName = this.handleClubName.bind(this);
-      this.handleClubNameAbbrev = this.handleClubNameAbbrev.bind(this);
-      this.handleEmail = this.handleEmail.bind(this);
-      this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
-      this.handlePassword = this.handlePassword.bind(this);
-      this.handleSignupSubmit = this.handleSignupSubmit.bind(this);
+
+    this.handleClubName = this.handleClubName.bind(this);
+    this.handleClubNameAbbrev = this.handleClubNameAbbrev.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
+    this.handlePhoneNumber = this.handlePhoneNumber.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+    this.handleSignupSubmit = this.handleSignupSubmit.bind(this);
   }
 
-  	handleClubName (e) {
+	handleClubName (e) {
+
 
   	let value = e.target.value;  
     if(value.length<1) {
@@ -55,7 +56,10 @@ class SignupContainer extends Component {
 
   	}
 
-  	handleClubNameAbbrev (e) {
+	
+
+	handleClubNameAbbrev (e) {
+
 
   	let value = e.target.value;  
     if(value.length<1) {
@@ -90,11 +94,16 @@ class SignupContainer extends Component {
         }), () => console.log(this.state.newUser.email_error))
     }
 
-  	}
+	}
+
+	
+
 
   	handlePhoneNumber (e) {
   		this.setState({ phonenumber: e.target.value })
   	}
+
+
 
   	handlePassword (e) {
   		
@@ -111,64 +120,68 @@ class SignupContainer extends Component {
       }), () => console.log(this.state.newUser))
     }
 
-  	}
+}
 
-	handleSignupSubmit (e) {
+  	handleSignupSubmit(e) {
 
 		createUserWithEmailAndPassword (this.state.email , this.state.password);
 	}
+
+	
+
 
 
 	render () {
 		return (
 			<div style={{display: 'flex', alignItems: 'space-between'}}>
-			<form onSubmit={this.handleSignupSubmit}>
-			<h2 className="paperTitle">Sign Up</h2>
-			<div className="fieldsContainer">
 
-			<TextField
-              floatingLabelText="Club Name"
-              value={this.state.clubname}
-              onChange={this.handleClubName}
-              errorText= {this.state.newUser.clubname_error}
-              required />
+			
+  			<form onSubmit={this.handleSignupSubmit}>
+  			<h2 className="paperTitle">Sign Up</h2>
+  			<div className="fieldsContainer">
+  			
+          <TextField
+            hintText="Club Name"
+            value={this.state.clubname}
+            onChange={this.handleClubName}
+            errorText= {this.state.clubname_error}
+            required />
 
-            <TextField
-              floatingLabelText="Club Name Abbreviation"
-              value={this.state.clubnameabbrev}
-              onChange={this.handleClubNameAbbrev}
-              errorText= {this.state.newUser.clubnameabbrev_error}
-              required />
+          <TextField
+            hintText="Club Name Abbreviation"
+            value={this.state.clubnameabbrev}
+            onChange={this.handleClubNameAbbrev}
+            errorText= {this.state.clubnameabbrev_error}
+            required />
 
-            <TextField
-              floatingLabelText="Email"
-              value={this.state.email}
-              onChange={this.handleEmail}
-              errorText= {this.state.newUser.email_error}
-              required />
+          <TextField
+            hintText="Email"
+            value={this.state.email}
+            onChange={this.handleEmail}
+            errorText= {this.state.email_error}
+            required />
 
-            <TextField
-              floatingLabelText="Phone Number"
-              value={this.state.phonenumber}
-              onChange={this.handlePhoneNumber}
-              errorText= {this.state.newUser.phonenumber_error}
-              required />
-    		
-    		<TextField
-              floatingLabelText="Password"
-              value={this.state.password}
-              onChange={this.handlePassword}
-              errorText= {this.state.newUser.password_error}
-              required />
+          <TextField
+            hintText="Phone Number"
+            value={this.state.phonenumber}
+            onChange={this.handlePhoneNumber}
+            errorText= {this.state.phonenumber_error}
+            required />
 
-      
+          <TextField
+            hintText="Password"
+            value={this.state.password}
+            onChange={this.handlePassword}
+            errorText= {this.state.password_error}
+            required />
 
-              <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true}  />
-              <br /><br /><br />
-              Already have an account? <Link className="bottomAlign" to="/auth/signin">Signin here</Link>
+            <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true}  />
+            <br /><br /><br />
+            Already have an account? <Link className="bottomAlign" to="/auth/signin">Signin here</Link>
 
-			</div>
-			</form>
+  			</div>
+  			</form>
+
 			</div>
 
 		)
