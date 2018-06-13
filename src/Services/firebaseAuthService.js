@@ -1,13 +1,15 @@
 import {firebaseAuth, firebaseMessaging} from '../firebaseConfig'
 import {getUserDetails, updateToken} from './firebaseDBService'
 import {getNotificationRequestPermission} from './NotificationService'
+import axios from 'axios'
 
-export const createUserWithEmailAndPassword = (email , password ) => {
-
-  firebaseAuth.createUserWithEmailAndPassword(email, password)
-  .then((u) => {})
-  .catch((error) => {
-    console.log(error);
+export const createUserWithEmailAndPassword = (newUser, callback) => {
+  axios.post('https://dev-miteventbooking.herokuapp.com/signup', newUser)
+  .then(function(res) {
+    callback(null, res)
+  })
+  .catch(function(err) {
+    callback(null);
   })
 }
 
@@ -18,7 +20,7 @@ export const authenticateUser = (email, password, callback) => {
       callback(null, user)
     })
     .catch(function(error) {
-        callback(error)
+      callback(error)
   });
 }
 
