@@ -32,6 +32,7 @@ class PendingEventsContainer extends Component {
       myArr: {},
       myArrx: {},
       allArr: {},
+      originalArr: {},
       pendingArr: {},
       approvedArr: {}
     }

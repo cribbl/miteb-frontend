@@ -34,6 +34,7 @@ class AD_EventsComponent extends Component {
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
     this.handleFlagDialogClose = this.handleFlagDialogClose.bind(this)
     this.nextEvent = this.nextEvent.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
     
     this.state = {
       fixedHeader: true,
@@ -44,6 +45,7 @@ class AD_EventsComponent extends Component {
       myArr: {},
       myArrx: {},
       allArr: {},
+      originalArr: {},
       pendingArr: {},
       approvedArr: {},
       SnackBarmessage: '',
@@ -54,6 +56,13 @@ class AD_EventsComponent extends Component {
       currentEvent: {}
     }
 }
+  
+  handleSearch(content) {
+    this.setState({searchContent: content})
+    var myArrx = this.state.originalArr
+    myArrx = Object.values(myArrx).filter(_event => _event.title.toLowerCase().includes(content.toLowerCase()));
+    this.setState({myArrx})
+  }
 
   showDialog(event) {
     this.setState({dialogOpen: true})
@@ -129,6 +138,7 @@ class AD_EventsComponent extends Component {
               myArrx[child.key] = child.val()
               myArrx[child.key].key = child.key
               scope.setState({myArrx})
+              scope.setState({originalArr: myArrx})
               console.log(scope.state.myArrx)
             }
           })
@@ -140,9 +150,9 @@ class AD_EventsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      {/*<div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
-      </div>*/}
+      <div style={{minWidth: '98%', backgroundColor: '', marginTop: 20}}>
+        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
+      </div>
 
       <Snackbar
           open={this.state.openSnackBar}
