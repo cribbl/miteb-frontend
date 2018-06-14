@@ -120,17 +120,17 @@ class AD_EventsComponent extends Component {
     }
     this.setState({fetching: true})
         var scope = this;
-        firebaseDB.ref().child('events').on('value',
+        firebaseDB.ref('events').orderByChild('AD_appr').equalTo('pending').on('value',
         function(snapshot) {
+          scope.setState({fetching: false})
           snapshot.forEach(function(child) {
-            scope.setState({fetching: false})
-              if(child.val().AD_appr == 'pending') {
-                const {myArrx} = scope.state
-                myArrx[child.key] = child.val()
-                myArrx[child.key].key = child.key
-                scope.setState({myArrx})
-                console.log(scope.state.myArrx)
-              }
+            if(child.val().AD_appr == 'pending') {
+              const {myArrx} = scope.state
+              myArrx[child.key] = child.val()
+              myArrx[child.key].key = child.key
+              scope.setState({myArrx})
+              console.log(scope.state.myArrx)
+            }
           })
         }, this)
   }

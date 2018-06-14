@@ -153,7 +153,7 @@ class FA_MyEventsComponent extends Component {
       this.setState({fetching: false})
       let events = snapshot.val().my_events
       for(event in events) {
-        firebaseDB.ref('/events/' + events[event]).on('value',
+        firebaseDB.ref('events/' + events[event]).on('value',
         function(snapshot) {
           if(snapshot.val().FA_appr == 'pending') {
             const {myArrx} = this.state
