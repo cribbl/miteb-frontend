@@ -198,7 +198,7 @@ class MyEventsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
+      <div style={{minWidth: '98%', backgroundColor: '', marginTop: 20}}>
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
       </div>
 
