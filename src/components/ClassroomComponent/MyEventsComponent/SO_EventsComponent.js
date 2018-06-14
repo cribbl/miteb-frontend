@@ -120,7 +120,7 @@ class SO_EventsComponent extends Component {
     }
     this.setState({fetching: true})
         var scope = this;
-        firebaseDB.ref().child('events').on('value',
+        firebaseDB.ref('events').orderByChild('SO_appr').equalTo('pending').on('value',
         function(snapshot) {
           snapshot.forEach(function(child) {
             scope.setState({fetching: false})
