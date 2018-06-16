@@ -22,11 +22,11 @@ class SearchClubContainer extends Component{
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
        <ToolbarGroup>
-          <span onClick={this.filterClicked('pending')}>pending</span>
+          <span onClick={()=>this.filterClicked('pending')}>pending</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={this.filterClicked('approved')}>approved</span>
+          <span onClick={()=>this.filterClicked('approved')}>approved</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={this.filterClicked('all')}>all</span>
+          <span onClick={()=>this.filterClicked('all')}>all</span>
         </ToolbarGroup>
        </Toolbar>
        </div>
