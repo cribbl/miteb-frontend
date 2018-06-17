@@ -36,21 +36,16 @@ messaging.setBackgroundMessageHandler(function(payload) {
 var cacheName = 'v1';
 var cacheFiles = [
     './',
-    './index.html' ,
-    './favicon.ico' ,  
-    './icon-192.png' ,  
-    './icon-225.png' , 
-    './notification.mp3' , 
-    './crypto.js' ,
-    './favicon.ico' ,
-    '../src/' ,
-    '../src/App.js',
-    '../src/App.css',
-    '../src/index.js',
-    '../src/index.css',
-    '../src/store.js',
-    '../src/logo.svg',
-    '../src/firebaseConfig.js'
+    './index.html',
+    './favicon.ico',  
+    // '../src/',
+    // '../src/App.js',
+    // '../src/App.css',
+    // '../src/index.js',
+    // '../src/index.css',
+    // '../src/store.js',
+    // '../src/logo.svg',
+    // '../src/firebaseConfig.js'
 ]
 
 self.addEventListener('install', function(event) {
@@ -65,12 +60,20 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
+	// event.waitUntil(
+	// 	caches.keys().then(function(cacheName	))
+	// 	)
   
   console.log("[ServiceWorker] Activated");
 });
 
 self.addEventListener('fetch', function(event) {
   /** An empty fetch handler! */
+   event.respondWith(
+      caches.match(event.request).then(function(response) {
+        return response || fetch(event.request);
+      })
+    )
   console.log("[ServiceWorker] Fetching", event.request.url);
 });
 
