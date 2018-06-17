@@ -24,33 +24,31 @@ class ApproveClubsContainer extends Component {
 		this.handleApprove = this.handleApprove.bind(this);
 		this.state = {
 			dialogOpen: false,
-			unapprovedClubs: [],
-			myArr: []
+			unapprovedClubs: {},
+			approvedClubs: {},
 		}
 	}
 
 	componentWillMount() {
-		var i=0;
-		const {myArr} = this.state;
-		const {unapprovedClubs} = this.state;
-		firebaseDB.ref('/clubs/').on('value', function(snapshot) {
-			let clubs = snapshot.val();
-			for(let club in clubs) {
-				firebaseDB.ref('/clubs/'+club).on('value',function(snapshot) {
-					if(snapshot.val().isClub && !snapshot.val().isApproved) {
-						snapshot.forEach(function(item) {
-							myArr[item.key] = item.val();		
-    					});
-    					console.log(myArr);
-    					unapprovedClubs[i]=myArr;
-    					i=i+1;
-					}
-				})
-			}
-			console.log(unapprovedClubs);
-		})
-			this.setState({unapprovedClubs: unapprovedClubs});
-	} 
+		this.fetchClubs();
+	}
+
+	fetchClubs() {
+		var approvedClubs = this.state.approvedClubs;
+		var unapprovedClubs = this.state.unapprovedClubs;
+		firebaseDB.ref('clubs').on('value', function(snapshot) {
+			snapshot.forEach(child => {
+				let user = child.val();
+				let key = child.key;
+				user['key'] = key;
+				if(user.isClub && user.isApproved)
+					approvedClubs[key] = user;
+				else if(user.isClub)
+					unapprovedClubs[key] = user;
+			});
+		});
+		this.setState({approvedClubs: approvedClubs, unapprovedClubs: unapprovedClubs});
+	}
 
 	handleOpen() {
 		this.setState({dialogOpen: true});
@@ -61,10 +59,11 @@ class ApproveClubsContainer extends Component {
 		this.setState({dialogOpen: false});
 	}
 
-	handleApprove(uid) {
-		// console.log(uid);
-		firebaseDB.ref('/clubs/'+uid+'/isApproved').set(true);
-		console.log(this.state.unapprovedClubs); 
+	handleApprove(club) {
+		console.log(club);
+		let uid = club.key;
+		// firebaseDB.ref('/clubs/'+uid).child('isApproved').set(true);
+		delete this.state.unapprovedClubs[uid];
 		this.setState({dialogOpen: false})
 	}
 
@@ -85,7 +84,8 @@ class ApproveClubsContainer extends Component {
 							      </TableRow>
 							    </TableHeader>
 							    <TableBody displayRowCheckbox={false}>
-							      	{this.state.unapprovedClubs.length>0?this.state.unapprovedClubs.map(function(club,index) {
+							      {
+							      	Object.keys(this.state.unapprovedClubs).length > 0 ? (Object.values(this.state.unapprovedClubs).map(function(club, index) {
 							      		return(
 							      			<TableRow key={index}>
 						      					<TableRowColumn>{club.name}</TableRowColumn>
@@ -93,10 +93,10 @@ class ApproveClubsContainer extends Component {
 								        		<Dialog
 										          title="Club Details"
 										          actions={[<RaisedButton
-	        												label="Approve Club"
-	        												primary={true}
-	        												onClick={()=>this.handleApprove(event)}
-	      												  />]}
+        												label="Approve Club"
+        												primary={true}
+        												onClick={()=>this.handleApprove(club)}
+      												  />]}
 										          modal={false}
 										          open={this.state.dialogOpen}
 										          onRequestClose={this.handleClose}
@@ -110,7 +110,7 @@ class ApproveClubsContainer extends Component {
 										        <p>Category : {club.category}</p> 
 										        </Dialog>
 										     </TableRow>
-										    )},this)
+										    )},this))
 							      		:<TableRow><TableRowColumn /*style={{textAlign: 'center', fontSize: '3rem'}}*/>No Unapproved Clubs</TableRowColumn></TableRow>}
 							    </TableBody>
 							</Table>
