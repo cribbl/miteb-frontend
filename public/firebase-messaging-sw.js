@@ -33,6 +33,48 @@ messaging.setBackgroundMessageHandler(function(payload) {
   return self.registration.showNotification(payload.notification.title, notificationOptions);
 });
 
+var cacheName = 'v1';
+var cacheFiles = [
+    './',
+    './index.html' ,
+    './favicon.ico' ,  
+    './icon-192.png' ,  
+    './icon-225.png' , 
+    './notification.mp3' , 
+    './crypto.js' ,
+    './favicon.ico' ,
+    '../src/' ,
+    '../src/App.js',
+    '../src/App.css',
+    '../src/index.js',
+    '../src/index.css',
+    '../src/store.js',
+    '../src/logo.svg',
+    '../src/firebaseConfig.js'
+]
+
+self.addEventListener('install', function(event) {
+  
+  console.log("[ServiceWorker] Installed");
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache){
+      console.log("[ServiceWorker] Caching cacheFiles");
+      return cache.addAll(cacheFiles);
+          })
+    )
+});
+
+self.addEventListener('activate', function(event) {
+  
+  console.log("[ServiceWorker] Activated");
+});
+
+self.addEventListener('fetch', function(event) {
+  /** An empty fetch handler! */
+  console.log("[ServiceWorker] Fetching", event.request.url);
+});
+
+
 self.addEventListener('notificationclick', function(e) {
   var notification = e.notification;
   var primaryKey = notification.data.primaryKey;
