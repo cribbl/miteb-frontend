@@ -26,7 +26,11 @@ import FlagIcon from 'material-ui/svg-icons/action/report-problem'
 import NAIcon from 'material-ui/svg-icons/action/restore'
 import DashIcon from 'material-ui/svg-icons/content/remove'
 import PendingIcon from 'material-ui/svg-icons/action/bookmark'
+import SortIcon from 'material-ui/svg-icons/content/sort' 
+import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
+import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
 import ReactTooltip from 'react-tooltip'
+import moment from 'moment'
 
 class MyEventsComponent extends Component {
   constructor(props) {
@@ -36,6 +40,7 @@ class MyEventsComponent extends Component {
     this.nextEvent = this.nextEvent.bind(this)
     this.handleIcon = this.handleIcon.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.handleSort = this.handleSort.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -46,12 +51,14 @@ class MyEventsComponent extends Component {
       myArr: {},
       myArrx: {},
       allArr: {},
+      originalArr: {},
       pendingArr: {},
       approvedArr: {},
       dialogOpen: false,
       currentEvent: {},
       fetching: true,
-      searchContent: ''
+      searchContent: '',
+      dateSort: null,
     }
 }
 
@@ -94,6 +101,24 @@ class MyEventsComponent extends Component {
     this.setState({searchContent: content})
     var myArrx = this.state.originalArr
     myArrx = Object.values(myArrx).filter(_event => _event.title.toLowerCase().includes(content.toLowerCase()));
+    this.setState({myArrx})
+  }
+
+  handleSort() {
+    if(this.state.dateSort === 'des')
+      this.setState({dateSort: 'asc'})
+    else
+      this.setState({dateSort: 'des'})
+    var scope = this
+    var myArrx = this.state.originalArr
+    myArrx = Object.values(myArrx).sort(function(a, b)
+      { 
+        var aDate = moment(a.start_date, 'DD-MM-YYYY');
+        var bDate = moment(b.start_date, 'DD-MM-YYYY');
+        if(scope.state.dateSort === 'des')
+          return (aDate - bDate);
+        return (bDate - aDate);
+      });
     this.setState({myArrx})
   }
 
@@ -161,7 +186,7 @@ class MyEventsComponent extends Component {
           myArrx[snapshot.key].key = snapshot.key
           this.setState({myArrx})
           this.setState({originalArr: myArrx})
-          this.filterAndStore(myArrx)
+          this.filterAndStore(myArrx);
           // console.log(this.state.myArrx)
         }, this)
       }
@@ -173,7 +198,7 @@ class MyEventsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
+      <div style={{minWidth: '98%', backgroundColor: '', marginTop: 20}}>
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
       </div>
 
@@ -195,7 +220,12 @@ class MyEventsComponent extends Component {
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
               <TableHeaderColumn data-tip="" style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>START DATE</TableHeaderColumn>
+              <TableHeaderColumn
+                style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center'}}
+                hidden={this.props.isMobile}>
+                START DATE
+                <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
+              </TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>FA</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>AD</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>SO</TableHeaderColumn>

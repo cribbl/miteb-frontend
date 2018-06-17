@@ -51,7 +51,7 @@ export const getMyEvents = (clubId, callback) => {
 		if(!events) {
 			callback(null, null)
 		}
-		for(event in events) {
+		for(let event in events) {
 			firebaseDB.ref('/events/' + events[event]).on('value',
 			function(snapshot) {
 				// console.log('inner snapshot')
