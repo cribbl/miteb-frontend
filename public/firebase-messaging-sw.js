@@ -12,16 +12,16 @@ messaging.setBackgroundMessageHandler(function(payload) {
   // Customize notification here
 
   var notificationOptions = payload;
-  // var notificationOptions = {
-  //   title: payload.notification.title,
-  //   body:  payload.notification.body,
-  //   icon:  payload.notification.icon,
-  //   vibrate: [100, 50, 100],
-  //   data: {
-  //     dateOfArrival: Date.now(),
-  //     primaryKey: 1
-  //   }
-  // };
+  var notificationOptions = {
+    title: payload.notification.title,
+    body:  payload.notification.body,
+    icon:  payload.notification.icon,
+    vibrate: [100, 50, 100],
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: 1
+    }
+  };
   notificationOptions['vibrate'] = [100, 50, 100];
   notificationOptions['actions'] = [
           {action: 'open', title: 'Open in App',
@@ -32,6 +32,51 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
   return self.registration.showNotification(payload.notification.title, notificationOptions);
 });
+
+var cacheName = 'v1';
+var cacheFiles = [
+    './',
+    './index.html',
+    './favicon.ico',  
+    '../src/',
+    '../src/App.js',
+    '../src/App.css',
+    '../src/index.js',
+    '../src/index.css',
+    '../src/store.js',
+    '../src/logo.svg',
+    '../src/firebaseConfig.js'
+]
+
+self.addEventListener('install', function(event) {
+  
+  console.log("[ServiceWorker] Installed");
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache){
+      console.log("[ServiceWorker] Caching cacheFiles");
+      return cache.addAll(cacheFiles);
+          })
+    )
+});
+
+self.addEventListener('activate', function(event) {
+	// event.waitUntil(
+	// 	caches.keys().then(function(cacheName	))
+	// 	)
+  
+  console.log("[ServiceWorker] Activated");
+});
+
+self.addEventListener('fetch', function(event) {
+  /** An empty fetch handler! */
+   event.respondWith(
+      caches.match(event.request).then(function(response) {
+        return response || fetch(event.request);
+      })
+    )
+  console.log("[ServiceWorker] Fetching", event.request.url);
+});
+
 
 self.addEventListener('notificationclick', function(e) {
   var notification = e.notification;
