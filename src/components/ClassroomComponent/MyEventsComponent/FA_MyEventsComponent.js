@@ -33,7 +33,8 @@ class FA_MyEventsComponent extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
     this.handleFlagDialogClose = this.handleFlagDialogClose.bind(this)
-    this.nextEvent = this.nextEvent.bind(this)
+    this.nextEvent = this.nextEvent.bind(this);
+    this.handleSearch = this.handleSearch.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -44,6 +45,7 @@ class FA_MyEventsComponent extends Component {
       myArr: {},
       myArrx: {},
       allArr: {},
+      originalArr: {},
       pendingArr: {},
       approvedArr: {},
       SnackBarmessage: '',
@@ -54,6 +56,13 @@ class FA_MyEventsComponent extends Component {
       currentEvent: {}
     }
 }
+
+  handleSearch(content) {
+    this.setState({searchContent: content})
+    var myArrx = this.state.originalArr
+    myArrx = Object.values(myArrx).filter(_event => _event.title.toLowerCase().includes(content.toLowerCase()));
+    this.setState({myArrx})
+  }
 
   showDialog(event) {
     this.setState({dialogOpen: true})
@@ -152,14 +161,15 @@ class FA_MyEventsComponent extends Component {
     function(snapshot) {
       this.setState({fetching: false})
       let events = snapshot.val().my_events
-      for(event in events) {
-        firebaseDB.ref('/events/' + events[event]).on('value',
+      for(let event in events) {
+        firebaseDB.ref('events/' + events[event]).on('value',
         function(snapshot) {
           if(snapshot.val().FA_appr == 'pending') {
             const {myArrx} = this.state
             myArrx[snapshot.key] = snapshot.val()
             myArrx[snapshot.key].key = snapshot.key
             this.setState({myArrx})
+            this.setState({originalArr: myArrx})
             this.filterAndStore(myArrx)
           }
         }, this)
@@ -171,6 +181,10 @@ class FA_MyEventsComponent extends Component {
 
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
+
+      <div style={{minWidth: '98%', backgroundColor: '', marginTop: 20}}>
+        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
+      </div>
       
       <Snackbar
           open={this.state.openSnackBar}
