@@ -5,7 +5,6 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 
-import IconCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import IconHome from 'material-ui/svg-icons/action/home'
 import IconDashboard from 'material-ui/svg-icons/action/dashboard'
 import IconAnalytics from 'material-ui/svg-icons/editor/insert-chart'
@@ -15,8 +14,7 @@ import IconUpdates from 'material-ui/svg-icons/action/update'
 import IconSettings from 'material-ui/svg-icons/action/settings'
 import IconHelp from 'material-ui/svg-icons/action/help'
 import IconProfile from 'material-ui/svg-icons/social/person'
-
-
+import ComplaintIcon from 'material-ui/svg-icons/av/new-releases'
 
 import {connect} from 'react-redux'
 import {toggleActions} from '../../actions/toggleActions'
@@ -51,8 +49,12 @@ class DrawerComponent extends Component {
     this.closeSideNav = this.closeSideNav.bind(this);
 
     this.state = {
-      menuIndex: 0
+      activeItem: ''
     }
+
+  hashHistory.listen(location => {
+    this.setState({activeItem: location.pathname})
+  });
   }
 
   closeSideNav () {
@@ -67,9 +69,6 @@ class DrawerComponent extends Component {
       dispatch(toggleActions.closeSideNav())
     }   
     hashHistory.push(menuItem.key);
-
-    this.setState({menuIndex: index})
-
   }
 
   render() {
@@ -81,35 +80,38 @@ class DrawerComponent extends Component {
           <Menu style={menuStyle} onItemClick={this.menuItemClicked}>
 
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 0? active: '', menuItemStyle)}
+                style={Object.assign(this.state.activeItem === '/dashboard' ? active: '', menuItemStyle)}
                 key="/dashboard"
                 primaryText="Dashboard"
                 leftIcon={<IconDashboard color={'#FFFFFF'} />} />
 
             <MenuItem
-                style={Object.assign(this.state.menuIndex == 1 && window.location.hash !== "#/dashboard/myEvents" ? active:'', menuItemStyle)}
+                style={Object.assign(this.state.activeItem === '/dashboard/book_room' ? active:'', menuItemStyle)}
                 key="/dashboard/book_room"
                 primaryText="Room Booking"
                 leftIcon={<IconTest color={'#FFFFFF'} />}
                 hidden={this.props.user && !this.props.user.isClub} />
 
             <MenuItem
-                style={Object.assign((this.state.menuIndex == 2)||(window.location.hash === "#/dashboard/myEvents") ? active :'', menuItemStyle)}
+                style={Object.assign(this.state.activeItem === '/dashboard/myEvents' ? active:'', menuItemStyle)}
                 key="/dashboard/myEvents"
                 primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
             <MenuItem
-                style={Object.assign((this.state.menuIndex == 3) ? active:'', menuItemStyle)}
+                style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active:'', menuItemStyle)}
                 key="/dashboard/profile"
                 primaryText="Profile"
                 leftIcon={<IconProfile color={'#FFFFFF'} />} />
-            {this.props.user.isSC?
+
+            {this.props.user && this.props.user.isSC ?
             <MenuItem
-                style={Object.assign((this.state.menuIndex == 4) ? active:'', menuItemStyle)}
-                key="/dashboard/approveClubs"
-                primaryText="Approve Clubs"
-                leftIcon={<IconCheckCircle color={'#FFFFFF'} />} />
+                style={Object.assign(this.state.activeItem === '/dashboard/viewComplaints' ? active:'', menuItemStyle)}
+                key="/dashboard/viewComplaints"
+                primaryText="View Complaints"
+                leftIcon={<ComplaintIcon color={'#FFFFFF'} />}
+            />
             : null}
+            
           </Menu>
         </Drawer>
       </div>
