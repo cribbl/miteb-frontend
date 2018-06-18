@@ -12,16 +12,16 @@ messaging.setBackgroundMessageHandler(function(payload) {
   // Customize notification here
 
   var notificationOptions = payload;
-  // var notificationOptions = {
-  //   title: payload.notification.title,
-  //   body:  payload.notification.body,
-  //   icon:  payload.notification.icon,
-  //   vibrate: [100, 50, 100],
-  //   data: {
-  //     dateOfArrival: Date.now(),
-  //     primaryKey: 1
-  //   }
-  // };
+  var notificationOptions = {
+    title: payload.notification.title,
+    body:  payload.notification.body,
+    icon:  payload.notification.icon,
+    vibrate: [100, 50, 100],
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: 1
+    }
+  };
   notificationOptions['vibrate'] = [100, 50, 100];
   notificationOptions['actions'] = [
           {action: 'open', title: 'Open in App',
@@ -38,14 +38,14 @@ var cacheFiles = [
     './',
     './index.html',
     './favicon.ico',  
-    // '../src/',
-    // '../src/App.js',
-    // '../src/App.css',
-    // '../src/index.js',
-    // '../src/index.css',
-    // '../src/store.js',
-    // '../src/logo.svg',
-    // '../src/firebaseConfig.js'
+    '../src/',
+    '../src/App.js',
+    '../src/App.css',
+    '../src/index.js',
+    '../src/index.css',
+    '../src/store.js',
+    '../src/logo.svg',
+    '../src/firebaseConfig.js'
 ]
 
 self.addEventListener('install', function(event) {
