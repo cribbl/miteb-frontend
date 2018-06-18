@@ -104,7 +104,7 @@ class AppBarComponent extends Component {
         !this.props.user ? (
         <AppBar
           style={{position: "fixed"}}
-          title={'not logged in'}
+          title={'Portal'}
           zDepth={1}
           children={<MyNavLinks />}
           showMenuIconButton={false}
