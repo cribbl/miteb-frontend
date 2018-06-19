@@ -4,12 +4,21 @@ import {getNotificationRequestPermission} from './NotificationService'
 
 export const authenticateUser = (email, password, callback) => {
     
-    firebaseAuth.signInWithEmailAndPassword(email, password)
+  
+  firebaseAuth.setPersistence('local')
+  .then(function() {
+   return firebaseAuth.signInWithEmailAndPassword(email, password)
     .then(function(user) {
       callback(null, user)
     })
     .catch(function(error) {
         callback(error)
+  });
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
   });
 }
 

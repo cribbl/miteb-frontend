@@ -37,16 +37,18 @@ var cacheName = 'v1';
 var cacheFiles = [
     './',
     './index.html',
-    './favicon.ico',  
-    '../src/',
-    '../src/App.js',
-    '../src/App.css',
-    '../src/index.js',
-    '../src/index.css',
-    '../src/store.js',
-    '../src/logo.svg',
-    '../src/firebaseConfig.js'
+    './offline.html',
+    './favicon.ico',
+    'static/js/bundle.js'
 ]
+
+// fetch('./asset-manifest.json')
+// .then(function(res) {
+//   for(let i in res)
+//     cacheFiles.push(res[i]);
+// })
+
+console.log(cacheFiles);
 
 self.addEventListener('install', function(event) {
   
@@ -60,22 +62,23 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-	// event.waitUntil(
-	// 	caches.keys().then(function(cacheName	))
-	// 	)
+  // event.waitUntil(
+  //  caches.keys().then(function(cacheName ))
+  //  )
   
   console.log("[ServiceWorker] Activated");
 });
 
 self.addEventListener('fetch', function(event) {
+  console.log("[ServiceWorker] Fetching", event.request.url);
   /** An empty fetch handler! */
    event.respondWith(
       caches.match(event.request).then(function(response) {
         return response || fetch(event.request);
       })
     )
-  console.log("[ServiceWorker] Fetching", event.request.url);
 });
+
 
 
 self.addEventListener('notificationclick', function(e) {
@@ -87,8 +90,8 @@ self.addEventListener('notificationclick', function(e) {
     notification.close();
   }
   if(action === 'open') {
-  	clients.openWindow('https://bookings.cribblservices.com/#/dashboard/myEvents')
-  	notification.close();
+    clients.openWindow('https://bookings.cribblservices.com/#/dashboard/myEvents')
+    notification.close();
   }
   else {
     clients.openWindow('https://bookings.cribblservices.com');
