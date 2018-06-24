@@ -14,6 +14,7 @@ import IconUpdates from 'material-ui/svg-icons/action/update'
 import IconSettings from 'material-ui/svg-icons/action/settings'
 import IconHelp from 'material-ui/svg-icons/action/help'
 import IconProfile from 'material-ui/svg-icons/social/person'
+import IconPublicity from 'material-ui/svg-icons/image/brush'
 
 
 
@@ -103,7 +104,11 @@ class DrawerComponent extends Component {
                 key="/dashboard/profile"
                 primaryText="Profile"
                 leftIcon={<IconProfile color={'#FFFFFF'} />} />
-            
+            <MenuItem 
+                style = {Object.assign(this.state.activeItem === '/dashboard/publicity_perm'? active: '', menuItemStyle)}
+                key = "/dashboard/publicity_perm"
+                primaryText = "Publicity Permission"
+                leftIcon = {<IconPublicity color = {'#FFFFFF'} />} />
           </Menu>
         </Drawer>
       </div>
