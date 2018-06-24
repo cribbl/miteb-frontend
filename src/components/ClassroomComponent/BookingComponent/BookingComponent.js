@@ -6,7 +6,6 @@ import {
 } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
 import { Route , Link } from 'react-router';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
