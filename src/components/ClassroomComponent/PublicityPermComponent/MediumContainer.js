@@ -1,15 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Subheader from 'material-ui/Subheader';
 import {List,ListItem} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
-import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
 //import { Route , Link } from 'react-router';
 
 class MediumContainer extends React.Component {
 	constructor(props){
 		super(props);
+    this.handleClick.bind(this);
 		this.state =  {
       checkboxValue : 0,
       checked: [true, false, false, false]
@@ -19,8 +18,11 @@ class MediumContainer extends React.Component {
     updateShared(){
     this.props.updateShared(this.state.checked);
   }
+    handleClick(){
+      console.log('i have been clicked')
+    }
     updateCheck(value){
-      var state = this;
+      console.log('i ahve been checked')
       var checked_array = this.state.checked;
       checked_array[value] = !checked_array[value];
       console.log('here is the value',value)
@@ -33,10 +35,9 @@ class MediumContainer extends React.Component {
       this.props.updateShared(this.state.checked);
       // this.props.checkedMediums(state,checked_array);   
     };
-
-		render() {
+   render() {
 			return (
-    		<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}>
+    		<div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
     			  <List>
               <ListItem
                 leftCheckbox={<Checkbox value={0} checked={this.state.checked[0]} onCheck={this.updateCheck.bind(this,0)}/>}

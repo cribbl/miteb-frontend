@@ -85,7 +85,6 @@ class PublicityComponent extends React.Component {
         isFormValid: true
       })
     }
-
   }
   updateShared(shared_value){
     this.setState({checked: shared_value})

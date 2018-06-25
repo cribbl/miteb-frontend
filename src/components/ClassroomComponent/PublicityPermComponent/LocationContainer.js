@@ -1,7 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Divider from 'material-ui/Divider';
-//import { Route , Link } from 'react-router';
 import {
   Step,
   Stepper,
@@ -10,11 +8,8 @@ import {
 } from 'material-ui/Stepper';
 import Toggle from 'material-ui/Toggle';
 import {List,ListItem} from 'material-ui/List';
-const styles = {
-  toggle: {
-    marginBottom: 16,
-  }
-}
+
+import MyIcon from './MyIcon';
 class LocationContainer extends React.Component {
 	constructor(props){
 		super(props);
@@ -84,9 +79,9 @@ class LocationContainer extends React.Component {
 	  if (isMobile && steps!=null) {
 	    return (<div style={{width: '100%',minWidth:500,minHeight:400,justifyContent:'center'}}>
 				        <Stepper orientation={this.props.isMobile ? 'vertical' : 'horizontal'} linear={false} activeStep={this.state.stepIndex}>
-								  {steps.map((step,index) =>  {
+								  {steps.map((step,index) =>  { 
 								    return (<Step >
-								      <StepButton onClick={() => this.setState({stepIndex: index})}>{step}</StepButton>
+								      <StepButton icon={<MyIcon step={step} index={this.state.stepIndex} />} onClick={() => this.setState({stepIndex: index})}></StepButton>
 								      <StepContent >{this.getStepContent(index)} </StepContent>
 								    </Step>)
 								  })}
@@ -101,7 +96,7 @@ class LocationContainer extends React.Component {
 			        <Stepper orientation={this.props.isMobile ? 'vertical' : 'horizontal'} linear={false} activeStep={this.state.stepIndex}>
 							  {steps.map((step,index) =>  {
 							    return (<Step key={index}>
-							      <StepButton onClick={() => this.setState({stepIndex: index})}>{step}</StepButton>
+							      <StepButton icon={<MyIcon step={step} index={this.state.stepIndex} />}  onClick={() => this.setState({stepIndex: index})}></StepButton>
 							    </Step>)
 							  })}
 							</Stepper>
@@ -145,7 +140,7 @@ class LocationContainer extends React.Component {
         </div>);
       case 2:
         return (<div>  
-      	 <List>
+      	 <List> 
 							  {steps.map((step,index) =>  {
 							  	var a = "" + stepIndex + index;
 							    return (<ListItem key={a} secondaryText={list_sec[index]} rightToggle={<Toggle key={a} toggled={(this.state.indexes[a])} onToggle={this.handleToggle.bind(this,a)} />}> {step} </ListItem>
@@ -168,9 +163,9 @@ class LocationContainer extends React.Component {
   }
 
   render() {
-
     return (
     	<div>
+    	<MyIcon/>
      {this.orientStepper()}
      </div>
   )
