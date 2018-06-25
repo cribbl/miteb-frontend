@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
-import clubDialog from '../../Dialogs/ViewEventDialogComponent'
+import ClubDialog from '../../Dialogs/ViewClubDialogComponent'
 
 import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
@@ -31,10 +31,6 @@ class ApproveClubsContainer extends Component {
 	}
 
 	componentWillMount() {
-		this.fetchClubs();
-	}
-
-	fetchClubs() {
 		var approvedClubs = this.state.approvedClubs;
 		var unapprovedClubs = this.state.unapprovedClubs;
 		firebaseDB.ref('clubs').on('value', function(snapshot) {
@@ -75,7 +71,8 @@ class ApproveClubsContainer extends Component {
 				<div style={{ width: this.props.isMobile? '98%': '90%', backgroundColor: 'yellow', margin: 'auto', marginTop: 20}}>
 					<SearchClubContainer />
 				</div>
-	     	    <clubDialog open={this.state.dialogOpen} /*currentEvent={this.state.currentEvent}*/ handleOpen={this.handleOpen} handleClose={this.handleClose} /*nextEvent={this.nextEvent}*//>
+
+				<ClubDialog open={this.state.dialogOpen} handleClose={this.handleClose} />
 
 				<div>
 					<Paper style={{background: '', width: this.props.isMobile? '98%': '90%', height: '500px', margin: 'auto',marginTop: 20,display: 'flex', justifyContent: 'center'}} zDepth={1}>

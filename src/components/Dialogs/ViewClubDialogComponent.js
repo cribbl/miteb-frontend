@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from 'react-redux';
 
 
-class clubDialog extends Component {
+class ClubDialog extends Component {
 	constructor(props) {
 		super(props);
 		this.handleApprove = this.handleApprove.bind(this);
@@ -98,4 +98,4 @@ function mapStateToProps(state) {
     filter
   }
 }
-export default connect(mapStateToProps)(clubDialog)
+export default connect(mapStateToProps)(ClubDialog)
