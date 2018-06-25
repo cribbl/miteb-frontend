@@ -62,7 +62,7 @@ class ApproveClubsContainer extends Component {
 	handleApprove(club) {
 		console.log(club);
 		let uid = club.key;
-		// firebaseDB.ref('/clubs/'+uid).child('isApproved').set(true);
+		firebaseDB.ref('/clubs/'+uid).child('isApproved').set(true);
 		delete this.state.unapprovedClubs[uid];
 		this.setState({dialogOpen: false})
 	}
