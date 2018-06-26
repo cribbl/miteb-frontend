@@ -8,19 +8,14 @@ import {connect} from 'react-redux';
 class ClubDialog extends Component {
 	constructor(props) {
 		super(props);
-		this.handleApprove = this.handleApprove.bind(this);
 		this.state = {
 			open: this.props.open
 		}
 	}
 
-	componentWillMount() {
-		console.log("hello world");
-	}
-
-	handleApprove() {
-		// approveClub(<parameter>);
-	}
+	componentWillReceiveProps(nextProps) {
+    	this.setState({open: nextProps.open})
+  	}
 
 	render() {
 		const styles = {
@@ -47,12 +42,12 @@ class ClubDialog extends Component {
 			<FlatButton
 			label="Next"
 			primary={true}
-			onClick={this.props.handleClose}
+			onClick={this.props.nextClub}
 			/>,
 			<FlatButton
 			label="Approve"
 			primary={true}
-			onClick={this.props.handleClose}
+			onClick={()=>this.props.approve(this.props.currentClub)}
 			/>
 		]
 
@@ -69,23 +64,23 @@ class ClubDialog extends Component {
 		        >
 		        <div>
 			        <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
-			        	<p style={styles.label}>Name : </p>
+			        	<p style={styles.label}>Name : {this.props.currentClub.name}</p>
 			        </div>
 			        <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
-			        	<p style={styles.label}>Name Abbreviation : </p>
+			        	<p style={styles.label}>Name Abbreviation : {this.props.currentClub.nameAbbrv}</p>
 			        </div>
 			        <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
-			        	<p style={styles.label}>Email : </p>
+			        	<p style={styles.label}>Email : {this.props.currentClub.email}</p>
 			        </div>
 			        <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
-			        	<p style={styles.label}>Primary Contact : </p>
+			        	<p style={styles.label}>Primary Contact : {this.props.currentClub.primaryContact}</p>
 			        </div>
 		        </div>
 		    </Dialog>
 		);
 	}
 }
-
+[]
 function mapStateToProps(state) {
   const {openSideNav, isMobile, filter} = state.toggler
   const {user, verified, vals} = state.authentication
