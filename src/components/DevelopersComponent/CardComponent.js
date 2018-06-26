@@ -27,7 +27,7 @@ class CardComponent extends Component {
     return (
       <Card style={{width: 250, margin: 10}} className="developerCard">
         <CardMedia style={{height: 250, width: 250}}>
-          <img src={this.props.developer.profilePicURL} alt="" />
+          <img src={this.props.developer.profilePicURL} alt="" style={{height: '250px', width: 250, objectFit: 'cover'}}/>
         </CardMedia>
 
         <div style={{display: 'flex', justifyContent: 'space-between', backgroundColor: 'rgb(0, 188, 212)', alignItems: 'center',}}>
