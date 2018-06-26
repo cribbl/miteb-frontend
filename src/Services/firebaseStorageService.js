@@ -15,7 +15,7 @@ export const generatePDF = (eventID) => {
   let params = {
     eventID: eventID
   }
-  axios.get("https://dev-miteventbooking.herokuapp.com/generate-pdf", {params})
+  axios.get("https://dev-miteventbooking.herokuapp.com/event/generate-pdf", {params})
   .then(function(res) {
     console.log(res);
   })
