@@ -7,11 +7,18 @@ import TextField from 'material-ui/TextField'
 class SearchClubContainer extends Component{
 	constructor(props) {
 		super(props);
-		this.filterClicked = this.filterClicked.bind(this);
-		this.state = {
-			filter: 'all'
-		}
+	    this.handleSearch = this.handleSearch.bind(this)
+	    this.filterClicked = this.filterClicked.bind(this);
+		  this.state = {
+			 filter: 'all',
+       search: ''
+		  }
 	}
+
+  handleSearch(e) {
+    this.setState({search: e.target.value})
+    this.props.handleSearch(e.target.value)
+  }
 
 	filterClicked(filterChoice) {
 		this.setState({filter: filterChoice});
@@ -28,6 +35,14 @@ class SearchClubContainer extends Component{
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
           <span onClick={()=>this.filterClicked('all')}>all</span>
         </ToolbarGroup>
+        {!this.props.isMobile ? 
+          <ToolbarGroup>
+            <TextField
+              floatingLabelText="Search"
+              value={this.state.search}
+              onChange={this.handleSearch} />
+          </ToolbarGroup>
+          : '' }
        </Toolbar>
        </div>
     );

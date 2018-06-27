@@ -22,12 +22,14 @@ class ApproveClubsContainer extends Component {
 		this.handleOpen = this.handleOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.handleApprove = this.handleApprove.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
 		this.nextClub = this.nextClub.bind(this);
 		this.state = {
 			dialogOpen: false,
 			unapprovedClubs: {},
 			approvedClubs: {},
-			currentClub: {}
+			currentClub: {},
+			searchContent: ''
 		}
 	}
 
@@ -47,6 +49,13 @@ class ApproveClubsContainer extends Component {
 		});
 		this.setState({approvedClubs: approvedClubs, unapprovedClubs: unapprovedClubs});
 	}
+
+	handleSearch(content) {
+	    this.setState({searchContent: content});
+	    var unapprovedClubs = this.state.unapprovedClubs;
+	    unapprovedClubs = Object.values(unapprovedClubs).filter(_club => _club.name.toLowerCase().includes(content.toLowerCase()));
+	    this.setState({unapprovedClubs})
+  }
 
 	handleApprove(club) {
 		console.log(club);
@@ -80,7 +89,7 @@ class ApproveClubsContainer extends Component {
 		return (
 			<div style={{justifyContent: 'center'}}>
 				<div style={{ width: this.props.isMobile? '98%': '90%', backgroundColor: 'yellow', margin: 'auto', marginTop: 20}}>
-					<SearchClubContainer />
+					<SearchClubContainer handleSearch={this.handleSearch}/>
 				</div>
 
 				<ClubDialog open={this.state.dialogOpen} currentClub={this.state.currentClub} nextClub={this.nextClub}  handleClose={this.handleClose} approve={this.handleApprove}/>
