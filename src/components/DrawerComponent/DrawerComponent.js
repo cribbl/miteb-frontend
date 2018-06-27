@@ -5,6 +5,7 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import IconHome from 'material-ui/svg-icons/action/home'
 import IconDashboard from 'material-ui/svg-icons/action/dashboard'
 import IconAnalytics from 'material-ui/svg-icons/editor/insert-chart'
@@ -14,8 +15,7 @@ import IconUpdates from 'material-ui/svg-icons/action/update'
 import IconSettings from 'material-ui/svg-icons/action/settings'
 import IconHelp from 'material-ui/svg-icons/action/help'
 import IconProfile from 'material-ui/svg-icons/social/person'
-
-
+import ComplaintIcon from 'material-ui/svg-icons/av/new-releases'
 
 import {connect} from 'react-redux'
 import {toggleActions} from '../../actions/toggleActions'
@@ -103,6 +103,23 @@ class DrawerComponent extends Component {
                 key="/dashboard/profile"
                 primaryText="Profile"
                 leftIcon={<IconProfile color={'#FFFFFF'} />} />
+
+            {this.props.user && this.props.user.isSC ?
+            <MenuItem
+                style={Object.assign(this.state.activeItem === '/dashboard/approveClubs' ? active:'', menuItemStyle)}
+                key="/dashboard/approveClubs"
+                primaryText="Approve Clubs"
+                leftIcon={<ActionCheckCircle color={'#FFFFFF'} />}
+            />
+            : null}
+            {this.props.user && this.props.user.isSC ?
+            <MenuItem
+                style={Object.assign(this.state.activeItem === '/dashboard/viewComplaints' ? active:'', menuItemStyle)}
+                key="/dashboard/viewComplaints"
+                primaryText="View Complaints"
+                leftIcon={<ComplaintIcon color={'#FFFFFF'} />}
+            />
+            : null}
             
           </Menu>
         </Drawer>
