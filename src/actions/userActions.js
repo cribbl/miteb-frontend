@@ -21,6 +21,14 @@ function login(email, password) {
             }
             else {
                 getUserDetails(result.uid, (user) => {
+                    if(!user.isApproved) {
+                        let error = {
+                            code: 'unapproved',
+                            message: 'Your account is not approved'
+                        }
+                        dispatch(failure(error));
+                        return;
+                    }
                     localStorage.setItem('clubID', user.uid)
                     dispatch(success(user));
                     

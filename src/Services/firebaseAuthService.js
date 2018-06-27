@@ -41,11 +41,15 @@ export const signOut = () => {
 export const fetchUser = (callback) => {
   firebaseAuth.onAuthStateChanged(function(user) {
     if (user) {
-        sessionStorage.setItem('uid', user.uid)
-        getUserDetails(user.uid, (userx) => {
-        userx['uid'] = user.uid;
-        callback(userx);
-        getNotificationRequestPermission(user.uid); // request permission for notifications
+      if(!user.isApproved) {
+        callback(null);
+        return;
+      }
+      sessionStorage.setItem('uid', user.uid)
+      getUserDetails(user.uid, (userx) => {
+      userx['uid'] = user.uid;
+      callback(userx);
+      getNotificationRequestPermission(user.uid); // request permission for notifications
       })
     } 
     else {
