@@ -1,6 +1,4 @@
-
 import React, { Component } from 'react';
-
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton'
@@ -20,11 +18,11 @@ class SignupContainer extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.state = {
       newUser: {
-        name: '',
-        abbrv: '',
-        email : '',
-        primaryContact:'',
-        password : '',
+        name: 'Some club',
+        abbrv: 'SCLUB',
+        email : 'bhansalibhawesh@yahoo.com',
+        primaryContact:'7760627296',
+        password : 'Password@1234',
       },
       fieldTouch: {
         name: '',
@@ -32,7 +30,10 @@ class SignupContainer extends Component {
         email : '',
         primaryContact:'',
         password : '',
-      }
+      },
+      showProgress: false,
+      errorMessage: null,
+      signupSuccess: false,
     }
   }
 
@@ -51,14 +52,16 @@ class SignupContainer extends Component {
   handleSignupSubmit(e) {
     e.preventDefault();
     var newUser = this.state.newUser;
+    this.setState({showProgress: true})
     createUserWithEmailAndPassword(this.state.newUser, (err, res) => {
+      this.setState({showProgress: false})
       if(err) {
-        console.log(err);
+        this.setState({errorMessage: err.message})
       }
       else {
-        console.log(res);
+        this.setState({signupSuccess: true})
       }
-    })
+    }, this)
 	}
 
 	render () {
@@ -67,57 +70,73 @@ class SignupContainer extends Component {
 
   			<form onSubmit={this.handleSignupSubmit}>
   			<h2 className="paperTitle">Sign Up</h2>
-    			<div className="fieldsContainer">
-  			
-            <TextField
-              hintText="Club Name"
-              value={this.state.newUser.name}
-              onChange={(event) => this.handleChange(event, 'name')}
-              onBlur={() => this.handleBlur('name')}
-              errorText= {this.state.newUser.clubname_error}
-              errorStyle={{position: 'absolute', bottom: -8}}
-              required />
 
-            <TextField
-              hintText="Club Name Abbreviation"
-              value={this.state.newUser.abbrv}
-              onChange={(event) => this.handleChange(event, 'abbrv')}
-              onBlur={() => this.handleBlur('abbrv')}
-              errorText= {this.state.newUser.clubnameabbrev_error}
-              errorStyle={{position: 'absolute', bottom: -8}}
-              required />
+            {this.state.signupSuccess &&
 
-            <TextField
-              hintText="Email"
-              value={this.state.newUser.email}
-              onChange={(event) => this.handleChange(event, 'email')}
-              onBlur={() => this.handleBlur('email')}
-              errorText= {this.state.newUser.email_error}
-              errorStyle={{position: 'absolute', bottom: -8}}
-              required />
+              <div>
+                <TextField disabled={true} />
+                <p>Success!<br />
+                Thank you for signing up <br />{this.state.newUser.name}. <br />
+                </p>
+              </div>
 
-            <TextField
-              hintText="Primary Contact"
-              value={this.state.newUser.primaryContact}
-              onChange={(event) => this.handleChange(event, 'primaryContact')}
-              onBlur={() => this.handleBlur('primaryContact')}
-              errorText= {this.state.newUser.primaryContactnumber_error}
-              errorStyle={{position: 'absolute', bottom: -8}}
-              required />
+            }
 
-            <TextField
-              hintText="Password"
-              value={this.state.newUser.password}
-              onChange={(event) => this.handleChange(event, 'password')}
-              onBlur={() => this.handleBlur('password')}
-              errorText= {this.state.newUser.password_error}
-              errorStyle={{position: 'absolute', bottom: -8}}
-              required />
+          <div className="fieldsContainer" hidden={this.state.signupSuccess}>
 
-              <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true}  />
+              <TextField
+                hintText="Club Name"
+                value={this.state.newUser.name}
+                onChange={(event) => this.handleChange(event, 'name')}
+                onBlur={() => this.handleBlur('name')}
+                errorText= {this.state.newUser.clubname_error}
+                errorStyle={{position: 'absolute', bottom: -8}}
+                required />
+
+              <TextField
+                hintText="Club Name Abbreviation"
+                value={this.state.newUser.abbrv}
+                onChange={(event) => this.handleChange(event, 'abbrv')}
+                onBlur={() => this.handleBlur('abbrv')}
+                errorText= {this.state.newUser.clubnameabbrev_error}
+                errorStyle={{position: 'absolute', bottom: -8}}
+                required />
+
+              <TextField
+                hintText="Email"
+                value={this.state.newUser.email}
+                onChange={(event) => this.handleChange(event, 'email')}
+                onBlur={() => this.handleBlur('email')}
+                errorText= {this.state.newUser.email_error}
+                errorStyle={{position: 'absolute', bottom: -8}}
+                required />
+
+              <TextField
+                hintText="Primary Contact"
+                value={this.state.newUser.primaryContact}
+                onChange={(event) => this.handleChange(event, 'primaryContact')}
+                onBlur={() => this.handleBlur('primaryContact')}
+                errorText= {this.state.newUser.primaryContactnumber_error}
+                errorStyle={{position: 'absolute', bottom: -8}}
+                required />
+
+              <TextField
+                hintText="Password"
+                type="password"
+                value={this.state.newUser.password}
+                onChange={(event) => this.handleChange(event, 'password')}
+                onBlur={() => this.handleBlur('password')}
+                errorText= {this.state.newUser.password_error}
+                errorStyle={{position: 'absolute', bottom: -8}}
+                required />
+
+                <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true} disabled={this.state.showProgress}/>
+                <CircularProgress style={{position: 'absolute', padding: '27px 5px'}} size={20} hidden={!this.state.showProgress}/>
+              {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
+            </div>
+
               <br /><br /><br />
               Already have an account? <Link className="bottomAlign" to="/auth/signin">Signin here</Link>
-          </div>
   			</form>
 			</div>
 		)

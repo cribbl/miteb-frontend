@@ -4,12 +4,15 @@ import {getNotificationRequestPermission} from './NotificationService'
 import axios from 'axios'
 
 export const createUserWithEmailAndPassword = (newUser, callback) => {
-  axios.post('https://dev-miteventbooking.herokuapp.com/signup', newUser)
+  axios.post('https://dev-miteventbooking.herokuapp.com/user/signup', newUser)
   .then(function(res) {
-    callback(null, res)
+    if(res.data.state == 'fail')
+      callback(res.data.err);
+    else
+      callback(null, res.data.newUser);
   })
   .catch(function(err) {
-    callback(null);
+    callback(err);
   })
 }
 
