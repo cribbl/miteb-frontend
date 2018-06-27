@@ -90,23 +90,23 @@ class ApproveClubsContainer extends Component {
 						<div>
 							<Table>
 								<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-							      <TableRow style={{backgroundColor: '#EFF0F2'}}>
-							        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Name</TableHeaderColumn>
-							        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Category</TableHeaderColumn>
-							        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Details</TableHeaderColumn>
-							      </TableRow>
-							    </TableHeader>
-							    <TableBody displayRowCheckbox={false}>
-							      {
-							      	Object.keys(this.state.unapprovedClubs).length > 0 ? (Object.values(this.state.unapprovedClubs).map(function(club, index) {
-							      		return(
-							      			<TableRow key={index}>
-						      					<TableRowColumn>{club.name}</TableRowColumn>
-						      					<TableRowColumn>{club.category}</TableRowColumn>
-								        		<TableRowColumn><RaisedButton label="View" primary={true} onClick={() => this.handleOpen(club)} /></TableRowColumn>
-										     </TableRow>
-										    )},this))
-							      		:<TableRow><TableRowColumn /*style={{textAlign: 'center', fontSize: '3rem'}}*/>No Unapproved Clubs</TableRowColumn></TableRow>}
+						      <TableRow style={{backgroundColor: '#EFF0F2'}}>
+						        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Name</TableHeaderColumn>
+						        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Category</TableHeaderColumn>
+						        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Details</TableHeaderColumn>
+						      </TableRow>
+							  </TableHeader>
+							  <TableBody displayRowCheckbox={false}>
+						      {
+						      	Object.keys(this.state.unapprovedClubs).length > 0 ? (Object.values(this.state.unapprovedClubs).map(function(club, index) {
+						      		return(
+						      			<TableRow key={index}>
+					      					<TableRowColumn>{club.name}</TableRowColumn>
+					      					<TableRowColumn>{club.category}</TableRowColumn>
+							        		<TableRowColumn><RaisedButton label="View" primary={true} onClick={() => this.handleOpen(club)} /></TableRowColumn>
+									     	</TableRow>
+									    )},this))
+						      		:<TableRow><TableRowColumn /*style={{textAlign: 'center', fontSize: '3rem'}}*/>No Unapproved Clubs</TableRowColumn></TableRow>}
 							    </TableBody>
 							</Table>
 						</div>
@@ -130,4 +130,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(ApproveClubsContainer)
-
