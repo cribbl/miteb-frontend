@@ -25,6 +25,7 @@ class ApproveClubsContainer extends Component {
 		this.toggleApprovalStatus = this.toggleApprovalStatus.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.nextClub = this.nextClub.bind(this);
+		this.filterState = this.filterState.bind(this);
 		this.state = {
 			dialogOpen: false,
 			unapprovedClubs: {},
@@ -98,11 +99,19 @@ class ApproveClubsContainer extends Component {
 		this.setState({dialogOpen: false});
 	}
 
+	filterState(state) {
+		switch(state) {
+			case 'unapproved': {let unapprovedClubs = this.state.unapprovedClubs; this.setState({allClubs: unapprovedClubs}); return;}
+			case 'approved': {let approvedClubs = this.state.approvedClubs; this.setState({allClubs: approvedClubs}); return;}
+			case 'all': {let allClubs = this.state.originalArr; this.setState({allClubs: allClubs}); return;}
+		}
+	}
+
 	render() {
 		return (
 			<div style={{justifyContent: 'center'}}>
 				<div style={{ width: this.props.isMobile? '98%': '90%', backgroundColor: 'yellow', margin: 'auto', marginTop: 20}}>
-					<SearchClubContainer handleSearch={this.handleSearch}/>
+					<SearchClubContainer handleSearch={this.handleSearch} filterState={this.filterState}/>
 				</div>
 
 				<ClubDialog open={this.state.dialogOpen} currentClub={this.state.currentClub} nextClub={this.nextClub}  handleClose={this.handleClose} toggleApproval={this.toggleApprovalStatus}/>
@@ -148,14 +157,14 @@ class ApproveClubsContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const {openSideNav, isMobile, filter} = state.toggler
+  const {openSideNav, isMobile, filterState} = state.toggler
   const {user, verified} = state.authentication
   return {
     user,
     openSideNav,
     verified,
     isMobile,
-    filter
+    filterState
   }
 }
 

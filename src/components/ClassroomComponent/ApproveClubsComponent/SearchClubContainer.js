@@ -10,7 +10,7 @@ class SearchClubContainer extends Component{
 	    this.handleSearch = this.handleSearch.bind(this)
 	    this.filterClicked = this.filterClicked.bind(this);
 		  this.state = {
-			 filter: 'all',
+			 filterChoice: 'all',
        search: ''
 		  }
 	}
@@ -21,19 +21,20 @@ class SearchClubContainer extends Component{
   }
 
 	filterClicked(filterChoice) {
-		this.setState({filter: filterChoice});
-    }
+		this.setState({filterChoice: filterChoice});
+    this.props.filterState(filterChoice);
+  }
 
   	render() {
     return (
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
        <ToolbarGroup>
-          <span onClick={()=>this.filterClicked('pending')}>pending</span>
+          <span onClick={()=>this.filterClicked('approved')} style={{fontWeight: this.state.filterChoice == "approved" ? 700 : 100}}>Approved</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>this.filterClicked('approved')}>approved</span>
+          <span onClick={()=>this.filterClicked('unapproved')} style={{fontWeight: this.state.filterChoice == "unapproved" ? 700 : 100}}>Unapproved</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>this.filterClicked('all')}>all</span>
+          <span onClick={()=>this.filterClicked('all')} style={{fontWeight: this.state.filterChoice == "all" ? 700 : 100}}>All</span>
         </ToolbarGroup>
         {!this.props.isMobile ? 
           <ToolbarGroup>
