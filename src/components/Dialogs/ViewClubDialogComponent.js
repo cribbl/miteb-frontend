@@ -37,10 +37,11 @@ class ClubDialog extends Component {
 			primary={true}
 			onClick={this.props.nextClub}
 			/>,
-			<FlatButton
-			label="Approve"
+			<RaisedButton
+			label={this.props.currentClub.isApproved ? "Disapprove" : "Approve"}
 			primary={true}
-			onClick={()=>this.props.approve(this.props.currentClub)}
+			onClick={()=>this.props.toggleApproval(this.props.currentClub, this.props.currentClub.isApproved ? false : true)}
+			style={{position: 'absolute', top: '6.5%', right: '3%'}}
 			/>
 		]
 

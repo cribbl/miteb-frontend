@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import ClubDialog from '../../Dialogs/ViewClubDialogComponent'
+import CircularProgress from 'material-ui/CircularProgress'
 
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -21,7 +22,7 @@ class ApproveClubsContainer extends Component {
 		super(props)
 		this.handleOpen = this.handleOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
-		this.handleApprove = this.handleApprove.bind(this);
+		this.toggleApprovalStatus = this.toggleApprovalStatus.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.nextClub = this.nextClub.bind(this);
 		this.state = {
@@ -29,14 +30,19 @@ class ApproveClubsContainer extends Component {
 			unapprovedClubs: {},
 			approvedClubs: {},
 			currentClub: {},
-			searchContent: ''
+			allClubs: {},
+			searchContent: '',
+      fetching: true,
+      originalArr: {},
 		}
 	}
 
 	componentWillMount() {
 		var approvedClubs = this.state.approvedClubs;
 		var unapprovedClubs = this.state.unapprovedClubs;
+		var allClubs = this.state.allClubs;
 		firebaseDB.ref('clubs').on('value', function(snapshot) {
+       this.setState({fetching: false})
 			snapshot.forEach(child => {
 				let user = child.val();
 				let key = child.key;
@@ -45,34 +51,41 @@ class ApproveClubsContainer extends Component {
 					approvedClubs[key] = user;
 				else if(user.isClub)
 					unapprovedClubs[key] = user;
+				let allClubs = Object.assign({}, approvedClubs, unapprovedClubs);
+				this.setState({approvedClubs: approvedClubs, unapprovedClubs: unapprovedClubs, allClubs: allClubs, originalArr: allClubs});
 			});
-		});
-		this.setState({approvedClubs: approvedClubs, unapprovedClubs: unapprovedClubs});
+		}, this);
 	}
 
+
 	handleSearch(content) {
-	    this.setState({searchContent: content});
-	    var unapprovedClubs = this.state.unapprovedClubs;
-	    unapprovedClubs = Object.values(unapprovedClubs).filter(_club => _club.name.toLowerCase().includes(content.toLowerCase()));
-	    this.setState({unapprovedClubs})
+    this.setState({searchContent: content});
+    var allClubs = this.state.originalArr;
+    allClubs = Object.values(allClubs).filter(_club => _club.name.toLowerCase().includes(content.toLowerCase()));
+    this.setState({allClubs})
   }
 
-	handleApprove(club) {
+	toggleApprovalStatus(club, status) {
 		console.log(club);
 		let uid = club.key;
-		firebaseDB.ref('/clubs/'+uid).child('isApproved').set(true);
+		firebaseDB.ref('/clubs/'+uid).child('isApproved').set(status);
 		delete this.state.unapprovedClubs[uid];
-		this.setState({dialogOpen: false});
+		delete this.state.approvedClubs[uid];
+		// this.setState({dialogOpen: false});
+		const {dispatch} = this.props;
+		let msg = status ? "Approved" : "Disapproved" + " successfully"
+		dispatch({type: "TOASTER", message: msg, toast_open: true})
+		this.nextClub()
 	}
 
 	nextClub() {
-	    let keys = Object.keys(this.state.unapprovedClubs)
+	    let keys = Object.keys(this.state.allClubs)
 	    let pos = keys.indexOf(this.state.currentClub.key) + 1
-	    if(pos == Object.keys(this.state.unapprovedClubs).length){
+	    if(pos == Object.keys(this.state.allClubs).length){
 	      pos = 0;
 	    }
 	    let nextKey = keys[pos]
-	    let nextClub = this.state.unapprovedClubs[nextKey]
+	    let nextClub = this.state.allClubs[nextKey]
 	    this.setState({currentClub: nextClub})
   	}
 
@@ -92,7 +105,7 @@ class ApproveClubsContainer extends Component {
 					<SearchClubContainer handleSearch={this.handleSearch}/>
 				</div>
 
-				<ClubDialog open={this.state.dialogOpen} currentClub={this.state.currentClub} nextClub={this.nextClub}  handleClose={this.handleClose} approve={this.handleApprove}/>
+				<ClubDialog open={this.state.dialogOpen} currentClub={this.state.currentClub} nextClub={this.nextClub}  handleClose={this.handleClose} toggleApproval={this.toggleApprovalStatus}/>
 
 				<div>
 					<Paper style={{background: '', width: this.props.isMobile? '98%': '90%', height: '500px', margin: 'auto',marginTop: 20,display: 'flex', justifyContent: 'center'}} zDepth={1}>
@@ -105,17 +118,25 @@ class ApproveClubsContainer extends Component {
 						        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Details</TableHeaderColumn>
 						      </TableRow>
 							  </TableHeader>
-							  <TableBody displayRowCheckbox={false}>
+							  <TableBody
+							    displayRowCheckbox={false}
+							    deselectOnClickaway={false}
+							    showRowHover={false}
+							    stripedRows={false}
+							  >
+
+							  {this.state.fetching && <CircularProgress />}
+
 						      {
-						      	Object.keys(this.state.unapprovedClubs).length > 0 ? (Object.values(this.state.unapprovedClubs).map(function(club, index) {
+						      	Object.keys(this.state.allClubs).length > 0 ? (Object.values(this.state.allClubs).map(function(club, index) {
 						      		return(
 						      			<TableRow key={index}>
 					      					<TableRowColumn>{club.name}</TableRowColumn>
 					      					<TableRowColumn>{club.category}</TableRowColumn>
 							        		<TableRowColumn><RaisedButton label="View" primary={true} onClick={() => this.handleOpen(club)} /></TableRowColumn>
 									     	</TableRow>
-									    )},this))
-						      		:<TableRow><TableRowColumn /*style={{textAlign: 'center', fontSize: '3rem'}}*/>No Unapproved Clubs</TableRowColumn></TableRow>}
+									    )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No clubs for this search' : 'No unapproved clubs'}</p>
+						      }
 							    </TableBody>
 							</Table>
 						</div>
