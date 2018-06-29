@@ -3,11 +3,11 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
-
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import {createUserWithEmailAndPassword} from '../../Services/firebaseAuthService'
 
-import { Link } from 'react-router'
+import { Link, hashHistory } from 'react-router'
 
 import './LoginComponent.css'
 
@@ -16,6 +16,7 @@ class SignupContainer extends Component {
     super(props);
     this.handleSignupSubmit = this.handleSignupSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this)
+    this.handleCounter = this.handleCounter.bind(this)
     this.state = {
       newUser: {
         name: 'Some club',
@@ -23,6 +24,7 @@ class SignupContainer extends Component {
         email : 'bhansalibhawesh@yahoo.com',
         primaryContact:'7760627296',
         password : 'Password@1234',
+        category: '',
       },
       fieldTouch: {
         name: '',
@@ -34,7 +36,20 @@ class SignupContainer extends Component {
       showProgress: false,
       errorMessage: null,
       signupSuccess: false,
+      counter: 5,
     }
+  }
+
+  handleCounter() {
+    var scope = this;
+    var interval = setInterval(function() {
+      let c = scope.state.counter - 1;
+      scope.setState({counter: c})
+      if(c==0) {
+        window.clearInterval(interval);
+        hashHistory.push('/auth');
+      }
+    }, 1000)
   }
 
 	handleChange(e, field) {
@@ -60,6 +75,7 @@ class SignupContainer extends Component {
       }
       else {
         this.setState({signupSuccess: true})
+        this.handleCounter();
       }
     }, this)
 	}
@@ -73,11 +89,12 @@ class SignupContainer extends Component {
 
             {this.state.signupSuccess &&
 
-              <div>
-                <TextField disabled={true} />
-                <p>Success!<br />
-                Thank you for signing up <br />{this.state.newUser.name}. <br />
-                </p>
+              <div style={{marginTop: 30}}>
+                <h4 style={{color: 'rgb(0, 188, 212)'}}>Success!</h4>
+                <h6>Thank you for signing up.<br /><br />
+                Your account will be reviewed shortly and you'll me notified via email and SMS.
+                </h6><br /><br /><br />
+                <h6>Redirecting to Home Page in {this.state.counter}</h6>
               </div>
 
             }
@@ -130,13 +147,26 @@ class SignupContainer extends Component {
                 errorStyle={{position: 'absolute', bottom: -8}}
                 required />
 
+              <RadioButtonGroup name="category" defaultSelected="technical" style={{display: 'inline-flex', marginLeft: -2, width: '105%'}} onChange={(event) => this.handleChange(event, 'category')}>
+                <RadioButton
+                  value="technical"
+                  label="Technical"
+                  style={{width: '40%', backgroundColor: ''}}
+                />
+                <RadioButton
+                  value="nonTechnical"
+                  label="Non Technical"
+                  style={{width: '60%', backgroundColor: ''}}
+                />
+              </RadioButtonGroup>
+
                 <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true} disabled={this.state.showProgress}/>
                 <CircularProgress style={{position: 'absolute', padding: '27px 5px'}} size={20} hidden={!this.state.showProgress}/>
               {this.state.errorMessage && <p>{this.state.errorMessage}</p>}
-            </div>
 
               <br /><br /><br />
               Already have an account? <Link className="bottomAlign" to="/auth/signin">Signin here</Link>
+            </div>
   			</form>
 			</div>
 		)
