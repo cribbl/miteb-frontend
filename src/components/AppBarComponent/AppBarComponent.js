@@ -33,7 +33,8 @@ import './AppBarComponent.css'
 
   const MyNavLinks = () => (
     <ToolbarGroup>
-      <Link to="/auth" activeClassName="activeLinkButton"><FlatButton label="Login" /></Link>
+      <Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link>      
+      <Link to="/auth" activeClassName=""><FlatButton label="Login" /></Link>
 	  </ToolbarGroup>
 	);
 

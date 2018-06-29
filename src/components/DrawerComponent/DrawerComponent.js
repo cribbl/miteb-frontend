@@ -112,6 +112,7 @@ class DrawerComponent extends Component {
                 leftIcon={<ActionCheckCircle color={'#FFFFFF'} />}
             />
             : null}
+
             {this.props.user && this.props.user.isSC ?
             <MenuItem
                 style={Object.assign(this.state.activeItem === '/dashboard/viewComplaints' ? active:'', menuItemStyle)}
