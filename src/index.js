@@ -36,27 +36,26 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
     	<Route path="/" component={App}>
-        <Route path="complaints" component={ComplaintsComponent}></Route>
-        <IndexRoute component={Reg}></IndexRoute>
+            <IndexRoute component={Reg}></IndexRoute>
+            <Route path="complaints" component={ComplaintsComponent}></Route>
+            <Route path='developers' component={DevelopersComponent}></Route>
             <Route path="auth" component={Reg}>
                 <IndexRoute component={LoginComponent} />
                 <Route path="signin" component={LoginComponent}></Route>
                 <Route path="forgot" component={ForgotPasswordContainer}></Route>
                 <Route path="signup" component={SignupContainer}></Route>
-    		</Route>
-            <Route path='developers' component={DevelopersComponent}></Route>
             </Route>
-        <Route path="dashboard" component={ClassroomComponent}>
-            <IndexRoute component={DashboardComponent}></IndexRoute>
-            <Route path="myEvents" component={MyEventsComponent}></Route>
-            <Route path="faEvents" component={FA_MyEventsComponent}></Route>
-            <Route path="adEvents" component={AD_EventsComponent}></Route>
-            <Route path="soEvents" component={SO_EventsComponent}></Route>
-            <Route path="book_room" component={BookingComponent}></Route>
-            <Route path="profile" component={ProfileComponent}></Route>
-            <Route path="approveClubs" component={ApproveClubsComponent}></Route>
-            <Route path="viewComplaints" component={ViewComplaintsComponent}></Route>
-        </Route>
+            <Route path="dashboard" component={ClassroomComponent}>
+                <IndexRoute component={DashboardComponent}></IndexRoute>
+                <Route path="myEvents" component={MyEventsComponent}></Route>
+                <Route path="faEvents" component={FA_MyEventsComponent}></Route>
+                <Route path="adEvents" component={AD_EventsComponent}></Route>
+                <Route path="soEvents" component={SO_EventsComponent}></Route>
+                <Route path="book_room" component={BookingComponent}></Route>
+                <Route path="profile" component={ProfileComponent}></Route>
+                <Route path="approveClubs" component={ApproveClubsComponent}></Route>
+                <Route path="viewComplaints" component={ViewComplaintsComponent}></Route>
+            </Route>
     	</Route>
     </Router>
   </Provider>,
