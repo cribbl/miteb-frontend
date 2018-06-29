@@ -1,34 +1,42 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import moment from 'moment';
+import {getDisabledDates} from '../../../Services/firebaseDBService'
 
 class EventContainer extends React.Component {
 	constructor(props){
 		super(props);
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 1);
+    maxDate.setHours(0, 0, 0, 0);
     this.handleBlur = this.handleBlur.bind(this);
+    this.handleStartDate = this.handleStartDate.bind(this);
+    this.handleEndDate = this.handleEndDate.bind(this);
+    this.formatDate = this.formatDate.bind(this);
+    this.shouldDisableDate = this.shouldDisableDate.bind(this)
+
 		this.state =  {
       checkboxValue : 0,
       checked: [true, false, false, false],
-      //  fields: {
-   
-      //   title: '',
-      //   desc: 'Some random description of a random event of this random Dummy MIT Club',
-   
-      // },
+      today: new Date(),
+      minDate: new Date(),
+      maxDate: maxDate,   
+      start_date: null,
+      end_date: null,   
+      disabledDates: [],
       fieldTouch: {
-  
         title: false,
         desc: false
       },
       errors: {
-
         title: '',
         desc: ''
       },
         isFormValid: false,
     }
-
-		}
+	}
     componentWillMount(){
       this.setState({
         isFormValid:false,
@@ -60,6 +68,34 @@ class EventContainer extends React.Component {
     let result = this.handleValidation(field);
     this.props.updateFormState(null,result);
   };
+   handleStartDate(event, start_date) {
+    var field = this.state.fields;
+    field['start_date'] = moment(start_date).format('DD-MM-YYYY')
+    this.setState({
+      fields: field,
+      start_date: start_date
+    })
+    this.props.updateFields(field)
+  }
+
+  handleEndDate(event, end_date) {
+    var field = this.state.fields;
+    field['end_date'] = moment(end_date).format('DD-MM-YYYY')
+      this.setState({
+      fields: field,
+      end_date: end_date
+    })
+    this.props.updateFields(field)
+  }
+  shouldDisableDate(day) {
+    let date = moment(day).format('DD-MM-YYYY');
+    if((this.state.disabledDates).includes(date))
+      return true
+    return false
+  }
+  formatDate(date) {
+    return moment(date).format("ddd, DD MMM YYYY")
+  }
   handleValidation(field) {
     let fields = this.state.fields;
     let errors = {
@@ -84,6 +120,7 @@ class EventContainer extends React.Component {
 
 
 		render() {
+      var self=this;
 			return (
     		<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <TextField 
@@ -124,6 +161,36 @@ class EventContainer extends React.Component {
             errorText={this.state.errors["notes"]} 
             errorStyle={{position: 'absolute', bottom: -8}}
           />
+          <DatePicker
+              floatingLabelText="Start Date"
+              mode={this.props.isMobile ? 'portrait' : 'landscape'}
+              autoOk={true}
+              onChange={this.handleStartDate}
+              value={this.state.start_date}
+              shouldDisableDate={this.day}
+              disableYearSelection={true}
+              minDate={this.state.minDate}
+              maxDate={this.state.maxDate}
+              formatDate={this.formatDate}
+              shouldDisableDate={this.shouldDisableDate}
+              errorText={this.state.end_date && this.state.start_date > this.state.end_date && "Start date should be less than end date"}
+              errorStyle={{position: 'absolute', bottom: -8}}
+              required
+            />
+            <DatePicker
+              floatingLabelText="End Date" 
+              mode={this.props.isMobile ? 'portrait' : 'landscape'}
+              autoOk={true}   
+              onChange={this.handleEndDate}
+              value={this.state.end_date} 
+              shouldDisableDate={this.day}
+              disableYearSelection={true}
+              minDate={self.state.start_date?self.state.start_date:self.state.minDate}
+              maxDate={this.state.maxDate}
+              formatDate={this.formatDate}
+              shouldDisableDate={this.shouldDisableDate}
+              required
+            />
                       
         </div>
 			);
