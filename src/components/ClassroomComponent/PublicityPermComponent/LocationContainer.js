@@ -19,10 +19,10 @@ class LocationContainer extends React.Component {
     checked:[true,false,false,false],
     toggled:[],
     Steps:['Banner'],
-    indexes: { '00':false, '01':false,'02':false,'03':false,
-  						'10':false, '11':false,'12':false,'13':false,
-  						'20':false, '21':false,'22':false,'23':false,
-  						'30':false, '31':false,'32':false,'33':false }  
+    indexes: [{ '0':false, '1':false,'2':false,'3':false},
+  						{ '0':false, '1':false,'2':false,'3':false},
+  						{ '0':false, '1':false,'2':false,'3':false},
+  						{ '0':false, '1':false,'2':false,'3':false }]  
   	};
   	  this.handleToggle = this.handleToggle.bind(this);
 	}
@@ -109,10 +109,12 @@ class LocationContainer extends React.Component {
   		return (<div>  </div>)
   	}
 	}
-  handleToggle(a){
+  handleToggle(s,i){
+  	debugger
    let indexes = this.state.indexes;
-    indexes[a]=!indexes[a];
+    (indexes[s])[i]=!(indexes[s])[i];
     this.setState({indexes});
+    this.props.updateToggle(indexes);
   }
   getStepContent(stepIndex) {
   	var steps = ["Academic Blocks", "Hostel", "Hostel Senior","Mess"]
@@ -123,7 +125,7 @@ class LocationContainer extends React.Component {
       	 <List>
 							  {steps.map((step,index) =>  {
 							  	var a = "" + stepIndex + index;
-							    return (<ListItem key={a} secondaryText={list_sec[index]}  rightToggle={<Toggle key={a} toggled={(this.state.indexes[a])} onToggle={this.handleToggle.bind(this,a)} />}> {step} </ListItem>
+							    return (<ListItem key={a} secondaryText={list_sec[index]}  rightToggle={<Toggle key={a} toggled={(this.state.indexes[stepIndex])[index]} onToggle={this.handleToggle.bind(this,stepIndex,index)} />}> {step} </ListItem>
 							    )
 							  })}
 					</List>
@@ -133,7 +135,7 @@ class LocationContainer extends React.Component {
       	 <List>
 							  {steps.map((step,index) =>  {
 							  	var a = "" + stepIndex + index;
-							    return (<ListItem key={a} secondaryText={list_sec[index]} rightToggle={<Toggle key={a} toggled={(this.state.indexes[a])} onToggle={this.handleToggle.bind(this,a)} />}> {step} </ListItem>
+							    return (<ListItem key={a} secondaryText={list_sec[index]} rightToggle={<Toggle key={a} toggled={(this.state.indexes[stepIndex])[index]} onToggle={this.handleToggle.bind(this,stepIndex,index)} />}> {step} </ListItem>
 							    )
 							  })}
 					</List>
@@ -143,7 +145,7 @@ class LocationContainer extends React.Component {
       	 <List> 
 							  {steps.map((step,index) =>  {
 							  	var a = "" + stepIndex + index;
-							    return (<ListItem key={a} secondaryText={list_sec[index]} rightToggle={<Toggle key={a} toggled={(this.state.indexes[a])} onToggle={this.handleToggle.bind(this,a)} />}> {step} </ListItem>
+							    return (<ListItem key={a} secondaryText={list_sec[index]} rightToggle={<Toggle key={a} toggled={(this.state.indexes[stepIndex])[index]} onToggle={this.handleToggle.bind(this,stepIndex,index)} />}> {step} </ListItem>
 							    )
 							  })}
 					</List>
@@ -153,7 +155,7 @@ class LocationContainer extends React.Component {
       	 <List>
 							  {steps.map((step,index) =>  {
 							  	var a = "" + stepIndex + index;
-							    return (<ListItem  key={a} secondaryText={list_sec[index]} rightToggle={<Toggle key={a} toggled={(this.state.indexes[a])} onToggle={this.handleToggle.bind(this,a)} />}> {step} </ListItem>
+							    return (<ListItem  key={a} secondaryText={list_sec[index]} rightToggle={<Toggle key={a} toggled={(this.state.indexes[stepIndex])[index]} onToggle={this.handleToggle.bind(this,stepIndex,index)} />}> {step} </ListItem>
 							    )
 							  })}
 					</List>

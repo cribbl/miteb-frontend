@@ -48,8 +48,11 @@ class PublicityComponent extends React.Component {
       },
       event_fields: {
         title: '',
-        desc: 'Some random description of a random event of this random Dummy MIT Club'
-      }
+        desc: 'Some random description of a random event of this random Dummy MIT Club',
+        start_date: null,
+        end_date: null
+      },
+      indexes: []
 		}
 	};
     componentWillMount(){
@@ -59,11 +62,23 @@ class PublicityComponent extends React.Component {
     }
     handleNext = () => {
     const {stepIndex} = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-      isFormValid:false
-    });
+    if(this.state.stepIndex+1 < 2){
+      this.setState({
+        stepIndex: stepIndex + 1,
+        finished: stepIndex >= 2,
+        isFormValid:false
+      });
+   }
+    else {
+        this.setState({
+        isFormValid:true,
+        stepIndex: stepIndex +1,
+        finished: stepIndex >=2 
+      })
+    if(this.state.stepIndex === 2)
+      this.handleSubmit();
+   
+  }
   };
 
   handlePrev = () => {
@@ -72,6 +87,41 @@ class PublicityComponent extends React.Component {
       this.setState({stepIndex: stepIndex - 1,isFormValid:true});
     }
   };
+  handleSubmit() {
+    var result = this.parseMediums();
+    var obj = Object.assign({},this.state.booker_fields,this.state.event_fields,result);
+    console.log('obj = ',obj);
+
+
+  //  var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
+   
+}
+
+  parseMediums(){
+   var arrChecked = this.state.checked;
+   var array = ['academicBlocks', 'Hostel', 'seniorHostel','Mess']
+   var arrayObj = this.state.indexes;
+   var newObj = [];
+
+   for (var item in arrayObj) {
+    var Data = {};
+    for (var a in array) {
+       Data[array[a]] = arrayObj[item][Object.keys(arrayObj[item])[a]];
+    } 
+    newObj.push(Data);
+   }
+   var arr = newObj;
+   var result = {};
+   var new_key=['Banner','InfoDesk','Digital Board','Poster']
+   for (var i=0; i<arr.length; i++) {
+    result[new_key[i]] = arr[i];
+   }
+    for(i=0;i<arrChecked.length;i++){
+    if(arrChecked[i] === false)
+      delete result[new_key[i]]
+   }
+  return result;
+  }
   updateFormState(bookForm,eventForm){
     if(bookForm===false || eventForm===false){
       this.setState({
@@ -98,8 +148,14 @@ class PublicityComponent extends React.Component {
     this.setState({
       event_fields:fields
     })
+    console.log('event fields=',this.state.event_fields)
   }
-
+  updateToggle(toggle){
+    this.setState({
+      indexes: toggle
+    })
+    console.log('toggle = ',toggle);
+  }
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -113,7 +169,7 @@ class PublicityComponent extends React.Component {
               </Paper>
 
               <Paper>
-                  <LocationContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} />
+                  <LocationContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />
               </Paper>
           </div>);
       default:
@@ -124,6 +180,8 @@ class PublicityComponent extends React.Component {
 		render() {
       var stepIndex=this.state.stepIndex;
       var finished=this.state.finished;
+      console.log('this.state.stepIndex=',this.state.stepIndex)
+      console.log('this.state.isFormValid',this.state.isFormValid)
 			return (
      <div>
         <Paper style={{width: this.props.isMobile? '98%':'90%' , height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%'}} zDepth={3}>
@@ -151,7 +209,7 @@ class PublicityComponent extends React.Component {
                 Click here
               </a> to reset the example.
             </p>
-          ) : (
+          ) : ( 
                 <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
                   <div>{this.getStepContent(this.state.stepIndex)}</div>
                   <div style={{marginBottom:20}}>
@@ -165,7 +223,7 @@ class PublicityComponent extends React.Component {
                       label={this.state.stepIndex === 2 ? 'Submit' : 'Next'}
                       primary={true}
                       onClick={this.handleNext}
-                      disabled={!this.state.isFormValid|| this.state.stepIndex == 2}
+                      disabled={!this.state.isFormValid || !this.state.stepIndex === 2}
                     />
                   </div>
                </div>
