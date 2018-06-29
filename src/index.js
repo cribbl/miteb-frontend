@@ -5,6 +5,7 @@ import App from './App';
 import LandingPage from './components/LandingPage/LandingPage'
 import LoginComponent from './components/LoginComponent/LoginComponent'
 import ForgotPasswordContainer from './components/LoginComponent/ForgotPasswordContainer'
+import SignupContainer from './components/LoginComponent/SignupContainer'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent'
 import DevelopersComponent from './components/DevelopersComponent/DevelopersComponent'
 //logo, name, fa, email, pass, notif settings: email after every approval/reject, sms and,aws, push notifs,   
@@ -36,6 +37,7 @@ ReactDOM.render(
     			<IndexRoute component={LoginComponent} />
     			<Route path="signin" component={LoginComponent}></Route>
                 <Route path="forgot" component={ForgotPasswordContainer}></Route>
+                <Route path="signup" component={SignupContainer}></Route>
     		</Route>
             <Route path='developers' component={DevelopersComponent}></Route>
         <Route path="dashboard" component={ClassroomComponent}>
