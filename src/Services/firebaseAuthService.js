@@ -1,6 +1,20 @@
 import {firebaseAuth, firebaseMessaging} from '../firebaseConfig'
 import {getUserDetails, updateToken} from './firebaseDBService'
 import {getNotificationRequestPermission} from './NotificationService'
+import axios from 'axios'
+
+export const createUserWithEmailAndPassword = (newUser, callback) => {
+  axios.post('https://dev-miteventbooking.herokuapp.com/user/signup', newUser)
+  .then(function(res) {
+    if(res.data.state == 'fail')
+      callback(res.data.err);
+    else
+      callback(null, res.data.newUser);
+  })
+  .catch(function(err) {
+    callback(err);
+  })
+}
 
 export const authenticateUser = (email, password, callback) => {
     
@@ -9,7 +23,7 @@ export const authenticateUser = (email, password, callback) => {
       callback(null, user)
     })
     .catch(function(error) {
-        callback(error)
+      callback(error)
   });
 }
 
@@ -27,11 +41,15 @@ export const signOut = () => {
 export const fetchUser = (callback) => {
   firebaseAuth.onAuthStateChanged(function(user) {
     if (user) {
-        sessionStorage.setItem('uid', user.uid)
-        getUserDetails(user.uid, (userx) => {
-        userx['uid'] = user.uid;
-        callback(userx);
-        getNotificationRequestPermission(user.uid); // request permission for notifications
+      sessionStorage.setItem('uid', user.uid)
+      getUserDetails(user.uid, (userx) => {
+        if(!userx.isApproved) {
+        callback(null);
+        return;
+      }
+      userx['uid'] = user.uid;
+      callback(userx);
+      getNotificationRequestPermission(user.uid); // request permission for notifications
       })
     } 
     else {
