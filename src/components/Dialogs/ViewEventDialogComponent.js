@@ -72,11 +72,12 @@ class Dialogxx extends Component {
         primary={true}
         onClick={this.props.nextEvent}
       />,
-      <FlatButton
+      <RaisedButton
         label="Download Receipt"
         primary={true}
         hidden={!this.props.currentEvent.receiptURL}
         onClick={() => {window.location=(this.props.currentEvent.receiptURL)}}
+        style={{position: 'absolute', top: '6.5%', right: '3%'}}
       />,
     ];
 
