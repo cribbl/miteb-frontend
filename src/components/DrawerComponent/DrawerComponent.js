@@ -94,7 +94,7 @@ class DrawerComponent extends Component {
                 hidden={this.props.user && !this.props.user.isClub} />
 
             <MenuItem
-                style={Object.assign(this.state.activeItem === '/dashboard/myEvents' ? active:'', menuItemStyle)}
+                style={Object.assign(this.state.activeItem.toLowerCase().indexOf("event")!=-1 ? active:'', menuItemStyle)}
                 key="/dashboard/myEvents"
                 primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
