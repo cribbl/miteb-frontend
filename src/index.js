@@ -5,8 +5,9 @@ import App from './App';
 import LandingPage from './components/LandingPage/LandingPage'
 import LoginComponent from './components/LoginComponent/LoginComponent'
 import ForgotPasswordContainer from './components/LoginComponent/ForgotPasswordContainer'
+import SignupContainer from './components/LoginComponent/SignupContainer'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent'
-
+import DevelopersComponent from './components/DevelopersComponent/DevelopersComponent'
 //logo, name, fa, email, pass, notif settings: email after every approval/reject, sms and,aws, push notifs,   
 
 import ClassroomComponent from './components/ClassroomComponent/ClassroomComponent'
@@ -19,6 +20,9 @@ import BookingComponent from './components/ClassroomComponent/BookingComponent/B
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
 import ApproveClubsComponent from './components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer'
 
+import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
+import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
+import NotFound from './components/NotFound/NotFound'
 import Reg from './components/LoginComponent/Reg'
 import {store} from './store'
 
@@ -31,24 +35,29 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
-    	<Route path="/" component={App}>
-    	<IndexRoute component={Reg}></IndexRoute>
-        	<Route path="auth" component={Reg}>
-    			<IndexRoute component={LoginComponent} />
-    			<Route path="signin" component={LoginComponent}></Route>
+        <Route exact path="/" component={App}>
+            <IndexRoute component={Reg}></IndexRoute>
+            <Route path="complaints" component={ComplaintsComponent}></Route>
+            <Route path='developers' component={DevelopersComponent}></Route>
+            <Route path="auth" component={Reg}>
+                <IndexRoute component={LoginComponent} />
+                <Route path="signin" component={LoginComponent}></Route>
                 <Route path="forgot" component={ForgotPasswordContainer}></Route>
-    		</Route>
-        <Route path="dashboard" component={ClassroomComponent}>
-            <IndexRoute component={DashboardComponent}></IndexRoute>
-            <Route path="myEvents" component={MyEventsComponent}></Route>
-            <Route path="faEvents" component={FA_MyEventsComponent}></Route>
-            <Route path="adEvents" component={AD_EventsComponent}></Route>
-            <Route path="soEvents" component={SO_EventsComponent}></Route>
-            <Route path="book_room" component={BookingComponent}></Route>
-            <Route path="profile" component={ProfileComponent}></Route>
-            <Route path="approveClubs" component={ApproveClubsComponent}></Route>
+                <Route path="signup" component={SignupContainer}></Route>
+            </Route>
+            <Route path="dashboard" component={ClassroomComponent}>
+                <IndexRoute component={DashboardComponent}></IndexRoute>
+                <Route path="myEvents" component={MyEventsComponent}></Route>
+                <Route path="faEvents" component={FA_MyEventsComponent}></Route>
+                <Route path="adEvents" component={AD_EventsComponent}></Route>
+                <Route path="soEvents" component={SO_EventsComponent}></Route>
+                <Route path="book_room" component={BookingComponent}></Route>
+                <Route path="profile" component={ProfileComponent}></Route>
+                <Route path="approveClubs" component={ApproveClubsComponent}></Route>
+                <Route path="viewComplaints" component={ViewComplaintsComponent}></Route>
+            </Route>
+        <Route path="*" component={NotFound} />
         </Route>
-    	</Route>
     </Router>
   </Provider>,
   document.getElementById('root')

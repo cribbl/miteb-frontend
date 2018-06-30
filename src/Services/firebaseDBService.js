@@ -32,7 +32,8 @@ export const getUserDetails = (clubId, callback) => {
                         user['fa'] = snap.val();
                     })
                   }
-                  store.dispatch({type: "USER_UPDATE", user})
+                  if(user.isApproved)
+                    store.dispatch({type: "USER_UPDATE", user})
             })
 }
 

@@ -42,7 +42,8 @@ class ApproveClubsContainer extends Component {
 		var approvedClubs = this.state.approvedClubs;
 		var unapprovedClubs = this.state.unapprovedClubs;
 		var allClubs = this.state.allClubs;
-		firebaseDB.ref('clubs').on('value', function(snapshot) {
+		firebaseDB.ref('clubs').orderByChild('isClub').equalTo(true).on('value', function(snapshot) {
+			console.log(snapshot.val());
        this.setState({fetching: false})
 			snapshot.forEach(child => {
 				let user = child.val();
@@ -50,9 +51,9 @@ class ApproveClubsContainer extends Component {
 				user['key'] = key;
 				if(user.isSC)
 					return;
-				if(user.isClub && user.isApproved)
+				if(user.isApproved)
 					approvedClubs[key] = user;
-				else if(user.isClub)
+				else
 					unapprovedClubs[key] = user;
 				let allClubs = Object.assign({}, approvedClubs, unapprovedClubs);
 				this.setState({approvedClubs: approvedClubs, unapprovedClubs: unapprovedClubs, allClubs: allClubs, originalArr: allClubs});
@@ -72,9 +73,10 @@ class ApproveClubsContainer extends Component {
 		console.log(club);
 		let uid = club.key;
 		firebaseDB.ref('/clubs/'+uid).child('isApproved').set(status);
-		delete this.state.unapprovedClubs[uid];
-		delete this.state.approvedClubs[uid];
-		// this.setState({dialogOpen: false});
+		if(status)
+			delete this.state.unapprovedClubs[uid];
+		else
+			delete this.state.approvedClubs[uid];
 		const {dispatch} = this.props;
 		let msg = status ? "Approved" : "Disapproved" + " successfully"
 		dispatch({type: "TOASTER", message: msg, toast_open: true})
