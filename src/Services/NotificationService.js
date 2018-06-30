@@ -16,7 +16,7 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 		html: html
 	}
 
-	axios.post('https://dev-miteventbooking.herokuapp.com/notif/send-email', params)
+	axios.post('https://dev-miteventbooking.herokuapp.com/send-email', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
@@ -52,14 +52,27 @@ export const sendPush = (uid, title, body) => {
     }
   };
 
-    axios.post('https://dev-miteventbooking.herokuapp.com/notif/send-push', params)
+    axios.post('https://dev-miteventbooking.herokuapp.com/send-notif', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
 	.catch(function(err) {
 		console.log(err);
 	})
+}
 
+export const sendSMS = (to, message) => {
+	let params = {
+		phone: to,
+		message: message
+	}
+	axios.post('https://sfdjt9wg4c.execute-api.us-east-1.amazonaws.com/dev', params)
+	.then(function(resp) {
+		console.log(resp)
+	})
+	.catch(function(err) {
+		console.log(err)
+	})
 }
 
 export const getNotificationRequestPermission = (uid) => {
