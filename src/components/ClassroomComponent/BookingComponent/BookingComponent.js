@@ -44,11 +44,11 @@ class HorizontalLinearStepper extends React.Component {
     this.state = {
       fields: {
         booker_name: '',
-        booker_email: 'random@email.com',
-        booker_contact: '9898989898',
-        booker_reg_no: '150911111',
+        booker_email: '',
+        booker_contact: '',
+        booker_reg_no: '',
         title: '',
-        desc: 'Some random description of a random event of this random Dummy MIT Club',
+        desc: '',
         workshop: 'External'
       },
       fieldTouch: {
