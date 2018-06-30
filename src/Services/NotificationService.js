@@ -16,7 +16,7 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 		html: html
 	}
 
-	axios.post('https://dev-miteventbooking.herokuapp.com/send-email', params)
+	axios.post('https://dev-miteventbooking.herokuapp.com/notif/send-email', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
@@ -52,7 +52,7 @@ export const sendPush = (uid, title, body) => {
     }
   };
 
-    axios.post('https://dev-miteventbooking.herokuapp.com/send-notif', params)
+  axios.post('https://dev-miteventbooking.herokuapp.com/notif/send-push', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
