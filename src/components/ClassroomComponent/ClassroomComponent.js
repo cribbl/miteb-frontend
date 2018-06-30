@@ -28,6 +28,7 @@ class ClassroomComponent extends Component {
     }
     else {
       console.log('User prop DNE')
+      hashHistory.push('/auth')
     }
   }
 
