@@ -22,7 +22,7 @@ import ApproveClubsComponent from './components/ClassroomComponent/ApproveClubsC
 
 import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
 import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
-
+import NotFound from './components/NotFound/NotFound'
 import Reg from './components/LoginComponent/Reg'
 import {store} from './store'
 
@@ -35,7 +35,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
-    	<Route path="/" component={App}>
+        <Route exact path="/" component={App}>
             <IndexRoute component={Reg}></IndexRoute>
             <Route path="complaints" component={ComplaintsComponent}></Route>
             <Route path='developers' component={DevelopersComponent}></Route>
@@ -56,7 +56,8 @@ ReactDOM.render(
                 <Route path="approveClubs" component={ApproveClubsComponent}></Route>
                 <Route path="viewComplaints" component={ViewComplaintsComponent}></Route>
             </Route>
-    	</Route>
+        <Route path="*" component={NotFound} />
+        </Route>
     </Router>
   </Provider>,
   document.getElementById('root')
