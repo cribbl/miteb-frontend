@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import moment from 'moment';
+import Subheader from 'material-ui/Subheader';
 import {getDisabledDates} from '../../../Services/firebaseDBService'
 
 class EventContainer extends React.Component {
@@ -27,12 +28,10 @@ class EventContainer extends React.Component {
       end_date: null,   
       disabledDates: [],
       fieldTouch: {
-        title: false,
-        desc: false
+        title: false
       },
       errors: {
-        title: '',
-        desc: ''
+        title: ''
       },
         isFormValid: false,
     }
@@ -99,8 +98,7 @@ class EventContainer extends React.Component {
   handleValidation(field) {
     let fields = this.state.fields;
     let errors = {
-      title: '',
-      desc: ''
+      title: ''
     };
     let isFormValid = true;
       if(fields["title"].length < 1){
@@ -108,10 +106,6 @@ class EventContainer extends React.Component {
         errors["title"] = "Cannot be empty";
       }
 
-      if(fields["desc"].length < 1){
-        isFormValid = false;
-        errors["desc"] ="Cannot be empty";
-      }
     this.setState({errors: errors, isFormValid: isFormValid});
     this.props.updateFormState(null,isFormValid);
     return isFormValid;
@@ -123,45 +117,8 @@ class EventContainer extends React.Component {
       var self=this;
 			return (
     		<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <TextField 
-            floatingLabelText="Title *"
-            key={1}
-            onChange={this.handleChange.bind(this, "title")}
-            onBlur={this.handleBlur.bind(this,"title")}
-            type="text" 
-            value={this.state.fields["title"]}
-            errorText={this.state.fieldTouch["title"] && this.state.errors["title"]}
-            errorStyle={{position: 'absolute', bottom: -8}}
-            required
-          />
-          <TextField 
-            style={{textAlign: 'left'}}
-            floatingLabelText="Event Description *"
-            multiLine={true}
-            rows={1}
-            rowsMax={this.props.isMobile ? 3 : 5}
-            key={2}
-            type="text"
-            onChange={this.handleChange.bind(this, "desc")}
-            onBlur={this.handleBlur.bind(this,"desc")}
-            value={this.state.fields["desc"]}
-            errorText={this.state.fieldTouch["desc"] && this.state.errors["desc"]}
-            errorStyle={{position: 'absolute', bottom: -8}}
-            required
-          />
-          <TextField 
-            multiLine={true}
-            rows={1}
-            rowsMax={this.props.isMobile ? 3 : 5}
-            style={{textAlign: 'left'}}
-            floatingLabelText="Notes" 
-            type="text"
-            onChange={this.handleChange.bind(this, "notes")}
-            value={this.state.fields["notes"]}
-            errorText={this.state.errors["notes"]} 
-            errorStyle={{position: 'absolute', bottom: -8}}
-          />
-          <DatePicker
+        <Subheader> Publicity Dates </Subheader>
+            <DatePicker
               floatingLabelText="Start Date"
               mode={this.props.isMobile ? 'portrait' : 'landscape'}
               autoOk={true}
@@ -191,6 +148,32 @@ class EventContainer extends React.Component {
               shouldDisableDate={this.shouldDisableDate}
               required
             />
+          <Subheader> Event Details </Subheader>
+          <TextField 
+            floatingLabelText="Title *"
+            key={1}
+            onChange={this.handleChange.bind(this, "title")}
+            onBlur={this.handleBlur.bind(this,"title")}
+            type="text" 
+            value={this.state.fields["title"]}
+            errorText={this.state.fieldTouch["title"] && this.state.errors["title"]}
+            errorStyle={{position: 'absolute', bottom: -8}}
+            required
+          />
+          
+          <TextField 
+            multiLine={true}
+            rows={1}
+            rowsMax={this.props.isMobile ? 3 : 5}
+            style={{textAlign: 'left'}}
+            floatingLabelText="Notes" 
+            type="text"
+            onChange={this.handleChange.bind(this, "notes")}
+            value={this.state.fields["notes"]}
+            errorText={this.state.errors["notes"]} 
+            errorStyle={{position: 'absolute', bottom: -8}}
+          />
+          
                       
         </div>
 			);

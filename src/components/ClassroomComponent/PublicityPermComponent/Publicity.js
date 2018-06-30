@@ -48,7 +48,6 @@ class PublicityComponent extends React.Component {
       },
       event_fields: {
         title: '',
-        desc: 'Some random description of a random event of this random Dummy MIT Club',
         start_date: null,
         end_date: null
       },
@@ -103,12 +102,21 @@ class PublicityComponent extends React.Component {
    var arrayObj = this.state.indexes;
    var newObj = [];
 
+
    for (var item in arrayObj) {
     var Data = {};
     for (var a in array) {
        Data[array[a]] = arrayObj[item][Object.keys(arrayObj[item])[a]];
     } 
     newObj.push(Data);
+   }
+    for(var item in newObj){
+    for(var a in array){
+      console.log(item);
+      console.log(newObj[item][array[a]]);
+      if(newObj[item][array[a]] === false)
+        delete newObj[item][array[a]]
+    }
    }
    var arr = newObj;
    var result = {};
