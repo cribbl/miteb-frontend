@@ -8,7 +8,7 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "icon-225.png",
+      "src": "logo-225x255.png",
       "sizes": "225x225",
       "type": "image/png"
     }
