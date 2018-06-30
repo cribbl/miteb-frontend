@@ -10,6 +10,10 @@ class ClubDialog extends Component {
 		super(props);
 	}
 
+	componentWillReceiveProps(nextProps) {
+			console.log(nextProps);
+		}
+
 	render() {
 		const styles = {
 		  label: {
@@ -39,7 +43,7 @@ class ClubDialog extends Component {
 			/>,
 			<RaisedButton
 			label={this.props.currentClub.isApproved ? "Disapprove" : "Approve"}
-			primary={true}
+			primary={!this.props.currentClub.isApproved}
 			onClick={()=>this.props.toggleApproval(this.props.currentClub, this.props.currentClub.isApproved ? false : true)}
 			style={{position: 'absolute', top: '6.5%', right: '3%'}}
 			/>

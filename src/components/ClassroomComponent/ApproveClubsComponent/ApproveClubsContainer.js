@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import ClubDialog from '../../Dialogs/ViewClubDialogComponent'
 import CircularProgress from 'material-ui/CircularProgress'
-
+import StatusIcon from 'material-ui/svg-icons/av/fiber-manual-record'
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import SearchClubContainer from './SearchClubContainer';
@@ -48,6 +48,8 @@ class ApproveClubsContainer extends Component {
 				let user = child.val();
 				let key = child.key;
 				user['key'] = key;
+				if(user.isSC)
+					return;
 				if(user.isClub && user.isApproved)
 					approvedClubs[key] = user;
 				else if(user.isClub)
@@ -76,7 +78,7 @@ class ApproveClubsContainer extends Component {
 		const {dispatch} = this.props;
 		let msg = status ? "Approved" : "Disapproved" + " successfully"
 		dispatch({type: "TOASTER", message: msg, toast_open: true})
-		this.nextClub()
+		this.handleClose()
 	}
 
 	nextClub() {
@@ -122,15 +124,17 @@ class ApproveClubsContainer extends Component {
 							<Table>
 								<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 						      <TableRow style={{backgroundColor: '#EFF0F2'}}>
-						        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Name</TableHeaderColumn>
+						        <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '18%'}}>Status</TableHeaderColumn>
 						        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Category</TableHeaderColumn>
+						        <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700}}>Club Name</TableHeaderColumn>
+						        <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700}}>Faculty Advisor</TableHeaderColumn>
 						        <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Club Details</TableHeaderColumn>
 						      </TableRow>
 							  </TableHeader>
 							  <TableBody
 							    displayRowCheckbox={false}
 							    deselectOnClickaway={false}
-							    showRowHover={false}
+							    showRowHover={true}
 							    stripedRows={false}
 							  >
 
@@ -140,8 +144,10 @@ class ApproveClubsContainer extends Component {
 						      	Object.keys(this.state.allClubs).length > 0 ? (Object.values(this.state.allClubs).map(function(club, index) {
 						      		return(
 						      			<TableRow key={index}>
+					      					<TableRowColumn style={{width: '18%'}}><StatusIcon style={{color: club.isApproved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
 					      					<TableRowColumn>{club.name}</TableRowColumn>
-					      					<TableRowColumn>{club.category}</TableRowColumn>
+					      					<TableRowColumn hidden={this.props.isMobile}>{club.category}</TableRowColumn>
+					      					<TableRowColumn hidden={this.props.isMobile}>{club.fa.name}</TableRowColumn>
 							        		<TableRowColumn><RaisedButton label="View" primary={true} onClick={() => this.handleOpen(club)} /></TableRowColumn>
 									     	</TableRow>
 									    )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No clubs for this search' : 'No unapproved clubs'}</p>
