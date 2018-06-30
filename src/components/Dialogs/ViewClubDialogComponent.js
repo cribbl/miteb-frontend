@@ -39,7 +39,7 @@ class ClubDialog extends Component {
 			/>,
 			<RaisedButton
 			label={this.props.currentClub.isApproved ? "Disapprove" : "Approve"}
-			primary={true}
+			primary={!this.props.currentClub.isApproved}
 			onClick={()=>this.props.toggleApproval(this.props.currentClub, this.props.currentClub.isApproved ? false : true)}
 			style={{position: 'absolute', top: '6.5%', right: '3%'}}
 			/>
@@ -47,7 +47,7 @@ class ClubDialog extends Component {
 
 		return(
 			<Dialog
-	      title="Club Details"
+	      title={this.props.currentClub.name}
 	      actions={viewActions}
 	     	modal={false}
 	      open={this.props.open}
