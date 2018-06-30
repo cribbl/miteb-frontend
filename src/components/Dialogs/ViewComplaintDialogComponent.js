@@ -39,44 +39,17 @@ class Dialogxx extends Component {
   }
 
   render() {
-    const FA_actions = [
-      <FlatButton
-        label="Close"
-        primary={false}
-        onClick={this.props.handleClose}
-      />,
-      <FlatButton
-        label="Mars as Resolved"
-        primary={false}
-        onClick={() => this.props.resolveComplaint(this.props.currentComplaint, 'resolved')}
-      />,
-      <FlatButton
-        label="Flag"
-        primary={true}
-        onClick={() => this.props.flagRejectHandler(this.props.currentComplaint, 'flag')}
-      />,
-      <FlatButton
-        label="Approve"
-        primary={true}
-        onClick={() => this.props.approveHandler(this.props.currentComplaint)}
-      />,
-      <FlatButton
-        label="Next"
-        primary={true}
-        onClick={this.props.nextComplaint}
-      />,
-    ];
-
     const Club_actions = [
       <FlatButton
         label="Close"
         primary={false}
         onClick={this.props.handleClose}
       />,
-      <FlatButton
-        label="Mark as Resolved"
-        primary={true}
-        onClick={() => this.props.resolveComplaint(this.props.currentComplaint, 'resolved')}
+      <RaisedButton
+        label={this.props.currentComplaint.isResolved ? "Mark as Unresolved" : "Mark as Resolved"}
+        primary={!!this.props.currentComplaint.isResolved}
+        onClick={() => this.props.resolveComplaint(this.props.currentComplaint, !this.props.currentComplaint.isResolved)}
+        style={{position: 'absolute', top: '6.5%', right: '3%'}}
       />,
       <FlatButton
         label="Next"
@@ -89,7 +62,7 @@ class Dialogxx extends Component {
       <div>
         <Dialog
           title={this.props.currentComplaint.dated}
-          actions={this.props.user && this.props.user.isClub ? Club_actions : FA_actions}
+          actions={Club_actions}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}

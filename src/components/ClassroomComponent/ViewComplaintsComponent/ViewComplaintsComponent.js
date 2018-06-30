@@ -25,6 +25,8 @@ import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
 import moment from 'moment'
 import {toggleActions} from '../../../actions/toggleActions'
+import StatusIcon from 'material-ui/svg-icons/av/fiber-manual-record'
+import SearchSortContainer from './SearchSortContainer'
 
 class ViewComplaintsComponent extends Component {
   constructor(props) {
@@ -34,7 +36,7 @@ class ViewComplaintsComponent extends Component {
     this.handleFlagDialogClose = this.handleFlagDialogClose.bind(this)
     this.nextComplaint = this.nextComplaint.bind(this)
     this.handleSort = this.handleSort.bind(this);
-    this.resolveComplaint = this.resolveComplaint.bind(this)
+    this.resolveComplaint = this.resolveComplaint.bind(this);
     
     this.state = {
       fixedHeader: true,
@@ -63,13 +65,10 @@ class ViewComplaintsComponent extends Component {
   }
 
   resolveComplaint(complaint, mode) {
-    firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(true);
-    const {myArrx} = this.state
-    delete myArrx[complaint.key]
-    this.setState({myArrx})
+    firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(mode);
     this.nextComplaint();
     const {dispatch} = this.props
-    dispatch(toggleActions.toggleToaster("Complaint Resolved", true))
+    dispatch(toggleActions.toggleToaster(mode ? "Compaint marked Resolved" : "Compaint marked Unresolved", true))
   }
 
   handleFlagDialogClose() { this.setState({FlagDialogOpen: false}) }
@@ -134,9 +133,9 @@ class ViewComplaintsComponent extends Component {
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
-      {/*<div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length}/>
-      </div>*/}
+      <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
+        <SearchSortContainer />
+      </div>
 
       {this.state.currentComplaint && 
       <Dialogxx open={this.state.dialogOpen} currentComplaint={this.state.currentComplaint} handleClose={this.handleDialogClose} nextComplaint={this.nextComplaint} resolveComplaint={this.resolveComplaint} />}
@@ -156,6 +155,7 @@ class ViewComplaintsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '18%'}}>Status</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '15%'}}>Subject</TableHeaderColumn>
               <TableHeaderColumn
                 style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '15%'}}
@@ -179,10 +179,11 @@ class ViewComplaintsComponent extends Component {
           { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(complaint, index) {
               return (
                   <TableRow key={index}>
+                    <TableRowColumn style={{width: '18%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
                     <TableRowColumn style={{width: '15%'}}>{complaint.subject}</TableRowColumn>
                     <TableRowColumn style={{width: '15%'}}>{complaint.dated}</TableRowColumn>
                     <TableRowColumn style={{width: '35%'}}>{complaint.desc}</TableRowColumn>
-                    <TableRowColumn style={{width: '20%'}}>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(complaint)}/><RaisedButton hidden={this.props.isMobile} label="Approve" primary={true} onClick={() => this.approve(complaint)}/></div>}</TableRowColumn>
+                    <TableRowColumn style={{width: '20%'}}>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(complaint)}/></div>}</TableRowColumn>
                   </TableRow>
             )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
           }
