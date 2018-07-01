@@ -5,6 +5,7 @@ import AppBarMobile from './components/AppBarComponent/AppBarMobile'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent';
 import ReactLoading from 'react-loading';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import SnackbarComponent from './components/SnackbarComponent'
 import './App.css';
 import {store} from './store'
 import {connect} from 'react-redux'
@@ -29,6 +30,7 @@ class App extends Component {
       {this.props.sessionCheck ? <div style={{display: 'flex', justifyContent: 'center'}}><ReactLoading type={'cylon'} color={'#00bcd4'} height='667px' width='50%' /></div> : (
         <div className="propChildrenContainer">
     	   {this.props.children}
+         <SnackbarComponent />
         </div>
         )}
       </div>

@@ -33,7 +33,8 @@ import './AppBarComponent.css'
 
   const MyNavLinks = () => (
     <ToolbarGroup>
-      <Link to="/auth" activeClassName="activeLinkButton"><FlatButton label="Login" /></Link>
+      <Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link>      
+      <Link to="/auth" activeClassName=""><FlatButton label="Login" /></Link>
 	  </ToolbarGroup>
 	);
 
@@ -103,7 +104,7 @@ class AppBarComponent extends Component {
         !this.props.user ? (
         <AppBar
           style={{position: "fixed"}}
-          title={'not logged in'}
+          title={'Portal'}
           zDepth={1}
           children={<MyNavLinks />}
           showMenuIconButton={false}

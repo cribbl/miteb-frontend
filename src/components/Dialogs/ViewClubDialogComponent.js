@@ -57,9 +57,11 @@ class ClubDialog extends Component {
 			/>
 		]
 
+		
+
 		return(
 			<Dialog
-	      title="Club Details"
+	      title={this.props.currentClub.name}
 	      actions={viewActions}
 	     	modal={false}
 	      open={this.props.open}
