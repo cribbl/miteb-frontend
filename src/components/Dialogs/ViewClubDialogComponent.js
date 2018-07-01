@@ -26,6 +26,18 @@ class ClubDialog extends Component {
 		  },
 		}
 
+		const approveStyle = {
+			position: 'absolute',
+			bottom: '6.5%',
+			left: '3%'
+		}
+
+		const disapproveStyle = {
+			position: 'absolute',
+			top: '6.5%',
+			right: '3%'
+		}
+
 		const viewActions = [
 			<FlatButton
 			label="Cancel"
@@ -39,9 +51,9 @@ class ClubDialog extends Component {
 			/>,
 			<RaisedButton
 			label={this.props.currentClub.isApproved ? "Disapprove" : "Approve"}
-			primary={true}
+			primary={this.props.currentClub.isApproved?false:true}
 			onClick={()=>this.props.toggleApproval(this.props.currentClub, this.props.currentClub.isApproved ? false : true)}
-			style={{position: 'absolute', top: '6.5%', right: '3%'}}
+			style={this.props.currentClub.isApproved?{disapproveStyle}:{approveStyle}}
 			/>
 		]
 
