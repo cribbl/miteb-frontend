@@ -6,19 +6,27 @@ import TextField from 'material-ui/TextField'
 class SearchSortContainer extends Component{
 	constructor(props) {
 		super(props);
-	 
+	  this.filterClicked = this.filterClicked.bind(this)
+    this.state = {
+      filterChoice: 'all'
+    }
 	}
+
+  filterClicked(filterChoice) {
+    this.setState({filterChoice: filterChoice});
+    this.props.filterState(filterChoice);
+  }
 
   render() {
     return (
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
        <ToolbarGroup>
-          <span>Resolved</span>
+          <span onClick={()=>{this.filterClicked('resolved')}} style={{fontWeight: this.state.filterChoice == 'resolved' ? 700 : 100}}>Resolved</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span>Unresolved</span>
+          <span onClick={()=>{this.filterClicked('unresolved')}} style={{fontWeight: this.state.filterChoice == 'unresolved' ? 700 : 100}}>Unresolved</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span>All</span>
+          <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.state.filterChoice == 'all' ? 700 : 100}}>All</span>
         </ToolbarGroup>
         
         {!this.props.isMobile ? 

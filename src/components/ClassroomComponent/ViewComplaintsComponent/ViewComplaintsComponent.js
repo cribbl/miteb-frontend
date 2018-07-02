@@ -37,6 +37,7 @@ class ViewComplaintsComponent extends Component {
     this.nextComplaint = this.nextComplaint.bind(this)
     this.handleSort = this.handleSort.bind(this);
     this.resolveComplaint = this.resolveComplaint.bind(this);
+    this.filterState = this.filterState.bind(this);
     
     this.state = {
       fixedHeader: true,
@@ -44,16 +45,18 @@ class ViewComplaintsComponent extends Component {
       stripedRows: false,
       showRowHover: true,
       showCheckboxes: false,
-      myArr: {},
-      myArrx: {},
-      allArr: {},
+      resolvedArr: {},
+      unresolvedArr: {},
       originalArr: {},
+      tempArr: {},
+      resolvedTempArr: {},
+      unresolvedTempArr: {},
       dialogOpen: false,
       FlagDialogOpen: false,
       currentComplaint: null,
       dateSort: null,
     }
-}
+  }
 
   showDialog(event) {
     this.setState({dialogOpen: true})
@@ -74,17 +77,17 @@ class ViewComplaintsComponent extends Component {
   handleFlagDialogClose() { this.setState({FlagDialogOpen: false}) }
 
   nextComplaint() {
-    let keys = Object.keys(this.state.myArrx)
+    let keys = Object.keys(this.state.tempArr)
     if(keys.length == 0){
       this.handleDialogClose()
       return
     }
     let pos = keys.indexOf(this.state.currentComplaint.key) + 1
-    if(pos == Object.keys(this.state.myArrx).length){
+    if(pos == Object.keys(this.state.tempArr).length){
       pos = 0;
     }
     let nextKey = keys[pos]
-    let nextComplaint = this.state.myArrx[nextKey]
+    let nextComplaint = this.state.tempArr[nextKey]
     this.setState({currentComplaint: nextComplaint})
   }
 
@@ -94,8 +97,8 @@ class ViewComplaintsComponent extends Component {
     else
       this.setState({dateSort: 'des'})
     var scope = this
-    var myArrx = this.state.originalArr
-    myArrx = Object.values(myArrx).sort(function(a, b)
+    var tempArr = this.state.originalArr
+    tempArr = Object.values(tempArr).sort(function(a, b)
       { 
         var aDate = moment(a.start_date, 'DD-MM-YYYY');
         var bDate = moment(b.start_date, 'DD-MM-YYYY');
@@ -103,7 +106,7 @@ class ViewComplaintsComponent extends Component {
           return (aDate - bDate);
         return (bDate - aDate);
       });
-    this.setState({myArrx})
+    this.setState({tempArr})
   }
 
   componentDidMount() {
@@ -112,20 +115,40 @@ class ViewComplaintsComponent extends Component {
       return
     }
     this.setState({fetching: true})
-        var scope = this;
-        firebaseDB.ref().child('complaints').on('value',
-        function(snapshot) {
-          scope.setState({fetching: false})
-          snapshot.forEach(function(child) {
-            scope.setState({fetching: false})
-              const {myArrx} = scope.state
-              myArrx[child.key] = child.val()
-              myArrx[child.key].key = child.key
-              scope.setState({myArrx})
-              scope.setState({originalArr: myArrx})
-              console.log(scope.state.myArrx)
-          })
-        })
+    var scope = this;
+    firebaseDB.ref().child('complaints').on('value',
+    function(snapshot) {
+      scope.setState({fetching: false})
+      snapshot.forEach(function(child) {
+        scope.setState({fetching: false})
+          const {tempArr} = scope.state
+          const {resolvedTempArr} = scope.state
+          const {unresolvedTempArr} = scope.state
+          if(child.val().isResolved==true) {
+            resolvedTempArr[child.key] = child.val()
+            resolvedTempArr[child.key].key = child.key
+          } else {
+            unresolvedTempArr[child.key] = child.val()
+            unresolvedTempArr[child.key].key = child.key
+          }
+          tempArr[child.key] = child.val()
+          tempArr[child.key].key = child.key
+          scope.setState({tempArr})
+          scope.setState({originalArr: tempArr})
+          scope.setState({resolvedArr: resolvedTempArr})
+          scope.setState({unresolvedArr: unresolvedTempArr})
+          // console.log("*********************")
+          // console.log(scope.state.tempArr)
+      })
+    })
+  }
+
+  filterState(state) {
+    switch(state) {
+      case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); return;}
+      case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); return;}
+      case 'all': {let originalArr = this.state.originalArr; this.setState({tempArr: originalArr}); return;}
+    }
   }
 
   render() {
@@ -134,7 +157,7 @@ class ViewComplaintsComponent extends Component {
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
       <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer />
+        <SearchSortContainer filterState={this.filterState}/>
       </div>
 
       {this.state.currentComplaint && 
@@ -176,7 +199,7 @@ class ViewComplaintsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
-          { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(complaint, index) {
+          { Object.keys(this.state.tempArr).length > 0 ? (Object.values(this.state.tempArr).map(function(complaint, index) {
               return (
                   <TableRow key={index}>
                     <TableRowColumn style={{width: '18%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
@@ -185,7 +208,7 @@ class ViewComplaintsComponent extends Component {
                     <TableRowColumn style={{width: '35%'}}>{complaint.desc}</TableRowColumn>
                     <TableRowColumn style={{width: '20%'}}>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(complaint)}/></div>}</TableRowColumn>
                   </TableRow>
-            )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
+            )}, this)) : <TableRow><TableRowColumn style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</TableRowColumn></TableRow>
           }
           
           </TableBody>
