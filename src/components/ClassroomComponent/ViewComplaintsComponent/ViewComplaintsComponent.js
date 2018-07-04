@@ -38,6 +38,7 @@ class ViewComplaintsComponent extends Component {
     this.handleSort = this.handleSort.bind(this);
     this.resolveComplaint = this.resolveComplaint.bind(this);
     this.filterState = this.filterState.bind(this);
+    this.setUpArray = this.setUpArray.bind(this);
     
     this.state = {
       fixedHeader: true,
@@ -55,6 +56,7 @@ class ViewComplaintsComponent extends Component {
       FlagDialogOpen: false,
       currentComplaint: null,
       dateSort: null,
+      filterChoice: 'all',
     }
   }
 
@@ -69,6 +71,7 @@ class ViewComplaintsComponent extends Component {
 
   resolveComplaint(complaint, mode) {
     firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(mode);
+    this.filterState(this.state.filterChoice);
     this.nextComplaint();
     const {dispatch} = this.props
     dispatch(toggleActions.toggleToaster(mode ? "Compaint marked Resolved" : "Compaint marked Unresolved", true))
@@ -114,6 +117,10 @@ class ViewComplaintsComponent extends Component {
       hashHistory.push('/dashboard')
       return
     }
+    this.setUpArray();
+  }
+
+  setUpArray() {
     this.setState({fetching: true})
     var scope = this;
     firebaseDB.ref().child('complaints').on('value',
@@ -144,6 +151,8 @@ class ViewComplaintsComponent extends Component {
   }
 
   filterState(state) {
+    this.setState({filterChoice: state})
+    this.setUpArray();
     switch(state) {
       case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); return;}
       case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); return;}
