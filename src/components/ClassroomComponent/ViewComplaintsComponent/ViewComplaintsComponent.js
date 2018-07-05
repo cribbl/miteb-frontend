@@ -35,9 +35,10 @@ class ViewComplaintsComponent extends Component {
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.handleFlagDialogClose = this.handleFlagDialogClose.bind(this)
     this.nextComplaint = this.nextComplaint.bind(this)
-    this.handleSort = this.handleSort.bind(this);
-    this.resolveComplaint = this.resolveComplaint.bind(this);
-    this.filterState = this.filterState.bind(this);
+    this.handleSort = this.handleSort.bind(this)
+    this.resolveComplaint = this.resolveComplaint.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
+    this.filterState = this.filterState.bind(this)
     
     this.state = {
       fixedHeader: true,
@@ -114,6 +115,12 @@ class ViewComplaintsComponent extends Component {
     this.setState({currentComplaint: nextComplaint})
   }
 
+  handleSearch(content) {
+    var tempArr = this.state.originalArr;
+    tempArr = Object.values(tempArr).filter(_complaint => _complaint.desc.toLowerCase().includes(content.toLowerCase()));
+    this.setState({tempArr:tempArr})
+  }
+
   handleSort() {
     if(this.state.dateSort === 'des')
       this.setState({dateSort: 'asc'})
@@ -179,7 +186,7 @@ class ViewComplaintsComponent extends Component {
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
       <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer filterState={this.filterState}/>
+        <SearchSortContainer filterState={this.filterState} search={this.handleSearch}/>
       </div>
 
       {this.state.currentComplaint && 
