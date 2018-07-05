@@ -38,7 +38,6 @@ class ViewComplaintsComponent extends Component {
     this.handleSort = this.handleSort.bind(this);
     this.resolveComplaint = this.resolveComplaint.bind(this);
     this.filterState = this.filterState.bind(this);
-    this.setUpArray = this.setUpArray.bind(this);
     
     this.state = {
       fixedHeader: true,
@@ -50,8 +49,6 @@ class ViewComplaintsComponent extends Component {
       unresolvedArr: {},
       originalArr: {},
       tempArr: {},
-      resolvedTempArr: {},
-      unresolvedTempArr: {},
       dialogOpen: false,
       FlagDialogOpen: false,
       currentComplaint: null,
@@ -71,10 +68,33 @@ class ViewComplaintsComponent extends Component {
 
   resolveComplaint(complaint, mode) {
     firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(mode);
+    if(this.state.filterChoice=='resolved') {
+      var resolvedArr = this.state.resolvedArr;
+      delete resolvedArr[complaint.key];
+      this.setState({resolvedArr:resolvedArr});
+    } else if(this.state.filterChoice=='unresolved') {
+      var unresolvedArr = this.state.unresolvedArr;
+      delete unresolvedArr[complaint.key];
+      this.setState({unresolvedArr: unresolvedArr});
+    } else {
+      if(complaint.isResolved==false) { 
+        var unresolvedArr = this.state.unresolvedArr;
+        delete unresolvedArr[complaint.key];
+        console.log("unresolved array is");
+        console.log(unresolvedArr);
+        this.setState({unresolvedArr: unresolvedArr});
+      } else {
+        var resolvedArr = this.state.resolvedArr;
+        delete resolvedArr[complaint.key];
+        console.log("resolved array is");
+        console.log(resolvedArr);
+        this.setState({resolvedArr:resolvedArr});
+      }
+    }
     this.filterState(this.state.filterChoice);
     this.nextComplaint();
     const {dispatch} = this.props
-    dispatch(toggleActions.toggleToaster(mode ? "Compaint marked Resolved" : "Compaint marked Unresolved", true))
+    dispatch(toggleActions.toggleToaster(mode ? "Complaint marked Resolved" : "Complaint marked Unresolved", true))
   }
 
   handleFlagDialogClose() { this.setState({FlagDialogOpen: false}) }
@@ -117,42 +137,35 @@ class ViewComplaintsComponent extends Component {
       hashHistory.push('/dashboard')
       return
     }
-    this.setUpArray();
-  }
-
-  setUpArray() {
     this.setState({fetching: true})
     var scope = this;
+    var tempArr = scope.state.tempArr
+    var resolvedArr = scope.state.resolvedArr
+    var unresolvedArr = scope.state.unresolvedArr
     firebaseDB.ref().child('complaints').on('value',
     function(snapshot) {
       scope.setState({fetching: false})
       snapshot.forEach(function(child) {
         scope.setState({fetching: false})
-          const {tempArr} = scope.state
-          const {resolvedTempArr} = scope.state
-          const {unresolvedTempArr} = scope.state
           if(child.val().isResolved==true) {
-            resolvedTempArr[child.key] = child.val()
-            resolvedTempArr[child.key].key = child.key
+            resolvedArr[child.key] = child.val()
+            resolvedArr[child.key].key = child.key
           } else {
-            unresolvedTempArr[child.key] = child.val()
-            unresolvedTempArr[child.key].key = child.key
+            unresolvedArr[child.key] = child.val()
+            unresolvedArr[child.key].key = child.key
           }
           tempArr[child.key] = child.val()
           tempArr[child.key].key = child.key
           scope.setState({tempArr})
           scope.setState({originalArr: tempArr})
-          scope.setState({resolvedArr: resolvedTempArr})
-          scope.setState({unresolvedArr: unresolvedTempArr})
-          // console.log("*********************")
-          // console.log(scope.state.tempArr)
+          scope.setState({resolvedArr: resolvedArr})
+          scope.setState({unresolvedArr: unresolvedArr})
       })
     })
   }
 
   filterState(state) {
     this.setState({filterChoice: state})
-    this.setUpArray();
     switch(state) {
       case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); return;}
       case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); return;}
