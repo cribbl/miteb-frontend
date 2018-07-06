@@ -1,25 +1,20 @@
 {
-  "name": "cognito-test",
+  "name": "CribblPortal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "amazon-cognito-identity-js": "^1.16.0",
-    "aws-sdk": "^2.36.0",
     "axios": "^0.17.1",
     "firebase": "^4.13.1",
     "history": "^4.7.2",
     "material-ui": "^0.20.0",
     "material-ui-datatables": "^0.18.2",
-    "material-ui-password-field": "^2.0.1",
     "moment": "^2.19.4",
     "react": "^15.4.2",
     "react-collapsible": "^2.0.3",
     "react-dom": "^15.4.2",
     "react-loading": "^1.0.3",
     "react-moment": "^0.6.8",
-    "react-phone-number-input": "^1.1.6",
     "react-redux": "^5.0.6",
-    "react-responsive-carousel": "^3.1.30",
     "react-router": "^3.0.5",
     "react-router-dom": "^4.2.2",
     "react-tooltip": "^3.4.0",
@@ -32,9 +27,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "deploy": "npm run build && git add build && git commit -m 'pushing build' && git subtree push --prefix build origin gh-pages"
+    "build": "react-scripts build"
   }
 }
