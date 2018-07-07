@@ -38,6 +38,7 @@ class ViewComplaintsComponent extends Component {
     this.handleSort = this.handleSort.bind(this)
     this.resolveComplaint = this.resolveComplaint.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.handleSort = this.handleSort.bind(this)
     this.filterState = this.filterState.bind(this)
     
     this.state = {
@@ -65,6 +66,24 @@ class ViewComplaintsComponent extends Component {
   
   handleDialogClose() {
     this.setState({dialogOpen: false})
+  }
+
+  handleSort() {
+    if(this.state.dateSort === 'des')
+      this.setState({dateSort: 'asc'})
+    else
+      this.setState({dateSort: 'des'})
+    var scope = this
+    var tempArr = this.state.originalArr
+    tempArr = Object.values(tempArr).sort(function(a, b)
+      { 
+        var aDate = moment(a.start_date, 'DD-MM-YYYY');
+        var bDate = moment(b.start_date, 'DD-MM-YYYY');
+        if(scope.state.dateSort === 'des')
+          return (aDate - bDate);
+        return (bDate - aDate);
+      });
+    this.setState({tempArr})
   }
 
   resolveComplaint(complaint, mode) {
@@ -116,7 +135,10 @@ class ViewComplaintsComponent extends Component {
   }
 
   handleSearch(content) {
-    var tempArr = this.state.originalArr;
+    var tempArr;
+    if(this.state.filterChoice=='resolved')tempArr=this.state.resolvedArr;
+    else if(this.state.filterChoice=='unresolved')tempArr=this.state.unresolvedArr;
+    else tempArr=this.state.originalArr;
     tempArr = Object.values(tempArr).filter(_complaint => _complaint.desc.toLowerCase().includes(content.toLowerCase()));
     this.setState({tempArr:tempArr})
   }
@@ -127,11 +149,14 @@ class ViewComplaintsComponent extends Component {
     else
       this.setState({dateSort: 'des'})
     var scope = this
-    var tempArr = this.state.originalArr
+    var tempArr;
+    if(this.state.filterChoice=='resolved')tempArr=this.state.resolvedArr;
+    else if(this.state.filterChoice=='unresolved')tempArr=this.state.unresolvedArr;
+    else tempArr=this.state.originalArr;
     tempArr = Object.values(tempArr).sort(function(a, b)
       { 
-        var aDate = moment(a.start_date, 'DD-MM-YYYY');
-        var bDate = moment(b.start_date, 'DD-MM-YYYY');
+        var aDate = moment(a.dated, 'DD-MM-YYYY');
+        var bDate = moment(b.dated, 'DD-MM-YYYY');
         if(scope.state.dateSort === 'des')
           return (aDate - bDate);
         return (bDate - aDate);

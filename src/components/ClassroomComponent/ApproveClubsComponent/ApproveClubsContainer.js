@@ -60,11 +60,11 @@ class ApproveClubsContainer extends Component {
 
 
 	handleSearch(content) {
-    this.setState({searchContent: content});
-    var allClubs = this.state.originalArr;
-    allClubs = Object.values(allClubs).filter(_club => _club.name.toLowerCase().includes(content.toLowerCase()));
-    this.setState({allClubs})
-  }
+	    this.setState({searchContent: content});
+	    var allClubs = this.state.originalArr;
+	    allClubs = Object.values(allClubs).filter(_club => _club.name.toLowerCase().includes(content.toLowerCase()));
+	    this.setState({allClubs})
+	}
 
 	toggleApprovalStatus(club, status) {
 		console.log(club);
