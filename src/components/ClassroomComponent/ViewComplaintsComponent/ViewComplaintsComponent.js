@@ -9,11 +9,15 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import CircularProgress from 'material-ui/CircularProgress'
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
-import IconButton from 'material-ui/IconButton'
+// import IconButton from 'material-ui/IconButton'
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
@@ -232,16 +236,16 @@ class ViewComplaintsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '18%'}}>Status</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '15%'}}>Subject</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '10%'}}>Status</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'20%':'30%'}}>Subject</TableHeaderColumn>
               <TableHeaderColumn
-                style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '15%'}}
+                style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '20%'}}
                 hidden={this.props.isMobile}>
                 Dated
                 <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
               </TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '35%'}}>Description</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '20%'}}>Actions</TableHeaderColumn>
+              <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700, width: '30%'}}>Description</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'20%':'10%'}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -256,11 +260,20 @@ class ViewComplaintsComponent extends Component {
           { Object.keys(this.state.tempArr).length > 0 ? (Object.values(this.state.tempArr).map(function(complaint, index) {
               return (
                   <TableRow key={index}>
-                    <TableRowColumn style={{width: '18%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
-                    <TableRowColumn style={{width: '15%'}}>{complaint.subject}</TableRowColumn>
-                    <TableRowColumn style={{width: '15%'}}>{complaint.dated}</TableRowColumn>
-                    <TableRowColumn style={{width: '35%'}}>{complaint.desc}</TableRowColumn>
-                    <TableRowColumn style={{width: '20%'}}>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(complaint)}/></div>}</TableRowColumn>
+                    <TableRowColumn style={{width: '10%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'20%':'30%'}}>{complaint.subject}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{complaint.dated}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'20%':'10%'}}>
+                      {<IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      >
+                      <MenuItem primaryText="View" onClick={() => this.showDialog(complaint)}/>
+                      <MenuItem primaryText={complaint.isResolved ? "Mark as Unresolved" : "Mark as Resolved"} onClick={() => this.resolveComplaint(complaint, !complaint.isResolved)}/>
+                      </IconMenu>}
+                    </TableRowColumn>
                   </TableRow>
             )}, this)) : <TableRow><TableRowColumn style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</TableRowColumn></TableRow>
           }
@@ -287,3 +300,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(ViewComplaintsComponent)
+
