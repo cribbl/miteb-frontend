@@ -42,8 +42,8 @@ class SearchSortContainer extends Component{
           <ToolbarGroup>
             <TextField
               floatingLabelText="Search"
-              onChange={this.handleSearch
-              }
+              onChange={this.handleSearch}
+              style={{marginBottom: 15}}
             />
           </ToolbarGroup>
           : '' }

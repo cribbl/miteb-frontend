@@ -37,9 +37,7 @@ class ViewComplaintsComponent extends Component {
     super(props)
     this.showDialog = this.showDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
-    this.handleFlagDialogClose = this.handleFlagDialogClose.bind(this)
     this.nextComplaint = this.nextComplaint.bind(this)
-    this.handleSort = this.handleSort.bind(this)
     this.resolveComplaint = this.resolveComplaint.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleSort = this.handleSort.bind(this)
@@ -78,11 +76,18 @@ class ViewComplaintsComponent extends Component {
     else
       this.setState({dateSort: 'des'})
     var scope = this
-    var tempArr = this.state.originalArr
+    var tempArr;
+    if(this.state.filterChoice=='resolved')
+      tempArr=this.state.resolvedArr;
+    else if(this.state.filterChoice=='unresolved')
+      tempArr=this.state.unresolvedArr;
+    else
+      tempArr=this.state.originalArr;
+
     tempArr = Object.values(tempArr).sort(function(a, b)
       { 
-        var aDate = moment(a.start_date, 'DD-MM-YYYY');
-        var bDate = moment(b.start_date, 'DD-MM-YYYY');
+        var aDate = moment(a.dated, 'DD-MM-YYYY');
+        var bDate = moment(b.dated, 'DD-MM-YYYY');
         if(scope.state.dateSort === 'des')
           return (aDate - bDate);
         return (bDate - aDate);
@@ -121,8 +126,6 @@ class ViewComplaintsComponent extends Component {
     dispatch(toggleActions.toggleToaster(mode ? "Complaint marked Resolved" : "Complaint marked Unresolved", true))
   }
 
-  handleFlagDialogClose() { this.setState({FlagDialogOpen: false}) }
-
   nextComplaint() {
     let keys = Object.keys(this.state.tempArr)
     if(keys.length == 0){
@@ -140,32 +143,24 @@ class ViewComplaintsComponent extends Component {
 
   handleSearch(content) {
     var tempArr;
-    if(this.state.filterChoice=='resolved')tempArr=this.state.resolvedArr;
-    else if(this.state.filterChoice=='unresolved')tempArr=this.state.unresolvedArr;
-    else tempArr=this.state.originalArr;
-    tempArr = Object.values(tempArr).filter(_complaint => _complaint.desc.toLowerCase().includes(content.toLowerCase()));
+    if(this.state.filterChoice=='resolved')
+      tempArr=this.state.resolvedArr;
+    else if(this.state.filterChoice=='unresolved')
+      tempArr=this.state.unresolvedArr;
+    else
+      tempArr=this.state.originalArr;
+
+    tempArr = Object.values(tempArr).filter(_complaint => _complaint.subject.toLowerCase().includes(content.toLowerCase()));
     this.setState({tempArr:tempArr})
   }
 
-  handleSort() {
-    if(this.state.dateSort === 'des')
-      this.setState({dateSort: 'asc'})
-    else
-      this.setState({dateSort: 'des'})
-    var scope = this
-    var tempArr;
-    if(this.state.filterChoice=='resolved')tempArr=this.state.resolvedArr;
-    else if(this.state.filterChoice=='unresolved')tempArr=this.state.unresolvedArr;
-    else tempArr=this.state.originalArr;
-    tempArr = Object.values(tempArr).sort(function(a, b)
-      { 
-        var aDate = moment(a.dated, 'DD-MM-YYYY');
-        var bDate = moment(b.dated, 'DD-MM-YYYY');
-        if(scope.state.dateSort === 'des')
-          return (aDate - bDate);
-        return (bDate - aDate);
-      });
-    this.setState({tempArr})
+  filterState(state) {
+    this.setState({filterChoice: state, dateSort: null})
+    switch(state) {
+      case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); return;}
+      case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); return;}
+      case 'all': {let originalArr = this.state.originalArr; this.setState({tempArr: originalArr}); return;}
+    }
   }
 
   componentDidMount() {
@@ -200,14 +195,6 @@ class ViewComplaintsComponent extends Component {
     })
   }
 
-  filterState(state) {
-    this.setState({filterChoice: state})
-    switch(state) {
-      case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); return;}
-      case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); return;}
-      case 'all': {let originalArr = this.state.originalArr; this.setState({tempArr: originalArr}); return;}
-    }
-  }
 
   render() {
 
@@ -237,7 +224,7 @@ class ViewComplaintsComponent extends Component {
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '10%'}}>Status</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'20%':'30%'}}>Subject</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '30%'}}>Subject</TableHeaderColumn>
               <TableHeaderColumn
                 style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '20%'}}
                 hidden={this.props.isMobile}>
@@ -261,7 +248,7 @@ class ViewComplaintsComponent extends Component {
               return (
                   <TableRow key={index}>
                     <TableRowColumn style={{width: '10%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
-                    <TableRowColumn style={{width: this.props.isMobile?'20%':'30%'}}>{complaint.subject}</TableRowColumn>
+                    <TableRowColumn style={{width: '30%'}}>{complaint.subject}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{complaint.dated}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'20%':'10%'}}>
@@ -269,6 +256,7 @@ class ViewComplaintsComponent extends Component {
                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      useLayerForClickAway={true}
                       >
                       <MenuItem primaryText="View" onClick={() => this.showDialog(complaint)}/>
                       <MenuItem primaryText={complaint.isResolved ? "Mark as Unresolved" : "Mark as Resolved"} onClick={() => this.resolveComplaint(complaint, !complaint.isResolved)}/>
