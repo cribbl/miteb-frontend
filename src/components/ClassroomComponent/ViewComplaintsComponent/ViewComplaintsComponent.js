@@ -215,7 +215,7 @@ class ViewComplaintsComponent extends Component {
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
       <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer filterState={this.filterState} search={this.handleSearch}/>
+        <SearchSortContainer allLength={Object.keys(this.state.originalArr).length} resolvedLength={Object.keys(this.state.resolvedArr).length} unresolvedLength={Object.keys(this.state.unresolvedArr).length} filterState={this.filterState} search={this.handleSearch}/>
       </div>
 
       {this.state.currentComplaint && 
