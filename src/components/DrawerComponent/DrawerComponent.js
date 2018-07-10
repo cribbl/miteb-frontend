@@ -99,6 +99,11 @@ class DrawerComponent extends Component {
                 key="/dashboard/myEvents"
                 primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
+            <MenuItem 
+                style = {Object.assign(this.state.activeItem === '/dashboard/myPublicity'? active: '', menuItemStyle)}
+                key = "/dashboard/myPublicity"
+                primaryText = "Publicity Requests"
+                leftIcon = {<IconAnalytics color = {'#FFFFFF'} />} />
             <MenuItem
                 style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active:'', menuItemStyle)}
                 key="/dashboard/profile"

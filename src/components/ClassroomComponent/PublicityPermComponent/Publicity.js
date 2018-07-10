@@ -88,13 +88,31 @@ class PublicityComponent extends React.Component {
   };
   handleSubmit() {
     var result = this.parseMediums();
-    var obj = Object.assign({},this.state.booker_fields,this.state.event_fields,result);
+    var newData = {
+      "AD_appr":"NA",
+      "FA_appr":"pending",
+      "SO_appr":"NA",
+      "clubName": this.props.user.name,
+      "clubID": localStorage.getItem('clubID'),
+      "FA_name": this.props.user.fa.name
+    }
+    var obj = Object.assign({},this.state.booker_fields,this.state.event_fields,result,newData);
     console.log('obj = ',obj);
-
-
-  //  var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
-   
-}
+    var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
+    var key = myRef.key;
+    var scope = this;
+    firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_publicity/').push(key,
+      function(res, err) {
+        if(err)
+          console.log("couldn't be booked ", err);
+        else {
+         // sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
+          //scope.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true, fields: {}})
+          scope.setState({finished: true})
+        }
+      });
+      
+  }
 
   parseMediums(){
    var arrChecked = this.state.checked;
@@ -162,7 +180,6 @@ class PublicityComponent extends React.Component {
     this.setState({
       indexes: toggle
     })
-    console.log('toggle = ',toggle);
   }
   getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -206,7 +223,7 @@ class PublicityComponent extends React.Component {
         </Stepper>
           <div  style={{backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}} >
           {finished ? (
-            <p>
+            <p> Sit back and relax! You will be informed about the status of your request shortly.
               <a
                 href="#"
                 onClick={(event) => {
@@ -215,7 +232,7 @@ class PublicityComponent extends React.Component {
                 }}
               >
                 Click here
-              </a> to reset the example.
+              </a>  to book again! 
             </p>
           ) : ( 
                 <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
