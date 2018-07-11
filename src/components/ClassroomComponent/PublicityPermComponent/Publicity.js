@@ -21,7 +21,7 @@ import {connect} from 'react-redux';
 import {List,ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import MediumContainer from './MediumContainer';
-import LocationContainer from './LocationContainer';
+//import LocationContainer from './LocationContainer';
 import BookerContainer from './BookerContainer';
 import EventContainer from './EventContainer';
 //import Snackbar from 'material-ui/Snackbar';
@@ -190,11 +190,7 @@ class PublicityComponent extends React.Component {
       case 2:
         return  (<div style={{display: 'flex', flexDirection: 'row',justifyContent:'center'}}>
               <Paper style={{ marginRight:20}}> 
-                 <MediumContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} />
-              </Paper>
-
-              <Paper>
-                  <LocationContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />
+                 <MediumContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />
               </Paper>
           </div>);
       default:

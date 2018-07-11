@@ -117,7 +117,7 @@ class EventContainer extends React.Component {
       var self=this;
 			return (
     		<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <Subheader> Publicity Dates </Subheader>
+        <h6> Publicity Dates </h6>
             <DatePicker
               floatingLabelText="Start Date"
               mode={this.props.isMobile ? 'portrait' : 'landscape'}
@@ -148,7 +148,8 @@ class EventContainer extends React.Component {
               shouldDisableDate={this.shouldDisableDate}
               required
             />
-          <Subheader> Event Details </Subheader>
+          <br/>
+          <h6> Event Details </h6>
           <TextField 
             floatingLabelText="Title *"
             key={1}
