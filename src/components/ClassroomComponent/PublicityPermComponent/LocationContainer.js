@@ -110,7 +110,6 @@ class LocationContainer extends React.Component {
   	}
 	}
   handleToggle(s,i){
-  	debugger
    let indexes = this.state.indexes;
     (indexes[s])[i]=!(indexes[s])[i];
     this.setState({indexes});
