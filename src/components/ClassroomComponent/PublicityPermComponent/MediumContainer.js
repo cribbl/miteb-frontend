@@ -6,6 +6,7 @@ import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
 //import { Route , Link } from 'react-router';
 
 class MediumContainer extends React.Component {
@@ -59,9 +60,9 @@ class MediumContainer extends React.Component {
     var medium = this.state.object[value];
     var steps = ["Academic Blocks", "First Year Hostel Blocks", "Senior Hostel Blocks","Mess"]
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
-      return (<div style={{minWidth:500}}>
+      return (<div>
         <Card>
-        <CardText expandable={this.state.clickedValue}>
+        <CardText expandable={false}>
          <List>
          <Subheader> {medium} </Subheader>
                 {steps.map((step,index) =>  {
@@ -77,9 +78,9 @@ class MediumContainer extends React.Component {
 
    render() {
 			return (
-    		<div style={{width: '100%',minHeight:400,justifyContent:'space-around',display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
-          <div style={{minWidth:300}}>
-          <Card style={{height:'100%',alignSelf:'left'}}>
+    		<div style={{display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
+        <div style = {{width: '100%',minHeight: 400,alignItems: 'center'}}>
+          <Paper style={{height:'100%'}}>
     			  <List>
               <Subheader> Media </Subheader>
                <div style={{display:'flex', flexDirection: 'row'}}>
@@ -87,7 +88,6 @@ class MediumContainer extends React.Component {
                  <ListItem
                     onClick={this.handleClick.bind(this,0)}
                     primaryText="Banner"
-                    secondaryText=""
                   />
                </div>
                 <Divider />
@@ -96,8 +96,7 @@ class MediumContainer extends React.Component {
                   <ListItem
                     onClick={this.handleClick.bind(this,1)}
                     primaryText="InfoDesk"
-                    secondaryText=""
-                  />
+                   />
                 </div>
                 <Divider />
                 <div style={{display:'flex', flexDirection: 'row'}}>
@@ -105,7 +104,6 @@ class MediumContainer extends React.Component {
                   <ListItem
                     onClick={this.handleClick.bind(this,2)}
                     primaryText="Digital Board"
-                    secondaryText=""
                   />
                 </div>
                 <Divider />
@@ -114,13 +112,12 @@ class MediumContainer extends React.Component {
                    <ListItem
                     onClick={this.handleClick.bind(this,3)}
                     primaryText="Poster"
-                    secondaryText=""
                   />
                 </div>
             </List>  
-            </Card> 		
+	         </Paper>
           </div>
-          <div style={{marginLeft:10}}>
+          <div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
         {this.state.clicked && this.renderCard()}
         </div>
       </div> 
