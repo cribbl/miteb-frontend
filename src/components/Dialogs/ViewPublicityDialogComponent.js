@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from 'react-redux'
 
 const styles = {
@@ -23,57 +22,18 @@ class Dialogxx extends Component {
   constructor(props){
     super(props)
     this.state = {
-      open: this.props.open,
+      open: this.props.open
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     this.setState({open: nextProps.open})
   }
-  renderInfodesk(InfoDesk){
-    debugger
-    console.log(InfoDesk);
-    if(InfoDesk){
+  renderLocation(location){
+    if(location){
       return (<div>
       {
-        Object.keys(InfoDesk).map((key, index) => ( 
-          <p key={index}> {key} </p> 
-        ))
-      }
-    </div>)
-    }
-    else return <div> </div>
-  }
-  renderDigitalBoard(digitalboard){
-    if(digitalboard){
-     return (<div>
-      {
-        Object.keys(digitalboard).map((key, index) => ( 
-          <p key={index}> {key} </p> 
-        ))
-      }
-    </div>)
-    }
-    else return <div> </div>
-  }
-  renderPoster(poster){
-    if(poster){
-     return (<div>
-      {
-        Object.keys(poster).map((key, index) => ( 
-          <p key={index}> {key} </p> 
-        ))
-      }
-    </div>)
-    }
-    else return <div> </div>
-  }
-  renderBanner(banner){
-    if(banner){
-     return (<div>
-      {
-        Object.keys(banner).map((key, index) => ( 
+        Object.keys(location).map((key, index) => ( 
           <p key={index}> {key} </p> 
         ))
       }
@@ -156,21 +116,21 @@ class Dialogxx extends Component {
 
           <div hidden={!(this.props.currentEvent.Poster)} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Poster</p>
-            <p style={styles.value}>{this.renderPoster(this.props.currentEvent.Poster)} </p>
+            <p style={styles.value}>{this.renderLocation(this.props.currentEvent.Poster)} </p>
           </div>
 
-          <div hidden={!(this.props.currentEvent.DigitalBoard)} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+          <div hidden={!(this.props.currentEvent['Digital Board'])} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Digital Board</p>
-            <p style={styles.value}>{this.renderDigitalBoard(this.props.currentEvent.DigitalBoard)} </p>
+            <p style={styles.value}>{this.renderLocation(this.props.currentEvent['Digital Board'])} </p>
           </div>
 
           <div hidden={!(this.props.currentEvent.InfoDesk)} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>InfoDesk</p>
-            <p style={styles.value}>{this.renderInfodesk(this.props.currentEvent.InfoDesk)} </p>
+            <p style={styles.value}>{this.renderLocation(this.props.currentEvent.InfoDesk)} </p>
           </div>
           <div hidden={!(this.props.currentEvent.Banner)} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Banner</p>
-            <p style={styles.value}>{this.renderBanner(this.props.currentEvent.Banner)} </p>
+            <p style={styles.value}>{this.renderLocation(this.props.currentEvent.Banner)} </p>
           </div>
 
 

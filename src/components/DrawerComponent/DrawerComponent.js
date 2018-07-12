@@ -93,7 +93,11 @@ class DrawerComponent extends Component {
                 primaryText="Room Booking"
                 leftIcon={<IconTest color={'#FFFFFF'} />}
                 hidden={this.props.user && !this.props.user.isClub} />
-
+            <MenuItem 
+                style = {Object.assign(this.state.activeItem === '/dashboard/publicity_perm'? active: '', menuItemStyle)}
+                key = "/dashboard/publicity_perm"
+                primaryText = "Publicity Permission"
+                leftIcon = {<IconPublicity color = {'#FFFFFF'} />} />
             <MenuItem
                 style={Object.assign(this.state.activeItem === '/dashboard/myEvents' ? active:'', menuItemStyle)}
                 key="/dashboard/myEvents"
@@ -109,11 +113,7 @@ class DrawerComponent extends Component {
                 key="/dashboard/profile"
                 primaryText="Profile"
                 leftIcon={<IconProfile color={'#FFFFFF'} />} />
-            <MenuItem 
-                style = {Object.assign(this.state.activeItem === '/dashboard/publicity_perm'? active: '', menuItemStyle)}
-                key = "/dashboard/publicity_perm"
-                primaryText = "Publicity Permission"
-                leftIcon = {<IconPublicity color = {'#FFFFFF'} />} />
+
           </Menu>
         </Drawer>
       </div>
