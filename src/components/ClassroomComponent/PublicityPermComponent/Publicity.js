@@ -244,6 +244,7 @@ class PublicityComponent extends React.Component {
           ) : ( 
                 <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
                   <div>{this.getStepContent(this.state.stepIndex)}</div>
+                  <br/>
                   <div style={{marginBottom:20}}>
                     <FlatButton
                       label="Back"
