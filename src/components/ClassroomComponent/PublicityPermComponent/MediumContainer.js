@@ -79,7 +79,7 @@ class MediumContainer extends React.Component {
    render() {
 			return (
     		<div style={{display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
-        <div style = {{width: '100%',minHeight: 400,alignItems: 'center'}}>
+        <div style = {{width: '100%',minHeight: 300,alignItems: 'center'}}>
           <Paper style={{height:'100%'}}>
     			  <List>
               <Subheader> Media </Subheader>
