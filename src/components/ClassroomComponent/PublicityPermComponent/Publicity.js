@@ -193,9 +193,9 @@ class PublicityComponent extends React.Component {
         return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
         return  (<div>
-              <Paper> 
+               
                  <MediumContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />
-              </Paper>
+              
           </div>);
       default:
         return '';
@@ -205,8 +205,6 @@ class PublicityComponent extends React.Component {
 		render() {
       var stepIndex=this.state.stepIndex;
       var finished=this.state.finished;
-      console.log('this.state.stepIndex=',this.state.stepIndex)
-      console.log('this.state.isFormValid',this.state.isFormValid)
 			return (
      <div>
         <Paper style={{width: this.props.isMobile? '98%':'90%' , height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%'}} zDepth={3}>
