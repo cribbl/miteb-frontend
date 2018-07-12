@@ -193,9 +193,7 @@ class PublicityComponent extends React.Component {
         return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
         return  (<div>
-               
-                 <MediumContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />
-              
+                 <MediumContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />      
           </div>);
       default:
         return '';
