@@ -56,7 +56,6 @@ class MediumContainer extends React.Component {
   renderCard() {
     var value = this.state.clickedValue;
     var clicked = value || value === 0? true : false;
-    console.log('clicked',clicked);
     var medium = this.state.object[value];
     var steps = ["Academic Blocks", "First Year Hostel Blocks", "Senior Hostel Blocks","Mess"]
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
@@ -117,7 +116,7 @@ class MediumContainer extends React.Component {
             </List>  
 	         </Paper>
           </div>
-          <div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
+          <div style={{width: '100%',minHeight:400,justifyContent:'center',position:'relative'}}>
         {this.state.clicked && this.renderCard()}
         </div>
       </div> 
