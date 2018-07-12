@@ -5,13 +5,11 @@ import {
   StepLabel,
 } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
-//import { Route , Link } from 'react-router';
+import { Route , Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
@@ -21,18 +19,16 @@ import {connect} from 'react-redux';
 import {List,ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import MediumContainer from './MediumContainer';
-//import LocationContainer from './LocationContainer';
 import BookerContainer from './BookerContainer';
 import EventContainer from './EventContainer';
-//import Snackbar from 'material-ui/Snackbar';
-//import moment from 'moment'
-//import {fetchRooms, updateDates, getDisabledDates} from '../../../Services/firebaseDBService'
-//import {sendPush} from '../../../Services/NotificationService'
+import Snackbar from 'material-ui/Snackbar';
+import moment from 'moment'
+import {sendPush} from '../../../Services/NotificationService'
 
 class PublicityComponent extends React.Component {
 	constructor(props){
 		super(props);
-
+    this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
 		this.state =  {
       checked: [true,false,false,false],
       index: 0,
@@ -51,7 +47,10 @@ class PublicityComponent extends React.Component {
         start_date: null,
         end_date: null
       },
-      indexes: []
+      indexes: [],
+      SnackBarmessage: '',
+      openSnackBar: false,
+      autoHideDuration: 3000,
 		}
 	};
     componentWillMount(){
@@ -86,6 +85,11 @@ class PublicityComponent extends React.Component {
       this.setState({stepIndex: stepIndex - 1,isFormValid:true});
     }
   };
+
+  handleSnackBarClose() {
+    this.setState({openSnackBar: false}) 
+  }
+
   handleSubmit() {
     var result = this.parseMediums();
     var newData = {
@@ -96,7 +100,10 @@ class PublicityComponent extends React.Component {
       "clubID": localStorage.getItem('clubID'),
       "FA_name": this.props.user.fa.name
     }
-    var obj = Object.assign({},this.state.booker_fields,this.state.event_fields,result,newData);
+    var booker_fields={
+      'booker_fields':this.state.booker_fields
+    }
+    var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
     console.log('obj = ',obj);
     var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
     var key = myRef.key;
@@ -106,8 +113,8 @@ class PublicityComponent extends React.Component {
         if(err)
           console.log("couldn't be booked ", err);
         else {
-         // sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
-          //scope.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true, fields: {}})
+          sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
+          scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
           scope.setState({finished: true})
         }
       });
@@ -119,8 +126,6 @@ class PublicityComponent extends React.Component {
    var array = ['academicBlocks', 'Hostel', 'seniorHostel','Mess']
    var arrayObj = this.state.indexes;
    var newObj = [];
-
-
    for (var item in arrayObj) {
     var Data = {};
     for (var a in array) {
@@ -174,7 +179,6 @@ class PublicityComponent extends React.Component {
     this.setState({
       event_fields:fields
     })
-    console.log('event fields=',this.state.event_fields)
   }
   updateToggle(toggle){
     this.setState({
@@ -188,8 +192,8 @@ class PublicityComponent extends React.Component {
       case 1:
         return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
-        return  (<div style={{display: 'flex', flexDirection: 'row',justifyContent:'center'}}>
-              <Paper style={{ marginRight:20}}> 
+        return  (<div>
+              <Paper> 
                  <MediumContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />
               </Paper>
           </div>);
@@ -219,17 +223,26 @@ class PublicityComponent extends React.Component {
         </Stepper>
           <div  style={{backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}} >
           {finished ? (
-            <p> Sit back and relax! You will be informed about the status of your request shortly.
-              <a
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
-                  this.setState({stepIndex: 0, finished: false});
-                }}
-              >
-                Click here
-              </a>  to book again! 
-            </p>
+              <div>
+                <div>
+                  Sit back and relax! Your event titled '{this.state.event_fields.title}' has been sent for approvals from the 
+                  authorities concerned.
+                  You can track your application under 'Publicity Requests' and we'll notify you via email and sms.
+                </div>
+                <div style = {{marginTop: 20, marginBottom:20}}>
+                <Link to = "dashboard/myPublicity"><RaisedButton label="Publicity Requests" primary={true} style = {{marginRight: (this.props.isMobile?5:'10%')}} /></Link>
+                <Link to = "dashboard/publicity_perm"><RaisedButton label="Request Publicity Permissions"
+                  primary={true} onClick={(event) => {
+                    this.setState({stepIndex: 0, finished: false});
+                    }} /></Link>
+                </div>
+                <Snackbar
+                open={this.state.openSnackBar}
+                message={this.state.SnackBarmessage}
+                autoHideDuration={this.state.autoHideDuration}
+                onRequestClose={this.handleSnackBarClose}
+                />
+              </div>
           ) : ( 
                 <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
                   <div>{this.getStepContent(this.state.stepIndex)}</div>

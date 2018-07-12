@@ -42,7 +42,7 @@ class MediumContainer extends React.Component {
     this.setState({indexes});
     this.props.updateToggle(indexes);
   }
-    updateCheck(value){
+  updateCheck(value){
       var checked_array = this.state.checked;
       checked_array[value] = !checked_array[value];
       this.setState((oldState) => {
@@ -55,10 +55,11 @@ class MediumContainer extends React.Component {
   renderCard() {
     var value = this.state.clickedValue;
     var clicked = value || value === 0? true : false;
+    console.log('clicked',clicked);
     var medium = this.state.object[value];
     var steps = ["Academic Blocks", "First Year Hostel Blocks", "Senior Hostel Blocks","Mess"]
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
-      return (<div>
+      return (<div style={{minWidth:500}}>
         <Card>
         <CardText expandable={this.state.clickedValue}>
          <List>
@@ -77,7 +78,7 @@ class MediumContainer extends React.Component {
    render() {
 			return (
     		<div style={{width: '100%',minHeight:400,justifyContent:'center',minWidth:400,display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
-          <div style={{minWidth:250,marginRight: 10}}>
+          <div style={{minWidth:300}}>
     			  <List>
               <Subheader> Media </Subheader>
                <div style={{display:'flex', flexDirection: 'row'}}>

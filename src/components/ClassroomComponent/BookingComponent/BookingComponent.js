@@ -135,7 +135,6 @@ class HorizontalLinearStepper extends React.Component {
     let fields = this.state.fields;
     fields[field] = e.target.value;        
     this.setState({fields});
-
     this.handleValidation(this.state.stepIndex, field);
   };
 
