@@ -59,7 +59,7 @@ class MediumContainer extends React.Component {
     var medium = this.state.object[value];
     var steps = ["Academic Blocks", "First Year Hostel Blocks", "Senior Hostel Blocks","Mess"]
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
-      return (<div style={{minWidth:500,alignSelf:'right'}}>
+      return (<div style={{minWidth:500}}>
         <Card>
         <CardText expandable={this.state.clickedValue}>
          <List>
@@ -77,7 +77,7 @@ class MediumContainer extends React.Component {
 
    render() {
 			return (
-    		<div style={{width: '100%',minHeight:400,justifyContent:'center',minWidth:400,display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
+    		<div style={{width: '100%',minHeight:400,justifyContent:'space-around',display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
           <div style={{minWidth:300}}>
           <Card style={{height:'100%',alignSelf:'left'}}>
     			  <List>
