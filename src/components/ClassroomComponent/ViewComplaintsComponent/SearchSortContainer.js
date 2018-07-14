@@ -1,18 +1,22 @@
 import React, {Component} from 'react';
 import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
 import {connect} from 'react-redux'
-import TextField from 'material-ui/TextField';
+import TextField from 'material-ui/TextField'
+import ExportIcon from 'material-ui/svg-icons/file/cloud-download'
+import IconButton from 'material-ui/IconButton'
+import EventExportDialog from '../../Dialogs/EventExportDialog'
 import './SearchSortContainer.css';
 
-
 class SearchSortContainer extends Component{
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 	  this.filterClicked = this.filterClicked.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.showExportDialog = this.showExportDialog.bind(this)
     this.state = {
       filterChoice: 'all',
       content: '',
+      dialogOpen: false
     }
 	}
 
@@ -26,6 +30,10 @@ class SearchSortContainer extends Component{
     this.props.search(e.target.value)
   }
 
+  showExportDialog() {
+    this.setState({dialogOpen: true})
+  }
+
   render() {
     return (
        <div>
@@ -36,6 +44,10 @@ class SearchSortContainer extends Component{
           <span onClick={()=>{this.filterClicked('unresolved')}} style={{fontWeight: this.state.filterChoice == 'unresolved'? 700 : 100}}>Unresolved ({this.props.unresolvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
           <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.state.filterChoice == 'all'? 700 : 100}}>All ({this.props.allLength})</span>
+          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
+          <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog}>
+            <ExportIcon />
+          </IconButton>
         </ToolbarGroup>
         
         {!this.props.isMobile ? 
@@ -49,6 +61,7 @@ class SearchSortContainer extends Component{
           </ToolbarGroup>
           : '' }
        </Toolbar>
+       <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view="complaint" />
        </div>
     );
   }
