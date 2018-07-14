@@ -12,22 +12,22 @@ class RoomsContainer extends Component {
     super(props)
     this.handleRoomSelection = this.handleRoomSelection.bind(this);
     this.state = {
-      selectedRooms: [],
-      takenRooms: []
+      selectedRooms: this.props && this.props.selectedRooms,
+      takenRooms: this.props && this.props.takenRooms
     }
   }
 
   componentWillReceiveProps(newProps) {
     if(newProps.takenRooms) {
 
-      let temp = this.state.selectedRooms
+      let selRooms = this.state.selectedRooms
       for(let room of newProps.takenRooms) {
-        if((temp).includes(room)) {
-          let index = temp.indexOf(room);
-          temp.splice(index, 1);
+        if((selRooms).includes(room)) {
+          let index = selRooms.indexOf(room);
+          selRooms.splice(index, 1);
         }
       }
-      this.setState({takenRooms: newProps.takenRooms, selectedRooms: temp})
+      this.setState({takenRooms: newProps.takenRooms, selectedRooms: selRooms})
     }
   }
   

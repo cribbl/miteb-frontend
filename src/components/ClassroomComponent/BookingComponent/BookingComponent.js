@@ -37,6 +37,8 @@ class HorizontalLinearStepper extends React.Component {
     this.getTakenRooms = this.getTakenRooms.bind(this);
     this.formatDate = this.formatDate.bind(this);
     this.shouldDisableDate = this.shouldDisableDate.bind(this)
+    this.verifyRooms = this.verifyRooms.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 1);
     maxDate.setHours(0, 0, 0, 0);
@@ -117,9 +119,7 @@ class HorizontalLinearStepper extends React.Component {
   handleNext = () => {
     if(this.handleValidation(this.state.stepIndex)){
       const {stepIndex} = this.state;
-      this.setState({
-      stepIndex: stepIndex + 1
-      });
+      this.setState({stepIndex: stepIndex + 1});
     }
     if(this.state.stepIndex == 2)
       this.handleSubmit();
@@ -253,53 +253,83 @@ class HorizontalLinearStepper extends React.Component {
     return isFormValid;
   }
 
-  handleSubmit = () => {
-    let field = this.state.fields;
-    let start__date = this.state.start_date;
-    let end__date = this.state.end_date;
-    let roomStatus = this.state.convertedObj;
-    let start_date = start__date.toISOString();
-    let end_date = end__date.toISOString();
-    field["start_date"] = start_date;
-    field["end_date"] = end_date;
-
-    var newData = {
-      "start_date":moment(field["start_date"]).format('DD-MM-YYYY'),
-      "end_date":moment(field["end_date"]).format('DD-MM-YYYY'),
-      "rooms":this.state.selectedRooms,
-      "AD_appr":"NA",
-      "FA_appr":"pending",
-      "SO_appr":"NA",
-      "booker_name":field["booker_name"],
-      "booker_contact":field["booker_contact"],
-      "booker_reg_no":field["booker_reg_no"],
-      "booker_email":field["booker_email"],
-      "title":field["title"],
-      "desc":field["desc"],
-      "type":field["workshop"],
-      "notes":field["notes"] || null,
-      "end_time":"7:45pm",
-      "start_time":"5:45pm",
-      "clubName": this.props.user.name,
-      "clubID": localStorage.getItem('clubID'),
-      "FA_name": this.props.user.fa.name
-    }
-   
-    var myRef = firebaseDB.ref('/events/').push(newData);
-    var key = myRef.key;
+  verifyRooms() {
     var scope = this;
-    firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_events/').push(key,
-      function(res, err) {
-        if(err)
-          console.log("couldn't be booked ", err);
-        else {
-          updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms)
-          sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
-          scope.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true, fields: {}})
-          scope.setState({finished: true})
+    var flag = false;
+    let selRooms = this.state.selectedRooms;
+    scope.setState({fetchingRooms: true})
+    return new Promise(function(resolve, reject) {
+      fetchRooms(scope.state.start_date, scope.state.end_date)
+      .then(function (takRooms) {
+        selRooms.forEach(room => {
+          if(takRooms.includes(room)) {
+            flag = true;
+            let index = selRooms.indexOf(room);
+            selRooms.splice(index, 1);
+            scope.setState({selectedRooms: selRooms, takenRooms: takRooms})
+          }
+        })
+        scope.setState({fetchingRooms: false})
+        if(flag) {
+          scope.setState({SnackBarmessage: 'Rooms were changed. Please rebook', openSnackBar: true})
+          reject();
         }
-      });
-      
+        resolve();
+      })
+    });
+  }
+
+  handleSubmit() {
+    const scope = this;
+    this.verifyRooms()
+    .then(function() {
+      let field = this.state.fields;
+      let start__date = this.state.start_date;
+      let end__date = this.state.end_date;
+      let roomStatus = this.state.convertedObj;
+      let start_date = start__date.toISOString();
+      let end_date = end__date.toISOString();
+      field["start_date"] = start_date;
+      field["end_date"] = end_date;
+
+      var newData = {
+        "start_date":moment(field["start_date"]).format('DD-MM-YYYY'),
+        "end_date":moment(field["end_date"]).format('DD-MM-YYYY'),
+        "rooms":this.state.selectedRooms,
+        "AD_appr":"NA",
+        "FA_appr":"pending",
+        "SO_appr":"NA",
+        "booker_name":field["booker_name"],
+        "booker_contact":field["booker_contact"],
+        "booker_reg_no":field["booker_reg_no"],
+        "booker_email":field["booker_email"],
+        "title":field["title"],
+        "desc":field["desc"],
+        "type":field["workshop"],
+        "notes":field["notes"] || null,
+        "end_time":"7:45pm",
+        "start_time":"5:45pm",
+        "clubName": this.props.user.name,
+        "clubID": localStorage.getItem('clubID'),
+        "FA_name": this.props.user.fa.name
+      }
+     
+      var myRef = firebaseDB.ref('/events/').push(newData);
+      var key = myRef.key;
+      var scope = this;
+      firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_events/').push(key,
+        function(res, err) {
+          if(err)
+            console.log("couldn't be booked ", err);
+          else {
+            updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms))
+            sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
+            scope.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true})
+            scope.setState({finished: true})
+          }
+        });
+    }.bind(this))
+    .catch(function() { })
   }
 
   getStepContent(stepIndex) {
@@ -450,7 +480,7 @@ class HorizontalLinearStepper extends React.Component {
               required
             />
           </div>
-            <RoomsContainer datesSelected={this.state.datesSelected} fetchingRooms={this.state.fetchingRooms} takenRooms={this.state.takenRooms} handleSelectedRooms={(temp) => this.handleSelectedRooms(temp)}/>
+            <RoomsContainer datesSelected={this.state.datesSelected} fetchingRooms={this.state.fetchingRooms} selectedRooms={this.state.selectedRooms} takenRooms={this.state.takenRooms} handleSelectedRooms={(temp) => this.handleSelectedRooms(temp)}/>
     </div>);
 
     default: console.log('thank you screen');
@@ -474,6 +504,13 @@ class HorizontalLinearStepper extends React.Component {
             </Step>
           </Stepper>
 
+          <Snackbar
+            open={this.state.openSnackBar}
+            message={this.state.SnackBarmessage}
+            autoHideDuration={this.state.autoHideDuration}
+            onRequestClose={this.handleSnackBarClose}
+          />
+
           <div style={{backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
             {this.state.finished ? (
               <div>
@@ -489,12 +526,6 @@ class HorizontalLinearStepper extends React.Component {
                     this.setState({stepIndex: 0, finished: false});
                     }} /></Link>
                 </div>
-                <Snackbar
-                open={this.state.openSnackBar}
-                message={this.state.SnackBarmessage}
-                autoHideDuration={this.state.autoHideDuration}
-                onRequestClose={this.handleSnackBarClose}
-                />
               </div>          ) : (
               <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
                 <div>{this.getStepContent(this.state.stepIndex)}</div>
@@ -508,7 +539,7 @@ class HorizontalLinearStepper extends React.Component {
                   <RaisedButton
                     label={this.state.stepIndex === 2 ? 'Submit' : 'Next'}
                     primary={true}
-                    onClick={this.handleNext}
+                    onClick={this.state.stepIndex == 2 ? this.handleSubmit : this.handleNext}
                     disabled={!this.state.isFormValid || this.state.stepIndex == 2 && this.state.selectedRooms.length == 0}
                   />
                 </div>
