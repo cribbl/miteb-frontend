@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import { Carousel } from 'react-responsive-carousel';
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+// import { Carousel } from 'react-responsive-carousel';
+// import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import './LandingPage.css';
 
@@ -18,7 +18,8 @@ class LandingPage extends Component {
     return (
     	<div>
     	<div className="carousel">
-      		<Carousel autoPlay interval={5000} infiniteLoop showArrows={false} showIndicators={false}  showThumbs={false} showStatus={false}>
+      	{/*}
+            <Carousel autoPlay interval={5000} infiniteLoop showArrows={false} showIndicators={false}  showThumbs={false} showStatus={false}>
                 <div>
                     <img src={require('../../assets/banner2.jpg')}/>
                 </div>
@@ -29,6 +30,7 @@ class LandingPage extends Component {
                     <img src={require('../../assets/banner3.jpg')}/>
                 </div>
        		</Carousel>
+        */}
         </div>
 
         <AboutContainer />
