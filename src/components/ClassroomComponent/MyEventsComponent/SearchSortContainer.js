@@ -4,17 +4,22 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import TextField from 'material-ui/TextField'
+import ExportIcon from 'material-ui/svg-icons/file/cloud-download'
+import IconButton from 'material-ui/IconButton'
+import EventExportDialog from '../../Dialogs/EventExportDialog'
 
 class SearchSortContainer extends Component {
   constructor (props) {
     super(props)
     this.filterClicked = this.filterClicked.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.showExportDialog = this.showExportDialog.bind(this)
     console.log('IPHONE')
     console.log(props)
     this.state = {
       filter: 'all',
-      search: ''
+      search: '',
+      dialogOpen: false,
     }
   }
 
@@ -28,6 +33,10 @@ class SearchSortContainer extends Component {
     this.props.handleSearch(e.target.value)
   }
 
+  showExportDialog() {
+    this.setState({dialogOpen: true})
+  }
+
   render() {
     return (
        <div>
@@ -38,7 +47,12 @@ class SearchSortContainer extends Component {
           <span onClick={()=>{this.filterClicked('approved')}} style={{fontWeight: this.props.filter == 'approved' ? 700 : 100}}>Approved ({this.props.approvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
           <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.props.filter == 'all' ? 700 : 100}}>All ({this.props.allLength})</span>
+          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
+          <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog}>
+            <ExportIcon />
+          </IconButton>
         </ToolbarGroup>
+
         {!this.props.isMobile ? 
           <ToolbarGroup>
             <TextField
@@ -48,6 +62,8 @@ class SearchSortContainer extends Component {
           </ToolbarGroup>
           : '' }
        </Toolbar>
+
+       <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view={"event"} />
        </div>
     );
   }
