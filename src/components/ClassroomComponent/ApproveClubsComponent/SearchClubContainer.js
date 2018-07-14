@@ -30,11 +30,11 @@ class SearchClubContainer extends Component{
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
        <ToolbarGroup>
-          <span onClick={()=>this.filterClicked('approved')} style={{fontWeight: this.state.filterChoice == "approved" ? 700 : 100}}>Approved</span>
+          <span onClick={()=>this.filterClicked('approved')} style={{fontWeight: this.state.filterChoice == "approved" && !(this.state.search) ? 700 : 100}}>Approved</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>this.filterClicked('unapproved')} style={{fontWeight: this.state.filterChoice == "unapproved" ? 700 : 100}}>Unapproved</span>
+          <span onClick={()=>this.filterClicked('unapproved')} style={{fontWeight: this.state.filterChoice == "unapproved" && !(this.state.search) ? 700 : 100}}>Unapproved</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>this.filterClicked('all')} style={{fontWeight: this.state.filterChoice == "all" ? 700 : 100}}>All</span>
+          <span onClick={()=>this.filterClicked('all')} style={{fontWeight: this.state.filterChoice == "all" || this.state.search ? 700 : 100}}>All</span>
         </ToolbarGroup>
         {!this.props.isMobile ? 
           <ToolbarGroup>
