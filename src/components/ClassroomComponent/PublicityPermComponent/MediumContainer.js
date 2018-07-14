@@ -85,6 +85,7 @@ class MediumContainer extends React.Component {
                <div style={{display:'flex', flexDirection: 'row'}}>
                  <Checkbox value={0} checked={this.state.checked[0]}   style={{width: 48,height: 36 }}onCheck={this.updateCheck.bind(this,0)}/>
                  <ListItem
+                    style={{minHeight:70}}
                     onClick={this.handleClick.bind(this,0)}
                     primaryText="Banner"
                   />
@@ -93,6 +94,7 @@ class MediumContainer extends React.Component {
                 <div style={{display:'flex', flexDirection: 'row'}}>
                   <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,1)} />
                   <ListItem
+                    style={{minHeight:70}}
                     onClick={this.handleClick.bind(this,1)}
                     primaryText="InfoDesk"
                    />
@@ -101,6 +103,7 @@ class MediumContainer extends React.Component {
                 <div style={{display:'flex', flexDirection: 'row'}}>
                   <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,2)} />
                   <ListItem
+                    style={{minHeight:70}}
                     onClick={this.handleClick.bind(this,2)}
                     primaryText="Digital Board"
                   />
@@ -109,6 +112,7 @@ class MediumContainer extends React.Component {
                 <div style={{display:'flex', flexDirection: 'row'}}>
                   <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,3)} />
                    <ListItem
+                    style={{minHeight:70}}
                     onClick={this.handleClick.bind(this,3)}
                     primaryText="Poster"
                   />
