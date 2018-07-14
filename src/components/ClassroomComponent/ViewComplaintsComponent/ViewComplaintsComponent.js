@@ -9,11 +9,15 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import CircularProgress from 'material-ui/CircularProgress'
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
-import IconButton from 'material-ui/IconButton'
+// import IconButton from 'material-ui/IconButton'
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
@@ -33,10 +37,11 @@ class ViewComplaintsComponent extends Component {
     super(props)
     this.showDialog = this.showDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
-    this.handleFlagDialogClose = this.handleFlagDialogClose.bind(this)
     this.nextComplaint = this.nextComplaint.bind(this)
-    this.handleSort = this.handleSort.bind(this);
-    this.resolveComplaint = this.resolveComplaint.bind(this);
+    this.resolveComplaint = this.resolveComplaint.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
+    this.handleSort = this.handleSort.bind(this)
+    this.filterState = this.filterState.bind(this)
     
     this.state = {
       fixedHeader: true,
@@ -44,16 +49,17 @@ class ViewComplaintsComponent extends Component {
       stripedRows: false,
       showRowHover: true,
       showCheckboxes: false,
-      myArr: {},
-      myArrx: {},
-      allArr: {},
+      resolvedArr: {},
+      unresolvedArr: {},
       originalArr: {},
+      tempArr: {},
       dialogOpen: false,
       FlagDialogOpen: false,
       currentComplaint: null,
       dateSort: null,
+      filterChoice: 'all',
     }
-}
+  }
 
   showDialog(event) {
     this.setState({dialogOpen: true})
@@ -64,46 +70,97 @@ class ViewComplaintsComponent extends Component {
     this.setState({dialogOpen: false})
   }
 
-  resolveComplaint(complaint, mode) {
-    firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(mode);
-    this.nextComplaint();
-    const {dispatch} = this.props
-    dispatch(toggleActions.toggleToaster(mode ? "Compaint marked Resolved" : "Compaint marked Unresolved", true))
-  }
-
-  handleFlagDialogClose() { this.setState({FlagDialogOpen: false}) }
-
-  nextComplaint() {
-    let keys = Object.keys(this.state.myArrx)
-    if(keys.length == 0){
-      this.handleDialogClose()
-      return
-    }
-    let pos = keys.indexOf(this.state.currentComplaint.key) + 1
-    if(pos == Object.keys(this.state.myArrx).length){
-      pos = 0;
-    }
-    let nextKey = keys[pos]
-    let nextComplaint = this.state.myArrx[nextKey]
-    this.setState({currentComplaint: nextComplaint})
-  }
-
   handleSort() {
     if(this.state.dateSort === 'des')
       this.setState({dateSort: 'asc'})
     else
       this.setState({dateSort: 'des'})
     var scope = this
-    var myArrx = this.state.originalArr
-    myArrx = Object.values(myArrx).sort(function(a, b)
+    var tempArr;
+    if(this.state.filterChoice=='resolved')
+      tempArr=this.state.resolvedArr;
+    else if(this.state.filterChoice=='unresolved')
+      tempArr=this.state.unresolvedArr;
+    else
+      tempArr=this.state.originalArr;
+
+    tempArr = Object.values(tempArr).sort(function(a, b)
       { 
-        var aDate = moment(a.start_date, 'DD-MM-YYYY');
-        var bDate = moment(b.start_date, 'DD-MM-YYYY');
+        var aDate = moment(a.dated, 'DD-MM-YYYY');
+        var bDate = moment(b.dated, 'DD-MM-YYYY');
         if(scope.state.dateSort === 'des')
           return (aDate - bDate);
         return (bDate - aDate);
       });
-    this.setState({myArrx})
+    this.setState({tempArr})
+  }
+
+  resolveComplaint(complaint, mode) {
+    firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(mode);
+    if(this.state.filterChoice=='resolved') {
+      var resolvedArr = this.state.resolvedArr;
+      delete resolvedArr[complaint.key];
+      this.setState({resolvedArr:resolvedArr});
+    } else if(this.state.filterChoice=='unresolved') {
+      var unresolvedArr = this.state.unresolvedArr;
+      delete unresolvedArr[complaint.key];
+      this.setState({unresolvedArr: unresolvedArr});
+    } else {
+      if(complaint.isResolved==false) { 
+        var unresolvedArr = this.state.unresolvedArr;
+        delete unresolvedArr[complaint.key];
+        console.log("unresolved array is");
+        console.log(unresolvedArr);
+        this.setState({unresolvedArr: unresolvedArr});
+      } else {
+        var resolvedArr = this.state.resolvedArr;
+        delete resolvedArr[complaint.key];
+        console.log("resolved array is");
+        console.log(resolvedArr);
+        this.setState({resolvedArr:resolvedArr});
+      }
+    }
+    this.filterState(this.state.filterChoice);
+    this.nextComplaint();
+    const {dispatch} = this.props
+    dispatch(toggleActions.toggleToaster(mode ? "Complaint marked Resolved" : "Complaint marked Unresolved", true))
+  }
+
+  nextComplaint() {
+    let keys = Object.keys(this.state.tempArr)
+    if(keys.length == 0){
+      this.handleDialogClose()
+      return
+    }
+    let pos = keys.indexOf(this.state.currentComplaint.key) + 1
+    if(pos == Object.keys(this.state.tempArr).length){
+      pos = 0;
+    }
+    let nextKey = keys[pos]
+    let nextComplaint = this.state.tempArr[nextKey]
+    this.setState({currentComplaint: nextComplaint})
+  }
+
+  handleSearch(content) {
+    var tempArr;
+    if(this.state.filterChoice=='resolved')
+      tempArr=this.state.resolvedArr;
+    else if(this.state.filterChoice=='unresolved')
+      tempArr=this.state.unresolvedArr;
+    else
+      tempArr=this.state.originalArr;
+
+    tempArr = Object.values(tempArr).filter(_complaint => _complaint.subject.toLowerCase().includes(content.toLowerCase()));
+    this.setState({tempArr:tempArr})
+  }
+
+  filterState(state) {
+    this.setState({filterChoice: state, dateSort: null})
+    switch(state) {
+      case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); break;}
+      case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); break;}
+      case 'all': {let originalArr = this.state.originalArr; this.setState({tempArr: originalArr}); break;}
+    }
   }
 
   componentDidMount() {
@@ -112,21 +169,32 @@ class ViewComplaintsComponent extends Component {
       return
     }
     this.setState({fetching: true})
-        var scope = this;
-        firebaseDB.ref().child('complaints').on('value',
-        function(snapshot) {
-          scope.setState({fetching: false})
-          snapshot.forEach(function(child) {
-            scope.setState({fetching: false})
-              const {myArrx} = scope.state
-              myArrx[child.key] = child.val()
-              myArrx[child.key].key = child.key
-              scope.setState({myArrx})
-              scope.setState({originalArr: myArrx})
-              console.log(scope.state.myArrx)
-          })
-        })
+    var scope = this;
+    var tempArr = scope.state.tempArr
+    var resolvedArr = scope.state.resolvedArr
+    var unresolvedArr = scope.state.unresolvedArr
+    firebaseDB.ref().child('complaints').on('value',
+    function(snapshot) {
+      scope.setState({fetching: false})
+      snapshot.forEach(function(child) {
+        scope.setState({fetching: false})
+          if(child.val().isResolved==true) {
+            resolvedArr[child.key] = child.val()
+            resolvedArr[child.key].key = child.key
+          } else {
+            unresolvedArr[child.key] = child.val()
+            unresolvedArr[child.key].key = child.key
+          }
+          tempArr[child.key] = child.val()
+          tempArr[child.key].key = child.key
+          scope.setState({tempArr})
+          scope.setState({originalArr: tempArr})
+          scope.setState({resolvedArr: resolvedArr})
+          scope.setState({unresolvedArr: unresolvedArr})
+      })
+    })
   }
+
 
   render() {
 
@@ -134,7 +202,7 @@ class ViewComplaintsComponent extends Component {
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
       
       <div style={{minWidth: '98%', backgroundColor: 'yellow', marginTop: 20}}>
-        <SearchSortContainer />
+        <SearchSortContainer allLength={Object.keys(this.state.originalArr).length} resolvedLength={Object.keys(this.state.resolvedArr).length} unresolvedLength={Object.keys(this.state.unresolvedArr).length} filterState={this.filterState} search={this.handleSearch}/>
       </div>
 
       {this.state.currentComplaint && 
@@ -155,16 +223,16 @@ class ViewComplaintsComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '18%'}}>Status</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '15%'}}>Subject</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '10%'}}>Status</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '30%'}}>Subject</TableHeaderColumn>
               <TableHeaderColumn
-                style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '15%'}}
+                style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '20%'}}
                 hidden={this.props.isMobile}>
                 Dated
                 <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
               </TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '35%'}}>Description</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '20%'}}>Actions</TableHeaderColumn>
+              <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700, width: '30%'}}>Description</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'20%':'10%'}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -176,16 +244,26 @@ class ViewComplaintsComponent extends Component {
 
           {this.state.fetching && <CircularProgress />}
 
-          { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(complaint, index) {
+          { Object.keys(this.state.tempArr).length > 0 ? (Object.values(this.state.tempArr).map(function(complaint, index) {
               return (
                   <TableRow key={index}>
-                    <TableRowColumn style={{width: '18%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
-                    <TableRowColumn style={{width: '15%'}}>{complaint.subject}</TableRowColumn>
-                    <TableRowColumn style={{width: '15%'}}>{complaint.dated}</TableRowColumn>
-                    <TableRowColumn style={{width: '35%'}}>{complaint.desc}</TableRowColumn>
-                    <TableRowColumn style={{width: '20%'}}>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(complaint)}/></div>}</TableRowColumn>
+                    <TableRowColumn style={{width: '10%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} /></TableRowColumn>
+                    <TableRowColumn style={{width: '30%'}}>{complaint.subject}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{complaint.dated}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'20%':'10%'}}>
+                      {<IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      useLayerForClickAway={true}
+                      >
+                      <MenuItem primaryText="View" onClick={() => this.showDialog(complaint)}/>
+                      <MenuItem primaryText={complaint.isResolved ? "Mark as Unresolved" : "Mark as Resolved"} onClick={() => this.resolveComplaint(complaint, !complaint.isResolved)}/>
+                      </IconMenu>}
+                    </TableRowColumn>
                   </TableRow>
-            )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
+            )}, this)) : <TableRow><TableRowColumn style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</TableRowColumn></TableRow>
           }
           
           </TableBody>
@@ -210,3 +288,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(ViewComplaintsComponent)
+
