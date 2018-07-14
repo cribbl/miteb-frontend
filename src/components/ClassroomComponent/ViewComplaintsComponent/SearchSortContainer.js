@@ -17,8 +17,8 @@ class SearchSortContainer extends Component{
 	}
 
   filterClicked(filterChoice) {
-    this.setState({filterChoice: filterChoice});
-    this.props.filterState(filterChoice);
+    this.setState({filterChoice: filterChoice, content: ''});
+    this.props.filterState(filterChoice, this.state.content);
   }
 
   handleSearch(e) {
@@ -44,6 +44,7 @@ class SearchSortContainer extends Component{
               floatingLabelText="Search"
               onChange={this.handleSearch}
               style={{marginBottom: 15}}
+              value={this.state.content}
             />
           </ToolbarGroup>
           : '' }

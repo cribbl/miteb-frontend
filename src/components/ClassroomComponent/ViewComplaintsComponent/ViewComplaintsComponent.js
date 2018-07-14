@@ -157,9 +157,9 @@ class ViewComplaintsComponent extends Component {
   filterState(state) {
     this.setState({filterChoice: state, dateSort: null})
     switch(state) {
-      case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); return;}
-      case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); return;}
-      case 'all': {let originalArr = this.state.originalArr; this.setState({tempArr: originalArr}); return;}
+      case 'unresolved': {let unresolvedArr = this.state.unresolvedArr; this.setState({tempArr: unresolvedArr}); break;}
+      case 'resolved': {let resolvedArr = this.state.resolvedArr; this.setState({tempArr: resolvedArr}); break;}
+      case 'all': {let originalArr = this.state.originalArr; this.setState({tempArr: originalArr}); break;}
     }
   }
 
@@ -247,7 +247,7 @@ class ViewComplaintsComponent extends Component {
           { Object.keys(this.state.tempArr).length > 0 ? (Object.values(this.state.tempArr).map(function(complaint, index) {
               return (
                   <TableRow key={index}>
-                    <TableRowColumn style={{width: '10%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} data-tip={"bhawesh"}/></TableRowColumn>
+                    <TableRowColumn style={{width: '10%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} /></TableRowColumn>
                     <TableRowColumn style={{width: '30%'}}>{complaint.subject}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{complaint.dated}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>

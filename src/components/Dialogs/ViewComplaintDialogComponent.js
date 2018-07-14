@@ -47,7 +47,7 @@ class Dialogxx extends Component {
       />,
       <RaisedButton
         label={this.props.currentComplaint.isResolved ? "Mark as Unresolved" : "Mark as Resolved"}
-        primary={!!this.props.currentComplaint.isResolved}
+        primary={!this.props.currentComplaint.isResolved}
         onClick={() => this.props.resolveComplaint(this.props.currentComplaint, !this.props.currentComplaint.isResolved)}
         style={{position: 'absolute', top: '6.5%', right: '3%'}}
       />,
