@@ -17,7 +17,7 @@ class NotFound extends Component {
       scope.setState({counter: c})
       if(c==0) {
         window.clearInterval(interval);
-        hashHistory.push('/auth');
+        hashHistory.goBack();
       }
     }, 1000)
   }
@@ -27,7 +27,7 @@ class NotFound extends Component {
     	<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '10%'}}>
         <img src={require('../../assets/404.png')} style={{width: this.props.isMobile ? '98%' : '50%'}}/>
         <br /><br />
-        <h5>Redirecting to Home in {this.state.counter}</h5>
+        <h5>Redirecting back in {this.state.counter}</h5>
       </div>
     );
   }
