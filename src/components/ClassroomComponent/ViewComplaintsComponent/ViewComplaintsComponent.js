@@ -58,6 +58,7 @@ class ViewComplaintsComponent extends Component {
       currentComplaint: null,
       dateSort: null,
       filterChoice: 'all',
+      searchContent: ''
     }
   }
 
@@ -142,6 +143,7 @@ class ViewComplaintsComponent extends Component {
   }
 
   handleSearch(content) {
+    this.setState({searchContent: content})
     var tempArr;
     if(this.state.filterChoice=='resolved')
       tempArr=this.state.resolvedArr;
@@ -208,7 +210,7 @@ class ViewComplaintsComponent extends Component {
       {this.state.currentComplaint && 
       <Dialogxx open={this.state.dialogOpen} currentComplaint={this.state.currentComplaint} handleClose={this.handleDialogClose} nextComplaint={this.nextComplaint} resolveComplaint={this.resolveComplaint} />}
 
-      <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
+      <Paper style={{background: '', width:'98%', height: '500px', margin: 'auto',marginTop: 20,display: 'flex', justifyContent: 'center'}} zDepth={1}>
         <Table
           style={{backgroundColor: ''}}
           height={'440px'}
@@ -242,14 +244,18 @@ class ViewComplaintsComponent extends Component {
             stripedRows={this.state.stripedRows}
           >
 
-          {this.state.fetching && <CircularProgress />}
+          {this.state.fetching &&
+            <div style={{textAlign: 'center', marginTop: '10%'}}>
+              <CircularProgress size={60} />
+            </div>
+          }
 
           { Object.keys(this.state.tempArr).length > 0 ? (Object.values(this.state.tempArr).map(function(complaint, index) {
               return (
                   <TableRow key={index}>
                     <TableRowColumn style={{width: '10%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} /></TableRowColumn>
                     <TableRowColumn style={{width: '30%'}}>{complaint.subject}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{complaint.dated}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{moment(complaint.dated, 'DD-MM-YYYY').format("DD MMM 'YY")}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'20%':'10%'}}>
                       {<IconMenu
@@ -263,7 +269,7 @@ class ViewComplaintsComponent extends Component {
                       </IconMenu>}
                     </TableRowColumn>
                   </TableRow>
-            )}, this)) : <TableRow><TableRowColumn style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</TableRowColumn></TableRow>
+            )}, this)) : <TableRow><TableRowColumn style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No complaints for this search' : 'No complaints'}</TableRowColumn></TableRow>
           }
           
           </TableBody>
