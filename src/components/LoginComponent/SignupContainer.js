@@ -19,11 +19,11 @@ class SignupContainer extends Component {
     this.handleCounter = this.handleCounter.bind(this)
     this.state = {
       newUser: {
-        name: 'Some club',
-        abbrv: 'SCLUB',
-        email : 'bhansalibhawesh@yahoo.com',
-        primaryContact:'7760627296',
-        password : 'Password@1234',
+        name: '',
+        abbrv: '',
+        email : '',
+        primaryContact:'',
+        password : '',
         category: '',
       },
       fieldTouch: {
