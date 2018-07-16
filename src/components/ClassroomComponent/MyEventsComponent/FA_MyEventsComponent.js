@@ -12,7 +12,6 @@ import CircularProgress from 'material-ui/CircularProgress'
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper'
-import {tableData} from './data'
 import RaisedButton from 'material-ui/RaisedButton'
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
@@ -150,9 +149,9 @@ class FA_MyEventsComponent extends Component {
   }
 
   
-  componentDidMount() {
-    if(!this.props.user){
-      hashHistory.push('/dashboard')
+  componentWillMount() {
+    if(!(this.props.user && this.props.user.isFA)) {
+      hashHistory.goBack();
       return
     }
     this.setState({fetching: true})
