@@ -29,3 +29,7 @@ input[type=number]::-webkit-outer-spin-button {
 	overflow-x: hidden;
 	height: calc(100vh) !important;
 }
+
+.hoverPointer {
+  cursor: pointer;
+}

@@ -33,7 +33,7 @@ export const exportEvents = (view, uid, mode, start_date=null, end_date=null, ca
     to: end_date
   }
   return axios({
-    url: 'http://localhost:9000/' + view + '/generate-sheet',
+    url: 'https://dev-miteventbooking.herokuapp.com/' + view + '/generate-sheet',
     params: params,
     method: 'GET',
     responseType: 'blob', // important
@@ -41,7 +41,7 @@ export const exportEvents = (view, uid, mode, start_date=null, end_date=null, ca
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'eventDetails.xlsx');
+    link.setAttribute('download', 'export.xlsx');
     document.body.appendChild(link);
     link.click();
   });

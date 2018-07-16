@@ -41,13 +41,7 @@ class SearchSortContainer extends Component {
     return (
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
-       <ToolbarGroup firstChild={true}>
-          <span onClick={()=>{this.filterClicked('pending')}} style={{fontWeight: this.props.filter == 'pending' ? 700 : 100}}>Pending ({this.props.pendingLength})</span>
-          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('approved')}} style={{fontWeight: this.props.filter == 'approved' ? 700 : 100}}>Approved ({this.props.approvedLength})</span>
-          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.props.filter == 'all' ? 700 : 100}}>All ({this.props.allLength})</span>
-          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
+       <ToolbarGroup>
           <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog}>
             <ExportIcon />
           </IconButton>
@@ -56,9 +50,13 @@ class SearchSortContainer extends Component {
         {!this.props.isMobile ? 
           <ToolbarGroup>
             <TextField
-              floatingLabelText="Search"
               value={this.state.search}
-              onChange={this.handleSearch} />
+              onChange={this.handleSearch}
+              underlineShow={false}
+              inputStyle={{border: '1px solid rgb(224, 224, 224)', height: 40, marginTop: 4, padding: 4}}
+              hintText="Search"
+              hintStyle={{paddingLeft: 4}}
+            />
           </ToolbarGroup>
           : '' }
        </Toolbar>

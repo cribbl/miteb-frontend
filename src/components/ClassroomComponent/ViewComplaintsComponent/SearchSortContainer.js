@@ -5,7 +5,6 @@ import TextField from 'material-ui/TextField'
 import ExportIcon from 'material-ui/svg-icons/file/cloud-download'
 import IconButton from 'material-ui/IconButton'
 import EventExportDialog from '../../Dialogs/EventExportDialog'
-import './SearchSortContainer.css';
 
 class SearchSortContainer extends Component{
   constructor(props) {
@@ -37,13 +36,13 @@ class SearchSortContainer extends Component{
   render() {
     return (
        <div>
-       <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF', padding: this.props.isMobile?0: 'auto'}}>
-       <ToolbarGroup className="complaintsToolbar">
-          <span onClick={()=>{this.filterClicked('resolved')}} style={{fontWeight: this.state.filterChoice == 'resolved'? 700 : 100}}>Resolved ({this.props.resolvedLength})</span>
+       <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
+       <ToolbarGroup>
+          <span className="hoverPointer" onClick={()=>{this.filterClicked('resolved')}} style={{fontWeight: this.state.filterChoice == 'resolved'? 700 : 100}}>Resolved ({this.props.resolvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('unresolved')}} style={{fontWeight: this.state.filterChoice == 'unresolved'? 700 : 100}}>Unresolved ({this.props.unresolvedLength})</span>
+          <span className="hoverPointer" onClick={()=>{this.filterClicked('unresolved')}} style={{fontWeight: this.state.filterChoice == 'unresolved'? 700 : 100}}>Unresolved ({this.props.unresolvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
-          <span onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.state.filterChoice == 'all'? 700 : 100}}>All ({this.props.allLength})</span>
+          <span className="hoverPointer" onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.state.filterChoice == 'all'? 700 : 100}}>All ({this.props.allLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
           <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog}>
             <ExportIcon />
