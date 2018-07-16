@@ -88,8 +88,8 @@ function getUser() {
             }
             else {
                 // user is not logged in
-                console.log('User is not logged in. Redirecting to /auth')
-                hashHistory.push('/auth')
+                console.log('User is not logged in')
+                // hashHistory.push('/auth');
             }
         })
     }

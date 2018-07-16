@@ -18,7 +18,6 @@ import Paper from 'material-ui/Paper'
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {tableData} from './data'
 import RaisedButton from 'material-ui/RaisedButton'
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
@@ -155,7 +154,7 @@ class MyEventsComponent extends Component {
 
   componentWillMount() {
     if(!this.props.user){
-      hashHistory.push('/dashboard')
+      hashHistory.goBack();
       return
     }
     else {

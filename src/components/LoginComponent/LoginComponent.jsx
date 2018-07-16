@@ -46,9 +46,9 @@ class LoginComponent extends Component {
       <form onSubmit={this.handleSigninSubmit}>
         <h2 className="paperTitle">Sign In</h2>
           <div className="fieldsContainer">
-            <TextField hintText="Email" value={this.state.username} onChange={this.changeUsername} required />
-            <TextField type="password" hintText="Password" value={this.state.password} onChange={this.changePassword} required />
-          <Link to="/auth/forgot" style={{fontSize: 12, float: 'right', textDecoration: 'underline'}}>Forgot Password?</Link> <br /><br />
+            <TextField floatingLabelText="Email" style={{marginTop: -12}} value={this.state.username} onChange={this.changeUsername} required />
+            <TextField type="password" floatingLabelText="Password" style={{marginTop: -12}} value={this.state.password} onChange={this.changePassword} required />
+          <Link to="/auth/forgot" style={{fontSize: 12, float: 'right', textDecoration: 'underline', position: 'relative', zIndex: 100}}>Forgot Password?</Link> <br /><br />
             <RaisedButton className="submitButton" type="submit" label="Sign In" primary={true} disabled={this.props.logging} />
             <CircularProgress style={{position: 'absolute', padding: '27px 5px'}} size={20} hidden={!this.props.logging}/>
           </div>

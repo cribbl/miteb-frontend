@@ -36,7 +36,7 @@ class SignupContainer extends Component {
       showProgress: false,
       errorMessage: null,
       signupSuccess: false,
-      counter: 5,
+      counter: 10,
     }
   }
 
@@ -102,49 +102,54 @@ class SignupContainer extends Component {
           <div className="fieldsContainer" hidden={this.state.signupSuccess}>
 
               <TextField
-                hintText="Club Name"
+                floatingLabelText="Club Name"
                 value={this.state.newUser.name}
                 onChange={(event) => this.handleChange(event, 'name')}
                 onBlur={() => this.handleBlur('name')}
                 errorText= {this.state.newUser.clubname_error}
                 errorStyle={{position: 'absolute', bottom: -8}}
+                style={{marginTop: -15}}
                 required />
 
               <TextField
-                hintText="Club Name Abbreviation"
+                floatingLabelText="Club Name Abbreviation"
                 value={this.state.newUser.abbrv}
                 onChange={(event) => this.handleChange(event, 'abbrv')}
                 onBlur={() => this.handleBlur('abbrv')}
                 errorText= {this.state.newUser.clubnameabbrev_error}
                 errorStyle={{position: 'absolute', bottom: -8}}
+                style={{marginTop: -15}}
                 required />
 
               <TextField
-                hintText="Email"
+                floatingLabelText="Email"
                 value={this.state.newUser.email}
                 onChange={(event) => this.handleChange(event, 'email')}
                 onBlur={() => this.handleBlur('email')}
                 errorText= {this.state.newUser.email_error}
                 errorStyle={{position: 'absolute', bottom: -8}}
+                style={{marginTop: -15}}
                 required />
 
               <TextField
-                hintText="Primary Contact"
+                floatingLabelText="Primary Contact"
                 value={this.state.newUser.primaryContact}
                 onChange={(event) => this.handleChange(event, 'primaryContact')}
                 onBlur={() => this.handleBlur('primaryContact')}
                 errorText= {this.state.newUser.primaryContactnumber_error}
                 errorStyle={{position: 'absolute', bottom: -8}}
+                style={{marginTop: -15}}
                 required />
 
               <TextField
-                hintText="Password"
+                floatingLabelText="Password"
                 type="password"
                 value={this.state.newUser.password}
                 onChange={(event) => this.handleChange(event, 'password')}
                 onBlur={() => this.handleBlur('password')}
                 errorText= {this.state.newUser.password_error}
                 errorStyle={{position: 'absolute', bottom: -8}}
+                style={{marginTop: -15}}
                 required />
 
               <RadioButtonGroup name="category" defaultSelected="technical" style={{display: 'inline-flex', marginLeft: -2, width: '105%'}} onChange={(event) => this.handleChange(event, 'category')}>
