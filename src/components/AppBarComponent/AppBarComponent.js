@@ -104,7 +104,7 @@ class AppBarComponent extends Component {
         !this.props.user ? (
         <AppBar
           style={{position: "fixed"}}
-          title={'Portal'}
+          title={<Link to="/" style={{color: 'black', textDecoration: 'none'}}>{"<Portal />"}</Link>}
           zDepth={1}
           children={<MyNavLinks />}
           showMenuIconButton={false}
