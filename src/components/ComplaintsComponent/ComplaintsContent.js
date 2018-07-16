@@ -19,6 +19,11 @@ class ComplaintsComponent extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.submitted)
+      this.setState({desc: '', subject: '', otherSubject: ''});
+  }
+
   handleDescChange(e) {
     this.setState({desc: e.target.value});
     this.props.handleDescChange(e)
@@ -34,13 +39,9 @@ class ComplaintsComponent extends Component {
     this.props.handleSubjectChange(e.target.value)
   }
 
-  handleAnonymous(event, isInputChecked) {
-    this.setState({goAnonymous: isInputChecked})
-  }
-
   render() {
     return (
-	    <Paper style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: '', padding: 15, backgroundColor: ''}} zDepth={2}>
+      <Paper style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: '', padding: 15, height: 420}} zDepth={2}>
       <div style={{display: 'flex'}}>
         <SelectField
           floatingLabelText="Subject"
@@ -60,9 +61,7 @@ class ComplaintsComponent extends Component {
         />
       </div>
         <p>Description</p>
-        <textarea placeholder="" rows={15} onChange={this.handleDescChange} value={this.state.desc}>
-          
-        </textarea>
+        <textarea rows={12} onChange={this.handleDescChange} value={this.state.desc} />
       </Paper>
     );
   }
