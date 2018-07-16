@@ -37,9 +37,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
         <Route exact path="/" component={App}>
-            <Route path="home" component={LandingPage}></Route>
             <Route path="faq" component={FaqComponent}></Route>
-            <IndexRoute component={Reg}></IndexRoute>
+            <IndexRoute component={LandingPage}></IndexRoute>
             <Route path="complaints" component={ComplaintsComponent}></Route>
             <Route path='developers' component={DevelopersComponent}></Route>
             <Route path="auth" component={Reg}>

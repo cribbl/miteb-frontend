@@ -6,6 +6,7 @@ import ComplaintIcon from 'material-ui/svg-icons/av/new-releases'
 import IconTest from 'material-ui/svg-icons/editor/mode-edit'
 import DashboardIcon from 'material-ui/svg-icons/action/dashboard'
 import CatalogueIcon from 'material-ui/svg-icons/av/library-books'
+import HomeIcon from 'material-ui/svg-icons/action/home'
 
 import Divider from 'material-ui/Divider'
 import Menu from 'material-ui/Menu'
@@ -77,10 +78,19 @@ class ProfileMenu extends Component {
             <Divider hidden={!this.props.isMobile} />
 
             <MenuItem
+              key="/"
+              primaryText="Home"
+              leftIcon={<HomeIcon />}
+            />
+
+            <Divider hidden={!this.props.isMobile} />
+
+            <MenuItem
               key="/complaints"
               primaryText="Complaints"
               leftIcon={<ComplaintIcon />}
             />
+
 
             <Divider hidden={!this.props.isMobile || !this.props.user}/>
             
