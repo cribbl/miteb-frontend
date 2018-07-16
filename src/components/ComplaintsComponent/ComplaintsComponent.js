@@ -19,41 +19,55 @@ class ComplaintsComponent extends Component {
     this.handleDescChange = this.handleDescChange.bind(this)
     this.handleSubjectChange = this.handleSubjectChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.formValid = this.formValid.bind(this)
     this.state = {
       fields: {
         name: '',
         email: '',
         regNo: '',
         contactNo: '',
+        branch: '',
+        year: ''
       },
       desc: '',
       subject: '',
       goAnonymous: false,
+      isFormValid: false,
     }
   }
 
   handleChange(field, e) {
     let fields = this.state.fields;
     fields[field] = e.target.value;        
-    this.setState({fields});
+    this.setState({fields}, function() {
+      this.formValid();
+    });
   }
 
   handleSelectChange(field, e, index, value) {
     let fields = this.state.fields;
     fields[field] = value;
-    this.setState({fields});
+    this.setState({fields}, function() {
+      this.formValid();
+    });
   }
 
   handleAnonymous(event, isInputChecked) {
-    this.setState({goAnonymous: isInputChecked})
+    this.setState({goAnonymous: isInputChecked}, function() {
+      this.formValid();
+    })
   }
 
   handleDescChange(e) {
-    this.setState({desc: e.target.value})
+    this.setState({desc: e.target.value}, function() {
+      this.formValid();
+    })
   }
 
   handleSubjectChange(value) {
-    this.setState({subject: value})
+    this.setState({subject: value}, function() {
+      this.formValid();
+    })
   }
 
   handleSubmit() {
@@ -65,17 +79,35 @@ class ComplaintsComponent extends Component {
     complaint['subject'] = this.state.subject;
     complaint['dated'] = moment(new Date()).format('DD-MM-YYYY');
     firebaseDB.ref('complaints').push(complaint);
+    this.setState({submitted: true})
     const {dispatch} = this.props;
     dispatch(toggleActions.toggleToaster("Complaint registered", true))
     sendPush("SC", "New complaint lodged", this.state.subject)
   }
 
+  formValid() {
+    if(!this.state.goAnonymous) {
+      for(let field in this.state.fields)
+        if(this.state.fields[field].length < 1) {
+          this.setState({isFormValid: false});
+          return;
+        }
+      
+    }
+    if(this.state.desc.length < 1 || this.state.subject.length < 1 || this.state.subject === 'Others') {
+      this.setState({isFormValid: false});
+      return;
+    }
+
+    this.setState({isFormValid: true});
+  }
+
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'column'}}>
+      <div style={{display: 'flex', flexDirection: 'column', marginTop: 20}}>
     	  <div style={{display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
-      		<div style={{width: this.props.isMobile ? '100%' : '40%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 10}}>
-          <Paper style={{width: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 15, backgroundColor: ''}} zDepth={2}>
+      		<div style={{width: this.props.isMobile ? '100%' : '35%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 10}}>
+          <Paper style={{width: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 15, backgroundColor: 'white', height: 420}} zDepth={2}>
             <Toggle
               label="Go Anonymous"
               onToggle={this.handleAnonymous}
@@ -115,10 +147,11 @@ class ComplaintsComponent extends Component {
             />
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <SelectField
-                floatingLabelText="Branch"
+                floatingLabelText="Branch *"
                 value={this.state.fields.branch}
                 onChange={this.handleSelectChange.bind(this, "branch")}
                 style={{width: '40%'}}
+                disabled={this.state.goAnonymous}
               >
                 <MenuItem value={"CSE"} primaryText="CSE" />
                 <MenuItem value={"IT"} primaryText="IT" />
@@ -127,10 +160,11 @@ class ComplaintsComponent extends Component {
                 <MenuItem value={"Civil"} primaryText="Civil" />
               </SelectField>
               <SelectField
-                floatingLabelText="Year"
+                floatingLabelText="Year *"
                 value={this.state.fields.year}
                 onChange={this.handleSelectChange.bind(this, "year")}
                 style={{width: '40%'}}
+                disabled={this.state.goAnonymous}
               >
                 <MenuItem value={"1"} primaryText="First" />
                 <MenuItem value={"2"} primaryText="Second" />
@@ -141,11 +175,11 @@ class ComplaintsComponent extends Component {
           </Paper>
           </div>
           <div style={{width: this.props.isMobile ? '100%' : '60%', display: 'flex', alignItems: '', justifyContent: 'center', padding: 10}}>
-            <ComplaintsContent handleDescChange={this.handleDescChange} handleSubjectChange={this.handleSubjectChange}/>
+            <ComplaintsContent handleDescChange={this.handleDescChange} handleSubjectChange={this.handleSubjectChange} submitted={this.state.submitted} />
           </div>
 	      </div>
         <div style={{display: 'flex', justifyContent: 'center', marginTop: 20}}>
-          <RaisedButton primary={true} label={"Submit"} onClick={this.handleSubmit} />
+          <RaisedButton primary={true} label={"Lodge Complaint"} onClick={this.handleSubmit} style={{width: this.props.isMobile ? '90%' : '20%', marginBottom: 20}} disabled={!this.state.isFormValid}/>
         </div>
       </div>
     );
