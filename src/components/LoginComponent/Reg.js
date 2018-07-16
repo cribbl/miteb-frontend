@@ -16,7 +16,7 @@ const paperStyle = {
   textAlign: 'center',
   display: 'inline-block',
   minHeight: 470,
-  maxWidth: 315,
+  maxWidth: 320,
   borderBottom: '6px solid #00bcd4',
 };
 
@@ -52,8 +52,15 @@ class Reg extends Component {
 
   render () {
     return (
-      <div className="row authPage">
-      <div className="col-md-4 offset-md-7 rightPane">
+      <div style={{display: 'flex', justifyContent: 'space-around', marginTop: 30}}>
+      <div hidden={this.props.isMobile} style={{textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <h1>MIT Event Booking Portal</h1>
+        <div style={{width: '70%'}}>
+        <p>Your One-stop destination to book rooms, lodge complaints, request publicity permissions and what not xD</p>
+        </div>
+      </div>
+
+      <div className="authPage">
         <Paper zDepth={5} style={paperStyle}>
             <div>
               {this.props.children}   
@@ -67,9 +74,11 @@ class Reg extends Component {
 
 function mapStateToProps(state) {
   const {loggedIn, user}  = state.authentication
+  const {isMobile} = state.toggler
   return {
     loggedIn,
-    user
+    user,
+    isMobile
   }
 }
 
