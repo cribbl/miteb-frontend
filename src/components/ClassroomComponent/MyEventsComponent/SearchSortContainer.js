@@ -42,7 +42,7 @@ class SearchSortContainer extends Component {
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
        <ToolbarGroup>
-          <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog}>
+          <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog} hidden={!this.props.user.isClub}>
             <ExportIcon />
           </IconButton>
         </ToolbarGroup>
