@@ -24,6 +24,7 @@ import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComp
 import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
 import NotFound from './components/NotFound/NotFound'
 import Reg from './components/LoginComponent/Reg'
+import FaqComponent from './components/FaqComponent/FaqComponent'
 import {store} from './store'
 
 import { Provider } from 'react-redux'
@@ -36,6 +37,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
         <Route exact path="/" component={App}>
+            <Route path="home" component={LandingPage}></Route>
+            <Route path="faq" component={FaqComponent}></Route>
             <IndexRoute component={Reg}></IndexRoute>
             <Route path="complaints" component={ComplaintsComponent}></Route>
             <Route path='developers' component={DevelopersComponent}></Route>
