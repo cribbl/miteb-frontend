@@ -28,7 +28,7 @@ class SearchClubContainer extends Component{
   	render() {
     return (
        <div>
-       <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
+       <Toolbar style={{minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)'}}>
        <ToolbarGroup className="complaintsToolbar">
           <span className="hoverPointer" onClick={()=>this.filterClicked('approved')} style={{fontWeight: this.state.filterChoice == "approved" && !(this.state.search) ? 700 : 100}}>Approved ({this.props.approvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>

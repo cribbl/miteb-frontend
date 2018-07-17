@@ -52,7 +52,8 @@ class FA_MyEventsComponent extends Component {
       autoHideDuration: 3000,
       dialogOpen: false,
       FlagDialogOpen: false,
-      currentEvent: {}
+      currentEvent: {},
+      searchContent: '',
     }
 }
 
@@ -151,7 +152,7 @@ class FA_MyEventsComponent extends Component {
   
   componentWillMount() {
     if(!(this.props.user && this.props.user.isFA)) {
-      hashHistory.goBack();
+      hashHistory.push('/auth');
       return
     }
     this.setState({fetching: true})
@@ -234,7 +235,13 @@ class FA_MyEventsComponent extends Component {
                     <TableRowColumn hidden={this.props.isMobile}>{event.end_date}</TableRowColumn>
                     <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton hidden={this.props.isMobile} label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
                   </TableRow>
-            )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
+            )}, this)) : (
+
+              <div style={{textAlign: 'center', marginTop: 10}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
+                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "No events found"}</p>
+                </div>
+              )
           }
           
           </TableBody>

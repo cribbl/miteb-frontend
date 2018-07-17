@@ -38,27 +38,27 @@ class SearchSortContainer extends Component {
   }
 
   render() {
+    if(!this.props.user)
+      return null;
     return (
        <div>
-       <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
+       <Toolbar style={{minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)'}}>
        <ToolbarGroup>
           <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog} hidden={!this.props.user.isClub}>
             <ExportIcon />
           </IconButton>
         </ToolbarGroup>
 
-        {!this.props.isMobile ? 
-          <ToolbarGroup>
-            <TextField
-              value={this.state.search}
-              onChange={this.handleSearch}
-              underlineShow={false}
-              inputStyle={{border: '1px solid rgb(224, 224, 224)', height: 40, marginTop: 4, padding: 4}}
-              hintText="Search"
-              hintStyle={{paddingLeft: 4}}
-            />
-          </ToolbarGroup>
-          : '' }
+        <ToolbarGroup>
+          <TextField
+            value={this.state.search}
+            onChange={this.handleSearch}
+            underlineShow={false}
+            inputStyle={{border: '1px solid rgb(224, 224, 224)', height: 40, marginTop: 4, padding: 4}}
+            hintText="Search"
+            hintStyle={{paddingLeft: 4}}
+          />
+        </ToolbarGroup>        
        </Toolbar>
 
        <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view={"event"} />

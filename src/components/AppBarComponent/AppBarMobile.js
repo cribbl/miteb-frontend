@@ -69,7 +69,7 @@ class AppBarComponent extends Component {
     const {dispatch} = this.props
     dispatch(userActions.errorNuller())
     console.log(location.pathname);
-    if (['/home','/pricing','/auth'].indexOf(location.pathname) > -1) {
+    if (['/home','/pricing','/auth', '/complaints'].indexOf(location.pathname) > -1 || location.pathname =='/') {
       this.setState({showMenuIcon: false})
     }
     else

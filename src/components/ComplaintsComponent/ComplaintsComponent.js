@@ -11,6 +11,7 @@ import {firebaseDB} from '../../firebaseConfig'
 import moment from 'moment'
 import {toggleActions} from '../../actions/toggleActions'
 import {sendPush} from '../../Services/NotificationService'
+import Finished from './Finished'
 
 class ComplaintsComponent extends Component {
   constructor (props) {
@@ -33,6 +34,8 @@ class ComplaintsComponent extends Component {
       subject: '',
       goAnonymous: false,
       isFormValid: false,
+      finished: false,
+      complaint: null,
     }
   }
 
@@ -78,11 +81,11 @@ class ComplaintsComponent extends Component {
     complaint['desc'] = this.state.desc;
     complaint['subject'] = this.state.subject;
     complaint['dated'] = moment(new Date()).format('DD-MM-YYYY');
-    firebaseDB.ref('complaints').push(complaint);
-    this.setState({submitted: true})
+    // firebaseDB.ref('complaints').push(complaint);
+    this.setState({submitted: true, finished: true, complaint: complaint})
     const {dispatch} = this.props;
-    dispatch(toggleActions.toggleToaster("Complaint registered", true))
-    sendPush("SC", "New complaint lodged", this.state.subject)
+    dispatch(toggleActions.toggleToaster("Complaint lodged", true))
+    // sendPush("SC", "New complaint lodged", this.state.subject)
   }
 
   formValid() {
@@ -104,6 +107,8 @@ class ComplaintsComponent extends Component {
 
   render() {
     return (
+      <div>
+      {this.state.finished ? <Finished complaint={this.state.complaint} /> : (
       <div style={{display: 'flex', flexDirection: 'column', marginTop: 20}}>
     	  <div style={{display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
       		<div style={{width: this.props.isMobile ? '100%' : '35%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 10}}>
@@ -150,7 +155,7 @@ class ComplaintsComponent extends Component {
                 floatingLabelText="Branch *"
                 value={this.state.fields.branch}
                 onChange={this.handleSelectChange.bind(this, "branch")}
-                style={{width: '40%'}}
+                style={{width: '43%'}}
                 disabled={this.state.goAnonymous}
               >
                 <MenuItem value={"CSE"} primaryText="CSE" />
@@ -163,7 +168,7 @@ class ComplaintsComponent extends Component {
                 floatingLabelText="Year *"
                 value={this.state.fields.year}
                 onChange={this.handleSelectChange.bind(this, "year")}
-                style={{width: '40%'}}
+                style={{width: '43%'}}
                 disabled={this.state.goAnonymous}
               >
                 <MenuItem value={"1"} primaryText="First" />
@@ -181,6 +186,8 @@ class ComplaintsComponent extends Component {
         <div style={{display: 'flex', justifyContent: 'center', marginTop: 20}}>
           <RaisedButton primary={true} label={"Lodge Complaint"} onClick={this.handleSubmit} style={{width: this.props.isMobile ? '90%' : '20%', marginBottom: 20}} disabled={!this.state.isFormValid}/>
         </div>
+      </div>
+    )}
       </div>
     );
   }

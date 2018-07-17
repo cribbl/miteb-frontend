@@ -9,8 +9,9 @@ class DashboardComponent extends Component {
 
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
-        <img src={require('../../../assets/analytics.png')} style={{width: this.props.isMobile ? '96%' : '70%'}}/>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center'}}>
+        <img src={require('../../../assets/dashboard.gif')} style={{width: this.props.isMobile ? '98%' : '50%'}}/>
+        <h3 style={{fontWeight: 700, marginTop: 30}}>We're monitoring your data and will generate useful Analytics soon</h3>
       </div>
     );
   }

@@ -18,9 +18,6 @@ const bstyle = {
 class ClassroomComponent extends Component {
   constructor (props) {
     super(props)
-  }
-
-  componentDidMount() {
     const {dispatch} = this.props
     dispatch(toggleActions.closeProfileMenu());
     if(this.props.user) {

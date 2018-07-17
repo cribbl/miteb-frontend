@@ -28,7 +28,7 @@ componentWillReceiveProps(newProps) {
           open={this.props.toast_open}
           message={this.props.toast_message}
           autoHideDuration={3000}
-          onRequestClose={this.handleSnackBarClose}
+          onRequestClose={this.handleSnackBarClose}          
         />
       </span>
     ) ;
@@ -36,10 +36,11 @@ componentWillReceiveProps(newProps) {
 }
 
 function mapStateToProps(state) {
-  const {toast_open, toast_message} = state.toggler
+  const {toast_open, toast_message, isMobile} = state.toggler
   return {
     toast_open,
-    toast_message
+    toast_message,
+    isMobile
   }
 }
 

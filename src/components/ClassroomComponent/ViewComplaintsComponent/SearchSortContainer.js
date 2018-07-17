@@ -36,7 +36,7 @@ class SearchSortContainer extends Component{
   render() {
     return (
        <div>
-       <Toolbar style={{minWidth: '100%', backgroundColor: '#FFF'}}>
+       <Toolbar style={{minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)', padding: '0px 10px'}}>
        <ToolbarGroup>
           <span className="hoverPointer" onClick={()=>{this.filterClicked('resolved')}} style={{fontWeight: this.state.filterChoice == 'resolved'? 700 : 100}}>Resolved ({this.props.resolvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
