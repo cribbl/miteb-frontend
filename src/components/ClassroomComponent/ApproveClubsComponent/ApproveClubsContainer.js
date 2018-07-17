@@ -52,9 +52,9 @@ class ApproveClubsContainer extends Component {
 		}
 	}
 
-	componentDidMount() {
+	componentWillMount() {
     if(!this.props.user){
-      hashHistory.push('/dashboard')
+      hashHistory.push('/auth')
       return
     }
     this.setState({fetching: true})
@@ -199,7 +199,7 @@ class ApproveClubsContainer extends Component {
 						        <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '30%'}}>Club Name</TableHeaderColumn>
 						        <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700, width: '20%'}}>Club Category</TableHeaderColumn>
 						        <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700, width: '30%'}}>Club FA</TableHeaderColumn>
-						        <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'20%':'10%'}}>Actions</TableHeaderColumn>
+						        <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'14%':'10%'}}>Actions</TableHeaderColumn>
 						      </TableRow>
 							  </TableHeader>
 							  <TableBody
@@ -223,7 +223,7 @@ class ApproveClubsContainer extends Component {
 					      					<TableRowColumn style={{width: '30%'}}>{club.name}</TableRowColumn>
 					      					<TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{club.category}</TableRowColumn>
 					      					<TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{club.fa.name}</TableRowColumn>
-							        		<TableRowColumn style={{width:this.props.isMobile?'20%':'10%'}}>
+							        		<TableRowColumn style={{width:this.props.isMobile?'14%':'10%'}}>
 			                      {<IconMenu
 			                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
 			                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -235,7 +235,13 @@ class ApproveClubsContainer extends Component {
 			                      </IconMenu>}
                     			</TableRowColumn>
 									     	</TableRow>
-									    )}, this)) : <TableRow><TableRowColumn style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No clubs for this search' : 'No unapproved clubs'}</TableRowColumn></TableRow>
+									    )}, this)) : (
+
+                      <div style={{textAlign: 'center', marginTop: 10}} hidden={this.state.fetching}>
+                        <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
+                        <p>{this.state.searchContent.length > 0 ? "No clubs for this search" : "No clubs here"}</p>
+                      </div>
+                    )
 						      }
 							    </TableBody>
 							</Table>

@@ -25,6 +25,7 @@ import Snackbar from 'material-ui/Snackbar';
 import moment from 'moment'
 import {fetchRooms, updateDates, getDisabledDates} from '../../../Services/firebaseDBService'
 import {sendPush} from '../../../Services/NotificationService'
+import FinishedContainer from './FinishedContainer'
 
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
@@ -45,12 +46,12 @@ class HorizontalLinearStepper extends React.Component {
 
     this.state = {
       fields: {
-        booker_name: '',
-        booker_email: '',
-        booker_contact: '',
-        booker_reg_no: '',
-        title: '',
-        desc: '',
+        booker_name: 'Bhawesh',
+        booker_email: 'bhansalibhawesh@yahoo.com',
+        booker_contact: '7760627296',
+        booker_reg_no: '150911124',
+        title: 'SOme title',
+        desc: 'this is the desc',
         workshop: 'External'
       },
       fieldTouch: {
@@ -70,7 +71,7 @@ class HorizontalLinearStepper extends React.Component {
         desc: ''
       },
       finished: false,
-      stepIndex: 0,
+      stepIndex: 2,
       value: 1,
       checked: false,
       start_date: null,
@@ -90,7 +91,8 @@ class HorizontalLinearStepper extends React.Component {
       takenRooms: [],
       disabledDates: [],
       datesSelected: false,
-      fetchingRooms: true
+      fetchingRooms: true,
+      bookedEvent: null,
     }       
   }
 
@@ -314,20 +316,22 @@ class HorizontalLinearStepper extends React.Component {
         "FA_name": this.props.user.fa.name
       }
      
-      var myRef = firebaseDB.ref('/events/').push(newData);
-      var key = myRef.key;
+      // var myRef = firebaseDB.ref('/events/').push(newData);
+      // var key = myRef.key;
       var scope = this;
-      firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_events/').push(key,
-        function(res, err) {
-          if(err)
-            console.log("couldn't be booked ", err);
-          else {
-            updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms))
-            sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
-            scope.setState({SnackBarmessage: 'Event booked successfully', openSnackBar: true})
-            scope.setState({finished: true})
-          }
-        });
+      // firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_events/').push(key,
+      //   function(res, err) {
+      //     if(err)
+      //       console.log("couldn't be booked ", err);
+      //     else {
+      //       updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms))
+      //       sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
+      //       scope.setState({SnackBarmessage: 'Request for booking room successful', openSnackBar: true})
+      //       scope.setState({bookedEvent: newData, finished: true})
+      //     }
+      //   });
+      scope.setState({SnackBarmessage: 'Request for booking room successful', openSnackBar: true})
+      scope.setState({bookedEvent: newData, finished: true})
     }.bind(this))
     .catch(function() { })
   }
@@ -490,19 +494,7 @@ class HorizontalLinearStepper extends React.Component {
   render() {
     return (
       <div>
-        <Paper style={{width: this.props.isMobile? '98%':'90%' , height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%'}} zDepth={3}>
-
-          <Stepper linear={false} activeStep={this.state.stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'} style={{width: '80%', margin: '0 auto'}}>
-            <Step>
-              <StepLabel>Booker Details</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Event Description</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Choose your Location</StepLabel>
-            </Step>
-          </Stepper>
+        <Paper style={{width: this.props.isMobile? '98%':'90%' , height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%', minHeight: 600}} zDepth={3}>
 
           <Snackbar
             open={this.state.openSnackBar}
@@ -513,21 +505,21 @@ class HorizontalLinearStepper extends React.Component {
 
           <div style={{backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
             {this.state.finished ? (
-              <div>
-                <div>
-                  Sit back and relax! Your event titled '{this.state.fields.title}' has been sent for approvals from the 
-                  authorities concerned.
-                  You can track your application under 'My Events' and we'll notify you via email and sms.
-                </div>
-                <div style = {{marginTop: 20, marginBottom:20}}>
-                <Link to = "dashboard/myEvents"><RaisedButton label="My Events" primary={true} style = {{marginRight: (this.props.isMobile?5:'10%')}} /></Link>
-                <Link to = "dashboard/book_room"><RaisedButton label="Book Another Event"
-                  primary={true} onClick={(event) => {
-                    this.setState({stepIndex: 0, finished: false});
-                    }} /></Link>
-                </div>
-              </div>          ) : (
+              <FinishedContainer event={this.state.bookedEvent}/>
+              ) : (
+              
               <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
+                <Stepper linear={false} activeStep={this.state.stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'} style={{width: '80%', margin: '0 auto'}}>
+                  <Step>
+                    <StepLabel>Booker Details</StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>Event Description</StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>Choose your Location</StepLabel>
+                  </Step>
+                </Stepper>
                 <div>{this.getStepContent(this.state.stepIndex)}</div>
                 <div style={{marginBottom:20}}>
                   <FlatButton

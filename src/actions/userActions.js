@@ -27,6 +27,7 @@ function login(email, password) {
                             message: 'Your account is not approved'
                         }
                         dispatch(failure(error));
+                        signOut();
                         return;
                     }
                     localStorage.setItem('clubID', user.uid)

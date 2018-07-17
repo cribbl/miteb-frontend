@@ -42,7 +42,8 @@ class CardComponent extends Component {
           <IconMenu
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}>
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+            useLayerForClickAway={true}>
             
             { !!this.props.developer.github && <a href={this.props.developer.github} target="_blank"> <MenuItem primaryText="Github" /> </a> }
             { !!this.props.developer.linkedin && <a href={this.props.developer.linkedin} target="_blank"> <MenuItem primaryText="LinkedIn" /> </a> }

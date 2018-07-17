@@ -31,7 +31,7 @@ class Reg extends Component {
   }
 
   componentWillMount() {
-    if(this.props.user) {
+    if(this.props.user && this.props.user.isApproved) {
       console.log('user prop exists')
       hashHistory.push('/dashboard')
     }
@@ -41,7 +41,7 @@ class Reg extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.user) {
+    if(nextProps.user && nextProps.user.isApproved) {
       console.log('user prop exists')
       hashHistory.push('/dashboard')
     }

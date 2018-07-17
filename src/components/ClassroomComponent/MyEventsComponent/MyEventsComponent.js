@@ -154,7 +154,7 @@ class MyEventsComponent extends Component {
 
   componentWillMount() {
     if(!this.props.user){
-      hashHistory.goBack();
+      hashHistory.push('/auth');
       return
     }
     else {
@@ -260,11 +260,11 @@ class MyEventsComponent extends Component {
                     <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
-                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%'}}>
+                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', overflow: 'visible'}}>
                       {<IconMenu
                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                      anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                      targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
                       useLayerForClickAway={true}
                       >
                       <MenuItem primaryText="View" onClick={() => this.showDialog(event)}/>
@@ -272,7 +272,13 @@ class MyEventsComponent extends Component {
                       </IconMenu>}
                     </TableRowColumn>
                   </TableRow>
-              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No Events Yet'}</p>
+              )}, this)) : (
+
+              <div style={{textAlign: 'center', marginTop: 10}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
+                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "No events found"}</p>
+                </div>
+              )
           }
 
           </TableBody>

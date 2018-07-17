@@ -24,8 +24,8 @@ class NotFound extends Component {
 
   render() {
     return (
-    	<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '10%'}}>
-        <img src={require('../../assets/404.png')} style={{width: this.props.isMobile ? '98%' : '50%'}}/>
+    	<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '5%'}}>
+        <img src={require('../../assets/404.gif')} style={{width: this.props.isMobile ? '98%' : '45%'}}/>
         <br /><br />
         <h5>Redirecting back in {this.state.counter}</h5>
       </div>

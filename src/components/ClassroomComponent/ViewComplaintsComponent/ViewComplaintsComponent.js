@@ -167,7 +167,7 @@ class ViewComplaintsComponent extends Component {
 
   componentDidMount() {
     if(!this.props.user){
-      hashHistory.push('/dashboard')
+      hashHistory.push('/auth')
       return
     }
     this.setState({fetching: true})
@@ -234,7 +234,7 @@ class ViewComplaintsComponent extends Component {
                 <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
               </TableHeaderColumn>
               <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700, width: '30%'}}>Description</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'20%':'10%'}}>Actions</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'14%':'10%'}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -257,7 +257,7 @@ class ViewComplaintsComponent extends Component {
                     <TableRowColumn style={{width: '30%'}}>{complaint.subject}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{moment(complaint.dated, 'DD-MM-YYYY').format("DD MMM 'YY")}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>
-                    <TableRowColumn style={{width: this.props.isMobile?'20%':'10%'}}>
+                    <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>
                       {<IconMenu
                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -269,7 +269,13 @@ class ViewComplaintsComponent extends Component {
                       </IconMenu>}
                     </TableRowColumn>
                   </TableRow>
-            )}, this)) : <TableRow><TableRowColumn style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No complaints for this search' : 'No complaints'}</TableRowColumn></TableRow>
+            )}, this)) : (
+
+              <div style={{textAlign: 'center', marginTop: 10}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
+                <p>{this.state.searchContent.length > 0 ? "No complaints for this seach" : "No complaints found"}</p>
+                </div>
+              )
           }
           
           </TableBody>

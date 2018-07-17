@@ -64,18 +64,12 @@ class ProfileMenu extends Component {
           animation={PopoverAnimationVertical}>
           <Menu onItemClick={this.menuItemClicked} style={{maxWidth: 350}}>
           {this.props.user &&
-            <MenuItem key="/dashboard/profile">
+            <MenuItem key="/dashboard">
             <Hihi />
             </MenuItem>
           }
           
-            <MenuItem
-              key="/auth"
-              primaryText="Login"
-              leftIcon={<FaceIcon />}
-              hidden={!this.props.isMobile || this.props.user}/>
-
-            <Divider hidden={!this.props.isMobile} />
+            <Divider hidden={!this.props.isMobile || !this.props.user}/>
 
             <MenuItem
               key="/"
@@ -90,6 +84,14 @@ class ProfileMenu extends Component {
               primaryText="Complaints"
               leftIcon={<ComplaintIcon />}
             />
+            
+            <Divider hidden={!this.props.isMobile || this.props.user} />
+            
+            <MenuItem
+              key="/auth"
+              primaryText="Login"
+              leftIcon={<FaceIcon />}
+              hidden={!this.props.isMobile || this.props.user}/>
 
 
             <Divider hidden={!this.props.isMobile || !this.props.user}/>

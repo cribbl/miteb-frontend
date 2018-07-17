@@ -8,9 +8,9 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "logo-225x255.png",
-      "sizes": "225x225",
-      "type": "image/png"
+      "src": "rocket-loader.gif",
+      "sizes": "255x255",
+      "type": "image/gif"
     }
   ],
   "gcm_sender_id": "103953800507"

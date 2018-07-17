@@ -33,6 +33,7 @@ import './AppBarComponent.css'
 
   const MyNavLinks = () => (
     <ToolbarGroup>
+      <Link to="/" activeClassName=""><FlatButton label="Home" /></Link>
       <Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link>      
       <Link to="/auth" activeClassName=""><FlatButton label="Login" /></Link>
 	  </ToolbarGroup>
@@ -41,8 +42,10 @@ import './AppBarComponent.css'
   const MyTitle = (props) => (
     <div style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
     <h2 style={{alignSelf: 'center', marginTop: 11}}>{props.content}</h2>
-    <div hidden={props.hidden}>
-    <Link to="/classroom" activeClassName="activeLinkButton"><FlatButton label="Dashboard" /></Link>
+    <div>
+    <Link to="/" activeClassName=""><FlatButton label="Home" /></Link>
+    <Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link>
+    <Link to="/dashboard" activeClassName=""><FlatButton label="Dashboard" /></Link>
     </div>
     </div>
   )
@@ -81,7 +84,11 @@ class AppBarComponent extends Component {
   componentWillMount() {
 
     console.log(window.location.hash)
-    if(window.location.hash.search('classroom') > -1) {
+    if(window.location.hash.search('dashboard') > -1) {
+      if(this.props.user && !this.props.user.isApproved) {
+        console.log("APP BAR WORKING")
+        hashHistory.push('auth');
+      }
       this.setState({showMenuIcon: true})
     }
 
@@ -89,7 +96,7 @@ class AppBarComponent extends Component {
     const {dispatch} = this.props
     dispatch(userActions.errorNuller())
     console.log(location.pathname);
-    if (['/home', '/pricing', '/auth', '/'].indexOf(location.pathname) > -1) {
+    if (['/home', '/complaints', '/auth', '/'].indexOf(location.pathname) > -1) {
       this.setState({showMenuIcon: false})
     }
     else

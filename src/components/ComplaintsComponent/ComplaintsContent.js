@@ -47,7 +47,7 @@ class ComplaintsComponent extends Component {
           floatingLabelText="Subject"
           value={this.state.subject}
           onChange={this.handleSelectChange}
-          style={{width: '20%'}}
+          style={{width: this.props.isMobile ? '45%' : '20%', overflow: 'hidden'}}
         >
           <MenuItem value={"Hostel"} primaryText="Hostel" />
           <MenuItem value={"Academics"} primaryText="Academics" />
