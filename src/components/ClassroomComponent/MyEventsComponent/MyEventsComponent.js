@@ -260,7 +260,7 @@ class MyEventsComponent extends Component {
                     <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
-                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', overflow: 'visible'}}>
+                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', textOverflow: 'clip'}}>
                       {<IconMenu
                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                       anchorOrigin={{horizontal: 'right', vertical: 'top'}}

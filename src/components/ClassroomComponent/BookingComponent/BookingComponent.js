@@ -15,7 +15,6 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import Subheader from 'material-ui/Subheader';
-import Checkbox from 'material-ui/Checkbox';
 import RoomsContainer from './Rooms'
 import axios from 'axios';
 import {firebaseDB} from '../../../firebaseConfig'
@@ -46,13 +45,13 @@ class HorizontalLinearStepper extends React.Component {
 
     this.state = {
       fields: {
-        booker_name: 'Bhawesh',
-        booker_email: 'bhansalibhawesh@yahoo.com',
-        booker_contact: '7760627296',
-        booker_reg_no: '150911124',
-        title: 'SOme title',
-        desc: 'this is the desc',
-        workshop: 'External'
+        booker_name: '',
+        booker_email: '',
+        booker_contact: '',
+        booker_reg_no: '',
+        title: '',
+        desc: '',
+        workshop: '',
       },
       fieldTouch: {
         booker_name: false,
@@ -71,18 +70,13 @@ class HorizontalLinearStepper extends React.Component {
         desc: ''
       },
       finished: false,
-      stepIndex: 2,
+      stepIndex: 0,
       value: 1,
-      checked: false,
       start_date: null,
       end_date: null,
-      checkbox: null,
-      roomStatusArray: {'0101': true},
       today: new Date(),
       minDate: new Date(),
       maxDate: maxDate,
-      fromChild: '',
-      convertedObj: {},
       SnackBarmessage: '',
       openSnackBar: false,
       autoHideDuration: 3000,
@@ -288,7 +282,6 @@ class HorizontalLinearStepper extends React.Component {
       let field = this.state.fields;
       let start__date = this.state.start_date;
       let end__date = this.state.end_date;
-      let roomStatus = this.state.convertedObj;
       let start_date = start__date.toISOString();
       let end_date = end__date.toISOString();
       field["start_date"] = start_date;
@@ -299,7 +292,7 @@ class HorizontalLinearStepper extends React.Component {
         "end_date":moment(field["end_date"]).format('DD-MM-YYYY'),
         "rooms":this.state.selectedRooms,
         "AD_appr":"NA",
-        "FA_appr":"pending",
+        "FA_appr":this.props.user.isSC ? "approved" : "pending",
         "SO_appr":"NA",
         "booker_name":field["booker_name"],
         "booker_contact":field["booker_contact"],
@@ -313,25 +306,24 @@ class HorizontalLinearStepper extends React.Component {
         "start_time":"5:45pm",
         "clubName": this.props.user.name,
         "clubID": localStorage.getItem('clubID'),
-        "FA_name": this.props.user.fa.name
+        "FA_name": this.props.user.fa.name,
+        "FA_date": this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null,
       }
      
-      // var myRef = firebaseDB.ref('/events/').push(newData);
-      // var key = myRef.key;
+      var myRef = firebaseDB.ref('/events/').push(newData);
+      var key = myRef.key;
       var scope = this;
-      // firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_events/').push(key,
-      //   function(res, err) {
-      //     if(err)
-      //       console.log("couldn't be booked ", err);
-      //     else {
-      //       updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms))
-      //       sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
-      //       scope.setState({SnackBarmessage: 'Request for booking room successful', openSnackBar: true})
-      //       scope.setState({bookedEvent: newData, finished: true})
-      //     }
-      //   });
-      scope.setState({SnackBarmessage: 'Request for booking room successful', openSnackBar: true})
-      scope.setState({bookedEvent: newData, finished: true})
+      firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_events/').push(key,
+        function(res, err) {
+          if(err)
+            console.log("couldn't be booked ", err);
+          else {
+            updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms))
+            sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
+            scope.setState({SnackBarmessage: 'Request for booking room successful', openSnackBar: true})
+            scope.setState({bookedEvent: newData, finished: true})
+          }
+        });
     }.bind(this))
     .catch(function() { })
   }

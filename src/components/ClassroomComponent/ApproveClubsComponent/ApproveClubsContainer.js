@@ -223,7 +223,7 @@ class ApproveClubsContainer extends Component {
 					      					<TableRowColumn style={{width: '30%'}}>{club.name}</TableRowColumn>
 					      					<TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{club.category}</TableRowColumn>
 					      					<TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{club.fa.name}</TableRowColumn>
-							        		<TableRowColumn style={{width:this.props.isMobile?'14%':'10%'}}>
+							        		<TableRowColumn style={{width:this.props.isMobile?'14%':'10%', textOverflow: 'clip'}}>
 			                      {<IconMenu
 			                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
 			                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
