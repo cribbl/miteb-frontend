@@ -118,11 +118,11 @@ class ViewComplaintsComponent extends Component {
         delete resolvedArr[complaint.key];
         console.log("resolved array is");
         console.log(resolvedArr);
-        this.setState({resolvedArr:resolvedArr});
       }
     }
     this.filterState(this.state.filterChoice);
-    this.nextComplaint();
+    if(this.state.currentComplaint)
+      this.nextComplaint();
     const {dispatch} = this.props
     dispatch(toggleActions.toggleToaster(mode ? "Complaint marked Resolved" : "Complaint marked Unresolved", true))
   }
@@ -257,7 +257,7 @@ class ViewComplaintsComponent extends Component {
                     <TableRowColumn style={{width: '30%'}}>{complaint.subject}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{moment(complaint.dated, 'DD-MM-YYYY').format("DD MMM 'YY")}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>
-                    <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>
+                    <TableRowColumn style={{width: this.props.isMobile?'14%':'10%', textOverflow: 'clip'}}>
                       {<IconMenu
                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -271,7 +271,7 @@ class ViewComplaintsComponent extends Component {
                   </TableRow>
             )}, this)) : (
 
-              <div style={{textAlign: 'center', marginTop: 10}} hidden={this.state.fetching}>
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center'}} hidden={this.state.fetching}>
                 <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
                 <p>{this.state.searchContent.length > 0 ? "No complaints for this seach" : "No complaints found"}</p>
                 </div>

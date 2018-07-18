@@ -39,11 +39,11 @@ class SearchSortContainer extends Component{
        <Toolbar style={{minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)', padding: '0px 10px'}}>
        <ToolbarGroup>
           <span className="hoverPointer" onClick={()=>{this.filterClicked('resolved')}} style={{fontWeight: this.state.filterChoice == 'resolved'? 700 : 100}}>Resolved ({this.props.resolvedLength})</span>
-          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
+          <ToolbarSeparator style={{marginLeft: 6, marginRight: 6, height: 20}}/>
           <span className="hoverPointer" onClick={()=>{this.filterClicked('unresolved')}} style={{fontWeight: this.state.filterChoice == 'unresolved'? 700 : 100}}>Unresolved ({this.props.unresolvedLength})</span>
-          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
+          <ToolbarSeparator style={{marginLeft: 6, marginRight: 6, height: 20}}/>
           <span className="hoverPointer" onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.state.filterChoice == 'all'? 700 : 100}}>All ({this.props.allLength})</span>
-          <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
+          <ToolbarSeparator style={{marginLeft: 6, marginRight: 6, height: 20}}/>
           <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog}>
             <ExportIcon />
           </IconButton>
@@ -52,10 +52,12 @@ class SearchSortContainer extends Component{
         {!this.props.isMobile ? 
           <ToolbarGroup>
             <TextField
-              floatingLabelText="Search"
+              value={this.state.search}
               onChange={this.handleSearch}
-              style={{marginBottom: 15}}
-              value={this.state.content}
+              underlineShow={false}
+              inputStyle={{border: '1px solid rgb(224, 224, 224)', height: 40, marginTop: 4, padding: 4}}
+              hintText="Search"
+              hintStyle={{paddingLeft: 4}}
             />
           </ToolbarGroup>
           : '' }

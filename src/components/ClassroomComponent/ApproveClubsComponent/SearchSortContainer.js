@@ -39,9 +39,13 @@ class SearchClubContainer extends Component{
         {!this.props.isMobile ? 
           <ToolbarGroup>
             <TextField
-              floatingLabelText="Search"
               value={this.state.search}
-              onChange={this.handleSearch} />
+              onChange={this.handleSearch}
+              underlineShow={false}
+              inputStyle={{border: '1px solid rgb(224, 224, 224)', height: 40, marginTop: 4, padding: 4}}
+              hintText="Search"
+              hintStyle={{paddingLeft: 4}}
+            />
           </ToolbarGroup>
           : '' }
        </Toolbar>
