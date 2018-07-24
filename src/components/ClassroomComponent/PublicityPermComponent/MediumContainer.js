@@ -2,12 +2,37 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {List,ListItem} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
+import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+
+import Avatar from 'material-ui/Avatar';
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+
 import Paper from 'material-ui/Paper';
 //import { Route , Link } from 'react-router';
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="Upload image"
+    tooltipPosition="bottom-right"
+  >
+    <MoreVertIcon color={grey400} />
+  </IconButton>
+);
+
+const rightIconMenu = (
+  <IconMenu iconButtonElement={iconButtonElement}>
+    <MenuItem>Upload</MenuItem>
+  </IconMenu>
+);
+
 
 class MediumContainer extends React.Component {
 	constructor(props){
@@ -114,7 +139,9 @@ class MediumContainer extends React.Component {
                    <ListItem
                     style={{minHeight:70}}
                     onClick={this.handleClick.bind(this,3)}
+                    rightIconButton={rightIconMenu}
                     primaryText="Poster"
+
                   />
                 </div>
             </List>  
