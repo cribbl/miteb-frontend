@@ -31,9 +31,8 @@ class PublicityComponent extends React.Component {
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
 		this.state =  {
       checked: [true,false,false,false],
-      index: 0,
       shouldCheck: false,
-      stepIndex:0,
+      stepIndex:2,
       finished: false,
       isFormValid:false,
       booker_fields:  {
