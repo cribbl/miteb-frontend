@@ -10,7 +10,9 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 import Paper from 'material-ui/Paper';
-//import { Route , Link } from 'react-router';
+import Dropzone from 'react-dropzone';
+
+
 class MediumContainer extends React.Component {
 	constructor(props){
 		super(props);
@@ -18,19 +20,18 @@ class MediumContainer extends React.Component {
     this.handleToggle.bind(this);
 		this.state =  {
       checkboxValue : 0,
-      checked: [true, false, false, false],
+      checked: this.props.checkedMediums,
       clickedValue: 0,
-      indexes: [{ '0':false, '1':false,'2':false,'3':false},
-              { '0':false, '1':false,'2':false,'3':false},
-              { '0':false, '1':false,'2':false,'3':false},
-              { '0':false, '1':false,'2':false,'3':false }],
+      indexes: this.props.indexesMediums,
       clicked: true,
-      object: { 0: 'Banner', 1: 'InfoDesk', 2: 'Digital Board', 3: 'Poster'}
+      object: { 0: 'Banner', 1: 'InfoDesk', 2: 'Digital Board', 3: 'Poster'},
+      files: this.props.filesMediums
 
 		}
   }
-  updateShared(){
-    this.props.updateShared(this.state.checked);
+  updateShared(checked){
+    this.props.updateShared(checked);
+
   }
   handleClick(location){
     //console.log('i have been clicked',location)
@@ -39,9 +40,39 @@ class MediumContainer extends React.Component {
       clicked: true
     })
   }
-  handleUpload(){
-    console.log('uploading..')
+ onPreviewDrop = (files) => {
+    this.setState({
+      files: this.state.files.concat(files),
+    });
+    this.props.updateFiles(this.state.files);
   }
+  renderSubmit() {
+      const previewStyle = {
+        display: 'inline',
+        width: 100,
+        height: 100,
+      };
+
+      return(  
+        <div className="dropzone" style={{marginLeft:20,marginRight:20,border: "1px dotted blue"}}>
+         <Dropzone style={{"width" : "100%", "height" : "20%"}} disabled={!this.state.checked[3]} accept="image/*" onDrop={this.onPreviewDrop} multiple={true}>
+            <div style={{color: !this.state.checked[3]? 'grey' : 'black'}} > Upload your posters here </div>
+          </Dropzone>
+         {this.state.files.length > 0 &&
+          <div>
+            {this.state.files.map((file) => (
+              <img
+                alt="Preview"
+                key={file.preview}
+                src={file.preview}
+                style={previewStyle}
+              />
+            ))}
+          </div>
+        }
+        </div>)
+  }
+   
   handleToggle(s,i){
     let indexes = this.state.indexes;
     (indexes[s])[i]=!(indexes[s])[i];
@@ -91,7 +122,7 @@ class MediumContainer extends React.Component {
                <div style={{display:'flex', flexDirection: 'row'}}>
                  <Checkbox value={0} checked={this.state.checked[0]}   style={{width: 48,height: 36 }}onCheck={this.updateCheck.bind(this,0)}/>
                  <ListItem
-                    style={{minHeight:70}}
+                    style={{minHeight:55}}
                     onClick={this.handleClick.bind(this,0)}
                     primaryText="Banner"
                   />
@@ -100,7 +131,7 @@ class MediumContainer extends React.Component {
                 <div style={{display:'flex', flexDirection: 'row'}}>
                   <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,1)} />
                   <ListItem
-                    style={{minHeight:70}}
+                    style={{minHeight:55}}
                     onClick={this.handleClick.bind(this,1)}
                     primaryText="InfoDesk"
                    />
@@ -109,7 +140,7 @@ class MediumContainer extends React.Component {
                 <div style={{display:'flex', flexDirection: 'row'}}>
                   <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,2)} />
                   <ListItem
-                    style={{minHeight:70}}
+                    style={{minHeight:55}}
                     onClick={this.handleClick.bind(this,2)}
                     primaryText="Digital Board"
                   />
@@ -118,13 +149,12 @@ class MediumContainer extends React.Component {
                 <div style={{display:'flex', flexDirection: 'row'}}>
                   <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,3)} />
                    <ListItem
-                    style={{minHeight:70}}
+                    style={{minHeight:55}}
                     onClick={this.handleClick.bind(this,3)}
                     primaryText="Poster"
-
                   />
-                   <IconButton touch={true} tooltip="Upload image" tooltipPosition="bottom-right" onClick={this.handleUpload} > <UploadIcon /> </IconButton>
                 </div>
+                {this.renderSubmit()}
             </List>  
 	         </Paper>
           </div>

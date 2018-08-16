@@ -23,12 +23,14 @@ import BookerContainer from './BookerContainer';
 import EventContainer from './EventContainer';
 import Snackbar from 'material-ui/Snackbar';
 import moment from 'moment'
-import {sendPush} from '../../../Services/NotificationService'
+import {sendPush} from '../../../Services/NotificationService';
+import Dropzone from 'react-dropzone';
+import {uploadPoster} from '../../../Services/firebaseStorageService';
 
 class PublicityComponent extends React.Component {
 	constructor(props){
 		super(props);
-    this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
+    this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
 		this.state =  {
       checked: [true,false,false,false],
       shouldCheck: false,
@@ -46,10 +48,15 @@ class PublicityComponent extends React.Component {
         start_date: null,
         end_date: null
       },
-      indexes: [],
+      //indexes: [],
       SnackBarmessage: '',
       openSnackBar: false,
       autoHideDuration: 3000,
+      indexes: [{ '0':false, '1':false,'2':false,'3':false},
+              { '0':false, '1':false,'2':false,'3':false},
+              { '0':false, '1':false,'2':false,'3':false},
+              { '0':false, '1':false,'2':false,'3':false }],
+      files: []
 		}
 	};
     componentWillMount(){
@@ -70,10 +77,11 @@ class PublicityComponent extends React.Component {
         this.setState({
         isFormValid:true,
         stepIndex: stepIndex +1,
-        finished: stepIndex >=2 
+        finished: stepIndex >=2
       })
-    if(this.state.stepIndex === 2)
+    if(this.state.stepIndex === 2) {
       this.handleSubmit();
+    }
    
   }
   };
@@ -89,34 +97,46 @@ class PublicityComponent extends React.Component {
     this.setState({openSnackBar: false}) 
   }
 
+
   handleSubmit() {
     var result = this.parseMediums();
-    var newData = {
-      "AD_appr":"NA",
-      "FA_appr":"pending",
-      "SO_appr":"NA",
-      "clubName": this.props.user.name,
-      "clubID": localStorage.getItem('clubID'),
-      "FA_name": this.props.user.fa.name
-    }
-    var booker_fields={
-      'booker_fields':this.state.booker_fields
-    }
-    var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
-    console.log('obj = ',obj);
-    var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
-    var key = myRef.key;
-    var scope = this;
-    firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_publicity/').push(key,
-      function(res, err) {
-        if(err)
-          console.log("couldn't be booked ", err);
-        else {
-          sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
-          scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
-          scope.setState({finished: true})
-        }
-      });
+    var file = this.state.files;
+    console.log(result);
+    uploadPoster(this.props.user.uid, file, (err, res) => {
+      if(err) {
+        console.log(err)
+      }
+      else {
+        //updateUser(this.props.user.uid, {profilePicURL: res.downloadURL});
+      }
+    })
+    // var newData = {
+    //   "AD_appr":"NA",
+    //   "FA_appr":"pending",
+    //   "SO_appr":"NA",
+    //   "clubName": this.props.user.name,
+    //   "clubID": localStorage.getItem('clubID'),
+    //   "FA_name": this.props.user.fa.name
+    // }
+    // var booker_fields={
+    //   'booker_fields':this.state.booker_fields
+    // }
+    // var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
+    // console.log('obj = ',obj);
+    // var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
+    // var key = myRef.key;
+    // var scope = this;
+    // firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_publicity/').push(key,
+    //   function(res, err) {
+    //     if(err)
+    //       console.log("couldn't be booked ", err);
+    //     else {
+    //       sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
+    //       scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
+    //       scope.setState({finished: true})
+    //     }
+    //   });
+
       
   }
 
@@ -134,8 +154,6 @@ class PublicityComponent extends React.Component {
    }
     for(var item in newObj){
     for(var a in array){
-      console.log(item);
-      console.log(newObj[item][array[a]]);
       if(newObj[item][array[a]] === false)
         delete newObj[item][array[a]]
     }
@@ -169,6 +187,9 @@ class PublicityComponent extends React.Component {
   updateShared(shared_value){
     this.setState({checked: shared_value})
   }
+  updateFiles(files){
+    this.setState({files: files})
+  }
   updateBooker(fields){
     this.setState({
       booker_fields:fields
@@ -192,13 +213,13 @@ class PublicityComponent extends React.Component {
         return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
         return  (<div>
-                 <MediumContainer checkedMediums={this.state.checked} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />      
+                 <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />      
+        
           </div>);
       default:
         return '';
     }
   }
-   
 		render() {
       var stepIndex=this.state.stepIndex;
       var finished=this.state.finished;
