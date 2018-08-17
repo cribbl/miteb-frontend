@@ -21,16 +21,17 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
-import Snackbar from 'material-ui/Snackbar';
-import {approveEvent, flagRejectEvent} from '../../../Services/firebaseDBService'
-import Dialogxx from '../../Dialogs/ViewComplaintDialogComponent'
+import ViewComplaintDialog from '../../Dialogs/ViewComplaintDialogComponent'
 import SortIcon from 'material-ui/svg-icons/content/sort' 
 import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
+import Visibility from 'material-ui/svg-icons/action/visibility'
+import VisibilityOff from 'material-ui/svg-icons/action/visibility-off'
 import moment from 'moment'
 import {toggleActions} from '../../../actions/toggleActions'
 import StatusIcon from 'material-ui/svg-icons/av/fiber-manual-record'
 import SearchSortContainer from './SearchSortContainer'
+import ReactTooltip from 'react-tooltip'
 
 class ViewComplaintsComponent extends Component {
   constructor(props) {
@@ -58,7 +59,8 @@ class ViewComplaintsComponent extends Component {
       currentComplaint: null,
       dateSort: null,
       filterChoice: 'all',
-      searchContent: ''
+      searchContent: '',
+      fetching: true,
     }
   }
 
@@ -107,7 +109,7 @@ class ViewComplaintsComponent extends Component {
       delete unresolvedArr[complaint.key];
       this.setState({unresolvedArr: unresolvedArr});
     } else {
-      if(complaint.isResolved==false) { 
+      if(!mode==false) { 
         var unresolvedArr = this.state.unresolvedArr;
         delete unresolvedArr[complaint.key];
         console.log("unresolved array is");
@@ -165,8 +167,8 @@ class ViewComplaintsComponent extends Component {
     }
   }
 
-  componentDidMount() {
-    if(!this.props.user){
+  componentWillMount() {
+    if(!(this.props.user && this.props.user.isSC)) {
       hashHistory.push('/auth')
       return
     }
@@ -208,9 +210,9 @@ class ViewComplaintsComponent extends Component {
       </div>
 
       {this.state.currentComplaint && 
-      <Dialogxx open={this.state.dialogOpen} currentComplaint={this.state.currentComplaint} handleClose={this.handleDialogClose} nextComplaint={this.nextComplaint} resolveComplaint={this.resolveComplaint} />}
+      <ViewComplaintDialog open={this.state.dialogOpen} currentComplaint={this.state.currentComplaint} handleClose={this.handleDialogClose} nextComplaint={this.nextComplaint} resolveComplaint={this.resolveComplaint} />}
 
-      <Paper style={{background: '', width:'98%', height: '500px', margin: 'auto',marginTop: 20,display: 'flex', justifyContent: 'center'}} zDepth={1}>
+      <Paper style={{width: '98%', height: 500, overflow: 'hidden', marginTop: 20}} zDepth={2}>
         <Table
           style={{backgroundColor: ''}}
           height={'440px'}
@@ -226,15 +228,16 @@ class ViewComplaintsComponent extends Component {
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '10%'}}>Status</TableHeaderColumn>
+              {/*<TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '10%', paddingLeft: 0}}>Anonymous</TableHeaderColumn> */}
               <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: '30%'}}>Subject</TableHeaderColumn>
               <TableHeaderColumn
                 style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '20%'}}
                 hidden={this.props.isMobile}>
                 Dated
-                <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
+                <IconButton data-tip="Sort by date" onClick={this.handleSort} style={{padding: 0, height: 20, width: 20, marginLeft: 5}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
               </TableHeaderColumn>
               <TableHeaderColumn hidden={this.props.isMobile} style={{color: '#000', fontWeight: 700, width: '30%'}}>Description</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'14%':'10%'}}>Actions</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'20%':'10%'}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -254,8 +257,9 @@ class ViewComplaintsComponent extends Component {
               return (
                   <TableRow key={index}>
                     <TableRowColumn style={{width: '10%'}}><StatusIcon style={{color: complaint.isResolved ? '#558B2F' : '#b71c1c'}} /></TableRowColumn>
+                    {/*<TableRowColumn style={{width: '10%'}}>{complaint.goAnonymous ? <VisibilityOff data-tip="Anonymous" /> : <Visibility />}</TableRowColumn>*/}
                     <TableRowColumn style={{width: '30%'}}>{complaint.subject}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{moment(complaint.dated, 'DD-MM-YYYY').format("DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{complaint.dated}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile} style={{width: '30%'}}>{complaint.desc}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'14%':'10%', textOverflow: 'clip'}}>
                       {<IconMenu
@@ -271,8 +275,8 @@ class ViewComplaintsComponent extends Component {
                   </TableRow>
             )}, this)) : (
 
-              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center'}} hidden={this.state.fetching}>
-                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.gif")} style={{width: this.props.isMobile ? '70%' : '30%', marginBottom: 10}} />
                 <p>{this.state.searchContent.length > 0 ? "No complaints for this seach" : "No complaints found"}</p>
                 </div>
               )
@@ -281,6 +285,7 @@ class ViewComplaintsComponent extends Component {
           </TableBody>
         </Table>
         </Paper>
+        <ReactTooltip effect="solid"/>
       </div>
     );
   }

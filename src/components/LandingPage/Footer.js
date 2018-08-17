@@ -36,15 +36,14 @@ class Footer extends Component {
           </div>
           <div style={{display: 'flex', alignItems: 'center', color: '#BFBFBF', marginLeft: -10, height: 30}}>
             <IconButton style={{width: 38, height: 38}}><EmailIcon color='#BFBFBF' viewBox="0 0 30 30"/></IconButton>
-            <p>admin@cribblservices.com</p>
+            <p>support@cribblservices.com</p>
           </div>
         </div>
         
         <div style={{backgroundColor: '', textAlign: 'left', padding: this.props.isMobile ? 15 : 40}}>
           <p style={{marginBottom: 15, fontSize: 18}}>Policies</p>
-          <Link to="/" style={{color: '#BFBFBF'}}>Privacy Policy</Link><br />
-          <Link to="/" style={{color: '#BFBFBF'}}>TnC</Link><br />
-          <Link to="/" style={{color: '#BFBFBF'}}>GDPR</Link><br />
+          <Link to="/policy/privacy" style={{color: '#BFBFBF'}}>Privacy Policy</Link><br />
+          <Link to="/policy/tnc" style={{color: '#BFBFBF'}}>TnC</Link><br />
         </div>
       </div>
     )

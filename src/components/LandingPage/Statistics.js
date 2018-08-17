@@ -21,9 +21,9 @@ class Statistics extends Component {
         </div>
         
         <div style={{backgroundColor: '', padding: 15, margin: 20}}>
-          <img src={require("../../assets/poster.png")} style={{height: 80, width: 80, marginBottom: 10}} />
+          <img src={require("../../assets/rooms.png")} style={{height: 80, width: 80, marginBottom: 10}} />
           <h2 style={{fontWeight: 700}}>200+</h2>
-          <p>Publicity Perms</p>
+          <p>Available Rooms</p>
         </div>
 
         <div style={{backgroundColor: '', padding: 15, margin: 20}}>

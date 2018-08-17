@@ -21,7 +21,7 @@ class LandingPage extends Component {
         <div style={{width: this.props.isMobile ? '94%' : '70%'}}>
           <img src={require("../../assets/logo.svg")} style={{height: 180, width: 180, margin: this.props.isMobile ? 20 : 50}}/>
           <h1 style={{fontWeight: 700}}>MIT Event Booking Portal</h1>
-          <h4 style={{lineHeight: 1.5, marginTop: 30}}>Simple and easy-to-use platform for booking rooms for events, getting permissions for event publicity, lodging complaints and viewing club statistics</h4>
+          <h4 style={{lineHeight: 1.5, marginTop: 30}}> We found the traditional way of booking a classroom difficult. Obtaining permissions? Even tougher. So, here we are. At Cribbl, you can book classrooms for your events, obtain permissions for your events publicity, lodge complaints and view your club's stats. </h4>
 
         </div>
       </div>
@@ -36,7 +36,7 @@ class LandingPage extends Component {
       <Support />
 
       <Footer />
-      <p style={{backgroundColor: 'rgb(60, 60, 60)', width: '100%', color: 'white', fontSize: 12, padding: 5}}>All Rights Reserved @ <a href="https://cribblservices.com" style={{textDecoration: 'none', color: 'white'}}>Cribbl Services</a></p>
+      <p style={{backgroundColor: 'rgb(60, 60, 60)', width: '100%', color: 'white', fontSize: 12, padding: 5, textAlign: 'center'}}>All Rights Reserved @ <a href="https://cribblservices.com" style={{textDecoration: 'none', color: 'white'}}>Cribbl Services</a></p>
       </div>
     )
   }

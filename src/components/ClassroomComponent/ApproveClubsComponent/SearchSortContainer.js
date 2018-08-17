@@ -5,31 +5,31 @@ import {connect} from 'react-redux'
 import TextField from 'material-ui/TextField'
 
 class SearchClubContainer extends Component{
-	constructor(props) {
-		super(props);
-	    this.handleSearch = this.handleSearch.bind(this)
-	    this.filterClicked = this.filterClicked.bind(this);
-		  this.state = {
-			 filterChoice: 'all',
+  constructor(props) {
+    super(props);
+      this.handleSearch = this.handleSearch.bind(this)
+      this.filterClicked = this.filterClicked.bind(this);
+      this.state = {
+       filterChoice: 'all',
        search: ''
-		  }
-	}
+      }
+  }
 
   handleSearch(e) {
     this.setState({search: e.target.value})
     this.props.handleSearch(e.target.value)
   }
 
-	filterClicked(filterChoice) {
-		this.setState({filterChoice: filterChoice});
+  filterClicked(filterChoice) {
+    this.setState({filterChoice: filterChoice});
     this.props.filterState(filterChoice);
   }
 
-  	render() {
+    render() {
     return (
        <div>
        <Toolbar style={{minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)'}}>
-       <ToolbarGroup className="complaintsToolbar">
+       <ToolbarGroup>
           <span className="hoverPointer" onClick={()=>this.filterClicked('approved')} style={{fontWeight: this.state.filterChoice == "approved" && !(this.state.search) ? 700 : 100}}>Approved ({this.props.approvedLength})</span>
           <ToolbarSeparator style={{marginLeft: 10, marginRight: 10, height: 20}}/>
           <span className="hoverPointer" onClick={()=>this.filterClicked('unapproved')} style={{fontWeight: this.state.filterChoice == "unapproved" && !(this.state.search) ? 700 : 100}}>Unapproved ({this.props.unapprovedLength})</span>

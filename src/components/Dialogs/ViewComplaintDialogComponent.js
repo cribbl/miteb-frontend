@@ -21,19 +21,14 @@ const styles = {
   },
 }
 
-class Dialogxx extends Component {
+class ViewComplaintDialog extends Component {
   constructor(props){
     super(props);
-    this.sendGmail = this.sendGmail.bind(this)
     this.state = {
       open: this.props.open,
     };
   }
-
-  sendGmail() {
-    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + this.props.currentComplaint.fields.email)
-  }
-
+  
   componentWillReceiveProps(nextProps) {
     this.setState({open: nextProps.open})
   }
@@ -78,9 +73,7 @@ class Dialogxx extends Component {
           </div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Email</p>
-            <p style={styles.value}>{this.props.currentComplaint.fields.email}
-            <IconButton onClick={this.sendGmail} style={{padding: 0, height: 20, width: 20}}><ReplyIcon viewBox='0 0 30 30' />}</IconButton>
-            </p>
+            <p style={styles.value}>{this.props.currentComplaint.fields.email}</p>
           </div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Reg No</p>
@@ -125,4 +118,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Dialogxx)
+export default connect(mapStateToProps)(ViewComplaintDialog)

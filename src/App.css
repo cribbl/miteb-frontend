@@ -20,6 +20,10 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
+textarea {
+    resize: none;
+}
+
 .activeLinkButton {
 	background-color: #20ADBF;
 }

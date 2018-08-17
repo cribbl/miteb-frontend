@@ -28,7 +28,7 @@ class ClubDialog extends Component {
 
 		const viewActions = [
 			<FlatButton
-			label="Cancel"
+			label="Close"
 			primary={false}
 			onClick={this.props.handleClose}
 			/>,

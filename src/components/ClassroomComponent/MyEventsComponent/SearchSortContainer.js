@@ -61,7 +61,7 @@ class SearchSortContainer extends Component {
         </ToolbarGroup>        
        </Toolbar>
 
-       <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view={"event"} />
+       <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view={"event"} titleText="Events"/>
        </div>
     );
   }

@@ -12,15 +12,21 @@ import {List, ListItem} from 'material-ui/List'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import ApplyIcon from 'material-ui/svg-icons/content/send';
 import './DeveloperComponent.css'
 
 class CardComponent extends Component {
   constructor(props){
     super(props)
+    this.apply = this.apply.bind(this);
     this.state = {
       open: this.props.open,
-
     };
+  }
+
+  apply() {
+    const {dispatch} = this.props;
+    dispatch({type: "TOASTER", message: "Applications opening soon!", toast_open: true})
   }
 
   render() {
@@ -39,16 +45,26 @@ class CardComponent extends Component {
             hoverColor={'rgba(0,0,0,0)'}
           />
         </List>
-          <IconMenu
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            useLayerForClickAway={true}>
-            
-            { !!this.props.developer.github && <a href={this.props.developer.github} target="_blank"> <MenuItem primaryText="Github" /> </a> }
-            { !!this.props.developer.linkedin && <a href={this.props.developer.linkedin} target="_blank"> <MenuItem primaryText="LinkedIn" /> </a> }
-            { !!this.props.developer.facebook && <a href={this.props.developer.facebook} target="_blank"> <MenuItem primaryText="Facebook" /> </a> }
-          </IconMenu>
+          
+          {
+            !!this.props.developer.openPosition ? 
+            (
+              <IconButton onClick={this.apply}><ApplyIcon /></IconButton>
+            ) : (
+              <IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                useLayerForClickAway={true}
+                >
+                
+                { !!this.props.developer.github && <a href={this.props.developer.github} target="_blank"> <MenuItem primaryText="Github" /> </a> }
+                { !!this.props.developer.linkedin && <a href={this.props.developer.linkedin} target="_blank"> <MenuItem primaryText="LinkedIn" /> </a> }
+                { !!this.props.developer.facebook && <a href={this.props.developer.facebook} target="_blank"> <MenuItem primaryText="Facebook" /> </a> }
+              </IconMenu>
+            )
+          }
+
         </div>
       </Card>
     );

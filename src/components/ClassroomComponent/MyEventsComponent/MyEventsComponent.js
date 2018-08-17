@@ -23,7 +23,7 @@ import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
-import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
+import ViewEventDialog from '../../Dialogs/ViewEventDialogComponent'
 import FlagIcon from 'material-ui/svg-icons/action/report-problem'
 import NAIcon from 'material-ui/svg-icons/action/restore'
 import DashIcon from 'material-ui/svg-icons/content/remove'
@@ -204,7 +204,7 @@ class MyEventsComponent extends Component {
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
       </div>
 
-      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent}/>
+      <ViewEventDialog open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent}/>
       
       <Paper style={{width: '98%', height: 500, overflow: 'hidden', marginTop: 20}} zDepth={2}>
         <Table
@@ -227,7 +227,7 @@ class MyEventsComponent extends Component {
                 hidden={this.props.isMobile}
                 >
                 START DATE
-                <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
+                <IconButton data-tip="Sort by date" onClick={this.handleSort} style={{padding: 0, height: 20, width: 20, marginLeft: 5}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
               </TableHeaderColumn>
               <TableHeaderColumn
                 style={{color: '#000', fontWeight: 700, alignItems: 'center',width:'20%'}}
@@ -248,7 +248,11 @@ class MyEventsComponent extends Component {
             stripedRows={this.state.stripedRows}
           >
 
-          {this.state.fetching && <CircularProgress />}
+          {this.state.fetching &&
+            <div style={{textAlign: 'center', marginTop: '10%'}}>
+              <CircularProgress size={60} />
+            </div>
+          }
 
           {
              Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
@@ -274,8 +278,8 @@ class MyEventsComponent extends Component {
                   </TableRow>
               )}, this)) : (
 
-              <div style={{textAlign: 'center', marginTop: 10}} hidden={this.state.fetching}>
-                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.gif")} style={{width: this.props.isMobile ? '70%' : '30%', marginBottom: 10}} />
                 <p>{this.state.searchContent.length > 0 ? "No events for this search" : "No events found"}</p>
                 </div>
               )

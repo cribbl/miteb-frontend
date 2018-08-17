@@ -24,7 +24,11 @@ import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComp
 import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
 import NotFound from './components/NotFound/NotFound'
 import Reg from './components/LoginComponent/Reg'
+
 import FaqComponent from './components/FaqComponent/FaqComponent'
+import PrivacyPolicy from './components/Policies/PrivacyPolicy'
+import TnC from './components/Policies/TnC'
+
 import {store} from './store'
 
 import { Provider } from 'react-redux'
@@ -41,6 +45,8 @@ ReactDOM.render(
             <IndexRoute component={LandingPage}></IndexRoute>
             <Route path="complaints" component={ComplaintsComponent}></Route>
             <Route path='developers' component={DevelopersComponent}></Route>
+            <Route path='policy/privacy' component={PrivacyPolicy}></Route>
+            <Route path='policy/tnc' component={TnC}></Route>
             <Route path="auth" component={Reg}>
                 <IndexRoute component={LoginComponent} />
                 <Route path="signin" component={LoginComponent}></Route>

@@ -70,23 +70,28 @@ class EventExportDialog extends Component {
 			label="Cancel"
 			primary={false}
 			onClick={this.props.handleClose}
+			style={{margin: '0px 5px'}}
 			/>,
 			<RaisedButton
 			label={"Export"}
 			primary={true}
 			onClick={this.export}
+			style={{margin: '0px 5px'}}
 			/>
 		]
 
 		return(
 			<Dialog
-	      title="Export"
+	      title={"Export " + this.props.titleText}
 	      actions={viewActions}
 	     	modal={false}
 	      open={this.props.open}
 	      onRequestClose={this.props.handleClose}
 	      autoScrollBodyContent={true}
 	      contentStyle={{width: this.props.isMobile ? '97%' : '30%', maxWidth: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+	      actionsContainerStyle={{backgroundColor: 'rgb(248, 248, 248)'}}
+        titleStyle={{backgroundColor: 'rgb(240, 240, 240)'}}
+        bodyStyle={{marginTop: 15}}
 	    >
 	      <div style={{display: 'flex', flexDirection: 'column'}}>
 	        <div>
@@ -120,8 +125,8 @@ class EventExportDialog extends Component {
               disableYearSelection={true}
               formatDate={this.formatDate}
               errorStyle={{position: 'absolute', bottom: -8}}
-              disabled={this.state.exportMode === 'all'}
-              required={this.state.exportMode != 'all'}
+              disabled={this.state.exportMode === 'ALL'}
+              required={this.state.exportMode != 'ALL'}
               textFieldStyle={{width: '60%'}}
             />
 
@@ -135,10 +140,9 @@ class EventExportDialog extends Component {
               minDate={this.state.start_date}
               formatDate={this.formatDate}
               errorStyle={{position: 'absolute', bottom: -8}}
-              disabled={this.state.exportMode === 'all'}
-              required={this.state.exportMode != 'all'}
+              disabled={this.state.exportMode === 'ALL'}
+              required={this.state.exportMode != 'ALL'}
               textFieldStyle={{width: '60%'}}
-
             />
 
 	        </div>
