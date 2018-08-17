@@ -216,10 +216,27 @@ export const approveClubNotif = (club, mode, clubID) => {
 
       sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Portal Team</p>");
      
-      // sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
+      sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
 
      sendPush(clubID , greeting, "Your club titled '"+club.name+ "' has been "+mode);
     return
+}
+
+export const resolveComplaintNotif = (complaint) => {
+
+      sendEmail("SC", "mitstudentcouncil@gmail.com", complaint.fields.email, "complaint_"+"resolved", "Complaint resolved", "Hey "+complaint.fields.name + "\nYour complaint titled " + complaint.subject+ "has been resolved","<p><strong>Hey "+complaint.fields.name + "</strong><br /> Your complaint titled <strong>'"+complaint.subject+"'</strong> has been resolved.<br/>Regards,<br/>Portal Team</p>");
+        
+      sendSMS('+91'+complaint.fields.contactNo, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nThank You,\nPortal Team" );
+
+    return
+}
+
+
+export const newComplaintNotif = () => {
+  sendEmail("Portal","mitstudentcouncil@gmail.com","vibhutisharma997@gmail.com","new_complaint","new complaint",
+    "A new coplaint has been lodged.","<p>A new complaint has been lodged.<br/>Regards, <br/>Portal Team</p>")
+
+  sendPush("kmnW71JZLdcx0trfvCHyiTXbpjw2","Uh-huh","A new complaint has been lodged.")
 }
 
 export const updateToken = (uid, token, bool) => {
