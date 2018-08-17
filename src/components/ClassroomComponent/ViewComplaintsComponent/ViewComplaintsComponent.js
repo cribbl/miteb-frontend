@@ -32,6 +32,7 @@ import {toggleActions} from '../../../actions/toggleActions'
 import StatusIcon from 'material-ui/svg-icons/av/fiber-manual-record'
 import SearchSortContainer from './SearchSortContainer'
 import ReactTooltip from 'react-tooltip'
+import {resolveComplaintNotif} from '../../../Services/firebaseDBService'
 
 class ViewComplaintsComponent extends Component {
   constructor(props) {
@@ -98,7 +99,7 @@ class ViewComplaintsComponent extends Component {
     this.setState({tempArr})
   }
 
-  resolveComplaint(complaint, mode) {
+  resolveComplaint(complaint, mode) { //mode is the boolean value which needs to be set -> isResolved = mode
     firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(mode);
     if(this.state.filterChoice=='resolved') {
       var resolvedArr = this.state.resolvedArr;
@@ -122,6 +123,14 @@ class ViewComplaintsComponent extends Component {
         console.log(resolvedArr);
       }
     }
+
+    if(complaint.goAnonymous == false) {
+      if(mode) {
+        resolveComplaintNotif(complaint)
+        // console.log("sending email")        
+      } 
+    }
+
     this.filterState(this.state.filterChoice);
     if(this.state.currentComplaint)
       this.nextComplaint();

@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {firebaseDB} from '../../firebaseConfig'
 import moment from 'moment'
 import {toggleActions} from '../../actions/toggleActions'
-import {sendPush} from '../../Services/NotificationService'
+import {newComplaintNotif} from '../../Services/firebaseDBService'
 import Finished from './Finished'
 
 class ComplaintsComponent extends Component {
@@ -85,7 +85,7 @@ class ComplaintsComponent extends Component {
     this.setState({submitted: true, finished: true, complaint: complaint})
     const {dispatch} = this.props;
     dispatch(toggleActions.toggleToaster("Complaint lodged", true))
-    // sendPush("SC", "New complaint lodged", this.state.subject)
+    newComplaintNotif()
   }
 
   formValid() {
