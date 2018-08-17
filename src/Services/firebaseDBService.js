@@ -2,7 +2,7 @@ import {firebaseDB} from '../firebaseConfig'
 import moment from 'moment'
 import {store} from '../store'
 import {toggleActions} from '../actions/toggleActions'
-import {sendEmail, sendPush, sendSMS} from './NotificationService'
+import {sendEmail, sendPush, sendSMS, sendEmailTemplate, sendComplaintTemplate, sendApproveClubTemplate} from './NotificationService'
 import {generatePDF} from './firebaseStorageService'
 
 export const getUserDetails = (clubId, callback) => {
@@ -160,7 +160,10 @@ export const approveEvent = (event, approver, user) => {
             }
             case 'SO': {
                   // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Approved by Security Officer", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Security Officer, "+user.name+".</p>");
-                  sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Portal Team</p>");
+
+                  sendEmailTemplate("SO", "APPROVED", "", event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, "https://s3.amazonaws.com/miteb/"+event.key+".pdf");
+
+                  // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Portal Team</p>");
                   let num = (event.booker_contact).substr((event.booker_contact).length - 10);
                   sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nThank You,\nPortal Team" );
                   sendPush(event.clubID, "Yay! Approved by SO", "Your event titled '"+event.title+ "' has been approved by SO");
@@ -183,6 +186,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
                         firebaseDB.ref('/events/').child(event.key+'/SO_appr').set("prevRejected");
                   }
                   // sendEmail("FA", user.email, event.booker_email, "FA_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Faculty Advisor", "Uh-huh! Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  sendEmailTemplate("FA", _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, "https://s3.amazonaws.com/miteb/"+event.key+".pdf");
                   sendPush(event.clubID, "Oops! " + _mode.charAt(0).toUpperCase()+_mode.slice(1) + "by FA", "Your event titled '"+event.title+ "' has been "+_mode.charAt(0).toUpperCase()+_mode.slice(1)+ " by FA");
                   firebaseDB.ref('/events/').child(event.key+'/FA_date').set(moment(new Date()).format("DD-MM-YYYY"));
                   firebaseDB.ref('/events/').child(event.key+'/FA_appr').set(_mode);
@@ -194,6 +198,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
                         firebaseDB.ref('/events/').child(event.key+'/SO_appr').set("prevRejected");
                   }
                   // sendEmail("AD", user.email, event.booker_email, "AD_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Associate Director", "Uh-huh! Your event has been "+_mode+" by the Associate Director, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Associate Director, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  sendEmailTemplate("AD", _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, "https://s3.amazonaws.com/miteb/"+event.key+".pdf");
                   sendPush(event.clubID, "Oops! " + _mode.charAt(0).toUpperCase()+_mode.slice(1) + "by AD", "Your event titled '"+event.title+ "' has been "+_mode.charAt(0).toUpperCase()+_mode.slice(1)+ " by AD");
                   firebaseDB.ref('/events/').child(event.key+'/AD_date').set(moment(new Date()).format("DD-MM-YYYY"));
                   firebaseDB.ref('/events/').child(event.key+'/AD_appr').set(_mode);
@@ -202,6 +207,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
             }
             case 'SO': {
                   // sendEmail("FA", user.email, event.booker_email, "SO_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Security Officer", "Uh-huh! Your event has been "+_mode+" by the Security Officer, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Security Officer, "+user.name+".<br /><br />Reason: "+message+"</p>");
+                  sendEmailTemplate("SO", _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, "https://s3.amazonaws.com/miteb/"+event.key+".pdf");
                   sendPush(event.clubID, "Oops! " + _mode.charAt(0).toUpperCase()+_mode.slice(1) + "by SO", "Your event titled '"+event.title+ "' has been "+_mode.charAt(0).toUpperCase()+_mode.slice(1)+ " by SO");
                   firebaseDB.ref('/events/').child(event.key+'/SO_date').set(moment(new Date()).format("DD-MM-YYYY"));
                   firebaseDB.ref('/events/').child(event.key+'/SO_appr').set(_mode);
@@ -215,6 +221,7 @@ export const approveClubNotif = (club, mode, clubID) => {
       var greeting = (mode == 'approved' ? "Congratulations! " : "Sorry! ")
 
       sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Portal Team</p>");
+      sendApproveClubTemplate(club.email, club.name);
      
       sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
 
@@ -224,6 +231,7 @@ export const approveClubNotif = (club, mode, clubID) => {
 
 export const resolveComplaintNotif = (complaint) => {
 
+    sendComplaintTemplate(complaint.fields.email, complaint.fields.name, complaint.subject);
       sendEmail("SC", "mitstudentcouncil@gmail.com", complaint.fields.email, "complaint_"+"resolved", "Complaint resolved", "Hey "+complaint.fields.name + "\nYour complaint titled " + complaint.subject+ "has been resolved","<p><strong>Hey "+complaint.fields.name + "</strong><br /> Your complaint titled <strong>'"+complaint.subject+"'</strong> has been resolved.<br/>Regards,<br/>Portal Team</p>");
         
       sendSMS('+91'+complaint.fields.contactNo, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nThank You,\nPortal Team" );
