@@ -17,10 +17,15 @@ import {hashHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {firebaseDB} from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
-import Dialogxx from '../../Dialogs/ViewEventDialogComponent'
-import FlagDialog from '../../Dialogs/FlagDialog'
+import ViewEventDialog from '../../Dialogs/ViewEventDialogComponent'
+import FlagRejectDialog from '../../Dialogs/FlagRejectDialog'
 import Snackbar from 'material-ui/Snackbar';
 import {approveEvent, flagRejectEvent} from '../../../Services/firebaseDBService'
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconButton from 'material-ui/IconButton';
+import moment from 'moment';
 
 class FA_MyEventsComponent extends Component {
   constructor(props) {
@@ -193,11 +198,11 @@ class FA_MyEventsComponent extends Component {
           onRequestClose={this.handleSnackBarClose}
         />
 
-      <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject} flagRejectHandler={this.flagRejectConfirm}/>
+      <ViewEventDialog open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject} flagRejectHandler={this.flagRejectConfirm}/>
 
-      <FlagDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} mode={this.state.flagRejectMode} flagRejectHandler={this.flagReject} />
+      <FlagRejectDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} mode={this.state.flagRejectMode} flagRejectHandler={this.flagReject} />
 
-      <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
+      <Paper style={{width: '98%', height: 500, overflow: 'hidden', marginTop: 20}} zDepth={2}>
         <Table
           style={{backgroundColor: ''}}
           height={'440px'}
@@ -215,7 +220,7 @@ class FA_MyEventsComponent extends Component {
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>END DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>ACTIONS</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%'}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -225,21 +230,37 @@ class FA_MyEventsComponent extends Component {
             stripedRows={this.state.stripedRows}
           >
 
-          {this.state.fetching && <CircularProgress />}
+          {this.state.fetching &&
+            <div style={{textAlign: 'center', marginTop: '10%'}}>
+              <CircularProgress size={60} />
+            </div>
+          }
 
           { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
             return(
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
-                    <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.end_date}</TableRowColumn>
-                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton hidden={this.props.isMobile} label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
+                    <TableRowColumn>{moment(event.start_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', textOverflow: 'clip'}}>
+                      {<IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      useLayerForClickAway={true}
+                      >
+                      <MenuItem primaryText="View" onClick={() => this.showDialog(event)}/>
+                      <MenuItem primaryText="Approve" onClick={() => this.approve(event)}/>
+                      <MenuItem primaryText="Reject" onClick={() => this.flagRejectConfirm(event, "reject")}/>
+                      <MenuItem primaryText="Flag" onClick={() => this.flagRejectConfirm(event, "flag")}/>
+                      </IconMenu>}
+                    </TableRowColumn>
                   </TableRow>
             )}, this)) : (
 
-              <div style={{textAlign: 'center', marginTop: 10}} hidden={this.state.fetching}>
-                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/nothingFound.png" : "../../../assets/nothingFound.png")} />
-                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "No events found"}</p>
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.jpeg")} style={{width: this.props.isMobile ? '70%' : '30%', marginBottom: 10}} />
+                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "Yay! You have no Pending Events"}</p>
                 </div>
               )
           }

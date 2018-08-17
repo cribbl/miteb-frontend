@@ -211,6 +211,17 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
       }
 }
 
+export const approveClubNotif = (club, mode, clubID) => {
+      var greeting = (mode == 'approved' ? "Congratulations! " : "Sorry! ")
+
+      sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Portal Team</p>");
+     
+      // sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
+
+     sendPush(clubID , greeting, "Your club titled '"+club.name+ "' has been "+mode);
+    return
+}
+
 export const updateToken = (uid, token, bool) => {
       firebaseDB.ref('/fcmTokens/'+uid).child(token).set(bool);
 }

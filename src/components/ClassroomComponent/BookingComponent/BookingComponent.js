@@ -51,7 +51,7 @@ class HorizontalLinearStepper extends React.Component {
         booker_reg_no: '',
         title: '',
         desc: '',
-        workshop: '',
+        workshop: 'External',
       },
       fieldTouch: {
         booker_name: false,
@@ -291,7 +291,7 @@ class HorizontalLinearStepper extends React.Component {
         "start_date":moment(field["start_date"]).format('DD-MM-YYYY'),
         "end_date":moment(field["end_date"]).format('DD-MM-YYYY'),
         "rooms":this.state.selectedRooms,
-        "AD_appr":"NA",
+        "AD_appr":this.props.user.isSC ? "pending" : "NA",
         "FA_appr":this.props.user.isSC ? "approved" : "pending",
         "SO_appr":"NA",
         "booker_name":field["booker_name"],
@@ -359,10 +359,11 @@ class HorizontalLinearStepper extends React.Component {
 
           <TextField
             floatingLabelText="Contact Number *"
-            type="text"
+            type='number'
             onBlur={this.handleBlur.bind(this,"booker_contact")}
             onChange={this.handleChange.bind(this, "booker_contact")}
             value={this.state.fields["booker_contact"]}
+            style={{marginLeft:0}}
             errorText={this.state.fieldTouch["booker_contact"] && this.state.errors["booker_contact"]}
             errorStyle={{position: 'absolute', bottom: -8}}
             required
@@ -429,13 +430,13 @@ class HorizontalLinearStepper extends React.Component {
               onChange={this.handleChange.bind(this,"workshop")}>
                 <RadioButton
                   value="Internal"
-                  label="Internal Workshop"
+                  label="Internal Event"
                   labelStyle={{width: '100%'}}
                 />
                    
                 <RadioButton
                   value="External"
-                  label="External Workshop"
+                  label="External Event"
                   labelStyle={{width: '100%'}}
                 />
             </RadioButtonGroup>

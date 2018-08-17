@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField'
 import {connect} from 'react-redux'
 
-class FlagDialog extends Component {
+class FlagRejectDialog extends Component {
   constructor(props){
     super(props)
     this.changeMessage = this.changeMessage.bind(this)
@@ -30,11 +30,14 @@ class FlagDialog extends Component {
         label="Cancel"
         primary={false}
         onClick={this.props.handleClose}
+        style={{margin: '0px 5px'}}
       />,
-      <FlatButton
+      <RaisedButton
         label={this.props.mode == 'flag' ? 'Flag' : 'Reject'}
         primary={true}
         onClick={() => this.props.flagRejectHandler(this.props.currentEvent, this.state.message, this.props.mode)}
+        style={{margin: '0px 5px'}}
+        disabled={this.state.message.length < 1}
       />,
     ];
 
@@ -46,15 +49,13 @@ class FlagDialog extends Component {
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
-          contentStyle={{width: this.props.isMobile ? '97%' : '60%', maxWidth: 'none'}}
+          contentStyle={{width: this.props.isMobile ? '97%' : '40%'}}
+          actionsContainerStyle={{backgroundColor: 'rgb(248, 248, 248)'}}
+          titleStyle={{backgroundColor: 'rgb(240, 240, 240)'}}
+          bodyStyle={{marginTop: 15}}
         >
-        <TextField 
-          floatingLabelText="Message" 
-          multiLine={true}
-          value={this.state.message}
-          onChange={this.changeMessage}
-          required
-        />
+        
+        <textarea rows={5} style={{width: '100%', padding: 5}} onChange={this.changeMessage} value={this.state.message} placeholder={"Please mention the reason to " + (this.props.mode) + " the event"} />
 
         </Dialog>
       </div>
@@ -75,4 +76,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(FlagDialog)
+export default connect(mapStateToProps)(FlagRejectDialog)

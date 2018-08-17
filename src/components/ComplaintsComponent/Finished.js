@@ -17,7 +17,7 @@ class Finished extends Component {
       scope.setState({counter: c})
       if(c==0) {
         window.clearInterval(interval);
-        hashHistory.goBack();
+        hashHistory.push('/');
       }
     }, 1000)
   }

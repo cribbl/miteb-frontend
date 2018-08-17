@@ -3,6 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from 'react-redux'
+import moment from 'moment'
 
 const styles = {
   label: {
@@ -19,7 +20,7 @@ const styles = {
   },
 }
 
-class Dialogxx extends Component {
+class ViewEventDialog extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -35,42 +36,49 @@ class Dialogxx extends Component {
   render() {
     const FA_actions = [
       <FlatButton
-        label="Cancel"
+        label="Close"
         primary={false}
         onClick={this.props.handleClose}
-      />,
-      <FlatButton
-        label="Reject"
-        primary={false}
-        onClick={() => this.props.flagRejectHandler(this.props.currentEvent, 'reject')}
+        style={{margin: '0px 5px', float: 'left'}}
       />,
       <FlatButton
         label="Flag"
         primary={true}
         onClick={() => this.props.flagRejectHandler(this.props.currentEvent, 'flag')}
+        style={{margin: '0px 5px'}}
       />,
       <FlatButton
+        label="Reject"
+        primary={true}
+        onClick={() => this.props.flagRejectHandler(this.props.currentEvent, 'reject')}
+        style={{margin: '0px 5px'}}
+      />,
+      <RaisedButton
         label="Approve"
         primary={true}
         onClick={() => this.props.approveHandler(this.props.currentEvent)}
+        style={{position: 'absolute', top: '6.5%', right: '3%'}}
       />,
       <FlatButton
         label="Next"
         primary={true}
         onClick={this.props.nextEvent}
+        style={{margin: '0px 5px'}}
       />,
     ];
 
     const Club_actions = [
       <FlatButton
-        label="Cancel"
+        label="Close"
         primary={false}
         onClick={this.props.handleClose}
+        style={{margin: '0px 5px'}}
       />,
       <FlatButton
         label="Next"
         primary={true}
         onClick={this.props.nextEvent}
+        style={{margin: '0px 5px'}}
       />,
       <RaisedButton
         label="Download Receipt"
@@ -84,12 +92,15 @@ class Dialogxx extends Component {
     return (
       <div>
         <Dialog
-          title={this.props.currentEvent.title}
+          title={this.props.currentEvent.clubName}
           actions={this.props.user && this.props.user.isClub ? Club_actions : FA_actions}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
-          contentStyle={{width: this.props.isMobile ? '97%' : '60%', maxWidth: 'none'}}
+          contentStyle={{width: this.props.isMobile ? '97%' : '60%'}}
+          actionsContainerStyle={{backgroundColor: 'rgb(248, 248, 248)'}}
+          titleStyle={{backgroundColor: 'rgb(240, 240, 240)', fontWeight: 700}}
+          bodyStyle={{marginTop: 15}}
         >
         
         <div>
@@ -107,11 +118,11 @@ class Dialogxx extends Component {
           </div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Start Date</p>
-            <p style={styles.value}>{this.props.currentEvent.start_date}</p>
+            <p style={styles.value}>{moment(this.props.currentEvent.start_date, 'DD-MM-YYYY').format('dddd, DD MMMM YYYY')}</p>
           </div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>End Date</p>
-            <p style={styles.value}>{this.props.currentEvent.end_date}</p>
+            <p style={styles.value}>{moment(this.props.currentEvent.end_date, 'DD-MM-YYYY').format('dddd, DD MMMM YYYY')}</p>
           </div>
           <div hidden={!((this.props.currentEvent.FA_appr == 'flagged') || (this.props.currentEvent.FA_appr == 'rejected'))} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>{this.props.currentEvent.FA_appr} by FA</p>
@@ -146,4 +157,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Dialogxx)
+export default connect(mapStateToProps)(ViewEventDialog)

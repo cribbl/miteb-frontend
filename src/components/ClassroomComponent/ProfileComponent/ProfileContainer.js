@@ -46,7 +46,9 @@ class ProfileContainer extends Component {
       hasChanged: false,
       popoverOpen: false,
       showProgress: false,
-      defaultProfilePic: true
+      defaultProfilePic: true,
+      errors: [],
+      isValid: false
     }
   }
 
@@ -65,10 +67,40 @@ class ProfileContainer extends Component {
     updateUser(this.props.user.uid, this.state.tempUser);
     this.setState({hasChanged: false});
   }
+  handleValidation(value,field) {
+    let errors = []
+     switch(field) {
+      case 'primaryContact': if(value.length >= 1) {
+                              if(!/^[0-9]{10}$/.test(value)){
+                                 errors[0] = "Please enter a valid phone number"
+                              }
+                            }
+                            else {
+                              errors[0] = 'Cannot be empty'
+                            }
+                            break;
+      default: console.log('invalid case')
+    }
+
+    //Using the filter method
+    let isValid=false;
+    var newArray = errors.filter(function(element) {
+      if(element != '') return element;
+    });
+    if (newArray.length < 1) {
+      isValid = true
+    }
+    this.setState({
+      errors: errors,
+      isValid: isValid
+    })
+  }
 
   handleChange(e, field) {
     const temp = this.state.tempUser;
     temp[field] = e.target.value;
+    let value = e.target.value;
+    this.handleValidation(value,field);
     this.setState({tempUser: temp});
     
     if(this.state.tempUser[field] != this.props.user[field]) {
@@ -184,6 +216,7 @@ class ProfileContainer extends Component {
                 type="text"
                 value={this.props.user && this.props.user.email}
                 disabled={true}
+                errorText={this.state.errors[1]}
                 />
 
               <TextField
@@ -191,6 +224,8 @@ class ProfileContainer extends Component {
                 type="text"
                 value={this.state.tempUser && this.state.tempUser.primaryContact}
                 onChange={(event) => this.handleChange(event, 'primaryContact')}
+                errorText={this.state.errors[0]}
+                required
                 />
             </div>
             <input ref={input => this.inputElement = input} type="file" id="media-upload" onChange={(e)=>this._handleImageChange(e)} accept="video/*,image/*" style={{display: 'none'}}/>
@@ -207,7 +242,7 @@ class ProfileContainer extends Component {
             <RaisedButton
               label='Save'
               onClick={this._updateUser}
-              disabled={!this.state.hasChanged}
+              disabled={!this.state.hasChanged || !this.state.isValid}
               primary={true}
             />
           </div>

@@ -81,7 +81,7 @@ class ComplaintsComponent extends Component {
     complaint['desc'] = this.state.desc;
     complaint['subject'] = this.state.subject;
     complaint['dated'] = moment(new Date()).format('DD-MM-YYYY');
-    // firebaseDB.ref('complaints').push(complaint);
+    firebaseDB.ref('complaints').push(complaint);
     this.setState({submitted: true, finished: true, complaint: complaint})
     const {dispatch} = this.props;
     dispatch(toggleActions.toggleToaster("Complaint lodged", true))

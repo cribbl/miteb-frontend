@@ -17,19 +17,19 @@ class ComingSoon extends Component {
         <div style={{backgroundColor: '', padding: 15, margin: 20}}>
           <img src={require("../../assets/description.png")} style={{height: 80, width: 80, marginBottom: 10}} />
           <h5 style={{fontWeight: 700, margin: 10}}>Post-event Description</h5>
-          <p>Make a note of the details of the events once the event is over. An easy and efficient way to keep a track of all events held and their information</p>
+          <p>Make a note of the details of the events once the event is over. An easy and efficient way to keep a track of all events held and their information.</p>
         </div>
 
         <div style={{backgroundColor: '', padding: 15, margin: 20}}>
-          <img src={require("../../assets/receipt.png")} style={{height: 80, width: 80, marginBottom: 10}} />
-          <h5 style={{fontWeight: 700, margin: 10}}>Receipt Tracking</h5>
-          <p>Upload your bills and receipts and get them reimbursed digitally. An easy way to manage your credits and debits, reducing load of the Treasurer</p>
+          <img src={require("../../assets/dashboard.png")} style={{height: 80, width: 80, marginBottom: 10}} />
+          <h5 style={{fontWeight: 700, margin: 10}}> Dashboard </h5>
+          <p> Reminders and Analytics, our upcoming Dashboard is an added bonus for you! Show off your club's statistics and receive alerts regarding your upcoming events. </p>
         </div>
         
         <div style={{backgroundColor: '', padding: 15, margin: 20}}>
           <img src={require("../../assets/poster.png")} style={{height: 80, width: 80, marginBottom: 10}} />
           <h5 style={{fontWeight: 700, margin: 10}}>Publicity Permission</h5>
-          <p>You'd surely need some publicity to gather crowd for your event. Just like you booked the room, take permission for publicity hassle-freely</p>
+          <p>You'd surely need some publicity to gather a crowd for your event. Just like you booked the room, take permission for publicity hassle-free. </p>
         </div>
         
       </div>

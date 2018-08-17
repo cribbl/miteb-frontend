@@ -98,12 +98,7 @@ class DrawerComponent extends Component {
                 key="/dashboard/myEvents"
                 primaryText="My Events"
                 leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
-            <MenuItem
-                style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active:'', menuItemStyle)}
-                key="/dashboard/profile"
-                primaryText="Profile"
-                leftIcon={<IconProfile color={'#FFFFFF'} />} />
-
+            
             {this.props.user && this.props.user.isSC ?
             <MenuItem
                 style={Object.assign(this.state.activeItem === '/dashboard/approveClubs' ? active:'', menuItemStyle)}
@@ -121,7 +116,13 @@ class DrawerComponent extends Component {
                 leftIcon={<ComplaintIcon color={'#FFFFFF'} />}
             />
             : null}
-            
+
+            <MenuItem
+                style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active:'', menuItemStyle)}
+                key="/dashboard/profile"
+                primaryText="Profile"
+                leftIcon={<IconProfile color={'#FFFFFF'} />} />
+
           </Menu>
         </Drawer>
       </div>

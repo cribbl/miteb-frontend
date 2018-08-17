@@ -14,18 +14,18 @@ class SearchSortContainer extends Component{
     this.showExportDialog = this.showExportDialog.bind(this)
     this.state = {
       filterChoice: 'all',
-      content: '',
+      search: '',
       dialogOpen: false
     }
 	}
 
   filterClicked(filterChoice) {
-    this.setState({filterChoice: filterChoice, content: ''});
-    this.props.filterState(filterChoice, this.state.content);
+    this.setState({filterChoice: filterChoice, search: ''});
+    this.props.filterState(filterChoice, this.state.search);
   }
 
   handleSearch(e) {
-    this.setState({content: e.target.value})
+    this.setState({search: e.target.value})
     this.props.search(e.target.value)
   }
 
@@ -44,7 +44,7 @@ class SearchSortContainer extends Component{
           <ToolbarSeparator style={{marginLeft: 6, marginRight: 6, height: 20}}/>
           <span className="hoverPointer" onClick={()=>{this.filterClicked('all')}} style={{fontWeight: this.state.filterChoice == 'all'? 700 : 100}}>All ({this.props.allLength})</span>
           <ToolbarSeparator style={{marginLeft: 6, marginRight: 6, height: 20}}/>
-          <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog}>
+          <IconButton tooltip="Export Complaints" tooltipPosition="top-right" onClick={this.showExportDialog}>
             <ExportIcon />
           </IconButton>
         </ToolbarGroup>
@@ -62,7 +62,7 @@ class SearchSortContainer extends Component{
           </ToolbarGroup>
           : '' }
        </Toolbar>
-       <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view="complaint" />
+       <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view="complaint" titleText="Complaints" />
        </div>
     );
   }

@@ -75,6 +75,7 @@ class ProfileMenu extends Component {
               key="/"
               primaryText="Home"
               leftIcon={<HomeIcon />}
+              hidden={!this.props.isMobile}
             />
 
             <Divider hidden={!this.props.isMobile} />
@@ -83,6 +84,7 @@ class ProfileMenu extends Component {
               key="/complaints"
               primaryText="Complaints"
               leftIcon={<ComplaintIcon />}
+              hidden={!this.props.isMobile}
             />
             
             <Divider hidden={!this.props.isMobile || this.props.user} />
@@ -94,7 +96,7 @@ class ProfileMenu extends Component {
               hidden={!this.props.isMobile || this.props.user}/>
 
 
-            <Divider hidden={!this.props.isMobile || !this.props.user}/>
+            <Divider hidden={!this.props.user} />
             
             <MenuItem key="logout" primaryText="Logout" leftIcon={<LogoutIcon />} hidden={!this.props.user}/>
 
