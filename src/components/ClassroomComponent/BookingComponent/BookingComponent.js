@@ -305,6 +305,7 @@ class HorizontalLinearStepper extends React.Component {
         "end_time":"7:45pm",
         "start_time":"5:45pm",
         "clubName": this.props.user.name,
+        "clubEmail": this.props.user.email,
         "clubID": localStorage.getItem('clubID'),
         "FA_name": this.props.user.fa.name,
         "FA_date": this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null,

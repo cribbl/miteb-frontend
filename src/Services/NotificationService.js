@@ -25,6 +25,62 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 	})
 }
 
+export const sendEmailTemplate = (authority=null, mode, message, club_name, club_email, booker_name, booker_email, event_name, receipt_url=null) => {
+
+	let params = {
+		authority: authority,
+		mode: mode,
+		message: message,
+		club_name: club_name,
+		club_email: club_email,
+		booker_name: booker_name,
+		booker_email: booker_email,
+		event_name: event_name,
+		receipt_url: receipt_url,
+	}
+
+	axios.get('https://dev-miteventbooking.herokuapp.com/notif/send-email-template', {params})
+	.then(function(resp) {
+		console.log(resp);
+	})
+	.catch(function(err) {
+		console.log(err);
+	})
+}
+
+export const sendComplaintTemplate = (booker_email, booker_name, subject) => {
+	let params = {
+		booker_email: booker_email,
+		booker_name: booker_name,
+		subject: subject
+	}
+
+	axios.get('https://dev-miteventbooking.herokuapp.com/notif/send-complaint-email', {params})
+	.then(function(resp) {
+		console.log(resp);
+	})
+	.catch(function(err) {
+		console.log(err);
+	})
+}
+
+export const sendApproveClubTemplate = (club_email, club_name) => {
+	let params = {
+		club_email: club_email,
+		club_name: club_name
+	}
+
+	axios.get('https://dev-miteventbooking.herokuapp.com/notif/send-clubApproval-email', {params})
+	.then(function(resp) {
+		console.log(resp);
+	})
+	.catch(function(err) {
+		console.log(err);
+	})
+}
+
+
+
 	     //  vibrate: [100, 50, 100],
 	     //  actions: [
 	     //  	{action: 'open', title: 'Open notif', icon: 'assets/notifications/checkIcon.png'},
@@ -121,7 +177,7 @@ export const requestOTP = (uid, contact, callback) => {
 	  userID: uid,
 	  contact: contact
 	}
-	axios.get("http://localhost:9000/send-otp", {params})
+	axios.get("https://dev-miteventbooking.herokuapp.com/send-otp", {params})
 	.then(function(res) {
 	  if(res.data.code=='failure') {
 	    throw res.data.message
@@ -141,7 +197,7 @@ export const confirmOTP = (code, userDetails, callback) => {
 	  code: code,
 	  userDetails: userDetails
 	}
-	axios.get("http://localhost:9000/confirm-otp", {params})
+	axios.get("https://dev-miteventbooking.herokuapp.com/confirm-otp", {params})
 	.then(function(res) {
 	  if(res.data.code=='failure') {
 	    throw res.data.message
