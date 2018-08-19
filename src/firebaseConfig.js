@@ -18,7 +18,8 @@ var prod = {
   messagingSenderId: "215459692984"
 };
 
-const config = process.env.REACT_APP_NODE_ENV === 'production' ? prod : dev;
+// const config = process.env.REACT_APP_NODE_ENV === 'production' ? prod : dev;
+const config = window.location.host.indexOf("prod") > -1 ? prod : dev;
 
 
 firebase.initializeApp(config);
