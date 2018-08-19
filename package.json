@@ -27,6 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "REACT_APP_NODE_ENV=staging && react-scripts build",
+    "build:prod": "REACT_APP_NODE_ENV=production && react-scripts build"
   }
 }

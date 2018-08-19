@@ -18,7 +18,7 @@ var prod = {
   messagingSenderId: "***REMOVED***"
 };
 
-const config = process.env.NODE_ENV === 'development' ? dev : prod;
+const config = process.env.REACT_APP_NODE_ENV === 'production' ? prod : dev;
 
 
 firebase.initializeApp(config);

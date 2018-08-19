@@ -7,8 +7,6 @@ cache:
 sudo: enabled
 install:
 - npm install
-script:
-- npm run build
 deploy:
   - provider: script
     skip_cleanup: true

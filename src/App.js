@@ -9,8 +9,9 @@ import SnackbarComponent from './components/SnackbarComponent'
 import './App.css';
 import {store} from './store'
 import {connect} from 'react-redux'
-
 import {userActions} from './actions/userActions'
+
+console.log(process.env.REACT_APP_NODE_ENV);
 
 class App extends Component {
   constructor(props) {
