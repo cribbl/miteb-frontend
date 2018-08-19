@@ -4,6 +4,8 @@ import {store} from '../store'
 import {toggleActions} from '../actions/toggleActions'
 import {updateToken} from './firebaseDBService'
 
+var base_url = "https://dev-miteventbooking.herokuapp.com";
+
 export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=null, text=null, html=null) => {
 
 	let params = {
@@ -16,7 +18,7 @@ export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=
 		html: html
 	}
 
-	axios.post('https://dev-miteventbooking.herokuapp.com/notif/send-email', params)
+	axios.post(base_url + '/notif/send-email', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
@@ -39,7 +41,7 @@ export const sendEmailTemplate = (authority=null, mode, message, club_name, club
 		receipt_url: receipt_url,
 	}
 
-	axios.get('https://dev-miteventbooking.herokuapp.com/notif/send-email-template', {params})
+	axios.get(base_url + '/notif/send-email-template', {params})
 	.then(function(resp) {
 		console.log(resp);
 	})
@@ -55,7 +57,7 @@ export const sendComplaintTemplate = (booker_email, booker_name, subject) => {
 		subject: subject
 	}
 
-	axios.get('https://dev-miteventbooking.herokuapp.com/notif/send-complaint-email', {params})
+	axios.get(base_url + '/notif/send-complaint-email', {params})
 	.then(function(resp) {
 		console.log(resp);
 	})
@@ -70,7 +72,7 @@ export const sendApproveClubTemplate = (club_email, club_name) => {
 		club_name: club_name
 	}
 
-	axios.get('https://dev-miteventbooking.herokuapp.com/notif/send-clubApproval-email', {params})
+	axios.get(base_url + '/notif/send-clubApproval-email', {params})
 	.then(function(resp) {
 		console.log(resp);
 	})
@@ -108,7 +110,7 @@ export const sendPush = (uid, title, body) => {
     }
   };
 
-  axios.post('https://dev-miteventbooking.herokuapp.com/notif/send-push', params)
+  axios.post(base_url + '/notif/send-push', params)
 	.then(function(resp) {
 		console.log(resp);
 	})
@@ -177,7 +179,7 @@ export const requestOTP = (uid, contact, callback) => {
 	  userID: uid,
 	  contact: contact
 	}
-	axios.get("https://dev-miteventbooking.herokuapp.com/send-otp", {params})
+	axios.get(base_url + "/send-otp", {params})
 	.then(function(res) {
 	  if(res.data.code=='failure') {
 	    throw res.data.message
@@ -197,7 +199,7 @@ export const confirmOTP = (code, userDetails, callback) => {
 	  code: code,
 	  userDetails: userDetails
 	}
-	axios.get("https://dev-miteventbooking.herokuapp.com/confirm-otp", {params})
+	axios.get(base_url + "/confirm-otp", {params})
 	.then(function(res) {
 	  if(res.data.code=='failure') {
 	    throw res.data.message

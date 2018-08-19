@@ -1,6 +1,8 @@
 import {storage} from '../firebaseConfig'
 import axios from 'axios'
 
+var base_url = "https://dev-miteventbooking.herokuapp.com";
+
 export const uploadProfilePic = (uid, file, callback) => {
 	storage.ref().child(uid + '/profilePic').put(file)
 	.then(function(res) {
@@ -15,7 +17,7 @@ export const generatePDF = (eventID) => {
   let params = {
     eventID: eventID
   }
-  axios.get("https://dev-miteventbooking.herokuapp.com/event/generate-pdf", {params})
+  axios.get(base_url + "/event/generate-pdf", {params})
   .then(function(res) {
     console.log(res);
   })
@@ -33,7 +35,7 @@ export const exportEvents = (view, uid, mode, start_date=null, end_date=null, ca
     to: end_date
   }
   return axios({
-    url: 'https://dev-miteventbooking.herokuapp.com/' + view + '/generate-sheet',
+    url: base_url + '/' + view + '/generate-sheet',
     params: params,
     method: 'GET',
     responseType: 'blob', // important

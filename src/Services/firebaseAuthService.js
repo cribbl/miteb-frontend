@@ -3,8 +3,11 @@ import {getUserDetails, updateToken} from './firebaseDBService'
 import {getNotificationRequestPermission} from './NotificationService'
 import axios from 'axios'
 
+
+var base_url = "https://dev-miteventbooking.herokuapp.com";
+
 export const createUserWithEmailAndPassword = (newUser, callback) => {
-  axios.post('https://dev-miteventbooking.herokuapp.com/user/signup', newUser)
+  axios.post(base_url + '/user/signup', newUser)
   .then(function(res) {
     if(res.data.state == 'fail')
       callback(res.data.err);
