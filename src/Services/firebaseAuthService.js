@@ -14,8 +14,9 @@ export const createClubWithEmailAndPassword = (newUser, callback) => {
   .then(function(res) {
     if(res.data.state == 'fail')
       callback(res.data.err);
-    else
+    else {
       callback(null, res.data.newUser);
+    }
   })
   .catch(function(err) {
     callback(err);

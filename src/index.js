@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage/LandingPage'
 import LoginComponent from './components/LoginComponent/LoginComponent'
 import ForgotPasswordContainer from './components/LoginComponent/ForgotPasswordContainer'
 import SignupContainer from './components/LoginComponent/SignupContainer'
+import SignupFAContainer from './components/LoginComponent/SignupFAContainer'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent'
 import DevelopersComponent from './components/DevelopersComponent/DevelopersComponent'
 //logo, name, fa, email, pass, notif settings: email after every approval/reject, sms and,aws, push notifs,   
@@ -52,6 +53,7 @@ ReactDOM.render(
                 <Route path="signin" component={LoginComponent}></Route>
                 <Route path="forgot" component={ForgotPasswordContainer}></Route>
                 <Route path="signup" component={SignupContainer}></Route>
+                <Route path="signup-fa" component={SignupFAContainer}></Route>
             </Route>
             <Route path="dashboard" component={ClassroomComponent}>
                 <IndexRoute component={DashboardComponent}></IndexRoute>

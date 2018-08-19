@@ -162,7 +162,7 @@ class FA_MyEventsComponent extends Component {
     }
     this.setState({fetching: true})
     
-    firebaseDB.ref('/clubs/' + this.props.user.clubId).on('value',
+    firebaseDB.ref('/users/' + this.props.user.clubId).on('value',
     function(snapshot) {
       this.setState({fetching: false})
       let events = snapshot.val().my_events

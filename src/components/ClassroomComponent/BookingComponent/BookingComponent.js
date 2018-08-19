@@ -314,7 +314,7 @@ class HorizontalLinearStepper extends React.Component {
       var myRef = firebaseDB.ref('/events/').push(newData);
       var key = myRef.key;
       var scope = this;
-      firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_events/').push(key,
+      firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_events/').push(key,
         function(res, err) {
           if(err)
             console.log("couldn't be booked ", err);
