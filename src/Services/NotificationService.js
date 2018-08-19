@@ -4,7 +4,11 @@ import {store} from '../store'
 import {toggleActions} from '../actions/toggleActions'
 import {updateToken} from './firebaseDBService'
 
-var base_url = "https://dev-miteventbooking.herokuapp.com";
+
+if(window.location.host.indexOf("prod") > -1)
+	var base_url = "https://app-miteventbooking.herokuapp.com";
+else
+	var base_url = "https://dev-miteventbooking.herokuapp.com";
 
 export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=null, text=null, html=null) => {
 
@@ -124,13 +128,14 @@ export const sendSMS = (to, message) => {
 		phone: to,
 		message: message
 	}
-	axios.post('https://sfdjt9wg4c.execute-api.us-east-1.amazonaws.com/dev', params)
-	.then(function(resp) {
-		console.log(resp)
-	})
-	.catch(function(err) {
-		console.log(err)
-	})
+	console.log("SMS CALL ");
+	// axios.post('https://sfdjt9wg4c.execute-api.us-east-1.amazonaws.com/dev', params)
+	// .then(function(resp) {
+	// 	console.log(resp)
+	// })
+	// .catch(function(err) {
+	// 	console.log(err)
+	// })
 }
 
 export const getNotificationRequestPermission = (uid) => {

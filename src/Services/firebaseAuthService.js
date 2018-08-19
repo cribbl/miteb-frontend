@@ -4,10 +4,26 @@ import {getNotificationRequestPermission} from './NotificationService'
 import axios from 'axios'
 
 
-var base_url = "https://dev-miteventbooking.herokuapp.com";
+if(window.location.host.indexOf("prod") > -1)
+  var base_url = "https://app-miteventbooking.herokuapp.com";
+else
+  var base_url = "https://dev-miteventbooking.herokuapp.com";
 
-export const createUserWithEmailAndPassword = (newUser, callback) => {
-  axios.post(base_url + '/user/signup', newUser)
+export const createClubWithEmailAndPassword = (newUser, callback) => {
+  axios.post(base_url + '/user/signup-club', newUser)
+  .then(function(res) {
+    if(res.data.state == 'fail')
+      callback(res.data.err);
+    else
+      callback(null, res.data.newUser);
+  })
+  .catch(function(err) {
+    callback(err);
+  })
+}
+
+export const createFAWithEmailAndPassword = (newUser, callback) => {
+  axios.post(base_url + '/user/signup-fa', newUser)
   .then(function(res) {
     if(res.data.state == 'fail')
       callback(res.data.err);
