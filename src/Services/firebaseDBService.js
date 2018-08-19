@@ -10,24 +10,24 @@ export const getUserDetails = (clubId, callback) => {
             console.log('return since no clubId')
             return
       }
-      firebaseDB.ref('/clubs/' + clubId).once('value',
+      firebaseDB.ref('/users/' + clubId).once('value',
             function(snapshot) {
               let user = snapshot.val();
               user['uid'] = snapshot.key;
               if(user.isClub) {
-                firebaseDB.ref('/clubs/' + user.fa_uid).once('value',
+                firebaseDB.ref('/users/' + user.fa_uid).once('value',
                   function(snap) {
                     user['fa'] = snap.val();
                 })
               }
               callback(user);
             })
-      firebaseDB.ref('/clubs/' + clubId).on('value',
+      firebaseDB.ref('/users/' + clubId).on('value',
             function(snapshot) {
                   let user = snapshot.val();
                   user['uid'] = snapshot.key;
                   if(user.isClub) {
-                    firebaseDB.ref('/clubs/' + user.fa_uid).once('value',
+                    firebaseDB.ref('/users/' + user.fa_uid).once('value',
                       function(snap) {
                         user['fa'] = snap.val();
                     })
@@ -41,7 +41,7 @@ export const getMyEvents = (clubId, callback) => {
     console.log('return since no clubId')
     return
   }
-  firebaseDB.ref('/clubs/' + clubId).on('value',
+  firebaseDB.ref('/users/' + clubId).on('value',
   function(snapshot) {
     // console.log('outer snapshot')
             let user = snapshot.val();
@@ -165,7 +165,7 @@ export const approveEvent = (event, approver, user) => {
 
                   // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Portal Team</p>");
                   let num = (event.booker_contact).substr((event.booker_contact).length - 10);
-                  sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nThank You,\nPortal Team" );
+                  // sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nThank You,\nPortal Team" );
                   sendPush(event.clubID, "Yay! Approved by SO", "Your event titled '"+event.title+ "' has been approved by SO");
 
                   firebaseDB.ref('/events/').child(event.key+'/SO_date').set(moment(new Date()).format("DD-MM-YYYY"));
@@ -223,7 +223,7 @@ export const approveClubNotif = (club, mode, clubID) => {
       sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Portal Team</p>");
       sendApproveClubTemplate(club.email, club.name);
      
-      sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
+      // sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
 
      sendPush(clubID , greeting, "Your club titled '"+club.name+ "' has been "+mode);
     return
@@ -233,18 +233,18 @@ export const resolveComplaintNotif = (complaint) => {
 
     sendComplaintTemplate(complaint.fields.email, complaint.fields.name, complaint.subject);
       sendEmail("SC", "mitstudentcouncil@gmail.com", complaint.fields.email, "complaint_"+"resolved", "Complaint resolved", "Hey "+complaint.fields.name + "\nYour complaint titled " + complaint.subject+ "has been resolved","<p><strong>Hey "+complaint.fields.name + "</strong><br /> Your complaint titled <strong>'"+complaint.subject+"'</strong> has been resolved.<br/>Regards,<br/>Portal Team</p>");
-        
-      sendSMS('+91'+complaint.fields.contactNo, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nThank You,\nPortal Team" );
+      let num = (complaint.fields.contactNo).substr((event.booker_contact).length - 10);
+      // sendSMS('+91'+num, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nThank You,\nPortal Team" );
 
     return
 }
 
 
 export const newComplaintNotif = () => {
-  sendEmail("Portal","mitstudentcouncil@gmail.com","vibhutisharma997@gmail.com","new_complaint","new complaint",
+  sendEmail("Portal","mitstudentcouncil@gmail.com","dummymitsc@gmail.com","new_complaint","new complaint",
     "A new coplaint has been lodged.","<p>A new complaint has been lodged.<br/>Regards, <br/>Portal Team</p>")
 
-  sendPush("kmnW71JZLdcx0trfvCHyiTXbpjw2","Uh-huh","A new complaint has been lodged.")
+  sendPush("SC","New Complaint","A new complaint has been lodged.")
 }
 
 export const updateToken = (uid, token, bool) => {
@@ -252,6 +252,6 @@ export const updateToken = (uid, token, bool) => {
 }
 
 export const updateUser = (uid, tempUser) => {
-      firebaseDB.ref('clubs/' + uid).update(tempUser);
+      firebaseDB.ref('users/' + uid).update(tempUser);
       store.dispatch(toggleActions.toggleToaster("Profile updated successfully!", true));
 }

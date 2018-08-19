@@ -19,7 +19,7 @@ var prod = {
 };
 
 // const config = process.env.REACT_APP_NODE_ENV === 'production' ? prod : dev;
-const config = window.location.host.indexOf("prod") > -1 ? prod : dev;
+const config = window.location.host.indexOf("prod") > -1 ? prod : prod;
 
 
 firebase.initializeApp(config);

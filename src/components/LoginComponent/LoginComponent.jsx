@@ -53,7 +53,7 @@ class LoginComponent extends Component {
             <CircularProgress style={{position: 'absolute', padding: '27px 5px'}} size={20} hidden={!this.props.logging}/>
           </div>
               {this.props.error && <p>{this.props.error.message}</p>}
-          <br /><br /><br />Don't have an account yet? <Link className="bottomAlign" to="/auth/signup">Signup here</Link>
+          <br /><br /><br />Don't have an account yet? <Link className="bottomAlign" to="/auth/signup">Signup as Club</Link><br /><Link className="bottomAlign" to="/auth/signup-fa">Signup as FA</Link>
       </form>
       </div>
     )
