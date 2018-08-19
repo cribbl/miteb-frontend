@@ -3,7 +3,7 @@ Online portal to book events and rooms for clubs of MIT.
 
 ## Folder Structure
 
-After creation, your project should look like this:
+After creation, your project should look like this:-
 
 ```
 app/
