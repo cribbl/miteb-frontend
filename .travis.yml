@@ -10,19 +10,19 @@ install:
 script:
 - npm run build
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: bash prod-deploy.sh
-  local_dir: build
-  on:
-    branch: master
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: bash stage-deploy.sh
-  local_dir: build
-  on:
-    branch: dev
+  - provider: script
+    skip_cleanup: true
+    script: bash prod-deploy.sh
+    local_dir: build
+    on:
+      branch: master
+
+  - provider: script
+    skip_cleanup: true
+    script: bash stage-deploy.sh
+    local_dir: build
+    on:
+      branch: dev
 git:
   depth: 3
 before_install:
