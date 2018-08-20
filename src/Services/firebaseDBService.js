@@ -165,7 +165,7 @@ export const approveEvent = (event, approver, user) => {
 
                   // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Cribbl Services</p>");
                   let num = (event.booker_contact).substr((event.booker_contact).length - 10);
-                  // sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services" );
+                  sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services" );
                   sendPush(event.clubID, "Yay! Approved by SO", "Your event titled '"+event.title+ "' has been approved by SO");
 
                   firebaseDB.ref('/events/').child(event.key+'/SO_date').set(moment(new Date()).format("DD-MM-YYYY"));
@@ -221,9 +221,13 @@ export const approveClubNotif = (club, mode, clubID) => {
       var greeting = (mode == 'approved' ? "Congratulations! " : "Sorry! ")
 
       // sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
-      sendApproveClubTemplate(club.email, club.name);
+      if(mode === 'approved')
+        sendApproveClubTemplate(club.email, club.name);
+      else
+        sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
+
       let num = (club.primaryContact).substr((club.primaryContact).length - 10);
-      sendSMS('+91'+num, greeting+"\n\nYour club titled '" + club.name + "' has been " + mode + " by the Student Council.\n\nRegards,\nCribbl Services" );
+      sendSMS('+91'+num, greeting+"\n\nYour club titled '" + club.name + "' has been " + mode + " by the Student Council.\nHead on to staging.cribblservices.com to get started! \n\nRegards,\nCribbl Services" );
 
       sendPush(clubID , greeting, "Your club named '"+club.name+ "' has been "+mode);
     return
