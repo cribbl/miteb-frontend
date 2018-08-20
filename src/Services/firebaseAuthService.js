@@ -1,4 +1,4 @@
-import {firebaseAuth, firebaseMessaging} from '../firebaseConfig'
+import {firebaseAuth, firebaseMessaging, firebaseDB} from '../firebaseConfig'
 import {getUserDetails, updateToken} from './firebaseDBService'
 import {getNotificationRequestPermission} from './NotificationService'
 import axios from 'axios'
@@ -40,6 +40,20 @@ export const authenticateUser = (email, password, callback) => {
     
     firebaseAuth.signInWithEmailAndPassword(email, password)
     .then(function(user) {
+      if(!user.emailVerified) {
+        let error = {
+          code: 'unapproved',
+          message: 'Email not verified! Please check your email for the Verification Link'
+        }
+        console.log("SEND EMAIL ON SIGNIN")
+        user.sendEmailVerification();
+        callback(error);
+        return;
+      }
+      
+      if(user.emailVerified) {
+        firebaseDB.ref('/users/' + user.uid + '/emailVerification').set(true);
+      }
       callback(null, user)
     })
     .catch(function(error) {
@@ -61,12 +75,19 @@ export const signOut = () => {
 export const fetchUser = (callback) => {
   firebaseAuth.onAuthStateChanged(function(user) {
     if (user) {
-      sessionStorage.setItem('uid', user.uid)
-      getUserDetails(user.uid, (userx) => {
-        if(!userx.isApproved) {
+      if(!user.emailVerified) {
         callback(null);
         return;
       }
+      if(user.emailVerified) {
+        firebaseDB.ref('/users/' + user.uid + '/emailVerification').set(true);
+      }
+      sessionStorage.setItem('uid', user.uid)
+      getUserDetails(user.uid, (userx) => {
+        if(!userx.isApproved) {
+          callback(null);
+          return;
+        }
       userx['uid'] = user.uid;
       callback(userx);
       getNotificationRequestPermission(user.uid); // request permission for notifications
