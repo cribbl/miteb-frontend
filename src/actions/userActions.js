@@ -66,7 +66,7 @@ function getUser() {
     var obj = {};
     var clubID = '';
     return dispatch => {
-        fetchUser(userx => {
+        fetchUser((userx, err) => {
             dispatch(sessionCheck(false))
             if(userx) {
                 dispatch(successUser(userx))
@@ -90,11 +90,19 @@ function getUser() {
             else {
                 // user is not logged in
                 console.log('User is not logged in')
+                if(err) {
+                    let error = {
+                            code: 'unapproved',
+                            message: 'Email not verified!'
+                        }
+                    // dispatch(failure(error))
+                }
                 // hashHistory.push('/auth');
             }
         })
     }
     function successUser(result) { return { type: "SUCCESS_LOGIN", result } }
     function success(result) { return { type: "SUCCESS_FETCH", result } }
+    function failure(error) { return { type: "FAILURE_LOGIN", error} }
     function sessionCheck(result) { return { type: "SESSION_CHECK", result } }
 }
