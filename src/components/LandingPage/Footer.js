@@ -23,8 +23,8 @@ class Footer extends Component {
         <div style={{backgroundColor: '', textAlign: 'left', padding: this.props.isMobile ? 15 : 40}}>
           <p style={{marginBottom: 15, fontSize: 18}}>Quick Links</p>
           <Link to="/auth" style={{color: '#BFBFBF'}}>Login</Link><br />
-          <Link to="" style={{color: '#BFBFBF'}}>FAQ</Link><br />
-          <Link to="/complaints" style={{color: '#BFBFBF'}}>Complaints</Link><br />
+          { /* <Link to="" style={{color: '#BFBFBF'}}>FAQ</Link><br /> */}
+          { /*<Link to="/complaints" style={{color: '#BFBFBF'}}>Complaints</Link><br /> */}
           <Link to="/developers" style={{color: '#BFBFBF'}}>Developers</Link><br />
         </div>
         
