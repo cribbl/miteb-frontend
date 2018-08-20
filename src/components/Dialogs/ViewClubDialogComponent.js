@@ -62,7 +62,7 @@ class ClubDialog extends Component {
 	        </div>
 	        <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
 	        	<p style={styles.label}>Name Abbreviation</p>
-	        	<p style={styles.value}>{this.props.currentClub.nameAbbrv}</p>
+	        	<p style={styles.value}>{this.props.currentClub.abbrv}</p>
 	        </div>
 	        <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
 	        	<p style={styles.label}>Email</p>
