@@ -6,7 +6,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import {createClubWithEmailAndPassword} from '../../Services/firebaseAuthService'
-import {sendPush, sendEmail} from '../../Services/NotificationService'
+import {sendPush, sendEmail, sendSMS} from '../../Services/NotificationService'
 
 import { Link, hashHistory } from 'react-router'
 
@@ -128,8 +128,9 @@ class SignupContainer extends Component {
           this.setState({signupSuccess: true, newUser: res})
           // this.handleCounter();
           sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Request Received", "", `Hey ${res.name},<br /><br />We have received your request for signup.<br />Kindly ask your Faculty Advisor to Sign Up using Club ID as <strong>${res.uid}</strong>.<br /><br />The Student Council will review your request and get back at the earliest. You shall be notified via email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
-
-          sendPush("SC", "Club Approval Requested", `${res.name} has requested your approval!`);
+          
+          sendSMS(res.primaryContact, `Signup request received.\n Kindly ask your Faculty Advisor to Sign Up using Club ID : ${res.uid}.\n\nRegards,\nCribbl Services`);
+          // sendPush("SC", "Club Approval Requested", `${res.name} has requested your approval!`);
         }
       }, this)
   }
@@ -146,11 +147,12 @@ class SignupContainer extends Component {
               <div style={{marginTop: 30}}>
                 <h4 style={{color: 'rgb(0, 188, 212)'}}>Success!</h4>
                 <h6>Thank you for signing up.<br /><br />
-                Kindly ask your Faculty Advisor to signup using the Club-ID as <strong>{this.state.newUser.uid}</strong>
+                Kindly ask your Faculty Advisor to signup using <br /><br /><span style={{color: 'rgb(0, 188, 212)'}}>Club ID : {this.state.newUser.uid}</span>
                 <br /><br />
                 You shall be notified via Email and SMS.
                 
                 </h6><br /><br /><br />
+                <Link to="/auth">Go back</Link>
               </div>
 
             }
@@ -212,14 +214,14 @@ class SignupContainer extends Component {
                 <RadioButton
                   value="technical"
                   label="Technical"
-                  style={{width: '37%', backgroundColor: '', marginRight: 10}}
-                  iconStyle={{marginRight: 5}}
+                  style={{width: '37%', backgroundColor: '', marginRight: 8}}
+                  iconStyle={{marginRight: 12}}
                 />
                 <RadioButton
                   value="nonTechnical"
                   label="Non Technical"
                   style={{width: '66%', backgroundColor: ''}}
-                  iconStyle={{marginRight: 5}}
+                  iconStyle={{marginRight: 12}}
                 />
               </RadioButtonGroup>
 

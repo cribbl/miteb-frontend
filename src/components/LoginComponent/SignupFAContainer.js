@@ -127,9 +127,8 @@ class SignupContainer extends Component {
           console.log(res);
           this.setState({signupSuccess: true, newUser: res})
           // this.handleCounter();
-          // sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Request Received", "", `Hey ${res.name},<br /><br />We have received your request for signup.<br />Kindly ask your Faculty Advisor to Sign Up using Club ID as <strong>${res.uid}</strong>.<br /><br />The Student Council will review your request and get back at the earliest. You shall be notified via email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
-
-          // sendPush("SC", "FA Connected", `${res.name} has requested your approval!`);
+          sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Request Received", "", `Hey ${res.name},<br /><br />We have received your request for signup.<br /><br />The Student Council will review your request and get back at the earliest. You shall be notified via email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
+          sendPush("SC", "FA Connected", `${res.name} has requested your approval!`);
         }
       }, this)
   }
@@ -149,6 +148,7 @@ class SignupContainer extends Component {
                 <br /><br />
                 Once Student Council reviews the club, you shall be notified via Email and SMS.
                 </h6><br /><br /><br />
+                <Link to="/auth">Go back</Link>
               </div>
 
             }
