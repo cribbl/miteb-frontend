@@ -23,14 +23,33 @@ const styles = {
 class ViewEventDialog extends Component {
   constructor(props){
     super(props)
+    this.getRoomsString = this.getRoomsString.bind(this);
     this.state = {
       open: this.props.open,
+      roomlist: ""
     };
   }
 
+  getRoomsString(rooms) {
+    var roomlist = "";
+    // determines the academic block according to the first digit as array index
+    var room_block = ["AB-1","AB-2","NLH","IC","AB-5"];
+    rooms.forEach(function(room){
+      var block = Math.floor(room/1000) - 1;
+      var room_no = room%1000;
+      block = room_block[block];
+      roomlist+=block + "-" + room_no + ", ";
+    });
+    roomlist = roomlist.replace(/,\s*$/, "");
+
+    this.setState({roomlist: roomlist})
+  }
   componentWillReceiveProps(nextProps) {
     console.log(nextProps)
     this.setState({open: nextProps.open})
+    if(nextProps.currentEvent && nextProps.currentEvent.rooms) {
+      this.getRoomsString(nextProps.currentEvent.rooms)
+    }
   }
 
   render() {
@@ -123,6 +142,27 @@ class ViewEventDialog extends Component {
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>End Date</p>
             <p style={styles.value}>{moment(this.props.currentEvent.end_date, 'DD-MM-YYYY').format('dddd, DD MMMM YYYY')}</p>
+          </div>
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Rooms</p>
+            <p style={styles.value}>{this.state.roomlist}</p>
+          </div>
+          <div hidden={!this.props.currentEvent.notes} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Notes</p>
+            <p style={styles.value}>{this.props.currentEvent.notes}</p>
+          </div>
+
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Name</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_name}</p>
+          </div>
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Contact</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_contact}</p>
+          </div>
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Email</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_email}</p>
           </div>
           <div hidden={!((this.props.currentEvent.FA_appr == 'flagged') || (this.props.currentEvent.FA_appr == 'rejected'))} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>{this.props.currentEvent.FA_appr} by FA</p>
