@@ -163,9 +163,9 @@ export const approveEvent = (event, approver, user) => {
 
                   sendEmailTemplate("SO", "APPROVED", "", event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, "https://s3.amazonaws.com/miteb/"+event.key+".pdf");
 
-                  // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Portal Team</p>");
+                  // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Cribbl Services</p>");
                   let num = (event.booker_contact).substr((event.booker_contact).length - 10);
-                  // sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nThank You,\nPortal Team" );
+                  // sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services" );
                   sendPush(event.clubID, "Yay! Approved by SO", "Your event titled '"+event.title+ "' has been approved by SO");
 
                   firebaseDB.ref('/events/').child(event.key+'/SO_date').set(moment(new Date()).format("DD-MM-YYYY"));
@@ -220,21 +220,21 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
 export const approveClubNotif = (club, mode, clubID) => {
       var greeting = (mode == 'approved' ? "Congratulations! " : "Sorry! ")
 
-      sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Portal Team</p>");
+      // sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
       sendApproveClubTemplate(club.email, club.name);
-     
-      // sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
+      let num = (club.primaryContact).substr((club.primaryContact).length - 10);
+      sendSMS('+91'+num, greeting+"\n\nYour club titled '" + club.name + "' has been " + mode + " by the Student Council.\n\nRegards,\nCribbl Services" );
 
-     sendPush(clubID , greeting, "Your club titled '"+club.name+ "' has been "+mode);
+      sendPush(clubID , greeting, "Your club named '"+club.name+ "' has been "+mode);
     return
 }
 
 export const resolveComplaintNotif = (complaint) => {
 
     sendComplaintTemplate(complaint.fields.email, complaint.fields.name, complaint.subject);
-      sendEmail("SC", "mitstudentcouncil@gmail.com", complaint.fields.email, "complaint_"+"resolved", "Complaint resolved", "Hey "+complaint.fields.name + "\nYour complaint titled " + complaint.subject+ "has been resolved","<p><strong>Hey "+complaint.fields.name + "</strong><br /> Your complaint titled <strong>'"+complaint.subject+"'</strong> has been resolved.<br/>Regards,<br/>Portal Team</p>");
+      sendEmail("SC", "mitstudentcouncil@gmail.com", complaint.fields.email, "complaint_"+"resolved", "Complaint resolved", "Hey "+complaint.fields.name + "\nYour complaint titled " + complaint.subject+ "has been resolved","<p><strong>Hey "+complaint.fields.name + "</strong><br /> Your complaint titled <strong>'"+complaint.subject+"'</strong> has been resolved.<br/>Regards,<br/>Cribbl Services</p>");
       let num = (complaint.fields.contactNo).substr((event.booker_contact).length - 10);
-      // sendSMS('+91'+num, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nThank You,\nPortal Team" );
+      // sendSMS('+91'+num, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nRegards,\nCribbl Services" );
 
     return
 }
@@ -242,7 +242,7 @@ export const resolveComplaintNotif = (complaint) => {
 
 export const newComplaintNotif = () => {
   sendEmail("Portal","mitstudentcouncil@gmail.com","dummymitsc@gmail.com","new_complaint","new complaint",
-    "A new coplaint has been lodged.","<p>A new complaint has been lodged.<br/>Regards, <br/>Portal Team</p>")
+    "A new coplaint has been lodged.","<p>A new complaint has been lodged.<br/>Regards, <br/>Cribbl Services</p>")
 
   sendPush("SC","New Complaint","A new complaint has been lodged.")
 }
