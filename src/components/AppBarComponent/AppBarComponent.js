@@ -34,7 +34,7 @@ import './AppBarComponent.css'
   const MyNavLinks = () => (
     <ToolbarGroup>
       <Link to="/" activeClassName=""><FlatButton label="Home" /></Link>
-      <Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link>      
+      {/*<Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link>*/}
       <Link to="/auth" activeClassName=""><FlatButton label="Login" /></Link>
 	  </ToolbarGroup>
 	);
