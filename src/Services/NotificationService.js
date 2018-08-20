@@ -85,32 +85,17 @@ export const sendApproveClubTemplate = (club_email, club_name) => {
 	})
 }
 
-
-
-	     //  vibrate: [100, 50, 100],
-	     //  actions: [
-	     //  	{action: 'open', title: 'Open notif', icon: 'assets/notifications/checkIcon.png'},
-	     //  	{action: 'close', title: 'Close notification', icon: 'assets/notifications/closeIcon.png'},
-	    	// ],
-	     //  data: {
-	     //    dateOfArrival: Date.now(),
-	     //    primaryKey: 1,
-	     //    title: 'data -> ' + title
-	     //  }
-export const sendPush = (uid, title, body) => {
+export const sendPush = (uid, title, body, icon) => {
 
 	let params = {
 		uid: uid,
-    notificationOptions: {
-    	notification: {
-	      title: title,
-	      body: body,
-	      icon: 'https://laracasts.com/images/series/circles/do-you-react.png',
-	      click_action: 'https://bookings.cribblservices.com'
-	  	},
-	  	data: {
-	  		name: 'bhawesh'
-	  	}
+	    notificationOptions: {
+	    	notification: {
+		      title: title,
+		      body: body,
+		      icon: icon || 'https://laracasts.com/images/series/circles/do-you-react.png',
+		      click_action: window.location.host
+		  	}
     }
   };
 
@@ -128,14 +113,13 @@ export const sendSMS = (to, message) => {
 		phone: to,
 		message: message
 	}
-	console.log("SMS CALL ");
-	// axios.post('https://sfdjt9wg4c.execute-api.us-east-1.amazonaws.com/dev', params)
-	// .then(function(resp) {
-	// 	console.log(resp)
-	// })
-	// .catch(function(err) {
-	// 	console.log(err)
-	// })
+	axios.post(base_url + '/notif/send-sms', params)
+	.then(function(resp) {
+		console.log(resp)
+	})
+	.catch(function(err) {
+		console.log(err)
+	})
 }
 
 export const getNotificationRequestPermission = (uid) => {
