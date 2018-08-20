@@ -5,12 +5,12 @@ import {toggleActions} from '../actions/toggleActions'
 import {sendEmail, sendPush, sendSMS, sendEmailTemplate, sendComplaintTemplate, sendApproveClubTemplate} from './NotificationService'
 import {generatePDF} from './firebaseStorageService'
 
-export const getUserDetails = (clubId, callback) => {
-      if(!clubId) {
-            console.log('return since no clubId')
+export const getUserDetails = (clubID, callback) => {
+      if(!clubID) {
+            console.log('return since no clubID')
             return
       }
-      firebaseDB.ref('/users/' + clubId).once('value',
+      firebaseDB.ref('/users/' + clubID).once('value',
             function(snapshot) {
               let user = snapshot.val();
               user['uid'] = snapshot.key;
@@ -22,7 +22,7 @@ export const getUserDetails = (clubId, callback) => {
               }
               callback(user);
             })
-      firebaseDB.ref('/users/' + clubId).on('value',
+      firebaseDB.ref('/users/' + clubID).on('value',
             function(snapshot) {
                   let user = snapshot.val();
                   user['uid'] = snapshot.key;
@@ -36,12 +36,12 @@ export const getUserDetails = (clubId, callback) => {
             })
 }
 
-export const getMyEvents = (clubId, callback) => {
-  if(!clubId) {
-    console.log('return since no clubId')
+export const getMyEvents = (clubID, callback) => {
+  if(!clubID) {
+    console.log('return since no clubID')
     return
   }
-  firebaseDB.ref('/users/' + clubId).on('value',
+  firebaseDB.ref('/users/' + clubID).on('value',
   function(snapshot) {
     // console.log('outer snapshot')
             let user = snapshot.val();
