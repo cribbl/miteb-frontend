@@ -44,7 +44,7 @@ import './AppBarComponent.css'
     <h2 style={{alignSelf: 'center', marginTop: 11}}>{props.content}</h2>
     <div>
     <Link to="/" activeClassName=""><FlatButton label="Home" /></Link>
-    <Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link>
+  {/*  <Link to="/complaints" activeClassName=""><FlatButton label="Complaints" /></Link> */}
     <Link to="/dashboard" activeClassName=""><FlatButton label="Dashboard" /></Link>
     </div>
     </div>
