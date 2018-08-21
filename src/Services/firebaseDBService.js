@@ -227,7 +227,7 @@ export const approveClubNotif = (club, mode, clubID) => {
         sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
 
       let num = (club.primaryContact).substr((club.primaryContact).length - 10);
-      sendSMS('+91'+num, greeting+"\n\nYour club titled '" + club.name + "' has been " + mode + " by the Student Council.\nHead on to staging.cribblservices.com to get started! \n\nRegards,\nCribbl Services" );
+      sendSMS('+91'+num, greeting+"\n\nYour club titled '" + club.name + "' has been " + mode + " by the Student Council.\n\nRegards,\nCribbl Services" );
 
       sendPush(clubID , greeting, "Your club named '"+club.name+ "' has been "+mode);
     return
