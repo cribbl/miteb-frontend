@@ -56,7 +56,7 @@ class Reg extends Component {
       <div hidden={this.props.isMobile} style={{textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <h1>MIT Event Booking Portal</h1>
         <div style={{width: '70%'}}>
-        <p>Your One-stop destination to book rooms, lodge complaints, request publicity permissions and what not xD</p>
+        <p>Your one-stop destination to book rooms, lodge complaints, request publicity permissions and so much more!</p>
         </div>
       </div>
 
