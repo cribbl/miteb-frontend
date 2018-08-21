@@ -23,7 +23,7 @@ import {connect} from 'react-redux'
 import Snackbar from 'material-ui/Snackbar';
 import moment from 'moment'
 import {fetchRooms, updateDates, getDisabledDates} from '../../../Services/firebaseDBService'
-import {sendPush} from '../../../Services/NotificationService'
+import {sendPush, sendEmail} from '../../../Services/NotificationService'
 import FinishedContainer from './FinishedContainer'
 
 class HorizontalLinearStepper extends React.Component {
@@ -323,7 +323,7 @@ class HorizontalLinearStepper extends React.Component {
             console.log("couldn't be booked ", err);
           else {
             updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms))
-            sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
+            sendPush(scope.props.user.fa_uid, "Dear FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
             scope.setState({SnackBarmessage: 'Request for booking room successful', openSnackBar: true})
             scope.setState({bookedEvent: newData, finished: true})
           }

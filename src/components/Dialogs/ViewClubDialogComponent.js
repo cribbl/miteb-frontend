@@ -10,7 +10,12 @@ class ClubDialog extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentFA: {}
+			currentFA: {
+				emailVerification: false,
+				name: "NOT CONNECTED",
+				email: "NOT CONNECTED",
+				primaryContact: "NOT CONNECTED"
+			}
 		}
 	}
 
@@ -18,9 +23,17 @@ class ClubDialog extends Component {
 		var scope = this;
 		firebaseDB.ref(`users/${nextProps.currentClub.fa_uid}`).once('value', function(snapshot) {
 			let FA = snapshot.val();
-			scope.setState({
-				currentFA: FA
-			})
+			if(FA)
+				scope.setState({
+					currentFA: FA
+				})
+			else
+				scope.setState({currentFA: {
+				emailVerification: false,
+				name: "NOT CONNECTED",
+				email: "NOT CONNECTED",
+				primaryContact: "NOT CONNECTED"
+			}})
 		})
 	}
 
