@@ -127,7 +127,7 @@ class SignupContainer extends Component {
           console.log(res);
           this.setState({signupSuccess: true, newUser: res})
           // this.handleCounter();
-          sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Request Received", "", `Hey ${res.name},<br /><br />We have received your request for signup.<br /><br />The Student Council will review your request and get back at the earliest. You shall be notified via email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
+          sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Successful", "", `Dear ${res.name},<br /><br />You have successfully signed up with us.<br /><br />The Student Council will review your Club's request and get back at the earliest. You shall be notified via an email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
           sendPush("SC", "FA Connected", `${res.name} has requested your approval!`);
         }
       }, this)
