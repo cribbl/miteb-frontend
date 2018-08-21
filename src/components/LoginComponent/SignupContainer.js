@@ -128,8 +128,8 @@ class SignupContainer extends Component {
           this.setState({signupSuccess: true, newUser: res})
           // this.handleCounter();
           sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Request Received", "", `Hey ${res.name},<br /><br />We have received your request for signup.<br />Kindly ask your Faculty Advisor to Sign Up using Club ID as <strong>${res.uid}</strong>.<br /><br />The Student Council will review your request and get back at the earliest. You shall be notified via email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
-          
-          sendSMS(res.primaryContact, `Signup request received.\n Kindly ask your Faculty Advisor to Sign Up using Club ID : ${res.uid}.\n\nRegards,\nCribbl Services`);
+          let num = (res.primaryContact).substr((res.primaryContact).length - 10);
+          sendSMS("+91"+num, `Signup request received.\n Kindly ask your Faculty Advisor to Sign Up using Club ID : ${res.uid}.\n\nRegards,\nCribbl Services`);
           // sendPush("SC", "Club Approval Requested", `${res.name} has requested your approval!`);
         }
       }, this)
