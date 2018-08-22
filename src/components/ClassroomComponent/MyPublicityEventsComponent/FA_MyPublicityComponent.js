@@ -155,12 +155,12 @@ class FA_MyPublicityComponent extends Component {
       return
     }
     this.setState({fetching: true}) 
-    firebaseDB.ref('/users/' + this.props.user.clubId).on('value',
+    firebaseDB.ref('/users/' + this.props.user.clubID).on('value',
     function(snapshot) {
       this.setState({fetching: false})
       let events = snapshot.val().my_publicity
       for(let event in events) {
-        firebaseDB.ref('events/publicity/' + events[event]).on('value',
+        firebaseDB.ref('publicity/' + events[event]).on('value',
         function(snapshot) {
           if(snapshot.val().FA_appr == 'pending') {
             const {myArrx} = this.state
