@@ -179,7 +179,7 @@ class MyPublicityComponent extends Component {
           this.setState({fetching: false})
       }
       for(let event in events) {
-        firebaseDB.ref('/events/publicity/' + events[event]).on('value',
+        firebaseDB.ref('/publicity/' + events[event]).on('value',
         function(snapshot) {
           this.setState({fetching: false})
           console.log(snapshot.val())

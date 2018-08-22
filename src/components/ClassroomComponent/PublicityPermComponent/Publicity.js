@@ -101,30 +101,29 @@ class PublicityComponent extends React.Component {
 
   handleSubmit() {
     var result = this.parseMediums();
-    var file = this.state.files;
-    console.log(result);
-    // uploadPoster(this.props.user.uid, file, (err, res) => {
-    //   if(err) {
-    //     console.log(err)
-    //   }
-    //   else {
-    //     //updateUser(this.props.user.uid, {profilePicURL: res.downloadURL});
-    //   }
-    // })
+    var file = this.state.files[0];
+    console.log(result, file);
+    uploadPoster(this.props.user.uid, file, (err, res) => {
+      if(err) {
+        console.log(err);
+      }
+      else {
+        console.log('done!');
+      }
+    })
     var newData = {
       "AD_appr":"NA",
       "FA_appr":"pending",
       "SO_appr":"NA",
       "clubName": this.props.user.name,
-      "clubID": localStorage.getItem('clubID'),
+      "clubID": this.props.user.uid,
       "FA_name": this.props.user.fa.name
     }
     var booker_fields={
       'booker_fields':this.state.booker_fields
     }
     var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
-    console.log('obj = ',obj);
-    var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
+    var myRef = firebaseDB.ref('/publicity/').push(obj);
     var key = myRef.key;
     var scope = this;
     firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(key,
@@ -137,8 +136,6 @@ class PublicityComponent extends React.Component {
           scope.setState({finished: true})
         }
       });
-
-      
   }
 
   parseMediums(){

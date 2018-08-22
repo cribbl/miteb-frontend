@@ -17,6 +17,13 @@ export const uploadProfilePic = (uid, file, callback) => {
 }
 
 export const uploadPoster = (uid,file,callback) => {
+  storage.ref().child(uid + `/${file.name}`).put(file)
+  .then(function(res) {
+    callback(null,res)
+  })
+  .catch(function(err) {
+    callback(err)
+  })
   
 }
 
