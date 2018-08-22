@@ -28,6 +28,9 @@ import PendingIcon from 'material-ui/svg-icons/action/bookmark'
 import SortIcon from 'material-ui/svg-icons/content/sort' 
 import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ReactTooltip from 'react-tooltip'
 import moment from 'moment'
 
@@ -252,7 +255,17 @@ class MyPublicityComponent extends Component {
                     <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', textOverflow: 'clip'}}>
+                      {<IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      useLayerForClickAway={true}
+                      >
+                      <MenuItem primaryText="View" onClick={() => this.showDialog(event)}/>
+                      <MenuItem hidden={!event.receiptURL} primaryText="Download Receipt" onClick={() => {window.location=(event.receiptURL)}}/>
+                      </IconMenu>}
+                    </TableRowColumn>
                   </TableRow>
               )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No Events Yet'}</p>
           }
