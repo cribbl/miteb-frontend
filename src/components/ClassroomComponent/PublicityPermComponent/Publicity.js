@@ -34,7 +34,7 @@ class PublicityComponent extends React.Component {
 		this.state =  {
       checked: [true,false,false,false],
       shouldCheck: false,
-      stepIndex:2,
+      stepIndex:1,
       finished: false,
       isFormValid:false,
       booker_fields:  {
