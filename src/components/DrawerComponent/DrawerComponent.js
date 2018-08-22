@@ -16,6 +16,8 @@ import IconSettings from 'material-ui/svg-icons/action/settings'
 import IconHelp from 'material-ui/svg-icons/action/help'
 import IconProfile from 'material-ui/svg-icons/social/person'
 import ComplaintIcon from 'material-ui/svg-icons/av/new-releases'
+import IconPublicity from 'material-ui/svg-icons/image/brush'
+
 
 import {connect} from 'react-redux'
 import {toggleActions} from '../../actions/toggleActions'
@@ -92,7 +94,11 @@ class DrawerComponent extends Component {
                 primaryText="Room Booking"
                 leftIcon={<IconTest color={'#FFFFFF'} />}
                 hidden={this.props.user && !this.props.user.isClub} />
-
+            <MenuItem 
+                style = {Object.assign(this.state.activeItem === '/dashboard/publicity_perm'? active: '', menuItemStyle)}
+                key = "/dashboard/publicity_perm"
+                primaryText = "Publicity Permission"
+                leftIcon = {<IconPublicity color = {'#FFFFFF'} />} />
             <MenuItem
                 style={Object.assign(this.state.activeItem.toLowerCase().indexOf("event")!=-1 ? active:'', menuItemStyle)}
                 key="/dashboard/myEvents"
@@ -117,6 +123,11 @@ class DrawerComponent extends Component {
             />
             : null}
 
+            <MenuItem 
+                style = {Object.assign(this.state.activeItem === '/dashboard/myPublicity'? active: '', menuItemStyle)}
+                key = "/dashboard/myPublicity"
+                primaryText = "Publicity Requests"
+                leftIcon = {<IconAnalytics color = {'#FFFFFF'} />} />
             <MenuItem
                 style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active:'', menuItemStyle)}
                 key="/dashboard/profile"

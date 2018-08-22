@@ -16,6 +16,10 @@ export const uploadProfilePic = (uid, file, callback) => {
 	})	
 }
 
+export const uploadPoster = (uid,file,callback) => {
+  
+}
+
 export const generatePDF = (eventID) => {
   let params = {
     eventID: eventID
