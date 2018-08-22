@@ -169,7 +169,7 @@ class MyPublicityComponent extends Component {
         return
       }
     }
-    firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
+    firebaseDB.ref('/users/' + this.props.user.uid).on('value',
     function(snapshot) {
       let events = snapshot.val().my_publicity
       if(!events) {
@@ -221,6 +221,12 @@ class MyPublicityComponent extends Component {
                 hidden={this.props.isMobile}>
                 START DATE
                 <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
+              </TableHeaderColumn>
+              <TableHeaderColumn
+                style={{color: '#000', fontWeight: 700, alignItems: 'center',width:'20%'}}
+                hidden={this.props.isMobile}
+                >
+                END DATE
               </TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>FA</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>AD</TableHeaderColumn>

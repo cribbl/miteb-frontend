@@ -116,8 +116,8 @@ class EventContainer extends React.Component {
 		render() {
       var self=this;
 			return (
-      <div style={{backgroundColor: '', display: 'flex', flexDirection: this.props.isMobile ? 'column': 'row' , justifyContent: 'space-between', alignItems: 'center',marginTop:16}}>
-        <div>
+      <div style={{backgroundColor: '', display: 'flex', flexDirection: this.props.isMobile ? 'column': 'row' , justifyContent: 'space-between', alignItems: 'center'}}>
+        <div style={{marginTop:16}}>
           <h6> Publicity Dates </h6>
           <DatePicker
                 floatingLabelText="Start Date"
@@ -150,7 +150,7 @@ class EventContainer extends React.Component {
                 required
            />
         </div>
-        <div>
+        <div style={{marginTop:16}}>
           <h6> Event Details </h6>
           <TextField 
               floatingLabelText="Title *"

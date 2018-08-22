@@ -103,40 +103,40 @@ class PublicityComponent extends React.Component {
     var result = this.parseMediums();
     var file = this.state.files;
     console.log(result);
-    uploadPoster(this.props.user.uid, file, (err, res) => {
-      if(err) {
-        console.log(err)
-      }
-      else {
-        //updateUser(this.props.user.uid, {profilePicURL: res.downloadURL});
-      }
-    })
-    // var newData = {
-    //   "AD_appr":"NA",
-    //   "FA_appr":"pending",
-    //   "SO_appr":"NA",
-    //   "clubName": this.props.user.name,
-    //   "clubID": localStorage.getItem('clubID'),
-    //   "FA_name": this.props.user.fa.name
-    // }
-    // var booker_fields={
-    //   'booker_fields':this.state.booker_fields
-    // }
-    // var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
-    // console.log('obj = ',obj);
-    // var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
-    // var key = myRef.key;
-    // var scope = this;
-    // firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_publicity/').push(key,
-    //   function(res, err) {
-    //     if(err)
-    //       console.log("couldn't be booked ", err);
-    //     else {
-    //       sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
-    //       scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
-    //       scope.setState({finished: true})
-    //     }
-    //   });
+    // uploadPoster(this.props.user.uid, file, (err, res) => {
+    //   if(err) {
+    //     console.log(err)
+    //   }
+    //   else {
+    //     //updateUser(this.props.user.uid, {profilePicURL: res.downloadURL});
+    //   }
+    // })
+    var newData = {
+      "AD_appr":"NA",
+      "FA_appr":"pending",
+      "SO_appr":"NA",
+      "clubName": this.props.user.name,
+      "clubID": localStorage.getItem('clubID'),
+      "FA_name": this.props.user.fa.name
+    }
+    var booker_fields={
+      'booker_fields':this.state.booker_fields
+    }
+    var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
+    console.log('obj = ',obj);
+    var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
+    var key = myRef.key;
+    var scope = this;
+    firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(key,
+      function(res, err) {
+        if(err)
+          console.log("couldn't be booked ", err);
+        else {
+          sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
+          scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
+          scope.setState({finished: true})
+        }
+      });
 
       
   }
