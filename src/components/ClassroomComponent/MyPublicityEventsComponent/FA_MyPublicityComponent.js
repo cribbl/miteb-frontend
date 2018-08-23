@@ -25,6 +25,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {approvePublicity, flagRejectPublicity} from '../../../Services/firebaseDBService'
+import moment from 'moment';
 
 class FA_MyPublicityComponent extends Component {
   constructor(props) {
@@ -56,7 +57,8 @@ class FA_MyPublicityComponent extends Component {
       autoHideDuration: 3000,
       dialogOpen: false,
       FlagDialogOpen: false,
-      currentEvent: {}
+      currentEvent: {},
+      searchContent: ''
     }
 }
 
@@ -183,9 +185,11 @@ class FA_MyPublicityComponent extends Component {
 
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
+
       <div style={{minWidth: '98%', backgroundColor: '', marginTop: 20}}>
-      <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
+        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
       </div>
+      
       <Snackbar
           open={this.state.openSnackBar}
           message={this.state.SnackBarmessage}
@@ -197,7 +201,7 @@ class FA_MyPublicityComponent extends Component {
 
       <FlagDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} mode={this.state.flagRejectMode} flagRejectHandler={this.flagReject} />
 
-      <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
+      <Paper style={{width: '98%', height: 500, overflow: 'hidden', marginTop:20}} zDepth={2}>
         <Table
           style={{backgroundColor: ''}}
           height={'440px'}
@@ -215,7 +219,7 @@ class FA_MyPublicityComponent extends Component {
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>END DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>ACTIONS</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%'}}>ACTIONS</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -225,14 +229,18 @@ class FA_MyPublicityComponent extends Component {
             stripedRows={this.state.stripedRows}
           >
 
-          {this.state.fetching && <CircularProgress />}
+          {this.state.fetching &&
+            <div style={{textAlign: 'center', marginTop: '10%'}}>
+              <CircularProgress size={60} />
+            </div>
+          }
 
           { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
             return(
                   <TableRow key={index}>
-                    <TableRowColumn>{event.title}</TableRowColumn>
-                    <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.end_date}</TableRowColumn>
+                   <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn>{moment(event.start_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
                     <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', textOverflow: 'clip'}}>
                       {<IconMenu
                       iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -247,7 +255,13 @@ class FA_MyPublicityComponent extends Component {
                       </IconMenu>}
                     </TableRowColumn>
                   </TableRow>
-            )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
+            )}, this)) : (
+
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.jpeg")} style={{width: this.props.isMobile ? '70%' : '30%', marginBottom: 10}} />
+                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "Yay! You have no Pending Events"}</p>
+                </div>
+              )
           }
           
           </TableBody>
