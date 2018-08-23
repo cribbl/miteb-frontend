@@ -103,14 +103,14 @@ class PublicityComponent extends React.Component {
     var result = this.parseMediums();
     var file = this.state.files[0];
     console.log(result, file);
-    uploadPoster(this.props.user.uid, file, (err, res) => {
-      if(err) {
-        console.log(err);
-      }
-      else {
-        console.log('done!');
-      }
-    })
+    // uploadPoster(this.props.user.uid, file, (err, res) => {
+    //   if(err) {
+    //     console.log(err);
+    //   }
+    //   else {
+    //     console.log('done!');
+    //   }
+    // })
     var newData = {
       "AD_appr":"NA",
       "FA_appr":"pending",

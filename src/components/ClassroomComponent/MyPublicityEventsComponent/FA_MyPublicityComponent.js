@@ -20,6 +20,10 @@ import {firebaseDB} from '../../../firebaseConfig'
 import Dialogxx from '../../Dialogs/ViewPublicityDialogComponent'
 import FlagDialog from '../../Dialogs/FlagRejectDialog'
 import Snackbar from 'material-ui/Snackbar';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import MenuItem from 'material-ui/MenuItem';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
 import {approvePublicity, flagRejectPublicity} from '../../../Services/firebaseDBService'
 
 class FA_MyPublicityComponent extends Component {
@@ -229,7 +233,19 @@ class FA_MyPublicityComponent extends Component {
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{event.start_date}</TableRowColumn>
                     <TableRowColumn hidden={this.props.isMobile}>{event.end_date}</TableRowColumn>
-                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton hidden={this.props.isMobile} label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', textOverflow: 'clip'}}>
+                      {<IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      useLayerForClickAway={true}
+                      >
+                      <MenuItem primaryText="View" onClick={() => this.showDialog(event)}/>
+                      <MenuItem primaryText="Approve" onClick={() => this.approve(event)}/>
+                      <MenuItem primaryText="Reject" onClick={() => this.flagRejectConfirm(event, "reject")}/>
+                      <MenuItem primaryText="Flag" onClick={() => this.flagRejectConfirm(event, "flag")}/>
+                      </IconMenu>}
+                    </TableRowColumn>
                   </TableRow>
             )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
           }
