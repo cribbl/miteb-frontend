@@ -103,14 +103,7 @@ class PublicityComponent extends React.Component {
     var result = this.parseMediums();
     var file = this.state.files[0];
     console.log(result, file);
-    // uploadPoster(this.props.user.uid, file, (err, res) => {
-    //   if(err) {
-    //     console.log(err);
-    //   }
-    //   else {
-    //     console.log('done!');
-    //   }
-    // })
+
     var newData = {
       "AD_appr":this.props.user.isSC ? "pending" : "NA",
       "FA_appr":this.props.user.isSC ? "approved" : "pending",
@@ -124,10 +117,20 @@ class PublicityComponent extends React.Component {
     var booker_fields={
       'booker_fields':this.state.booker_fields
     }
+
      newData = Object.assign({},newData,booker_fields,this.state.event_fields);
     var publicityID = newData.clubID.slice(0,4);
     publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0,4));
     publicityID = publicityID.concat(new Date().getTime()%1000000);
+
+    uploadPoster(this.props.user.uid, publicityID, file, (err, res) => {
+      if(err) {
+        console.log(err);
+      }
+      else {
+        console.log('done!');
+      }
+    })
 
     var obj = Object.assign({},result,newData);
 
@@ -143,6 +146,8 @@ class PublicityComponent extends React.Component {
           scope.setState({finished: true})
         }
       });
+
+
   }
 
   parseMediums(){
