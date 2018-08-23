@@ -112,21 +112,28 @@ class PublicityComponent extends React.Component {
     //   }
     // })
     var newData = {
-      "AD_appr":"NA",
-      "FA_appr":"pending",
+      "AD_appr":this.props.user.isSC ? "pending" : "NA",
+      "FA_appr":this.props.user.isSC ? "approved" : "pending",
       "SO_appr":"NA",
       "clubName": this.props.user.name,
       "clubID": this.props.user.uid,
-      "FA_name": this.props.user.fa.name
+      "FA_name": this.props.user.fa.name,
+      "FA_date": this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null
     }
+
     var booker_fields={
       'booker_fields':this.state.booker_fields
     }
-    var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
-    var myRef = firebaseDB.ref('/publicity/').push(obj);
-    var key = myRef.key;
+     newData = Object.assign({},newData,booker_fields,this.state.event_fields);
+    var publicityID = newData.clubID.slice(0,4);
+    publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0,4));
+    publicityID = publicityID.concat(new Date().getTime()%1000000);
+
+    var obj = Object.assign({},result,newData);
+
+    firebaseDB.ref('/publicity/').child(publicityID).set(obj);
     var scope = this;
-    firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(key,
+    firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(publicityID,
       function(res, err) {
         if(err)
           console.log("couldn't be booked ", err);
