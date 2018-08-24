@@ -34,7 +34,7 @@ class PublicityComponent extends React.Component {
 		this.state =  {
       checked: [true,false,false,false],
       shouldCheck: false,
-      stepIndex:1,
+      stepIndex:2,
       finished: false,
       isFormValid:false,
       booker_fields:  {
@@ -101,37 +101,45 @@ class PublicityComponent extends React.Component {
 
   handleSubmit() {
     var result = this.parseMediums();
-    var file = this.state.files[0];
-    console.log(result, file);
-
+    var files = this.state.files;
+    var filesDB = files.map(x=> x.name);
     var newData = {
       "AD_appr":this.props.user.isSC ? "pending" : "NA",
       "FA_appr":this.props.user.isSC ? "approved" : "pending",
       "SO_appr":"NA",
       "clubName": this.props.user.name,
+      "files": filesDB,
       "clubID": this.props.user.uid,
       "FA_name": this.props.user.fa.name,
       "FA_date": this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null
     }
-
     var booker_fields={
       'booker_fields':this.state.booker_fields
     }
+    newData = Object.assign({},newData,booker_fields,this.state.event_fields);
 
-     newData = Object.assign({},newData,booker_fields,this.state.event_fields);
     var publicityID = newData.clubID.slice(0,4);
     publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0,4));
     publicityID = publicityID.concat(new Date().getTime()%1000000);
-
-    uploadPoster(this.props.user.uid, publicityID, file, (err, res) => {
-      if(err) {
-        console.log(err);
-      }
-      else {
-        console.log('done!');
-      }
-    })
-
+    
+    
+    if(this.state.checked[3] && files.length!=0) {
+      files.forEach(file => { 
+        console.log('here is the file',file);
+        uploadPoster(this.props.user.uid, publicityID, file, (err, res) => {
+          if(err) {
+            console.log(err);
+          }
+          else {
+            console.log('done!');
+          }
+        })
+      });
+    }
+    else {
+      console.log('No files chosen');
+    }
+   
     var obj = Object.assign({},result,newData);
 
     firebaseDB.ref('/publicity/').child(publicityID).set(obj);

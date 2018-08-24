@@ -34,7 +34,6 @@ class MediumContainer extends React.Component {
 
   }
   handleClick(location){
-    //console.log('i have been clicked',location)
     this.setState({
       clickedValue: location,
       clicked: true
@@ -46,6 +45,18 @@ class MediumContainer extends React.Component {
     });
     this.props.updateFiles(this.state.files);
   }
+
+  removePicture(file) {
+    var files = this.state.files;
+    var i = files.indexOf(file);
+    if(i != -1) {
+      files.splice(i, 1);
+    }
+    this.setState({
+      files: files
+    })
+  }
+
   renderSubmit() {
       const previewStyle = {
         display: 'inline',
@@ -66,6 +77,7 @@ class MediumContainer extends React.Component {
                 key={file.preview}
                 src={file.preview}
                 style={previewStyle}
+                onClick={this.removePicture.bind(this,file)}
               />
             ))}
           </div>
