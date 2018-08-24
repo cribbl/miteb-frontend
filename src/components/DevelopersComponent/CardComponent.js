@@ -30,6 +30,7 @@ class CardComponent extends Component {
     // this.setState({currentPosition: position})
   }
 
+
   render() {
     return (
       <Card style={{width: 250, margin: 10}} className="developerCard">
@@ -46,8 +47,8 @@ class CardComponent extends Component {
             hoverColor={'rgba(0,0,0,0)'}
           />
         </List>
+        <DeveloperApplicationDialog open={this.state.dialogOpen} handleClose={() => this.setState({dialogOpen: false})} developer={this.props.developer} />
 
-        <DeveloperApplicationDialog open={this.state.dialogOpen}/>
 
           
           {

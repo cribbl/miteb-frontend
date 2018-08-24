@@ -37,7 +37,6 @@ const styles = {
 class DeveloperApplicationDialog extends Component {
   constructor(props){
     super(props)
-    this.handleClose = this.handleClose.bind(this);
     this.handleApply = this.handleApply.bind(this);
     this.handleChange = this.handleChange.bind(this)
     this.state = {
@@ -52,13 +51,11 @@ class DeveloperApplicationDialog extends Component {
     };
   }
 
-  handleClose(){
-    open:false;
-    this.setState({open: this.props.open})
-  }
+  
 
   handleApply(){
-
+    let dev = this.props.developer.name;
+    firebaseDB.ref('developerApplications/' + dev).push(this.state.newUser);
   }
 
   handleChange(e, field) {
@@ -85,7 +82,7 @@ class DeveloperApplicationDialog extends Component {
       <FlatButton
         label={"Apply"}
         primary={true}
-        onClick={this.props.handleApply}
+        onClick={this.handleApply}
         style={{margin: '0px 5px'}}
       />,
        
@@ -94,31 +91,43 @@ class DeveloperApplicationDialog extends Component {
     return (
       <div>
         <Dialog
-          title={'Title'}
+          title={<div><p style={{fontWeight: 700}}>{this.props.developer.name}</p><p style={{fontSize: 15, lineHeight: '20px'}}>{this.props.developer.description}</p></div>}
           actions={DA_actions}
           open={this.props.open}
           modal={true}
+          autoScrollBodyContent={true}
           onRequestClose={this.props.handleClose}
-          contentStyle={{width: this.props.isMobile ? '97%' : '35%', maxWidth: 'none', maxHeight: 'none', background: 'red'}}
+          contentStyle={{width: this.props.isMobile ? '97%' : '50%', maxWidth: 'none', maxHeight: 'none', background: 'red'}}
+          actionsContainerStyle={{backgroundColor: 'rgb(248, 248, 248)'}}
+          titleStyle={{backgroundColor: 'rgb(240, 240, 240)'}}
           >
-          <div style={{width: '30%'}} >
+          
             <div style={{maxHeight: '100%', overflow: 'auto'}}>
+
+             <br />
+
+             <p>Name</p>
+
              <TextField 
-                floatingLabelText="Name"
+                floatingLabelText=""
                 value={this.state.newUser.name}
                 onChange={(event) => this.handleChange(event, 'name')}
                 style={{marginTop: -15,marginBottom:8,alignItems:'center'}}
                 required />
 
+             <p>Email</p>
+
              <TextField
-                floatingLabelText="Email"
+                floatingLabelText=""
                 value={this.state.newUser.email}
                 onChange={(event) => this.handleChange(event, 'email')}
                 style={{marginTop: -15, marginBottom: 8}}
                 required />
 
+             <p>Primary Phone</p>
+
               <TextField
-                floatingLabelText="Primary Phone"
+                floatingLabelText=""
                 type="number"
                 value={this.state.newUser.primaryContact}
                 onChange={(event) => this.handleChange(event, 'primaryContact')}
@@ -148,7 +157,7 @@ class DeveloperApplicationDialog extends Component {
                 required />
 
             </div>
-          </div>
+          
         </Dialog>
       </div>
     );
