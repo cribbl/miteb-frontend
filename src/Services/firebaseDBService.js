@@ -5,29 +5,29 @@ import {toggleActions} from '../actions/toggleActions'
 import {sendEmail, sendPush, sendSMS, sendEmailTemplate, sendComplaintTemplate, sendApproveClubTemplate} from './NotificationService'
 import {generatePDF} from './firebaseStorageService'
 
-export const getUserDetails = (clubId, callback) => {
-      if(!clubId) {
-            console.log('return since no clubId')
+export const getUserDetails = (clubID, callback) => {
+      if(!clubID) {
+            console.log('return since no clubID')
             return
       }
-      firebaseDB.ref('/clubs/' + clubId).once('value',
+      firebaseDB.ref('/users/' + clubID).once('value',
             function(snapshot) {
               let user = snapshot.val();
               user['uid'] = snapshot.key;
               if(user.isClub) {
-                firebaseDB.ref('/clubs/' + user.fa_uid).once('value',
+                firebaseDB.ref('/users/' + user.fa_uid).once('value',
                   function(snap) {
                     user['fa'] = snap.val();
                 })
               }
               callback(user);
             })
-      firebaseDB.ref('/clubs/' + clubId).on('value',
+      firebaseDB.ref('/users/' + clubID).on('value',
             function(snapshot) {
                   let user = snapshot.val();
                   user['uid'] = snapshot.key;
                   if(user.isClub) {
-                    firebaseDB.ref('/clubs/' + user.fa_uid).once('value',
+                    firebaseDB.ref('/users/' + user.fa_uid).once('value',
                       function(snap) {
                         user['fa'] = snap.val();
                     })
@@ -36,12 +36,12 @@ export const getUserDetails = (clubId, callback) => {
             })
 }
 
-export const getMyEvents = (clubId, callback) => {
-  if(!clubId) {
-    console.log('return since no clubId')
+export const getMyEvents = (clubID, callback) => {
+  if(!clubID) {
+    console.log('return since no clubID')
     return
   }
-  firebaseDB.ref('/clubs/' + clubId).on('value',
+  firebaseDB.ref('/users/' + clubID).on('value',
   function(snapshot) {
     // console.log('outer snapshot')
             let user = snapshot.val();
@@ -163,9 +163,9 @@ export const approveEvent = (event, approver, user) => {
 
                   sendEmailTemplate("SO", "APPROVED", "", event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, "https://s3.amazonaws.com/miteb/"+event.key+".pdf");
 
-                  // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Portal Team</p>");
+                  // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Cribbl Services</p>");
                   let num = (event.booker_contact).substr((event.booker_contact).length - 10);
-                  sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nThank You,\nPortal Team" );
+                  sendSMS('+91'+num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services" );
                   sendPush(event.clubID, "Yay! Approved by SO", "Your event titled '"+event.title+ "' has been approved by SO");
 
                   firebaseDB.ref('/events/').child(event.key+'/SO_date').set(moment(new Date()).format("DD-MM-YYYY"));
@@ -218,33 +218,37 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
 }
 
 export const approveClubNotif = (club, mode, clubID) => {
-      var greeting = (mode == 'approved' ? "Congratulations! " : "Sorry! ")
+      var greeting = (mode == 'approved' ? "Congratulations!" : "Sorry!")
 
-      sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Portal Team</p>");
-      sendApproveClubTemplate(club.email, club.name);
-     
-      sendSMS('+91'+club.primaryContact, greeting+"\nYour club titled '" + club.name + "' has been" + mode + "by the Student Council.\n\nThank You,\nPortal Team" );
+      // sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
+      if(mode === 'approved')
+        sendApproveClubTemplate(club.email, club.name);
+      else
+        sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
 
-     sendPush(clubID , greeting, "Your club titled '"+club.name+ "' has been "+mode);
+      let num = (club.primaryContact).substr((club.primaryContact).length - 10);
+      sendSMS('+91'+num, greeting+"\n\nYour club titled '" + club.name + "' has been " + mode + " by the Student Council.\n\nRegards,\nCribbl Services" );
+
+      sendPush(clubID , greeting, "Your club named '"+club.name+ "' has been "+mode);
     return
 }
 
 export const resolveComplaintNotif = (complaint) => {
 
     sendComplaintTemplate(complaint.fields.email, complaint.fields.name, complaint.subject);
-      sendEmail("SC", "mitstudentcouncil@gmail.com", complaint.fields.email, "complaint_"+"resolved", "Complaint resolved", "Hey "+complaint.fields.name + "\nYour complaint titled " + complaint.subject+ "has been resolved","<p><strong>Hey "+complaint.fields.name + "</strong><br /> Your complaint titled <strong>'"+complaint.subject+"'</strong> has been resolved.<br/>Regards,<br/>Portal Team</p>");
-        
-      sendSMS('+91'+complaint.fields.contactNo, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nThank You,\nPortal Team" );
+      sendEmail("SC", "mitstudentcouncil@gmail.com", complaint.fields.email, "complaint_"+"resolved", "Complaint resolved", "Hey "+complaint.fields.name + "\nYour complaint titled " + complaint.subject+ "has been resolved","<p><strong>Hey "+complaint.fields.name + "</strong><br /> Your complaint titled <strong>'"+complaint.subject+"'</strong> has been resolved.<br/>Regards,<br/>Cribbl Services</p>");
+      let num = (complaint.fields.contactNo).substr((event.booker_contact).length - 10);
+      // sendSMS('+91'+num, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nRegards,\nCribbl Services" );
 
     return
 }
 
 
 export const newComplaintNotif = () => {
-  sendEmail("Portal","mitstudentcouncil@gmail.com","vibhutisharma997@gmail.com","new_complaint","new complaint",
-    "A new coplaint has been lodged.","<p>A new complaint has been lodged.<br/>Regards, <br/>Portal Team</p>")
+  sendEmail("Portal","mitstudentcouncil@gmail.com","dummymitsc@gmail.com","new_complaint","new complaint",
+    "A new coplaint has been lodged.","<p>A new complaint has been lodged.<br/>Regards, <br/>Cribbl Services</p>")
 
-  sendPush("kmnW71JZLdcx0trfvCHyiTXbpjw2","Uh-huh","A new complaint has been lodged.")
+  sendPush("SC","New Complaint","A new complaint has been lodged.")
 }
 
 export const updateToken = (uid, token, bool) => {
@@ -252,6 +256,6 @@ export const updateToken = (uid, token, bool) => {
 }
 
 export const updateUser = (uid, tempUser) => {
-      firebaseDB.ref('clubs/' + uid).update(tempUser);
+      firebaseDB.ref('users/' + uid).update(tempUser);
       store.dispatch(toggleActions.toggleToaster("Profile updated successfully!", true));
 }

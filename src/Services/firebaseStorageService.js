@@ -1,7 +1,10 @@
 import {storage} from '../firebaseConfig'
 import axios from 'axios'
 
-var base_url = "https://dev-miteventbooking.herokuapp.com";
+if(window.location.host.indexOf("prod") > -1)
+  var base_url = "https://app-miteventbooking.herokuapp.com";
+else
+  var base_url = "https://dev-miteventbooking.herokuapp.com";
 
 export const uploadProfilePic = (uid, file, callback) => {
 	storage.ref().child(uid + '/profilePic').put(file)

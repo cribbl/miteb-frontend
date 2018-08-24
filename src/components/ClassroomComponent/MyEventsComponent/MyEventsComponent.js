@@ -172,7 +172,7 @@ class MyEventsComponent extends Component {
       }
     }
     
-    firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
+    firebaseDB.ref('/users/' + this.props.user.uid).on('value',
     function(snapshot) {
       let events = snapshot.val().my_events
       if(!events) {

@@ -162,7 +162,7 @@ class FA_MyEventsComponent extends Component {
     }
     this.setState({fetching: true})
     
-    firebaseDB.ref('/clubs/' + this.props.user.clubId).on('value',
+    firebaseDB.ref('/users/' + this.props.user.clubID).on('value',
     function(snapshot) {
       this.setState({fetching: false})
       let events = snapshot.val().my_events
@@ -220,7 +220,7 @@ class FA_MyEventsComponent extends Component {
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>START DATE</TableHeaderColumn>
               <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>END DATE</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%'}}>Actions</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%'}}>ACTIONS</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody

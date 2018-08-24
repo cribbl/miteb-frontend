@@ -1,10 +1,14 @@
-import axios from 'axios'
+	import axios from 'axios'
 import {firebaseMessaging} from '../firebaseConfig'
 import {store} from '../store'
 import {toggleActions} from '../actions/toggleActions'
 import {updateToken} from './firebaseDBService'
 
-var base_url = "https://dev-miteventbooking.herokuapp.com";
+
+if(window.location.host.indexOf("prod") > -1)
+	var base_url = "https://app-miteventbooking.herokuapp.com";
+else
+	var base_url = "https://dev-miteventbooking.herokuapp.com";
 
 export const sendEmail = (senderName, senderEmail, to, default_purpose, subject=null, text=null, html=null) => {
 
@@ -81,32 +85,17 @@ export const sendApproveClubTemplate = (club_email, club_name) => {
 	})
 }
 
-
-
-	     //  vibrate: [100, 50, 100],
-	     //  actions: [
-	     //  	{action: 'open', title: 'Open notif', icon: 'assets/notifications/checkIcon.png'},
-	     //  	{action: 'close', title: 'Close notification', icon: 'assets/notifications/closeIcon.png'},
-	    	// ],
-	     //  data: {
-	     //    dateOfArrival: Date.now(),
-	     //    primaryKey: 1,
-	     //    title: 'data -> ' + title
-	     //  }
-export const sendPush = (uid, title, body) => {
+export const sendPush = (uid, title, body, icon) => {
 
 	let params = {
 		uid: uid,
-    notificationOptions: {
-    	notification: {
-	      title: title,
-	      body: body,
-	      icon: 'https://laracasts.com/images/series/circles/do-you-react.png',
-	      click_action: 'https://bookings.cribblservices.com'
-	  	},
-	  	data: {
-	  		name: 'bhawesh'
-	  	}
+	    notificationOptions: {
+	    	notification: {
+		      title: title,
+		      body: body,
+		      icon: icon || 'https://laracasts.com/images/series/circles/do-you-react.png',
+		      click_action: window.location.host
+		  	}
     }
   };
 
@@ -124,7 +113,7 @@ export const sendSMS = (to, message) => {
 		phone: to,
 		message: message
 	}
-	axios.post('https://sfdjt9wg4c.execute-api.us-east-1.amazonaws.com/dev', params)
+	axios.post(base_url + '/notif/send-sms', params)
 	.then(function(resp) {
 		console.log(resp)
 	})

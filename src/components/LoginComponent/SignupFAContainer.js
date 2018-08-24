@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
-import {createClubWithEmailAndPassword} from '../../Services/firebaseAuthService'
-import {sendPush, sendEmail, sendSMS} from '../../Services/NotificationService'
+import {createFAWithEmailAndPassword} from '../../Services/firebaseAuthService'
+import {sendPush, sendEmail} from '../../Services/NotificationService'
 
 import { Link, hashHistory } from 'react-router'
 
@@ -22,7 +22,7 @@ class SignupContainer extends Component {
     this.state = {
       newUser: {
         name: '',
-        abbrv: '',
+        clubID: '',
         email : '',
         primaryContact:'',
         password : '',
@@ -31,7 +31,7 @@ class SignupContainer extends Component {
       },
       fieldTouch: {
         name: '',
-        abbrv: '',
+        clubID: '',
         email : '',
         primaryContact:'',
         password : '',
@@ -90,7 +90,7 @@ class SignupContainer extends Component {
         errorText = value.length >= 1?  (!/^(([^[<>()\[\]\\.,;:@"]+(\.[^<>()\[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\.-0-9])+[a-zA-Z]))$/.test(value))? "Email is not valid" : "" : "Cannot be empty"
         errors[1] = errorText
         break;
-      case 'abbrv':
+      case 'clubID':
         if(this.state.tabIndex == 1)
           break;
         errorText = value.length<1? "Cannot be empty" : ""
@@ -118,7 +118,7 @@ class SignupContainer extends Component {
     this.setState({showProgress: true})
     console.log(this.state.newUser);
 
-      createClubWithEmailAndPassword(this.state.newUser, (err, res) => {
+      createFAWithEmailAndPassword(this.state.newUser, (err, res) => {
         this.setState({showProgress: false})
         if(err) {
           this.setState({errorMessage: err.message})
@@ -127,10 +127,8 @@ class SignupContainer extends Component {
           console.log(res);
           this.setState({signupSuccess: true, newUser: res})
           // this.handleCounter();
-          sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Request Received", "", `Hey ${res.name},<br /><br />We have received your request for signup.<br />Kindly ask your Faculty Advisor to Sign Up using Club ID as <strong>${res.uid}</strong>.<br /><br />The Student Council will review your request and get back at the earliest. You shall be notified via email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
-          let num = (res.primaryContact).substr((res.primaryContact).length - 10);
-          sendSMS("+91"+num, `Signup request received.\nKindly ask your Faculty Advisor to Sign Up using Club ID : ${res.uid}.\n\nRegards,\nCribbl Services`);
-          // sendPush("SC", "Club Approval Requested", `${res.name} has requested your approval!`);
+          sendEmail("SENDER", "SENDER-EMAIL", res.email, "PURPOSE", "Signup Successful", "", `Dear ${res.name},<br /><br />You have successfully signed up with us.<br /><br />The Student Council will review your Club's request and get back at the earliest. You shall be notified via an email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`);
+          sendPush("SC", "FA Connected", `${res.name} has requested your approval!`);
         }
       }, this)
   }
@@ -140,17 +138,15 @@ class SignupContainer extends Component {
       <div style={{display: 'flex', alignItems: 'space-between'}}>
 
         <form onSubmit={this.handleSignupSubmit}>
-        <h2 className="paperTitle">Club Sign Up</h2>
+        <h2 className="paperTitle">FA Sign Up</h2>
 
             {this.state.signupSuccess &&
 
               <div style={{marginTop: 30}}>
                 <h4 style={{color: 'rgb(0, 188, 212)'}}>Success!</h4>
                 <h6>Thank you for signing up.<br /><br />
-                Kindly ask your Faculty Advisor to signup using <br /><br /><span style={{color: 'rgb(0, 188, 212)'}}>Club ID : {this.state.newUser.uid}</span>
                 <br /><br />
-                You shall be notified via Email and SMS.
-                
+                Once Student Council reviews the club, you shall be notified via Email and SMS.
                 </h6><br /><br /><br />
                 <Link to="/auth">Go back</Link>
               </div>
@@ -159,7 +155,7 @@ class SignupContainer extends Component {
 
           <div className="fieldsContainer" hidden={this.state.signupSuccess}>
               <TextField
-                floatingLabelText="Club Name"
+                floatingLabelText="Full Name"
                 value={this.state.newUser.name}
                 onChange={(event) => this.handleChange(event, 'name')}
                 onBlur={() => this.handleBlur('name')}
@@ -169,11 +165,11 @@ class SignupContainer extends Component {
                 required />
 
               <TextField
-                floatingLabelText="Club Name Abbreviation"
-                value={this.state.newUser.abbrv}
-                onChange={(event) => this.handleChange(event, 'abbrv')}
-                onBlur={() => this.handleBlur('abbrv')}
-                errorText= {this.state.fieldTouch['abbrv'] && this.state.errors[3]}
+                floatingLabelText="Club ID"
+                value={this.state.newUser.clubID}
+                onChange={(event) => this.handleChange(event, 'clubID')}
+                onBlur={() => this.handleBlur('clubID')}
+                errorText= {this.state.fieldTouch['clubID'] && this.state.errors[3]}
                 errorStyle={{position: 'absolute', bottom: -8}}
                 style={{marginTop: -15,marginBottom:8}}
                 required />
@@ -209,21 +205,6 @@ class SignupContainer extends Component {
                 errorStyle={{position: 'absolute', bottom: -8}}
                 style={{marginTop: -15,marginBottom:8}}
                 required />
-
-              <RadioButtonGroup name="category" defaultSelected="technical" style={{display: 'inline-flex',marginLeft: -2, width: '105%'}} onChange={(event) => this.handleChange(event, 'category')}>
-                <RadioButton
-                  value="technical"
-                  label="Technical"
-                  style={{width: '37%', backgroundColor: '', marginRight: 8}}
-                  iconStyle={{marginRight: 12}}
-                />
-                <RadioButton
-                  value="nonTechnical"
-                  label="Non Technical"
-                  style={{width: '66%', backgroundColor: ''}}
-                  iconStyle={{marginRight: 12}}
-                />
-              </RadioButtonGroup>
 
               <RaisedButton className="submitButton" type="submit" label="Sign Up" primary={true} disabled={this.state.showProgress || !this.state.isValid}/>
                 <CircularProgress style={{position: 'absolute', padding: '27px 5px'}} size={20} hidden={!this.state.showProgress}/>

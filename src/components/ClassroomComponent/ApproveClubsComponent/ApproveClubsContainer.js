@@ -55,7 +55,7 @@ class ApproveClubsContainer extends Component {
     var tempArr = scope.state.tempArr
     var approvedArr = scope.state.approvedArr
     var unapprovedArr = scope.state.unapprovedArr
-    firebaseDB.ref().child('clubs').on('value',
+    firebaseDB.ref().child('users').on('value',
     function(snapshot) {
       scope.setState({fetching: false})
       snapshot.forEach(function(child) {
@@ -129,7 +129,7 @@ class ApproveClubsContainer extends Component {
   }
 
   approveClub(club, mode) {
-    firebaseDB.ref('clubs/' + club.key + '/isApproved').set(mode);
+    firebaseDB.ref('users/' + club.key + '/isApproved').set(mode);
     if(this.state.filterChoice=='approved') {
       var approvedArr = this.state.approvedArr;
       delete approvedArr[club.key];
