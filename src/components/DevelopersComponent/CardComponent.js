@@ -14,20 +14,22 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ApplyIcon from 'material-ui/svg-icons/content/send';
 import './DeveloperComponent.css'
+import DeveloperApplicationDialog from '../Dialogs/DeveloperApplicationDialogComponent'
 
 class CardComponent extends Component {
   constructor(props){
     super(props)
-    this.apply = this.apply.bind(this);
+    this.showDialog = this.showDialog.bind(this)
     this.state = {
       open: this.props.open,
     };
   }
 
-  apply() {
-    const {dispatch} = this.props;
-    dispatch({type: "TOASTER", message: "Applications opening soon!", toast_open: true})
+  showDialog() {
+    this.setState({dialogOpen: true})
+    // this.setState({currentPosition: position})
   }
+
 
   render() {
     return (
@@ -45,11 +47,14 @@ class CardComponent extends Component {
             hoverColor={'rgba(0,0,0,0)'}
           />
         </List>
+        <DeveloperApplicationDialog open={this.state.dialogOpen} handleClose={() => this.setState({dialogOpen: false})} developer={this.props.developer} />
+
+
           
           {
             !!this.props.developer.openPosition ? 
             (
-              <IconButton onClick={this.apply}><ApplyIcon /></IconButton>
+              <IconButton onClick={() => this.showDialog()}><ApplyIcon /></IconButton>
             ) : (
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
