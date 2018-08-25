@@ -39,13 +39,12 @@ class MediumContainer extends React.Component {
       clicked: true
     })
   }
- onPreviewDrop = (files) => {
+  onPreviewDrop = (files) => {
     this.setState({
       files: this.state.files.concat(files),
     });
     this.props.updateFiles(this.state.files);
   }
-
   removePicture(file) {
     var files = this.state.files;
     var i = files.indexOf(file);
@@ -56,8 +55,7 @@ class MediumContainer extends React.Component {
       files: files
     })
   }
-
-  renderSubmit() {
+  renderPoster() {
       const previewStyle = {
         display: 'inline',
         width: 100,
@@ -110,7 +108,6 @@ class MediumContainer extends React.Component {
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
       return (<div>
         <Card>
-        <CardText expandable={false}>
          <List>
          <Subheader> {medium} </Subheader>
                 {steps.map((step,index) =>  {
@@ -119,58 +116,65 @@ class MediumContainer extends React.Component {
                   )
                 })}
           </List>
-        </CardText>
+
         </Card>
         </div>);     
+  }
+
+  renderMedia() {
+    return(<div>
+      <Card style={{minHeight:375}}>
+        <List>
+          <Subheader> Media </Subheader>
+           <div style={{display:'flex', flexDirection: 'row'}}>
+             <Checkbox value={0} checked={this.state.checked[0]}   style={{width: 48,height: 36, padding:10 }}onCheck={this.updateCheck.bind(this,0)}/>
+             <ListItem
+                style={{minHeight:65}}
+                onClick={this.handleClick.bind(this,0)}
+                primaryText="Banner"
+                secondaryText=""
+              />
+           </div>
+            <Divider />
+            <div style={{display:'flex', flexDirection: 'row'}}>
+              <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 36, padding:10 }} onCheck={this.updateCheck.bind(this,1)} />
+              <ListItem
+                style={{minHeight:65}}
+                onClick={this.handleClick.bind(this,1)}
+                primaryText="InfoDesk"
+               />
+            </div>
+            <Divider />
+            <div style={{display:'flex', flexDirection: 'row'}}>
+              <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 36, padding:10 }} onCheck={this.updateCheck.bind(this,2)} />
+              <ListItem
+                style={{minHeight:65}}
+                onClick={this.handleClick.bind(this,2)}
+                primaryText="Digital Board"
+              />
+            </div>
+            <Divider />
+            <div style={{display:'flex', flexDirection: 'row'}}>
+              <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 36, padding:10 }} onCheck={this.updateCheck.bind(this,3)} />
+               <ListItem
+                style={{minHeight:65}}
+                onClick={this.handleClick.bind(this,3)}
+                primaryText="Poster"
+              />
+            </div>
+            {this.renderPoster()}
+        </List>  
+       </Card>
+      </div> )
   }
 
    render() {
 			return (
     		<div style={{display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
         <div style = {{width: '100%',minHeight: 300,alignItems: 'center'}}>
-          <Paper style={{height:'100%'}}>
-    			  <List>
-              <Subheader> Media </Subheader>
-               <div style={{display:'flex', flexDirection: 'row'}}>
-                 <Checkbox value={0} checked={this.state.checked[0]}   style={{width: 48,height: 36 }}onCheck={this.updateCheck.bind(this,0)}/>
-                 <ListItem
-                    style={{minHeight:55}}
-                    onClick={this.handleClick.bind(this,0)}
-                    primaryText="Banner"
-                  />
-               </div>
-                <Divider />
-                <div style={{display:'flex', flexDirection: 'row'}}>
-                  <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,1)} />
-                  <ListItem
-                    style={{minHeight:55}}
-                    onClick={this.handleClick.bind(this,1)}
-                    primaryText="InfoDesk"
-                   />
-                </div>
-                <Divider />
-                <div style={{display:'flex', flexDirection: 'row'}}>
-                  <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,2)} />
-                  <ListItem
-                    style={{minHeight:55}}
-                    onClick={this.handleClick.bind(this,2)}
-                    primaryText="Digital Board"
-                  />
-                </div>
-                <Divider />
-                <div style={{display:'flex', flexDirection: 'row'}}>
-                  <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 36 }} onCheck={this.updateCheck.bind(this,3)} />
-                   <ListItem
-                    style={{minHeight:55}}
-                    onClick={this.handleClick.bind(this,3)}
-                    primaryText="Poster"
-                  />
-                </div>
-                {this.renderSubmit()}
-            </List>  
-	         </Paper>
+          {this.renderMedia()}
           </div>
-          <div style={{width: '100%',minHeight:400,justifyContent:'center',position:'relative'}}>
+          <div style={{width: '100%',minHeight:300,justifyContent:'center',position:'relative'}}>
         {this.state.clicked && this.renderCard()}
         </div>
       </div> 

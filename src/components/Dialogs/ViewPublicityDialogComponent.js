@@ -92,14 +92,16 @@ class Dialogxx extends Component {
     return (
       <div>
         <Dialog
-          title={this.props.currentEvent.title}
+          title={this.props.currentEvent.clubName}
           actions={this.props.user && this.props.user.isClub ? Club_actions : FA_actions}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
-          contentStyle={{width: this.props.isMobile ? '97%' : '60%', maxWidth: 'none'}}
+          contentStyle={{width: this.props.isMobile ? '97%' : '60%'}}
+          actionsContainerStyle={{backgroundColor: 'rgb(248, 248, 248)'}}
+          titleStyle={{backgroundColor: 'rgb(240, 240, 240)', fontWeight: 700}}
+          bodyStyle={{marginTop: 15}}
         >
-        
         <div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Title</p>
@@ -113,7 +115,18 @@ class Dialogxx extends Component {
             <p style={styles.label}>End Date</p>
             <p style={styles.value}>{this.props.currentEvent.end_date}</p>
           </div>
-
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Name</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_name}</p>
+          </div>
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Email</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_email}</p>
+          </div>
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Contact</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_contact}</p>
+          </div>
           <div hidden={!(this.props.currentEvent.Poster)} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Poster</p>
             <p style={styles.value}>{this.renderLocation(this.props.currentEvent.Poster)} </p>
