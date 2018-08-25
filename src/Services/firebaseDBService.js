@@ -119,7 +119,7 @@ export const fetchRooms = (start_date, end_date, callback) => {
   return (fetch(dateArr).then(res => prm(res)))
 }
 
-export const updateDates = (start_date, end_date, rooms) => {
+export const updateDates = (start_date, end_date, rooms, eventID) => {
       var date = start_date
       var dateArr = [];
 
@@ -129,12 +129,14 @@ export const updateDates = (start_date, end_date, rooms) => {
             dateArr.push(datex)
       } while(moment(date).format('DD-MM-YYYY') != moment(end_date).add(1, 'days').format('DD-MM-YYYY'))
 
-      updateDatesDBx(dateArr, rooms)
+      updateDatesDBx(dateArr, rooms, eventID)
 }
 
-function updateDatesDBx(dateArr, roomArr) {
-      for(let date of dateArr)
-            firebaseDB.ref('/roomsx').child(date).set(roomArr);
+function updateDatesDBx(dateArr, roomArr, eventID) {
+      for(let date of dateArr) {
+        firebaseDB.ref('/roomsx').child(date).set(roomArr);
+        firebaseDB.ref('/to-be-held').child(date).push(eventID);
+      }
 }
 
 export const approveEvent = (event, approver, user) => {
