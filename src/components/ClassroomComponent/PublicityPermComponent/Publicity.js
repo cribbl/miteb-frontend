@@ -108,7 +108,6 @@ class PublicityComponent extends React.Component {
       "FA_appr":this.props.user.isSC ? "approved" : "pending",
       "SO_appr":"NA",
       "clubName": this.props.user.name,
-      "files": filesDB,
       "clubID": this.props.user.uid,
       "FA_name": this.props.user.fa.name,
       "FA_date": this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null
@@ -121,6 +120,7 @@ class PublicityComponent extends React.Component {
     var publicityID = newData.clubID.slice(0,4);
     publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0,4));
     publicityID = publicityID.concat(new Date().getTime()%1000000);
+    var files_poster = {}
     
     
     if(this.state.checked[3] && files.length!=0) {
@@ -131,7 +131,7 @@ class PublicityComponent extends React.Component {
             console.log(err);
           }
           else {
-            console.log('done!');
+          files_poster=[file.name] = res.downloadURL;
           }
         })
       });
@@ -139,9 +139,14 @@ class PublicityComponent extends React.Component {
     else {
       console.log('No files chosen');
     }
+
+
+    newData['files'] = files_poster;
+    console.log('newData',newData);
    
     var obj = Object.assign({},result,newData);
-
+    console.log('new Obj',obj);
+    //files is not getting stored in the db when pushed. it exists on obj.
     firebaseDB.ref('/publicity/').child(publicityID).set(obj);
     var scope = this;
     firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(publicityID,
