@@ -28,6 +28,7 @@ class DevelopersComponent extends Component {
         snapshot.forEach(child => {
           let developer = child.val();
           const developers = scope.state.developers;
+          developer['key'] = child.key;
           developers.push(developer);
           scope.setState({developers});
         })  
