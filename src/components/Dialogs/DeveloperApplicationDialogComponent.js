@@ -98,7 +98,7 @@ class DeveloperApplicationDialog extends Component {
           modal={true}
           autoScrollBodyContent={true}
           onRequestClose={this.props.handleClose}
-          contentStyle={{width: this.props.isMobile ? '97%' : '50%', maxWidth: 'none', maxHeight: 'none', background: 'red'}}
+          contentStyle={{width: this.props.isMobile ? '97%' : '50%', maxWidth: 'none', maxHeight: '500px', background: 'red'}}
           actionsContainerStyle={{backgroundColor: 'rgb(248, 248, 248)'}}
           titleStyle={{backgroundColor: 'rgb(240, 240, 240)'}}
           >
