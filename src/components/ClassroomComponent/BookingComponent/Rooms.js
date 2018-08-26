@@ -147,13 +147,6 @@ class RoomsContainer extends Component {
             <MyRaisedButton id={3404} />
             <MyRaisedButton id={3405} />
           </div>
-          <div style={styles.buttonsRow}>
-            <MyRaisedButton id={3501} />
-            <MyRaisedButton id={3502} />
-            <MyRaisedButton id={3503} />
-            <MyRaisedButton id={3504} />
-            <MyRaisedButton id={3505} />
-          </div>
         </div>
 
         <div style={{display: this.props.isMobile ? 'none' : '', height: 300, border: '1px solid lightgrey'}}></div>
