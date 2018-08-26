@@ -312,6 +312,7 @@ class HorizontalLinearStepper extends React.Component {
       var eventID = newData.clubID.slice(0, 4);
       eventID = eventID.concat(newData.title.toLowerCase().slice(0,4));
       eventID = eventID.concat(new Date().getTime()%1000000);
+      eventID = eventID.replace(/\s/g,'');
 
       firebaseDB.ref('/events/').child(eventID).set(newData);
       var scope = this;
@@ -320,7 +321,7 @@ class HorizontalLinearStepper extends React.Component {
           if(err)
             console.log("couldn't be booked ", err);
           else {
-            updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms))
+            updateDates(field["start_date"], field["end_date"], scope.state.selectedRooms.concat(scope.state.takenRooms), eventID)
             sendPush(scope.props.user.fa_uid, "Dear FA, Approval requested!", "Please approve the event titled "+scope.state.fields.title+"'")
             scope.setState({SnackBarmessage: 'Request for booking room successful', openSnackBar: true})
             scope.setState({bookedEvent: newData, finished: true})
