@@ -94,7 +94,7 @@ export const sendPush = (uid, title, body, icon) => {
 		      title: title,
 		      body: body,
 		      icon: icon || 'https://laracasts.com/images/series/circles/do-you-react.png',
-		      click_action: window.location.host
+		      click_action: process.env.NODE_ENV === 'production' ? 'https://prod.cribblservices.com' : null
 		  	}
     }
   };
