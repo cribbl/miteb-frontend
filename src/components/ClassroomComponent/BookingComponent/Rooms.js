@@ -215,6 +215,7 @@ class RoomsContainer extends Component {
           <div style={styles.buttonsRow}>
             <MyRaisedButton id={5502} />
             <MyRaisedButton id={5503} />
+            <MyRaisedButton id={5504} />
             <MyRaisedButton id={5505} />
             <MyRaisedButton id={5505} />
             <MyRaisedButton id={5506} />
