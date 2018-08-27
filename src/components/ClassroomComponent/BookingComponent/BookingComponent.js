@@ -70,7 +70,7 @@ class HorizontalLinearStepper extends React.Component {
         desc: ''
       },
       finished: false,
-      stepIndex: 0,
+      stepIndex: 2,
       value: 1,
       start_date: null,
       end_date: null,
@@ -84,8 +84,8 @@ class HorizontalLinearStepper extends React.Component {
       selectedRooms: [],
       takenRooms: [],
       disabledDates: [],
-      datesSelected: false,
-      fetchingRooms: true,
+      datesSelected: true,
+      fetchingRooms: false,
       bookedEvent: null,
     }       
   }
