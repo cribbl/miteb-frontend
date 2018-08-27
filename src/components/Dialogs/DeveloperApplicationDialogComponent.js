@@ -92,7 +92,7 @@ class DeveloperApplicationDialog extends Component {
     return (
       <div>
         <Dialog
-          title={<div><p style={{fontWeight: 700}}>{this.props.developer.name}</p><p hidden={this.props.isMobile} style={{fontSize: 15, lineHeight: '20px'}}>{this.props.developer.description}</p></div>}
+          title={<div><p style={{fontWeight: 700}}>{this.props.developer.name}</p><p hidden={this.props.isMobile} style={{fontSize: 15, lineHeight: '20px', color: 'rgb(100, 100, 100)'}}>{this.props.developer.description}</p></div>}
           actions={DA_actions}
           open={this.props.open}
           modal={true}
@@ -134,15 +134,7 @@ class DeveloperApplicationDialog extends Component {
                 value={this.state.newUser.primaryContact}
                 onChange={(event) => this.handleChange(event, 'primaryContact')}
                 required />
-                  
-              <p style={{color: 'black', marginTop: 20}}>Which Clubs or Student Projects are you currently working for?</p>
-              <TextField 
-                hintText="Your answer" 
-                type="text"
-                onChange={(event) => this.handleChange(event, 'clubInfo')}
-                value={this.state.newUser.clubInfo}
-                style={{width: '90%'}} />
-                  
+
               <p style={{color: 'black', marginTop: 20}}>Link to your resume *</p>
               <p style={{color: 'rgb(100, 100, 100)', fontSize: 14}}>You may upload on Google Drive. Please make sure that the resume is accessible</p>
               <TextField
