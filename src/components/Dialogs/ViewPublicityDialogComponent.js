@@ -30,6 +30,9 @@ class Dialogxx extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({open: nextProps.open})
   }
+  handleFileDownload(file) {
+    window.open(file);
+  }
   renderLocation(location){
     if(location){
       return (<div>
@@ -50,6 +53,7 @@ class Dialogxx extends Component {
                   <Avatar
                     src={file}
                     size={100}
+                    onClick={this.handleFileDownload.bind(this,file)}
                   />
       ) }
      </div>)
