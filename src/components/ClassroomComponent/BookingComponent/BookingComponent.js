@@ -25,7 +25,7 @@ import {fetchRooms, updateDates, getDisabledDates} from '../../../Services/fireb
 import {sendPush, sendEmail} from '../../../Services/NotificationService'
 import FinishedContainer from './FinishedContainer'
 
-class HorizontalLinearStepper extends React.Component {
+class BookingComponent extends React.Component {
   constructor(props){
     super(props);
 
@@ -551,4 +551,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(HorizontalLinearStepper);
+export default connect(mapStateToProps)(BookingComponent);

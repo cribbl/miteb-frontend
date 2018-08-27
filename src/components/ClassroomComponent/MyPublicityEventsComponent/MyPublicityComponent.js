@@ -271,7 +271,13 @@ class MyPublicityComponent extends Component {
                       </IconMenu>}
                     </TableRowColumn>
                   </TableRow>
-              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No Events Yet'}</p>
+              )}, this)) :  (
+
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.gif")} style={{width: this.props.isMobile ? '70%' : '30%', marginBottom: 10}} />
+                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "No events found"}</p>
+                </div>
+              )
           }
 
           </TableBody>

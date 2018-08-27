@@ -19,6 +19,7 @@ import {connect} from 'react-redux';
 import {List,ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import MediumContainer from './MediumContainer';
+import {storage} from '../../../firebaseConfig'
 import BookerContainer from './BookerContainer';
 import EventContainer from './EventContainer';
 import Snackbar from 'material-ui/Snackbar';
@@ -102,7 +103,6 @@ class PublicityComponent extends React.Component {
   handleSubmit() {
     var result = this.parseMediums();
     var files = this.state.files;
-    var filesDB = files.map(x=> x.name);
     var newData = {
       "AD_appr":this.props.user.isSC ? "pending" : "NA",
       "FA_appr":this.props.user.isSC ? "approved" : "pending",
@@ -116,37 +116,20 @@ class PublicityComponent extends React.Component {
       'booker_fields':this.state.booker_fields
     }
     newData = Object.assign({},newData,booker_fields,this.state.event_fields);
-
     var publicityID = newData.clubID.slice(0,4);
     publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0,4));
     publicityID = publicityID.concat(new Date().getTime()%1000000);
-    var files_poster = {}
-    
-    
-    if(this.state.checked[3] && files.length!=0) {
-      files.forEach(file => { 
-        console.log('here is the file',file);
-        uploadPoster(this.props.user.uid, publicityID, file, (err, res) => {
-          if(err) {
-            console.log(err);
-          }
-          else {
-          files_poster=[file.name] = res.downloadURL;
-          }
-        })
-      });
-    }
-    else {
-      console.log('No files chosen');
-    }
-
-
-    newData['files'] = files_poster;
-    console.log('newData',newData);
-   
+    var files_poster = {};
     var obj = Object.assign({},result,newData);
-    console.log('new Obj',obj);
-    //files is not getting stored in the db when pushed. it exists on obj.
+
+    Promise.all(files.map(file => storage.ref().child(`uid/${publicityID}/${file.name}`).put(file).then(response => response.downloadURL))).then(
+      urls => {
+        obj['files'] = urls;
+        this.handleDBSubmit(obj,publicityID);
+      })
+  }
+
+  handleDBSubmit(obj,publicityID) {
     firebaseDB.ref('/publicity/').child(publicityID).set(obj);
     var scope = this;
     firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(publicityID,
@@ -160,8 +143,10 @@ class PublicityComponent extends React.Component {
         }
       });
 
-
   }
+
+
+  
 
   parseMediums(){
    var arrChecked = this.state.checked;

@@ -16,17 +16,6 @@ export const uploadProfilePic = (uid, file, callback) => {
 	})	
 }
 
-export const uploadPoster = (uid,publicityID,file,callback) => {
-  storage.ref().child(uid + `/${publicityID}` +  `/${file.name}`).put(file)
-  .then(function(res) {
-    callback(null,res)
-  })
-  .catch(function(err) {
-    callback(err)
-  })
-  
-}
-
 export const generatePDF = (eventID) => {
   let params = {
     eventID: eventID
