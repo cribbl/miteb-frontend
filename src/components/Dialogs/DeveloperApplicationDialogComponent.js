@@ -92,7 +92,7 @@ class DeveloperApplicationDialog extends Component {
     return (
       <div>
         <Dialog
-          title={<div><p style={{fontWeight: 700}}>{this.props.developer.name}</p><p hidden={this.props.isMobile} style={{fontSize: 15, lineHeight: '20px'}}>{this.props.developer.description}</p></div>}
+          title={<div><p style={{fontWeight: 700}}>{this.props.developer.name}</p><p hidden={this.props.isMobile} style={{fontSize: 15, lineHeight: '20px', color: 'rgb(100, 100, 100)'}}>{this.props.developer.description}</p></div>}
           actions={DA_actions}
           open={this.props.open}
           modal={true}
