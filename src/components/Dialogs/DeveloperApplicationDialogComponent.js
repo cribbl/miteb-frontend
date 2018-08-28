@@ -38,18 +38,30 @@ class DeveloperApplicationDialog extends Component {
   constructor(props){
     super(props)
     this.handleApply = this.handleApply.bind(this);
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
     this.state = {
       newUser: {
         name: '',
         email : '',
         primaryContact:'',
-        clubInfo: '',
+        cvLink: '',
+      },
+      errors: {
+        name: '',
+        email : '',
+        primaryContact:'',
         cvLink: '',
       },
       finished: false,
+      isFormValid: false,
       open: this.props.open,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+    this.setState({open: nextProps.open})
   }
 
   handleApply() {
@@ -64,12 +76,62 @@ class DeveloperApplicationDialog extends Component {
     let newUser = this.state.newUser;
     newUser[field] = e.target.value;  
     this.setState({newUser});
+    this.handleValidation(field);
   };
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-    this.setState({open: nextProps.open})
+  handleValidation(field) {
+    let fields = this.state.newUser;
+    let isFormValid = true;
+    let errors = {
+        name: '',
+        email : '',
+        primaryContact:'',
+        cvLink: '',
+      };
+      if(fields["name"].length < 1) {
+        isFormValid = false;
+        errors["name"] = "Cannot be empty";
+      }
+
+      if(fields["email"].length < 1) {
+        isFormValid = false;
+        errors["email"] = "Cannot be empty";
+      }
+
+      if(fields["email"].length >= 1) {
+        if (!/^(([^[<>()\[\]\\.,;:@"]+(\.[^<>()\[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\.-0-9])+[a-zA-Z]))$/.test(fields["email"])) {
+          isFormValid = false;
+          errors["email"] = "Email is not valid";
+        }
+      }
+
+      if(fields["primaryContact"].length < 1) {
+        isFormValid = false;
+        errors["primaryContact"] = "Cannot be empty";
+      }
+
+      if(fields["primaryContact"].length >= 1) {
+        if(!/^[0-9]{10}$/.test(fields["primaryContact"])){
+          isFormValid = false;
+          errors["primaryContact"] = "Invalid contact number"
+        }
+      }
+
+      if(fields["cvLink"].length < 1){
+        isFormValid = false;
+        errors["cvLink"] = "Cannot be empty";
+      }
+
+      if(fields["cvLink"].length >=1 ) {
+        if (!/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/.test(fields["cvLink"])) {
+          isFormValid = false;
+          errors["cvLink"] = "URL is not valid";
+        }
+      }
+
+    this.setState({errors: errors, isFormValid: isFormValid});
   }
+
 
   render() {
     const DA_actions = [
@@ -79,8 +141,8 @@ class DeveloperApplicationDialog extends Component {
         onClick={this.props.handleClose}
         style={{margin: '0px 5px'}}
       />,
-      <FlatButton
-        disabled={this.state.finished}
+      <RaisedButton
+        disabled={this.state.finished || !this.state.isFormValid}
         label={"Apply"}
         primary={true}
         onClick={this.handleApply}
@@ -118,6 +180,8 @@ class DeveloperApplicationDialog extends Component {
                 hintText="Your answer"
                 value={this.state.newUser.name}
                 onChange={(event) => this.handleChange(event, 'name')}
+                errorText={this.state.errors["name"]}
+                errorStyle={{position: 'absolute', bottom: -8}}
                 required />
 
               <p style={{color: 'black', marginTop: 20}}>Email *</p>
@@ -125,6 +189,8 @@ class DeveloperApplicationDialog extends Component {
                 hintText="Your answer"
                 value={this.state.newUser.email}
                 onChange={(event) => this.handleChange(event, 'email')}
+                errorText={this.state.errors["email"]}
+                errorStyle={{position: 'absolute', bottom: -8}}
                 required />
 
               <p style={{color: 'black', marginTop: 20}}>Contact Number *</p>
@@ -133,6 +199,8 @@ class DeveloperApplicationDialog extends Component {
                 type="number"
                 value={this.state.newUser.primaryContact}
                 onChange={(event) => this.handleChange(event, 'primaryContact')}
+                errorText={this.state.errors["primaryContact"]}
+                errorStyle={{position: 'absolute', bottom: -8}}
                 required />
 
               <p style={{color: 'black', marginTop: 20}}>Link to your resume *</p>
@@ -142,6 +210,8 @@ class DeveloperApplicationDialog extends Component {
                 value={this.state.newUser.cvLink}
                 onChange={(event) => this.handleChange(event, 'cvLink')}
                 style={{width: '90%'}}
+                errorText={this.state.errors["cvLink"]}
+                errorStyle={{position: 'absolute', bottom: -8}}
                 required />
 
             </form>
