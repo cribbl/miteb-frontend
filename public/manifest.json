@@ -8,9 +8,14 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "rocket-loader.gif",
+      "src": "cribbl-255.png",
       "sizes": "255x255",
-      "type": "image/gif"
+      "type": "image/png"
+    },
+    {
+      "src": "cribbl-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ],
   "gcm_sender_id": "103953800507"
