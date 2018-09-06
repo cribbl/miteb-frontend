@@ -109,7 +109,6 @@ class MediumContainer extends React.Component {
     var steps = ["Academic Blocks", "First Years Hostel Blocks", "Senior Hostel Blocks","Mess"]
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
       return (<div>
-        <Card>
          <List>
          <Subheader> {medium} </Subheader>
                 {steps.map((step,index) =>  {
@@ -118,20 +117,17 @@ class MediumContainer extends React.Component {
                   )
                 })}
           </List>
-
-        </Card>
         </div>);     
   }
 
   renderMedia() {
     return(<div>
-      <Card style={{minHeight:375}}>
         <List>
           <Subheader> Media </Subheader>
            <div style={{display:'flex', flexDirection: 'row'}}>
-             <Checkbox value={0} checked={this.state.checked[0]} style={{width: 48,height: 36, padding:10 }}onCheck={this.updateCheck.bind(this,0)}/>
+             <Checkbox value={0} checked={this.state.checked[0]} style={{width: 48,height: 36, paddingTop:15, paddingBottom:15  }}onCheck={this.updateCheck.bind(this,0)}/>
              <ListItem
-                style={{minHeight:65,textAlign:'left',minWidth:400}}
+                style={{minHeight:65,textAlign:'left',minWidth:400, paddingTop:10}}
                 onClick={this.handleClick.bind(this,0)}
                 primaryText="Banner"
                 secondaryText=""
@@ -139,9 +135,9 @@ class MediumContainer extends React.Component {
            </div>
             <Divider />
             <div style={{display:'flex', flexDirection: 'row'}}>
-              <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 36, padding:10 }} onCheck={this.updateCheck.bind(this,1)} />
+              <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 36, paddingTop:15, paddingBottom:15 }} onCheck={this.updateCheck.bind(this,1)} />
               <ListItem
-                style={{minHeight:65, textAlign:'left',minWidth:400}}
+                style={{minHeight:65, textAlign:'left',minWidth:400, paddingTop:10}}
                 onClick={this.handleClick.bind(this,1)}
                 primaryText="InfoDesk"
               />
@@ -149,25 +145,24 @@ class MediumContainer extends React.Component {
             </div>
             <Divider />
             <div style={{display:'flex', flexDirection: 'row'}}>
-              <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 36, padding:10 }} onCheck={this.updateCheck.bind(this,2)} />
+              <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 36, paddingTop:15, paddingBottom:15 }} onCheck={this.updateCheck.bind(this,2)} />
               <ListItem
-                style={{minHeight:65, textAlign:'left', minWidth:400}}
+                style={{minHeight:65, textAlign:'left', minWidth:400,paddingTop:10}}
                 onClick={this.handleClick.bind(this,2)}
                 primaryText="Digital Board"
               />
             </div>
             <Divider />
             <div style={{display:'flex', flexDirection: 'row'}}>
-              <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 36, padding:10 }} onCheck={this.updateCheck.bind(this,3)} />
+              <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 36, paddingTop:15, paddingBottom:15 }} onCheck={this.updateCheck.bind(this,3)} />
                <ListItem
-                style={{minHeight:65,textAlign:'left',minWidth:400}}
+                style={{minHeight:65,textAlign:'left',minWidth:400, paddingTop:10}}
                 onClick={this.handleClick.bind(this,3)}
                 primaryText="Poster"
               />
             </div>
             {this.renderPoster()}
         </List>  
-       </Card>
       </div> )
   }
 
@@ -176,7 +171,8 @@ class MediumContainer extends React.Component {
     		<div style={{display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
         <div style = {{width: '100%',minHeight: 300}}>
           {this.renderMedia()}
-          </div>
+        </div>
+        <div style={{display: this.props.isMobile ? 'none' : '', height: 350, border: '1px solid lightgrey'}}></div>
           <div style={{width: '100%',minHeight:300}}>
         {this.state.clicked && this.renderCard()}
         </div>
