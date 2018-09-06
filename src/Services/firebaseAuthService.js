@@ -43,7 +43,7 @@ export const authenticateUser = (email, password, callback) => {
       if(!user.emailVerified) {
         let error = {
           code: 'unapproved',
-          message: 'Email not verified! Please check your email for the Verification Link'
+          message: 'Check your email for a Verification Link'
         }
         console.log("SEND EMAIL ON SIGNIN")
         user.sendEmailVerification();
