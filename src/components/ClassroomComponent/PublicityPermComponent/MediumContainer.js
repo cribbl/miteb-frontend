@@ -114,7 +114,7 @@ class MediumContainer extends React.Component {
          <Subheader> {medium} </Subheader>
                 {steps.map((step,index) =>  {
                   var a = "" + value + index;
-                  return (<div><ListItem key={a} secondaryText={list_sec[index]}  rightToggle={<Toggle key={a} toggled={(this.state.indexes[value])[index]} onToggle={this.handleToggle.bind(this,value,index)} />}> {step} </ListItem> </div>
+                  return (<ListItem style={{textAlign:'left'}} key={a} secondaryText={list_sec[index]} primaryText={step} rightToggle={<Toggle style={{marginRight:0}} key={a} toggled={(this.state.indexes[value])[index]} onToggle={this.handleToggle.bind(this,value,index)} />} /> 
                   )
                 })}
           </List>
