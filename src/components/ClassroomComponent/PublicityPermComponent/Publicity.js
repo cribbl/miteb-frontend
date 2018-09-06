@@ -16,7 +16,6 @@ import Checkbox from 'material-ui/Checkbox';
 import {firebaseDB} from '../../../firebaseConfig'
 import firebase from 'firebase';
 import {connect} from 'react-redux';
-import {List,ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import MediumContainer from './MediumContainer';
 import {storage} from '../../../firebaseConfig'
@@ -115,7 +114,11 @@ class PublicityComponent extends React.Component {
     var booker_fields={
       'booker_fields':this.state.booker_fields
     }
-    newData = Object.assign({},newData,booker_fields,this.state.event_fields);
+    var fields = this.state.event_fields;
+    fields['start_date'] = moment(this.state.event_fields['start_date'], 'DD-MM-YYYY').format('DD-MM-YYYY');
+    fields['end_date'] = moment(this.state.event_fields['end_date'], 'DD-MM-YYYY').format('DD-MM-YYYY');
+
+    newData = Object.assign({},newData,booker_fields,fields);
     var publicityID = newData.clubID.slice(0,4);
     publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0,4));
     publicityID = publicityID.concat(new Date().getTime()%1000000);
@@ -144,9 +147,6 @@ class PublicityComponent extends React.Component {
       });
 
   }
-
-
-  
 
   parseMediums(){
    var arrChecked = this.state.checked;
@@ -205,7 +205,9 @@ class PublicityComponent extends React.Component {
   }
   updateEvent(fields){
     this.setState({
-      event_fields:fields
+      event_fields:fields,
+      start_date: fields['start_date'],
+      end_date: fields['end_date']
     })
   }
   updateToggle(toggle){
@@ -216,11 +218,11 @@ class PublicityComponent extends React.Component {
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <BookerContainer fields={this.state.booker_fields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
+        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <BookerContainer fields={this.state.booker_fields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 1:
-        return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
+        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
-        return  (<div>
+        return  (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
                  <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />      
         
           </div>);

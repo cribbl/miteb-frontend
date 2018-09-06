@@ -69,7 +69,7 @@ class EventContainer extends React.Component {
   };
    handleStartDate(event, start_date) {
     var field = this.state.fields;
-    field['start_date'] = moment(start_date).format('DD-MM-YYYY')
+    field['start_date'] = start_date;
     this.setState({
       fields: field,
       start_date: start_date
@@ -79,7 +79,7 @@ class EventContainer extends React.Component {
 
   handleEndDate(event, end_date) {
     var field = this.state.fields;
-    field['end_date'] = moment(end_date).format('DD-MM-YYYY')
+    field['end_date'] = end_date;
       this.setState({
       fields: field,
       end_date: end_date
@@ -124,7 +124,7 @@ class EventContainer extends React.Component {
                 mode={this.props.isMobile ? 'portrait' : 'landscape'}
                 autoOk={true}
                 onChange={this.handleStartDate}
-                value={this.state.start_date}
+                value={this.props.fields['start_date']}
                 shouldDisableDate={this.day}
                 disableYearSelection={true}
                 minDate={this.state.minDate}
@@ -140,7 +140,7 @@ class EventContainer extends React.Component {
                 mode={this.props.isMobile ? 'portrait' : 'landscape'}
                 autoOk={true}   
                 onChange={this.handleEndDate}
-                value={this.state.end_date} 
+                value={this.props.fields['end_date']} 
                 shouldDisableDate={this.day}
                 disableYearSelection={true}
                 minDate={self.state.start_date?self.state.start_date:self.state.minDate}

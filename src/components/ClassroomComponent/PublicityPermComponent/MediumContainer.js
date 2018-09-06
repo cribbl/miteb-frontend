@@ -104,7 +104,7 @@ class MediumContainer extends React.Component {
     var value = this.state.clickedValue;
     var clicked = value || value === 0? true : false;
     var medium = this.state.object[value];
-    var steps = ["Academic Blocks", "First Year Hostel Blocks", "Senior Hostel Blocks","Mess"]
+    var steps = ["Academic Blocks", "First Years Hostel Blocks", "Senior Hostel Blocks","Mess"]
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
       return (<div>
         <Card>
@@ -127,7 +127,7 @@ class MediumContainer extends React.Component {
         <List>
           <Subheader> Media </Subheader>
            <div style={{display:'flex', flexDirection: 'row'}}>
-             <Checkbox value={0} checked={this.state.checked[0]}   style={{width: 48,height: 36, padding:10 }}onCheck={this.updateCheck.bind(this,0)}/>
+             <Checkbox value={0} checked={this.state.checked[0]} style={{width: 48,height: 36, padding:10 }}onCheck={this.updateCheck.bind(this,0)}/>
              <ListItem
                 style={{minHeight:65}}
                 onClick={this.handleClick.bind(this,0)}
@@ -171,10 +171,10 @@ class MediumContainer extends React.Component {
    render() {
 			return (
     		<div style={{display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row'}}>
-        <div style = {{width: '100%',minHeight: 300,alignItems: 'center'}}>
+        <div style = {{width: '100%',minHeight: 300}}>
           {this.renderMedia()}
           </div>
-          <div style={{width: '100%',minHeight:300,justifyContent:'center',position:'relative'}}>
+          <div style={{width: '100%',minHeight:300}}>
         {this.state.clicked && this.renderCard()}
         </div>
       </div> 
