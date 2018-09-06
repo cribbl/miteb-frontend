@@ -63,6 +63,7 @@ class MediumContainer extends React.Component {
       };
 
       return(  
+        <a href="javascript:void(0)">
         <div className="dropzone" style={{marginLeft:20,marginRight:20,border: "1px dotted blue"}}>
          <Dropzone style={{"width" : "100%", "height" : "20%"}} disabled={!this.state.checked[3]} accept="image/*" onDrop={this.onPreviewDrop} multiple={true}>
             <div style={{color: !this.state.checked[3]? 'grey' : 'black'}} > Upload your posters here </div>
@@ -80,7 +81,8 @@ class MediumContainer extends React.Component {
             ))}
           </div>
         }
-        </div>)
+        </div>
+        </a>)
   }
    
   handleToggle(s,i){
@@ -142,7 +144,8 @@ class MediumContainer extends React.Component {
                 style={{minHeight:65}}
                 onClick={this.handleClick.bind(this,1)}
                 primaryText="InfoDesk"
-               />
+              />
+               
             </div>
             <Divider />
             <div style={{display:'flex', flexDirection: 'row'}}>
