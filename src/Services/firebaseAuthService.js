@@ -40,16 +40,16 @@ export const authenticateUser = (email, password, callback) => {
     
     firebaseAuth.signInWithEmailAndPassword(email, password)
     .then(function(user) {
-      // if(!user.emailVerified) {
-      //   let error = {
-      //     code: 'unapproved',
-      //     message: 'Email not verified! Please check your email for the Verification Link'
-      //   }
-      //   console.log("SEND EMAIL ON SIGNIN")
-      //   user.sendEmailVerification();
-      //   callback(error);
-      //   return;
-      // }
+      if(!user.emailVerified) {
+        let error = {
+          code: 'unapproved',
+          message: 'Email not verified! Please check your email for the Verification Link'
+        }
+        console.log("SEND EMAIL ON SIGNIN")
+        user.sendEmailVerification();
+        callback(error);
+        return;
+      }
       
       if(user.emailVerified) {
         firebaseDB.ref('/users/' + user.uid + '/emailVerification').set(true);
