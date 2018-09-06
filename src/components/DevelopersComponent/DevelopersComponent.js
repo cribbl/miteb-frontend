@@ -28,6 +28,7 @@ class DevelopersComponent extends Component {
         snapshot.forEach(child => {
           let developer = child.val();
           const developers = scope.state.developers;
+          developer['key'] = child.key;
           developers.push(developer);
           scope.setState({developers});
         })  
@@ -37,15 +38,27 @@ class DevelopersComponent extends Component {
   render() {
     return (
       <div style={{padding: 20}}>
-        <h1 style={{textAlign: 'center'}}>OUR TEAM</h1>
+        <h1 style={{textAlign: 'center', fontWeight: 700}}>OUR TEAM</h1>
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: this.props.isMobile ? 'column' : 'row', maxWidth: '100%', flexWrap: 'wrap'}}>
           {
             this.state.developers.length > 0 ? (this.state.developers.map(function(developer, index) {
+              if(!developer.openPosition)
               return(
                   <CardComponent developer={developer} key={index} />
               )}, this)) : <p>Fetching Developers</p>
           }
-      </div>
+        </div>
+
+        <h1 hidden={this.state.developers.length <= 0} style={{textAlign: 'center', marginTop: 50}}>OPEN POSITIONS</h1>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: this.props.isMobile ? 'column' : 'row', maxWidth: '100%', flexWrap: 'wrap'}}>
+          {
+            this.state.developers.length > 0 ? (this.state.developers.map(function(developer, index) {
+              if(developer.openPosition)
+              return(
+                  <CardComponent developer={developer} key={index} />
+              )}, this)) : null
+          }
+        </div>
 
       </div>
     );

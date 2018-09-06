@@ -21,7 +21,7 @@ class LandingPage extends Component {
         <div style={{width: this.props.isMobile ? '94%' : '70%'}}>
           <img src={require("../../assets/logo.svg")} style={{height: 180, width: 180, margin: this.props.isMobile ? 20 : 50}}/>
           <h1 style={{fontWeight: 700}}>MIT Event Booking Portal</h1>
-          <h4 style={{lineHeight: 1.5, marginTop: 30}}> We have found the traditional way of booking a classroom difficult. Obtaining permissions? Even tougher. So, here we are. At Cribbl, you can book classrooms for your events, obtain permissions for your event's publicity, lodge complaints and view your club's stats. </h4>
+          <h4 style={{lineHeight: 1.5, marginTop: 30}}> We found the traditional way of booking a classroom difficult. Obtaining permissions? Even tougher. So, here we are. At Cribbl, you can book classrooms for your events, obtain permissions for your event's publicity, lodge complaints, view your club's stats and so much more! </h4>
 
         </div>
       </div>

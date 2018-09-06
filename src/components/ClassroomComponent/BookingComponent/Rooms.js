@@ -79,7 +79,12 @@ class RoomsContainer extends Component {
 
     const MyRaisedButton = (props) => {
       var scope = this;
-      let label = (props.id)%1000;
+      let label;
+      switch(props.id) {
+        case 53101: label = "310 A"; break;
+        case 53102: label = "310 B"; break;
+        default: label = (props.id)%1000;
+      }
       return (
         <RaisedButton
           label={label}
@@ -147,13 +152,6 @@ class RoomsContainer extends Component {
             <MyRaisedButton id={3404} />
             <MyRaisedButton id={3405} />
           </div>
-          <div style={styles.buttonsRow}>
-            <MyRaisedButton id={3501} />
-            <MyRaisedButton id={3502} />
-            <MyRaisedButton id={3503} />
-            <MyRaisedButton id={3504} />
-            <MyRaisedButton id={3505} />
-          </div>
         </div>
 
         <div style={{display: this.props.isMobile ? 'none' : '', height: 300, border: '1px solid lightgrey'}}></div>
@@ -164,56 +162,65 @@ class RoomsContainer extends Component {
             <MyRaisedButton id={5201} />
             <MyRaisedButton id={5202} />
             <MyRaisedButton id={5203} />
-            <MyRaisedButton id={5204} />
             <MyRaisedButton id={5205} />
             <MyRaisedButton id={5206} />
             <MyRaisedButton id={5207} />
             <MyRaisedButton id={5208} />
-            <MyRaisedButton id={5209} />
           </div>
           <div style={styles.buttonsRow}>
+            <MyRaisedButton id={5209} />
             <MyRaisedButton id={5210} />
             <MyRaisedButton id={5211} />
             <MyRaisedButton id={5212} />
-            <MyRaisedButton id={5213} />
-            <MyRaisedButton id={5214} />
-            <MyRaisedButton id={5215} />
-            <MyRaisedButton id={5216} />
-            <MyRaisedButton id={5217} />
-            <MyRaisedButton id={5218} />
-          </div>
-          <div style={styles.buttonsRow}>
             <MyRaisedButton id={5301} />
             <MyRaisedButton id={5302} />
             <MyRaisedButton id={5303} />
+          </div>
+          <div style={styles.buttonsRow}>
             <MyRaisedButton id={5304} />
             <MyRaisedButton id={5305} />
             <MyRaisedButton id={5306} />
             <MyRaisedButton id={5307} />
             <MyRaisedButton id={5308} />
             <MyRaisedButton id={5309} />
+            <MyRaisedButton id={53101} />
           </div>
           <div style={styles.buttonsRow}>
-            <MyRaisedButton id={5310} />
+            <MyRaisedButton id={53102} />
             <MyRaisedButton id={5311} />
             <MyRaisedButton id={5312} />
             <MyRaisedButton id={5313} />
             <MyRaisedButton id={5314} />
             <MyRaisedButton id={5315} />
             <MyRaisedButton id={5316} />
-            <MyRaisedButton id={5317} />
-            <MyRaisedButton id={5318} />
           </div>
           <div style={styles.buttonsRow}>
+            <MyRaisedButton id={5317} />
+            <MyRaisedButton id={5318} />
             <MyRaisedButton id={5401} />
             <MyRaisedButton id={5402} />
             <MyRaisedButton id={5403} />
             <MyRaisedButton id={5404} />
             <MyRaisedButton id={5405} />
+          </div>
+          <div style={styles.buttonsRow}>
             <MyRaisedButton id={5406} />
             <MyRaisedButton id={5407} />
             <MyRaisedButton id={5408} />
             <MyRaisedButton id={5409} />
+            <MyRaisedButton id={5410} />
+            <MyRaisedButton id={5411} />
+            <MyRaisedButton id={5501} />        
+          </div>
+          <div style={styles.buttonsRow}>
+            <MyRaisedButton id={5502} />
+            <MyRaisedButton id={5503} />
+            <MyRaisedButton id={5504} />
+            <MyRaisedButton id={5505} />
+            <MyRaisedButton id={5505} />
+            <MyRaisedButton id={5506} />
+            <MyRaisedButton id={5507} />
+            <MyRaisedButton id={5508} />
           </div>
         </div>
       </Paper>
