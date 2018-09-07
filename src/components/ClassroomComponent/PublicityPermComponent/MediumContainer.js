@@ -64,7 +64,7 @@ class MediumContainer extends React.Component {
 
       return(  
         <a href="javascript:void(0)">
-        <div className="dropzone" style={{marginLeft:20,marginRight:20,border: "1px dotted blue"}}>
+        <div className="dropzone" style={{marginLeft:50,marginRight:50,border: "1px dotted blue"}}>
          <Dropzone style={{"width" : "100%", "height" : "20%"}} disabled={!this.state.checked[3]} accept="image/*" onDrop={this.onPreviewDrop} multiple={true}>
             <div style={{color: !this.state.checked[3]? 'grey' : 'black'}} > Upload your posters here </div>
           </Dropzone>
@@ -125,7 +125,7 @@ class MediumContainer extends React.Component {
         <List>
           <Subheader> Media </Subheader>
            <div style={{display:'flex', flexDirection: 'row'}}>
-             <Checkbox value={0} checked={this.state.checked[0]} style={{width: 48,height: 36, paddingTop:15, paddingBottom:15  }}onCheck={this.updateCheck.bind(this,0)}/>
+             <Checkbox value={0} checked={this.state.checked[0]} style={{width: 48,height: 48, paddingTop:20, paddingBottom:15}}onCheck={this.updateCheck.bind(this,0)}/>
              <ListItem
                 style={{minHeight:65,textAlign:'left',minWidth:400, paddingTop:10}}
                 onClick={this.handleClick.bind(this,0)}
@@ -135,7 +135,7 @@ class MediumContainer extends React.Component {
            </div>
             <Divider />
             <div style={{display:'flex', flexDirection: 'row'}}>
-              <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 36, paddingTop:15, paddingBottom:15 }} onCheck={this.updateCheck.bind(this,1)} />
+              <Checkbox value={1} checked={this.state.checked[1]}  style={{width: 48,height: 48, paddingTop:20, paddingBottom:15}} onCheck={this.updateCheck.bind(this,1)} />
               <ListItem
                 style={{minHeight:65, textAlign:'left',minWidth:400, paddingTop:10}}
                 onClick={this.handleClick.bind(this,1)}
@@ -145,7 +145,7 @@ class MediumContainer extends React.Component {
             </div>
             <Divider />
             <div style={{display:'flex', flexDirection: 'row'}}>
-              <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 36, paddingTop:15, paddingBottom:15 }} onCheck={this.updateCheck.bind(this,2)} />
+              <Checkbox value={2} checked={this.state.checked[2]}  style={{width: 48,height: 48, paddingTop:20, paddingBottom:15}} onCheck={this.updateCheck.bind(this,2)} />
               <ListItem
                 style={{minHeight:65, textAlign:'left', minWidth:400,paddingTop:10}}
                 onClick={this.handleClick.bind(this,2)}
@@ -154,7 +154,7 @@ class MediumContainer extends React.Component {
             </div>
             <Divider />
             <div style={{display:'flex', flexDirection: 'row'}}>
-              <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 36, paddingTop:15, paddingBottom:15 }} onCheck={this.updateCheck.bind(this,3)} />
+              <Checkbox value={3} checked={this.state.checked[3]}  style={{width: 48,height: 48, paddingTop:20, paddingBottom:15}} onCheck={this.updateCheck.bind(this,3)} />
                <ListItem
                 style={{minHeight:65,textAlign:'left',minWidth:400, paddingTop:10}}
                 onClick={this.handleClick.bind(this,3)}
