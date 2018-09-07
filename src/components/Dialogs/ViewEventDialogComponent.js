@@ -166,7 +166,7 @@ class ViewEventDialog extends Component {
           </div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Timings</p>
-            <p style={styles.value}>{(moment(this.props.currentEvent.start_date, 'DD-MM-YYYY').format('dddd'))=="Sunday"?"9:00 AM to 5:00 PM":"5:45 to 8:00 PM"}</p>
+            <p style={styles.value}>{(moment(this.props.currentEvent.start_date, 'DD-MM-YYYY').format('dddd')) == "Sunday" ? "9:00 AM to 5:00 PM" : "5:45 PM to 8:00 PM"}</p>
           </div>
           <div hidden={!((this.props.currentEvent.FA_appr == 'flagged') || (this.props.currentEvent.FA_appr == 'rejected'))} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>{this.props.currentEvent.FA_appr} by FA</p>
