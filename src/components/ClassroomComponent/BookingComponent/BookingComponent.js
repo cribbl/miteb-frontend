@@ -39,8 +39,8 @@ class HorizontalLinearStepper extends React.Component {
     this.shouldDisableDate = this.shouldDisableDate.bind(this)
     this.verifyRooms = this.verifyRooms.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    const maxDate = new Date();
-    maxDate.setMonth(maxDate.getMonth() + 1);
+    const maxDate = new Date('2018, 10, 6');
+    // maxDate.setMonth(maxDate.getMonth() + 1);
     maxDate.setHours(0, 0, 0, 0);
 
     this.state = {
