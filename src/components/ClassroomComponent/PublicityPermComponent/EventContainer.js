@@ -32,17 +32,19 @@ class EventContainer extends React.Component {
       },
       errors: {
         title: ''
-      },
-        isFormValid: false,
+      }
     }
 	}
     componentWillMount(){
+      var result=(this.props.fields['title']).length===0? false : true; 
       this.setState({
-        isFormValid:false,
+        isFormValid: result,
         fields:this.props.fields
       })
+      this.props.updateFormState(null,result);
     }
-      componentWillReceiveProps(nextProps){
+    
+    componentWillReceiveProps(nextProps){
       var fields = nextProps.fields;
       this.callFunction(fields);
     }

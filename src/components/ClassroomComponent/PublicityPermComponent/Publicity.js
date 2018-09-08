@@ -34,7 +34,7 @@ class PublicityComponent extends React.Component {
 		this.state =  {
       checked: [true,false,false,false],
       shouldCheck: false,
-      stepIndex:2,
+      stepIndex:0,
       finished: false,
       isFormValid:false,
       booker_fields:  {
@@ -65,32 +65,20 @@ class PublicityComponent extends React.Component {
         checked: [true,false,false,false]
       })
     }
-    handleNext = () => {
-    const {stepIndex} = this.state;
-    if(this.state.stepIndex+1 < 2){
-      this.setState({
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2,
-        isFormValid:false
-      });
-   }
-    else {
-        this.setState({
-        isFormValid:true,
-        stepIndex: stepIndex +1,
-        finished: stepIndex >=2
-      })
-    if(this.state.stepIndex === 2) {
-      this.handleSubmit();
+  
+  handleNext = () => {
+    if(this.state.stepIndex < 2){
+      const {stepIndex} = this.state;
+      this.setState({stepIndex: stepIndex + 1});
     }
-   
-  }
+    if(this.state.stepIndex == 2)
+      this.handleSubmit();
   };
 
   handlePrev = () => {
     const {stepIndex} = this.state;
     if (stepIndex > 0) {
-      this.setState({stepIndex: stepIndex - 1,isFormValid:true});
+      this.setState({stepIndex: stepIndex - 1, isFormValid: true});
     }
   };
 
@@ -220,7 +208,7 @@ class PublicityComponent extends React.Component {
       case 0:
         return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <BookerContainer fields={this.state.booker_fields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 1:
-        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
+        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} isFormValid={this.state.isFormValid} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
         return  (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
                  <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />      
