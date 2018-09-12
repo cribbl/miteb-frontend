@@ -28,15 +28,13 @@ class Finished extends Component {
         <div style={{minHeight: 250}}>
           <img src={require('../../assets/mail-delivery.gif')} style={{width: this.props.isMobile ? '98%' : '70%', margin: '10%, 0'}}/>
         </div>
-        
-        {
-          <div style={{padding: 10}}>
-            <h5>{this.props.complaint.fields.name}, your complaint with subject "{this.props.complaint.subject}" has been lodged.</h5>
-            <p>We shall reach out to you via email ({this.props.complaint.fields.email})</p>
-          </div>
-        }
 
-        <p style={{margin: '30px 0px'}}>Redirecting back in {this.state.counter}</p>
+        <div style={{padding: 10}}>
+          <h5>{this.props.complaint.fields.name}, your complaint with subject "{this.props.complaint.subject}" has been lodged.</h5>
+          <p>We shall reach out to you via email ({this.props.complaint.fields.email})</p>
+        </div>
+      
+      <p style={{margin: '30px 0px'}}>Redirecting back in {this.state.counter}</p>
 
       </div>
     )
