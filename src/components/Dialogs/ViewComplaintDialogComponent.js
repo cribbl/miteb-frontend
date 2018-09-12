@@ -65,8 +65,6 @@ class ViewComplaintDialog extends Component {
         >
         
         <div>
-        {!this.props.currentComplaint.goAnonymous && (
-          <div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Name</p>
             <p style={styles.value}>{this.props.currentComplaint.fields.name}</p>
@@ -87,8 +85,6 @@ class ViewComplaintDialog extends Component {
             <p style={styles.label}>Year & Branch</p>
             <p style={styles.value}>{this.props.currentComplaint.fields.year} - {this.props.currentComplaint.fields.branch}</p>
           </div>
-          </div>
-        )}
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Subject</p>
             <p style={styles.value}>{this.props.currentComplaint.subject}</p>
