@@ -44,7 +44,7 @@ ReactDOM.render(
         <Route exact path="/" component={App}>
             <Route path="faq" component={FaqComponent}></Route>
             <IndexRoute component={LandingPage}></IndexRoute>
-            <Route path="complaints" component={NotFound}></Route>
+            <Route path="complaints" component={ComplaintsComponent}></Route>
             <Route path='developers' component={DevelopersComponent}></Route>
             <Route path='policy/privacy' component={PrivacyPolicy}></Route>
             <Route path='policy/tnc' component={TnC}></Route>
