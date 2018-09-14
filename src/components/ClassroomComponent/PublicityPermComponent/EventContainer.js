@@ -9,6 +9,7 @@ import {getDisabledDates} from '../../../Services/firebaseDBService'
 class EventContainer extends React.Component {
 	constructor(props){
 		super(props);
+
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 1);
     maxDate.setHours(0, 0, 0, 0);
@@ -48,6 +49,7 @@ class EventContainer extends React.Component {
       var fields = nextProps.fields;
       this.callFunction(fields);
     }
+
     callFunction(fields){
       this.setState({
         fields:fields
@@ -60,7 +62,7 @@ class EventContainer extends React.Component {
     this.setState({fields});
     let result = this.handleValidation(field);
     this.props.updateFormState(null,result);
-  };
+  }
 
   handleBlur(field, e) {
     let fieldTouch = this.state.fieldTouch;
@@ -68,7 +70,8 @@ class EventContainer extends React.Component {
     this.setState({fieldTouch})
     let result = this.handleValidation(field);
     this.props.updateFormState(null,result);
-  };
+  }
+
    handleStartDate(event, start_date) {
     var field = this.state.fields;
     field['start_date'] = start_date;
@@ -88,15 +91,18 @@ class EventContainer extends React.Component {
     })
     this.props.updateFields(field)
   }
+
   shouldDisableDate(day) {
     let date = moment(day).format('DD-MM-YYYY');
     if((this.state.disabledDates).includes(date))
       return true
     return false
   }
+
   formatDate(date) {
     return moment(date).format("ddd, DD MMM YYYY")
   }
+
   handleValidation(field) {
     let fields = this.state.fields;
     let errors = {
@@ -112,8 +118,6 @@ class EventContainer extends React.Component {
     this.props.updateFormState(null,isFormValid);
     return isFormValid;
   }
-
-
 
 		render() {
       var self=this;

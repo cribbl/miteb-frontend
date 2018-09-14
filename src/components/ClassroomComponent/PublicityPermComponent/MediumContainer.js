@@ -16,6 +16,7 @@ import Dropzone from 'react-dropzone';
 class MediumContainer extends React.Component {
 	constructor(props){
 		super(props);
+
     this.handleClick.bind(this);
     this.handleToggle.bind(this);
 		this.state =  {
@@ -28,6 +29,7 @@ class MediumContainer extends React.Component {
 
 		}
   }
+  
   componentWillMount() {
     this.validationMedia();
   }
