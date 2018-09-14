@@ -23,28 +23,32 @@ class MediumContainer extends React.Component {
       checked: this.props.checkedMediums,
       clickedValue: 0,
       indexes: this.props.indexesMediums,
-      clicked: true,
       object: { 0: 'Banner', 1: 'InfoDesk', 2: 'Digital Board', 3: 'Poster'},
       files: this.props.filesMediums
 
 		}
   }
+  componentWillMount() {
+    this.validationMedia();
+  }
+
   updateShared(checked){
     this.props.updateShared(checked);
-
   }
+
   handleClick(location){
     this.setState({
-      clickedValue: location,
-      clicked: true
+      clickedValue: location
     })
   }
+
   onPreviewDrop = (files) => {
     this.setState({
       files: this.state.files.concat(files),
     });
     this.props.updateFiles(this.state.files);
   }
+
   removePicture(file) {
     var files = this.state.files;
     var i = files.indexOf(file);
@@ -55,6 +59,7 @@ class MediumContainer extends React.Component {
       files: files
     })
   }
+
   renderPoster() {
       const previewStyle = {
         display: 'inline',
@@ -84,27 +89,33 @@ class MediumContainer extends React.Component {
         </div>
         </a>)
   }
+
+  validationMedia() {
+    var checked = this.state.checked;
+    var indexes = this.state.indexes; 
+    var isChecked = !(Object.values(checked).every(v => v === false));
+    var isFormValid = isChecked ? !checked.some((key, index) => key ? Object.values(indexes[index]).every(v => v === false) : false) : false;
+    this.props.updateValidation(isFormValid);
+  }
    
   handleToggle(s,i){
     let indexes = this.state.indexes;
     (indexes[s])[i]=!(indexes[s])[i];
     this.setState({indexes});
+    this.validationMedia();
     this.props.updateToggle(indexes);
   }
+
   updateCheck(value){
       var checked_array = this.state.checked;
       checked_array[value] = !checked_array[value];
-      this.setState((oldState) => {
-        return {
-          checked: checked_array
-        }
-      })
+      this.setState({checked_array})
+      this.validationMedia();
       this.props.updateShared(this.state.checked);
     };
 
   renderCard() {
     var value = this.state.clickedValue;
-    var clicked = value || value === 0? true : false;
     var medium = this.state.object[value];
     var steps = ["Academic Blocks", "First Years Hostel Blocks", "Senior Hostel Blocks","Mess"]
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
@@ -130,7 +141,6 @@ class MediumContainer extends React.Component {
                 style={{minHeight:65,textAlign:'left',minWidth:400, paddingTop:10}}
                 onClick={this.handleClick.bind(this,0)}
                 primaryText="Banner"
-                secondaryText=""
               />
            </div>
             <Divider />
@@ -174,12 +184,13 @@ class MediumContainer extends React.Component {
         </div>
         <div style={{display: this.props.isMobile ? 'none' : '', height: 350, border: '1px solid lightgrey'}}></div>
           <div style={{width: '100%',minHeight:300}}>
-        {this.state.clicked && this.renderCard()}
+          {this.renderCard()}
         </div>
       </div> 
 			);
 		}
   }
+
 	function mapStateToProps(state) {
   const {isMobile} = state.toggler
   const {user} = state.authentication

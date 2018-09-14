@@ -32,7 +32,7 @@ class PublicityComponent extends React.Component {
 		super(props);
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
 		this.state =  {
-      checked: [true,false,false,false],
+      checked: [false,false,false,false],
       shouldCheck: false,
       stepIndex:0,
       finished: false,
@@ -60,9 +60,10 @@ class PublicityComponent extends React.Component {
 		
     }
 	};
-    componentWillMount(){
+  
+  componentWillMount(){
       this.setState({
-        checked: [true,false,false,false]
+        checked: [false,false,false,false]
       })
     }
   
@@ -85,7 +86,6 @@ class PublicityComponent extends React.Component {
   handleSnackBarClose() {
     this.setState({openSnackBar: false}) 
   }
-
 
   handleSubmit() {
     var result = this.parseMediums();
@@ -166,6 +166,7 @@ class PublicityComponent extends React.Component {
    }
   return result;
   }
+
   updateFormState(bookForm,eventForm){
     if(bookForm===false || eventForm===false){
       this.setState({
@@ -180,17 +181,23 @@ class PublicityComponent extends React.Component {
       })
     }
   }
-  updateShared(shared_value){
-    this.setState({checked: shared_value})
+
+  updateShared(checked){
+    this.setState({checked: checked})
   }
+
+  updateValidation(isFormValid){
+    this.setState({isFormValid: isFormValid});
+  }
+
   updateFiles(files){
     this.setState({files: files})
   }
+
   updateBooker(fields){
-    this.setState({
-      booker_fields:fields
-    })
+    this.setState({booker_fields:fields})
   }
+
   updateEvent(fields){
     this.setState({
       event_fields:fields,
@@ -198,11 +205,11 @@ class PublicityComponent extends React.Component {
       end_date: fields['end_date']
     })
   }
+
   updateToggle(toggle){
-    this.setState({
-      indexes: toggle
-    })
+    this.setState({indexes: toggle});
   }
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -211,7 +218,7 @@ class PublicityComponent extends React.Component {
         return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} isFormValid={this.state.isFormValid} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
         return  (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
-                 <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />      
+                 <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} updateValidation={this.updateValidation.bind(this)}/>      
         
           </div>);
       default:
