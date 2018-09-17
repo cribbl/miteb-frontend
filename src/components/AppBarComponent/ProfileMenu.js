@@ -80,14 +80,12 @@ class ProfileMenu extends Component {
 
             <Divider hidden={!this.props.isMobile} />
 
-          {/*
             <MenuItem
               key="/complaints"
               primaryText="Complaints"
               leftIcon={<ComplaintIcon />}
               hidden={!this.props.isMobile}
             />
-          */}
             
             <Divider hidden={!this.props.isMobile || this.props.user} />
             
