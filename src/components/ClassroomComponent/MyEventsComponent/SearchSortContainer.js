@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import './MyEventsComponent';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {hashHistory} from 'react-router'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import './MyEventsComponent'
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar'
+import { hashHistory } from 'react-router'
+import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import ExportIcon from 'material-ui/svg-icons/file/cloud-download'
 import IconButton from 'material-ui/IconButton'
@@ -19,57 +19,56 @@ class SearchSortContainer extends Component {
     this.state = {
       filter: 'all',
       search: '',
-      dialogOpen: false,
+      dialogOpen: false
     }
   }
 
-  filterClicked(filter) {
-    const {dispatch} = this.props
-    dispatch({type: 'FILTER', filter})
+  filterClicked (filter) {
+    const { dispatch } = this.props
+    dispatch({ type: 'FILTER', filter })
   }
 
-  handleSearch(e) {
-    this.setState({search: e.target.value})
+  handleSearch (e) {
+    this.setState({ search: e.target.value })
     this.props.handleSearch(e.target.value)
   }
 
-  showExportDialog() {
-    this.setState({dialogOpen: true})
+  showExportDialog () {
+    this.setState({ dialogOpen: true })
   }
 
-  render() {
-    if(!this.props.user)
-      return null;
+  render () {
+    if (!this.props.user) { return null }
     return (
-       <div>
-       <Toolbar style={{minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)'}}>
-       <ToolbarGroup>
-          <IconButton tooltip="Export Events" tooltipPosition="top-right" onClick={this.showExportDialog} hidden={!this.props.user.isClub} disabled={this.props.disableExport}>
-            <ExportIcon />
-          </IconButton>
-        </ToolbarGroup>
+      <div>
+        <Toolbar style={{ minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)' }}>
+          <ToolbarGroup>
+            <IconButton tooltip='Export Events' tooltipPosition='top-right' onClick={this.showExportDialog} hidden={!this.props.user.isClub} disabled={this.props.disableExport}>
+              <ExportIcon />
+            </IconButton>
+          </ToolbarGroup>
 
-        <ToolbarGroup>
-          <TextField
-            value={this.state.search}
-            onChange={this.handleSearch}
-            underlineShow={false}
-            inputStyle={{border: '1px solid rgb(224, 224, 224)', height: 40, marginTop: 4, padding: 4}}
-            hintText="Search"
-            hintStyle={{paddingLeft: 4}}
-          />
-        </ToolbarGroup>        
-       </Toolbar>
+          <ToolbarGroup>
+            <TextField
+              value={this.state.search}
+              onChange={this.handleSearch}
+              underlineShow={false}
+              inputStyle={{ border: '1px solid rgb(224, 224, 224)', height: 40, marginTop: 4, padding: 4 }}
+              hintText='Search'
+              hintStyle={{ paddingLeft: 4 }}
+            />
+          </ToolbarGroup>
+        </Toolbar>
 
-       <EventExportDialog open={this.state.dialogOpen} handleClose={() => {this.setState({dialogOpen: false})}} view={"event"} titleText="Events"/>
-       </div>
-    );
+        <EventExportDialog open={this.state.dialogOpen} handleClose={() => { this.setState({ dialogOpen: false }) }} view={'event'} titleText='Events' />
+      </div>
+    )
   }
 }
 
-function mapStateToProps(state) {
-  const {openSideNav, isMobile, filter} = state.toggler
-  const {user, verified} = state.authentication
+function mapStateToProps (state) {
+  const { openSideNav, isMobile, filter } = state.toggler
+  const { user, verified } = state.authentication
   return {
     user,
     openSideNav,
