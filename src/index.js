@@ -7,15 +7,14 @@ import LoginComponent from './components/LoginComponent/LoginComponent'
 import ForgotPasswordContainer from './components/LoginComponent/ForgotPasswordContainer'
 import SignupContainer from './components/LoginComponent/SignupContainer'
 import SignupFAContainer from './components/LoginComponent/SignupFAContainer'
-import DrawerComponent from './components/DrawerComponent/DrawerComponent'
 import DevelopersComponent from './components/DevelopersComponent/DevelopersComponent'
 // logo, name, fa, email, pass, notif settings: email after every approval/reject, sms and,aws, push notifs,
 
 import ClassroomComponent from './components/ClassroomComponent/ClassroomComponent'
 import MyEventsComponent from './components/ClassroomComponent/MyEventsComponent/MyEventsComponent'
-import FA_MyEventsComponent from './components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent'
-import AD_EventsComponent from './components/ClassroomComponent/MyEventsComponent/AD_EventsComponent'
-import SO_EventsComponent from './components/ClassroomComponent/MyEventsComponent/SO_EventsComponent'
+import FAmyEventsComponent from './components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent'
+import ADeventsComponent from './components/ClassroomComponent/MyEventsComponent/AD_EventsComponent'
+import SOeventsComponent from './components/ClassroomComponent/MyEventsComponent/SO_EventsComponent'
 import DashboardComponent from './components/ClassroomComponent/DashboardComponent/DashboardComponent'
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
@@ -58,9 +57,9 @@ ReactDOM.render(
         <Route path='dashboard' component={ClassroomComponent}>
           <IndexRoute component={DashboardComponent} />
           <Route path='myEvents' component={MyEventsComponent} />
-          <Route path='faEvents' component={FA_MyEventsComponent} />
-          <Route path='adEvents' component={AD_EventsComponent} />
-          <Route path='soEvents' component={SO_EventsComponent} />
+          <Route path='faEvents' component={FAmyEventsComponent} />
+          <Route path='adEvents' component={ADeventsComponent} />
+          <Route path='soEvents' component={SOeventsComponent} />
           <Route path='book_room' component={BookingComponent} />
           <Route path='profile' component={ProfileComponent} />
           <Route path='approveClubs' component={ApproveClubsComponent} />
