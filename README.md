@@ -1,4 +1,5 @@
 # MIT-Event-Booking
+[![Build Status](https://travis-ci.com/cribblportal/MIT-Event-Booking.svg?token=VkvSbZJB1bmjWZDEPRYh&branch=master)](https://travis-ci.com/cribblportal/MIT-Event-Booking)
 Online portal to book events and rooms for clubs of MIT.
 
 ## Folder Structure
