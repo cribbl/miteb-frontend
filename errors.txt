@@ -1,585 +1,447 @@
-
-> CribblPortal@0.1.0 test /home/bhawesh96/git/MIT-Event-Booking
-> standard --fix
-
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:1:1: 'importScripts' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:2:1: 'importScripts' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:4:1: 'firebase' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:8:19: 'firebase' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:35:10: 'self' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:38:1: 'self' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:40:7: 'primaryKey' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:47:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:47:4: 'clients' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:47:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:48:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:48:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:50:5: 'clients' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/App.js:2:10: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/App.js:2:23: 'Router' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/App.js:2:31: 'Route' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/App.js:5:8: 'DrawerComponent' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/App.js:10:10: 'store' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:7:54: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:7:122: 'base_url' is already defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:7:122: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:9:56: Identifier 'default_purpose' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:20:14: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:29:68: Identifier 'club_name' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:29:79: Identifier 'club_email' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:29:91: Identifier 'booker_name' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:29:104: Identifier 'booker_email' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:29:118: Identifier 'event_name' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:42:13: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:51:39: Identifier 'booker_email' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:51:53: Identifier 'booker_name' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:58:13: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:67:41: Identifier 'club_email' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:67:53: Identifier 'club_name' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:73:13: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:85:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:85:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:86:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:86:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:87:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:87:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:88:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:88:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:89:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:89:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:90:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:90:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:91:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:91:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:95:14: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:109:14: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:125:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:125:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:125:4: 'sessionStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:136:19: 'sessionStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:138:12: Expected error to be handled.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:143:7: 'getNotificationPermissionState' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:160:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:160:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:161:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:161:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:163:13: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:165:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:165:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:165:22: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:166:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:166:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:167:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:167:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:168:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:168:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:169:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:169:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:172:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:172:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:173:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:173:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:179:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:179:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:180:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:180:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:181:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:181:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:183:13: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:185:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:185:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:185:22: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:186:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:186:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:187:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:187:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:188:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:188:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:189:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:189:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:192:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:192:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:193:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/NotificationService.js:193:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:1:24: 'firebaseMessaging' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:6:54: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:6:122: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:6:122: 'base_url' is already defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:9:14: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:11:26: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:21:14: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:23:26: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:55:7: 'sessionStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:55:53: 'sessionStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:55:106: 'sessionStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:55:137: 'sessionStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:59:12: Expected error to be handled.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseAuthService.js:74:7: 'sessionStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:104:5: Expected the Promise rejection reason to be an Error.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:108:28: Identifier 'start_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:108:40: Identifier 'end_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:109:14: Identifier 'start_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:116:46: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:121:29: Identifier 'start_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:121:41: Identifier 'end_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:122:14: Identifier 'start_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:129:46: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:180:20: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:183:17: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:196:17: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:219:24: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:233:7: 'num' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseDBService.js:233:50: 'event' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseStorageService.js:4:54: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseStorageService.js:4:122: 'base_url' is already defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseStorageService.js:4:122: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseStorageService.js:20:13: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseStorageService.js:37:10: Identifier 'base_url' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/firebaseStorageService.js:42:48: 'Blob' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/test.js:1:1: 'x' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/test.js:1349:18: 'x' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/test.js:1350:23: 'x' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/Services/test.js:1351:28: 'x' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:5:10: 'store' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:32:11: 'localStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:50:3: 'localStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:64:7: 'arr' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:76:9: 'localStorage' is not defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:91:15: 'error' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:103:12: 'failure' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:4:8: 'IconMenu' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:6:8: 'MoreVertIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:11:8: 'FaceIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:12:8: 'SettingsIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:13:8: 'LogoutIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:14:8: 'Snackbar' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:16:8: 'Divider' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:18:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:19:8: 'Menu' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:20:8: 'MenuItem' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:21:8: 'Popover' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:21:19: 'PopoverAnimationVertical' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:22:10: 'Toolbar' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:22:33: 'ToolbarSeparator' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:22:51: 'ToolbarTitle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:23:8: 'axios' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:25:8: 'DrawerComponent' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:26:10: 'notif' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:122:15: No duplicate props allowed
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:4:8: 'IconMenu' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:5:8: 'FlatButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:9:8: 'AvatarIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:10:8: 'FaceIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:11:8: 'SettingsIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:12:8: 'LogoutIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:14:8: 'Divider' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:15:8: 'Avatar' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:16:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:17:8: 'Menu' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:18:8: 'MenuItem' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:19:8: 'Popover' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:19:19: 'PopoverAnimationVertical' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:10: 'Toolbar' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:19: 'ToolbarGroup' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:33: 'ToolbarSeparator' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:51: 'ToolbarTitle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:21:8: 'axios' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:23:8: 'DrawerComponent' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:71:110: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:3:8: 'SettingsIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:5:8: 'ComplaintIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:6:8: 'IconTest' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:7:8: 'DashboardIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:8:8: 'CatalogueIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:12:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:14:10: 'toggleActions' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:103:33: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:103:118: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:111:21: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:116:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:126:33: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:130:40: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:135:27: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:136:13: 'unapprovedArr' is already defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:142:13: 'approvedArr' is already defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:188:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:188:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:197:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:197:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:198:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:198:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:199:25: Expected indentation of 2 space characters but found 24.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:200:1: Expected indentation of 26 spaces but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:200:5: Expected indentation of 26 space characters but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:201:1: Expected indentation of 26 spaces but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:201:5: Expected indentation of 26 space characters but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:202:1: Expected indentation of 26 spaces but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:202:5: Expected indentation of 26 space characters but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:203:1: Expected indentation of 26 spaces but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:203:5: Expected indentation of 26 space characters but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:204:1: Expected indentation of 26 spaces but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:204:5: Expected indentation of 26 space characters but found 4.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:205:29: Expected indentation of 6 space characters but found 28.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:206:1: Expected indentation of 30 spaces but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:206:9: Expected indentation of 30 space characters but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:207:1: Expected indentation of 30 spaces but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:207:9: Expected indentation of 30 space characters but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:208:1: Expected indentation of 30 spaces but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:208:9: Expected indentation of 30 space characters but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:209:1: Expected indentation of 30 spaces but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:209:9: Expected indentation of 30 space characters but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:210:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:210:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:211:1: Expected indentation of 30 spaces but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:211:9: Expected indentation of 30 space characters but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:212:1: Expected indentation of 30 spaces but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:212:9: Expected indentation of 30 space characters but found 8.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:213:1: Expected indentation of 28 spaces but found 6.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:213:7: Expected indentation of 28 space characters but found 6.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:214:27: Expected indentation of 4 space characters but found 26.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:215:1: Expected indentation of 24 spaces but found 2.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:215:3: Expected indentation of 24 space characters but found 2.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:216:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:216:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:224:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:224:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:2:1: Expected consistent spacing
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:33:136: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:35:138: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:37:131: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/BookingComponent.js:115:14: Parsing error: Unexpected token =
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/FinishedContainer.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/FinishedContainer.js:6:3: Useless constructor.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/Rooms.js:2:10: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/Rooms.js:6:8: 'Divider' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/Rooms.js:8:10: 'updateDatesDBx' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ClassroomComponent.js:6:10: 'userActions' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/DashboardComponent/DashboardComponent.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/DashboardComponent/DashboardComponent.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/DashboardComponent/DashboardComponent.js:6:3: Useless constructor.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:5:3: 'TableFooter' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:12:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:13:8: 'Toggle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:15:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:30:7: Identifier 'AD_EventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:118:21: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:123:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:142:35: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:5:3: 'TableFooter' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:12:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:13:8: 'Toggle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:15:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:30:7: Identifier 'FA_MyEventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:116:21: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:121:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:131:11: 'x' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:142:25: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:145:32: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:148:32: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:168:42: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:5:3: 'TableFooter' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:15:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:16:8: 'Toggle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:21:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:68:15: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:69:15: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:70:15: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:71:15: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:72:15: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:73:15: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:88:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:118:11: 'x' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:129:25: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:132:32: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:135:32: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:5:3: 'TableFooter' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:12:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:13:8: 'Toggle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:15:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:30:7: Identifier 'SO_EventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:116:21: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:121:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:140:35: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SearchSortContainer.js:3:33: 'ToolbarSeparator' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SearchSortContainer.js:3:51: 'ToolbarTitle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SearchSortContainer.js:4:10: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:2:8: 'axios' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:3:10: 'firebaseDB' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:5:8: 'firebase' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:7:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:9:10: 'getUserDetails' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:10:10: 'sendPasswordResetEmail' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:11:10: 'uploadProfilePic' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:12:10: 'requestOTP' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:15:8: 'Avatar' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:16:10: 'Tabs' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:16:16: 'Tab' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:17:8: 'Slider' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:20:8: 'Snackbar' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:23:8: 'Checkbox' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:25:8: 'OtpDialog' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:52:40: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:75:114: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:83:112: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/Profile.js:35:19: Parsing error: Unexpected token =
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/ProfileContainer.js:134:25: Parsing error: Unexpected token =
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:12:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:12:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:41:140: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:43:142: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:45:135: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:5:3: 'TableFooter' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:16:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:17:8: 'Toggle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:19:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:28:8: 'Visibility' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:29:8: 'VisibilityOff' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:81:33: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:81:118: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:94:33: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:98:40: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:103:17: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:104:13: 'unresolvedArr' is already defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:110:13: 'resolvedArr' is already defined.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:117:31: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:132:21: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:137:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:148:33: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:148:118: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:178:38: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ComplaintsComponent/ComplaintsComponent.js:4:8: 'Toggle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ComplaintsComponent/ComplaintsContent.js:4:8: 'Toggle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ComplaintsComponent/Finished.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/ComplaintsComponent/Finished.js:18:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:4:8: 'SelectField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:6:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:7:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:8:8: 'FlatButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:9:10: 'firebaseDB' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:16: 'CardActions' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:29: 'CardHeader' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:52: 'CardTitle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:63: 'CardText' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:3:8: 'SelectField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:4:8: 'MenuItem' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:5:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:6:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:7:8: 'FlatButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:10: 'Card' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:16: 'CardActions' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:29: 'CardHeader' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:41: 'CardMedia' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:52: 'CardTitle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:63: 'CardText' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:10:10: 'List' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:10:16: 'ListItem' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:11:8: 'IconMenu' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:12:8: 'IconButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:13:8: 'MoreVertIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:7:8: 'moment' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:9:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:10:8: 'SelectField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:11:8: 'MenuItem' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:12:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:10: 'Card' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:16: 'CardActions' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:29: 'CardHeader' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:41: 'CardMedia' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:52: 'CardTitle' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:63: 'CardText' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:15:10: 'List' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:15:16: 'ListItem' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:16:8: 'IconMenu' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:17:8: 'IconButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:18:8: 'MoreVertIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:19:8: 'ApplyIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:22:7: 'styles' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:102:23: Unnecessary escape character: \[.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:102:46: Unnecessary escape character: \[.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:102:134: Unnecessary escape character: \..
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:126:28: Unnecessary escape character: \+.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:126:78: Unnecessary escape character: \+.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:136:11: Identifier 'DA_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:157:20: Identifier 'DA_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:34:27: Identifier 'start_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:38:25: Identifier 'end_date' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:43:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:43:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:44:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:44:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:45:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:45:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:46:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:46:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:47:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:47:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:48:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:48:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:49:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:49:4: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:53:11: 'styles' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:54:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:54:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:55:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:55:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:56:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:56:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:57:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:57:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:58:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:58:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:59:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:59:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:61:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:61:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:62:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:62:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:63:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:63:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:64:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:64:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:65:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:65:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:95:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:95:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:102:15: No duplicate props allowed
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:108:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:108:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:115:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:115:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:129:47: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:144:47: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:5:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:28:11: Identifier 'Flag_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:36:32: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:48:20: Identifier 'Flag_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/OtpDialog.js:24:15: Parsing error: Unexpected token =
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:42:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:42:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:43:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:43:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:44:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:44:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:45:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:45:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:46:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:46:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:47:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:47:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:49:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:49:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:50:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:50:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:51:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:51:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:52:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:52:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:53:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:53:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:84:2: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:84:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:5:8: 'IconButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:6:8: 'ReplyIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:37:11: Identifier 'Club_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:60:20: Identifier 'Club_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:36:9: Identifier 'room_block' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:39:11: Identifier 'room_no' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:41:33: Identifier 'room_no' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:56:11: Identifier 'FA_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:89:11: Identifier 'Club_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:115:64: Identifier 'Club_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:115:79: Identifier 'FA_actions' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:169:112: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:171:61: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:171:111: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:175:61: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:175:111: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:179:61: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:179:111: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:2:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:6:8: 'Divider' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:9:8: 'IconHome' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:13:8: 'IconNews' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:14:8: 'IconUpdates' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:15:8: 'IconSettings' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:16:8: 'IconHelp' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:38:7: 'selectedStyle' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:97:89: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/FaqComponent/FaqComponent.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/FaqComponent/FaqComponent.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/FaqComponent/FaqComponent.js:9:3: Useless constructor.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:4:8: 'PhoneIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:5:8: 'IconButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:6:8: 'EmailIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Features.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Features.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Features.js:4:8: 'PhoneIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Footer.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/LandingPage.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/LandingPage.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/LandingPage.js:4:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Statistics.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Statistics.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Statistics.js:4:8: 'PhoneIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Statistics.js:5:8: 'IconButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Statistics.js:6:8: 'EmailIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Support.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Support.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Support.js:4:8: 'PhoneIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Support.js:5:8: 'IconButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LandingPage/Support.js:6:8: 'EmailIcon' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/ForgotPasswordContainer.js:3:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/LoginComponent.jsx:3:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/LoginComponent.jsx:10:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/Reg.js:3:8: 'TextField' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/Reg.js:4:8: 'RaisedButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/Reg.js:6:8: 'LoginComponent' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/Reg.js:10:10: 'userActions' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/Reg.js:11:10: 'firebaseAuth' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:2:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:9:10: 'sendPush' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:53:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:78:9: 'fieldTouch' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:90:54: Unnecessary escape character: \[.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:90:77: Unnecessary escape character: \[.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:90:165: Unnecessary escape character: \..
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:94:33: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:103:19: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:116:9: 'newUser' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:2:8: 'Paper' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:6:10: 'RadioButton' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:6:23: 'RadioButtonGroup' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:53:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:78:9: 'fieldTouch' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:90:54: Unnecessary escape character: \[.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:90:77: Unnecessary escape character: \[.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:90:165: Unnecessary escape character: \..
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:94:33: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:103:19: Expected '!==' and instead saw '!='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:116:9: 'newUser' is assigned a value but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/NotFound/NotFound.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/NotFound/NotFound.js:18:13: Expected '===' and instead saw '=='.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Policies/PrivacyPolicy.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Policies/PrivacyPolicy.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Policies/PrivacyPolicy.js:7:3: Useless constructor.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Policies/TnC.js:3:10: 'Link' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Policies/TnC.js:3:16: 'hashHistory' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/Policies/TnC.js:7:3: Useless constructor.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/SnackbarComponent.js:11:2: Mixed spaces and tabs.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/SnackbarComponent.js:11:6: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/SnackbarComponent.js:39:11: Identifier 'toast_open' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/components/SnackbarComponent.js:39:23: Identifier 'toast_message' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/index.js:10:8: 'DrawerComponent' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/index.js:16:8: Identifier 'FA_MyEventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/index.js:17:8: Identifier 'AD_EventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/index.js:18:8: Identifier 'SO_EventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/index.js:61:45: Identifier 'FA_MyEventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/index.js:62:45: Identifier 'AD_EventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/index.js:63:45: Identifier 'SO_EventsComponent' is not in camel case.
-  /home/bhawesh96/git/MIT-Event-Booking/src/reducers/eventsReducer.js:1:10: 'getUser' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/reducers/userReducer.js:1:10: 'getUser' is defined but never used.
-  /home/bhawesh96/git/MIT-Event-Booking/src/store.js:9:5: Unexpected tab character.
-  /home/bhawesh96/git/MIT-Event-Booking/src/store.js:10:42: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:1:1: 'importScripts' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:2:1: 'importScripts' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:4:1: 'firebase' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:8:19: 'firebase' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:35:10: 'self' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:38:1: 'self' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:40:7: 'primaryKey' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:47:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:47:4: 'clients' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:47:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:48:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:48:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/public/firebase-messaging-sw.js:50:5: 'clients' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/actions/userActions.js:5:10: 'store' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/actions/userActions.js:32:11: 'localStorage' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/actions/userActions.js:50:3: 'localStorage' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/actions/userActions.js:64:7: 'arr' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/actions/userActions.js:76:9: 'localStorage' is not defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/actions/userActions.js:91:15: 'error' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/actions/userActions.js:103:12: 'failure' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:4:8: 'IconMenu' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:6:8: 'MoreVertIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:11:8: 'FaceIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:12:8: 'SettingsIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:13:8: 'LogoutIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:14:8: 'Snackbar' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:16:8: 'Divider' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:18:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:19:8: 'Menu' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:20:8: 'MenuItem' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:21:8: 'Popover' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:21:19: 'PopoverAnimationVertical' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:22:10: 'Toolbar' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:22:33: 'ToolbarSeparator' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:22:51: 'ToolbarTitle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:23:8: 'axios' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:25:8: 'DrawerComponent' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:26:10: 'notif' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarComponent.js:122:15: No duplicate props allowed
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:4:8: 'IconMenu' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:5:8: 'FlatButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:9:8: 'AvatarIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:10:8: 'FaceIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:11:8: 'SettingsIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:12:8: 'LogoutIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:14:8: 'Divider' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:15:8: 'Avatar' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:16:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:17:8: 'Menu' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:18:8: 'MenuItem' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:19:8: 'Popover' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:19:19: 'PopoverAnimationVertical' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:10: 'Toolbar' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:19: 'ToolbarGroup' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:33: 'ToolbarSeparator' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:20:51: 'ToolbarTitle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:21:8: 'axios' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:23:8: 'DrawerComponent' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/AppBarMobile.js:71:110: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:3:8: 'SettingsIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:5:8: 'ComplaintIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:6:8: 'IconTest' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:7:8: 'DashboardIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/AppBarComponent/ProfileMenu.js:8:8: 'CatalogueIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:12:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:14:10: 'toggleActions' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:103:33: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:103:118: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:111:21: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:116:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:126:33: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:130:40: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:135:27: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:136:13: 'unapprovedArr' is already defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:142:13: 'approvedArr' is already defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:188:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:188:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:197:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:197:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:198:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:198:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:199:25: Expected indentation of 2 space characters but found 24.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:200:1: Expected indentation of 26 spaces but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:200:5: Expected indentation of 26 space characters but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:201:1: Expected indentation of 26 spaces but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:201:5: Expected indentation of 26 space characters but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:202:1: Expected indentation of 26 spaces but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:202:5: Expected indentation of 26 space characters but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:203:1: Expected indentation of 26 spaces but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:203:5: Expected indentation of 26 space characters but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:204:1: Expected indentation of 26 spaces but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:204:5: Expected indentation of 26 space characters but found 4.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:205:29: Expected indentation of 6 space characters but found 28.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:206:1: Expected indentation of 30 spaces but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:206:9: Expected indentation of 30 space characters but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:207:1: Expected indentation of 30 spaces but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:207:9: Expected indentation of 30 space characters but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:208:1: Expected indentation of 30 spaces but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:208:9: Expected indentation of 30 space characters but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:209:1: Expected indentation of 30 spaces but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:209:9: Expected indentation of 30 space characters but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:210:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:210:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:211:1: Expected indentation of 30 spaces but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:211:9: Expected indentation of 30 space characters but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:212:1: Expected indentation of 30 spaces but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:212:9: Expected indentation of 30 space characters but found 8.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:213:1: Expected indentation of 28 spaces but found 6.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:213:7: Expected indentation of 28 space characters but found 6.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:214:27: Expected indentation of 4 space characters but found 26.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:215:1: Expected indentation of 24 spaces but found 2.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:215:3: Expected indentation of 24 space characters but found 2.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:216:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:216:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:224:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer.js:224:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:2:1: Expected consistent spacing
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:33:136: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:35:138: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ApproveClubsComponent/SearchSortContainer.js:37:131: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/BookingComponent.js:115:14: Parsing error: Unexpected token =
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/FinishedContainer.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/FinishedContainer.js:6:3: Useless constructor.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/Rooms.js:2:10: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/Rooms.js:6:8: 'Divider' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/Rooms.js:8:10: 'updateDatesDBx' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ClassroomComponent.js:6:10: 'userActions' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/DashboardComponent/DashboardComponent.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/DashboardComponent/DashboardComponent.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/DashboardComponent/DashboardComponent.js:6:3: Useless constructor.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:5:3: 'TableFooter' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:12:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:13:8: 'Toggle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:15:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:30:7: Identifier 'AD_EventsComponent' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:118:21: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:123:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/AD_EventsComponent.js:142:35: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:5:3: 'TableFooter' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:12:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:13:8: 'Toggle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:15:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:30:7: Identifier 'FA_MyEventsComponent' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:116:21: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:121:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:131:11: 'x' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:142:25: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:145:32: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:148:32: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent.js:168:42: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:5:3: 'TableFooter' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:15:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:16:8: 'Toggle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:21:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:68:15: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:69:15: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:70:15: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:71:15: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:72:15: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:73:15: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:88:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:118:11: 'x' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:129:25: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:132:32: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/MyEventsComponent.js:135:32: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:5:3: 'TableFooter' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:12:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:13:8: 'Toggle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:15:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:30:7: Identifier 'SO_EventsComponent' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:116:21: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:121:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SO_EventsComponent.js:140:35: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SearchSortContainer.js:3:33: 'ToolbarSeparator' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SearchSortContainer.js:3:51: 'ToolbarTitle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/MyEventsComponent/SearchSortContainer.js:4:10: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:2:8: 'axios' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:3:10: 'firebaseDB' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:5:8: 'firebase' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:7:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:9:10: 'getUserDetails' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:10:10: 'sendPasswordResetEmail' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:11:10: 'uploadProfilePic' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:12:10: 'requestOTP' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:15:8: 'Avatar' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:16:10: 'Tabs' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:16:16: 'Tab' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:17:8: 'Slider' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:20:8: 'Snackbar' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:23:8: 'Checkbox' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:25:8: 'OtpDialog' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:52:40: Expected '!==' and instead saw '!='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:75:114: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/NotificationsContainer.js:83:112: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/Profile.js:35:19: Parsing error: Unexpected token =
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/ProfileContainer.js:134:25: Parsing error: Unexpected token =
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:12:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:12:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:41:140: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:43:142: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/SearchSortContainer.js:45:135: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:5:3: 'TableFooter' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:16:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:17:8: 'Toggle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:19:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:28:8: 'Visibility' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:29:8: 'VisibilityOff' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:81:33: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:81:118: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:94:33: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:98:40: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:103:17: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:104:13: 'unresolvedArr' is already defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:110:13: 'resolvedArr' is already defined.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:117:31: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:132:21: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:137:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:148:33: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:148:118: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent.js:178:38: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ComplaintsComponent/ComplaintsComponent.js:4:8: 'Toggle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ComplaintsComponent/ComplaintsContent.js:4:8: 'Toggle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ComplaintsComponent/Finished.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/ComplaintsComponent/Finished.js:18:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:4:8: 'SelectField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:6:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:7:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:8:8: 'FlatButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:9:10: 'firebaseDB' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:16: 'CardActions' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:29: 'CardHeader' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:52: 'CardTitle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/CardComponent.js:10:63: 'CardText' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:3:8: 'SelectField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:4:8: 'MenuItem' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:5:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:6:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:7:8: 'FlatButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:10: 'Card' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:16: 'CardActions' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:29: 'CardHeader' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:41: 'CardMedia' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:52: 'CardTitle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:9:63: 'CardText' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:10:10: 'List' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:10:16: 'ListItem' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:11:8: 'IconMenu' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:12:8: 'IconButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DevelopersComponent/DevelopersComponent.js:13:8: 'MoreVertIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:7:8: 'moment' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:9:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:10:8: 'SelectField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:11:8: 'MenuItem' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:12:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:10: 'Card' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:16: 'CardActions' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:29: 'CardHeader' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:41: 'CardMedia' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:52: 'CardTitle' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:14:63: 'CardText' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:15:10: 'List' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:15:16: 'ListItem' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:16:8: 'IconMenu' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:17:8: 'IconButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:18:8: 'MoreVertIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:19:8: 'ApplyIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:22:7: 'styles' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:102:23: Unnecessary escape character: \[.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:102:46: Unnecessary escape character: \[.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:102:134: Unnecessary escape character: \..
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:126:28: Unnecessary escape character: \+.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:126:78: Unnecessary escape character: \+.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:136:11: Identifier 'DA_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/DeveloperApplicationDialogComponent.js:157:20: Identifier 'DA_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:34:27: Identifier 'start_date' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:38:25: Identifier 'end_date' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:43:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:43:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:44:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:44:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:45:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:45:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:46:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:46:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:47:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:47:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:48:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:48:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:49:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:49:4: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:53:11: 'styles' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:54:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:54:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:55:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:55:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:56:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:56:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:57:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:57:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:58:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:58:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:59:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:59:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:61:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:61:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:62:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:62:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:63:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:63:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:64:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:64:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:65:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:65:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:95:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:95:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:102:15: No duplicate props allowed
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:108:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:108:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:115:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:115:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:129:47: Expected '!==' and instead saw '!='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/EventExportDialog.js:144:47: Expected '!==' and instead saw '!='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:5:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:28:11: Identifier 'Flag_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:36:32: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/FlagRejectDialog.js:48:20: Identifier 'Flag_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/OtpDialog.js:24:15: Parsing error: Unexpected token =
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:42:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:42:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:43:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:43:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:44:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:44:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:45:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:45:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:46:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:46:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:47:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:47:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:49:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:49:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:50:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:50:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:51:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:51:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:52:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:52:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:53:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:53:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:84:2: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewClubDialogComponent.js:84:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:5:8: 'IconButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:6:8: 'ReplyIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:37:11: Identifier 'Club_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewComplaintDialogComponent.js:60:20: Identifier 'Club_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:36:9: Identifier 'room_block' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:39:11: Identifier 'room_no' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:41:33: Identifier 'room_no' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:56:11: Identifier 'FA_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:89:11: Identifier 'Club_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:115:64: Identifier 'Club_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:115:79: Identifier 'FA_actions' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:169:112: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:171:61: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:171:111: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:175:61: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:175:111: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:179:61: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Dialogs/ViewEventDialogComponent.js:179:111: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:2:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:6:8: 'Divider' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:9:8: 'IconHome' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:13:8: 'IconNews' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:14:8: 'IconUpdates' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:15:8: 'IconSettings' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:16:8: 'IconHelp' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:38:7: 'selectedStyle' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/DrawerComponent/DrawerComponent.js:97:89: Expected '!==' and instead saw '!='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/FaqComponent/FaqComponent.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/FaqComponent/FaqComponent.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/FaqComponent/FaqComponent.js:9:3: Useless constructor.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:4:8: 'PhoneIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:5:8: 'IconButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/ComingSoon.js:6:8: 'EmailIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Features.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Features.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Features.js:4:8: 'PhoneIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Footer.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/LandingPage.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/LandingPage.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/LandingPage.js:4:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Statistics.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Statistics.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Statistics.js:4:8: 'PhoneIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Statistics.js:5:8: 'IconButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Statistics.js:6:8: 'EmailIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Support.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Support.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Support.js:4:8: 'PhoneIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Support.js:5:8: 'IconButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LandingPage/Support.js:6:8: 'EmailIcon' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/ForgotPasswordContainer.js:3:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/LoginComponent.jsx:3:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/LoginComponent.jsx:10:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/Reg.js:3:8: 'TextField' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/Reg.js:4:8: 'RaisedButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/Reg.js:6:8: 'LoginComponent' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/Reg.js:10:10: 'userActions' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/Reg.js:11:10: 'firebaseAuth' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:2:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:9:10: 'sendPush' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:53:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:78:9: 'fieldTouch' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:90:54: Unnecessary escape character: \[.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:90:77: Unnecessary escape character: \[.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:90:165: Unnecessary escape character: \..
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:94:33: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:103:19: Expected '!==' and instead saw '!='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupContainer.js:116:9: 'newUser' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:2:8: 'Paper' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:6:10: 'RadioButton' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:6:23: 'RadioButtonGroup' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:53:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:78:9: 'fieldTouch' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:90:54: Unnecessary escape character: \[.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:90:77: Unnecessary escape character: \[.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:90:165: Unnecessary escape character: \..
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:94:33: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:103:19: Expected '!==' and instead saw '!='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/LoginComponent/SignupFAContainer.js:116:9: 'newUser' is assigned a value but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/NotFound/NotFound.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/NotFound/NotFound.js:18:13: Expected '===' and instead saw '=='.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Policies/PrivacyPolicy.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Policies/PrivacyPolicy.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Policies/PrivacyPolicy.js:7:3: Useless constructor.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Policies/TnC.js:3:10: 'Link' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Policies/TnC.js:3:16: 'hashHistory' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/Policies/TnC.js:7:3: Useless constructor.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/SnackbarComponent.js:11:2: Mixed spaces and tabs.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/SnackbarComponent.js:11:6: Unexpected tab character.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/SnackbarComponent.js:39:11: Identifier 'toast_open' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/components/SnackbarComponent.js:39:23: Identifier 'toast_message' is not in camel case.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/reducers/eventsReducer.js:1:10: 'getUser' is defined but never used.
+  /home/rohit/Projects/CRIBBLPortal/MIT-Event-Booking/src/reducers/userReducer.js:1:10: 'getUser' is defined but never used.
