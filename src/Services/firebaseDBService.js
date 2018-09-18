@@ -101,32 +101,31 @@ function prm (avl) {
       }
     }
     resolve(takenRooms)
-    reject('rejected')
   })
 }
 
-export const fetchRooms = (start_date, end_date, callback) => {
-  var date = start_date
+export const fetchRooms = (startDate, endDate, callback) => {
+  var date = startDate
   var dateArr = []
 
   do {
     var datex = moment(date).format('DD-MM-YYYY')
     date = moment(date).add(1, 'days')
     dateArr.push(datex)
-  } while (moment(date).format('DD-MM-YYYY') != moment(end_date).add(1, 'days').format('DD-MM-YYYY'))
+  } while (moment(date).format('DD-MM-YYYY') !== moment(endDate).add(1, 'days').format('DD-MM-YYYY'))
 
   return (fetch(dateArr).then(res => prm(res)))
 }
 
-export const updateDates = (start_date, end_date, rooms, eventID) => {
-  var date = start_date
+export const updateDates = (startDate, endDate, rooms, eventID) => {
+  var date = startDate
   var dateArr = []
 
   do {
     var datex = moment(date).format('DD-MM-YYYY')
     date = moment(date).add(1, 'days')
     dateArr.push(datex)
-  } while (moment(date).format('DD-MM-YYYY') != moment(end_date).add(1, 'days').format('DD-MM-YYYY'))
+  } while (moment(date).format('DD-MM-YYYY') !== moment(endDate).add(1, 'days').format('DD-MM-YYYY'))
 
   updateDatesDBx(dateArr, rooms, eventID)
 }
@@ -177,10 +176,10 @@ export const approveEvent = (event, approver, user) => {
 }
 
 export const flagRejectEvent = (event, message, mode, approver, user) => {
-  let _mode = mode == 'flag' ? 'flagged' : 'rejected'
+  let _mode = mode === 'flag' ? 'flagged' : 'rejected'
   switch (approver) {
     case 'FA': {
-      if (_mode == 'rejected') {
+      if (_mode === 'rejected') {
         firebaseDB.ref('/events/').child(event.key + '/AD_appr').set('prevRejected')
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
       }
@@ -193,7 +192,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
       return
     }
     case 'AD': {
-      if (_mode == 'rejected') {
+      if (_mode === 'rejected') {
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
       }
       // sendEmail("AD", user.email, event.booker_email, "AD_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Associate Director", "Uh-huh! Your event has been "+_mode+" by the Associate Director, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Associate Director, "+user.name+".<br /><br />Reason: "+message+"</p>");
@@ -216,7 +215,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
 }
 
 export const approveClubNotif = (club, mode, clubID) => {
-  var greeting = (mode == 'approved' ? 'Congratulations!' : 'Sorry!')
+  var greeting = (mode === 'approved' ? 'Congratulations!' : 'Sorry!')
 
   // sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
   if (mode === 'approved') { sendApproveClubTemplate(club.email, club.name) } else { sendEmail('SC', 'mitstudentcouncil@gmail.com', club.email, 'club_' + 'mode', 'Club ' + mode, greeting + 'Your event has been ' + mode + ' by the Student Council', '<p><strong>' + greeting + "</strong><br /> Your club titled <strong>'" + club.name + "'</strong> has been " + mode + '.<br/>Regards,<br/>Cribbl Services</p>') }
@@ -230,7 +229,7 @@ export const approveClubNotif = (club, mode, clubID) => {
 export const resolveComplaintNotif = (complaint) => {
   sendComplaintTemplate(complaint.fields.email, complaint.fields.name, complaint.subject)
   sendEmail('SC', 'mitstudentcouncil@gmail.com', complaint.fields.email, 'complaint_' + 'resolved', 'Complaint resolved', 'Hey ' + complaint.fields.name + '\nYour complaint titled ' + complaint.subject + 'has been resolved', '<p><strong>Hey ' + complaint.fields.name + "</strong><br /> Your complaint titled <strong>'" + complaint.subject + "'</strong> has been resolved.<br/>Regards,<br/>Cribbl Services</p>")
-  let num = (complaint.fields.contactNo).substr((event.booker_contact).length - 10)
+  // let num = (complaint.fields.contactNo).substr((event.booker_contact).length - 10)
   // sendSMS('+91'+num, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nRegards,\nCribbl Services" );
 }
 
