@@ -56,9 +56,8 @@ export const authenticateUser = (email, password, callback) => {
     })
 }
 
-let sessionStorage
 export const signOut = () => {
-  if (sessionStorage.getItem('fcmToken') != null && sessionStorage.getItem('uid') != null) { updateToken(sessionStorage.getItem('uid'), sessionStorage.getItem('fcmToken'), false) }
+  if (sessionStorage.getItem('fcmToken') != null && sessionStorage.getItem('uid') != null) { updateToken(sessionStorage.getItem('uid'), sessionStorage.getItem('fcmToken'), false) } // eslint-disable-line
   firebaseAuth.signOut()
     .then(function () {
     })
@@ -77,7 +76,7 @@ export const fetchUser = (callback) => {
       if (user.emailVerified) {
         firebaseDB.ref('/users/' + user.uid + '/emailVerification').set(true)
       }
-      sessionStorage.setItem('uid', user.uid)
+      sessionStorage.setItem('uid', user.uid) // eslint-disable-line
       getUserDetails(user.uid, (userx) => {
         if (!userx.isApproved) {
           callback(null)
