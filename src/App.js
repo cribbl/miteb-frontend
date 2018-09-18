@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import { hashHistory, Router, Route } from 'react-router'
 import AppBarComponent from './components/AppBarComponent/AppBarComponent'
 import AppBarMobile from './components/AppBarComponent/AppBarMobile'
-import DrawerComponent from './components/DrawerComponent/DrawerComponent'
 import ReactLoading from 'react-loading'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import SnackbarComponent from './components/SnackbarComponent'
 import './App.css'
-import { store } from './store'
 import { connect } from 'react-redux'
 import { userActions } from './actions/userActions'
 
