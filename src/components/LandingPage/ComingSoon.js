@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, hashHistory } from 'react-router'
-import PhoneIcon from 'material-ui/svg-icons/communication/phone'
-import IconButton from 'material-ui/IconButton'
-import EmailIcon from 'material-ui/svg-icons/communication/email'
 
 class ComingSoon extends Component {
   constructor (props) {

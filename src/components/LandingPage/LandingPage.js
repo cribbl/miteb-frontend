@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, hashHistory } from 'react-router'
-import RaisedButton from 'material-ui/RaisedButton'
 import Footer from './Footer'
 import Features from './Features'
 import Statistics from './Statistics'

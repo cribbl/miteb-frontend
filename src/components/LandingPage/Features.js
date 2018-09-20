@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, hashHistory } from 'react-router'
-import PhoneIcon from 'material-ui/svg-icons/communication/phone'
+
 class Features extends Component {
   constructor (props) {
     super()

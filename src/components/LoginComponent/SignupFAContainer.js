@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
-
 import { createFAWithEmailAndPassword } from '../../Services/firebaseAuthService'
 import { sendPush, sendEmail } from '../../Services/NotificationService'
 
@@ -50,7 +47,7 @@ class SignupContainer extends Component {
     var interval = setInterval(function () {
       let c = scope.state.counter - 1
       scope.setState({ counter: c })
-      if (c == 0) {
+      if (c === 0) {
         window.clearInterval(interval)
         hashHistory.push('/auth')
       }
@@ -75,7 +72,6 @@ class SignupContainer extends Component {
     let errors = this.state.errors
     let newUser = this.state.newUser
     let value = newUser[field]
-    let fieldTouch = this.state.fieldTouch[field]
     let errorText = ''
     switch (field) {
       case 'name':
@@ -87,11 +83,11 @@ class SignupContainer extends Component {
         errors[0] = errorText
         break
       case 'email':
-        errorText = value.length >= 1 ? (!/^(([^[<>()\[\]\\.,;:@"]+(\.[^<>()\[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\.-0-9])+[a-zA-Z]))$/.test(value)) ? 'Email is not valid' : '' : 'Cannot be empty'
+        errorText = value.length >= 1 ? (!/^(([^[<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z.-0-9])+[a-zA-Z]))$/.test(value)) ? 'Email is not valid' : '' : 'Cannot be empty'
         errors[1] = errorText
         break
       case 'clubID':
-        if (this.state.tabIndex == 1) { break }
+        if (this.state.tabIndex === 1) { break }
         errorText = value.length < 1 ? 'Cannot be empty' : ''
         errors[3] = errorText
         break
@@ -100,7 +96,7 @@ class SignupContainer extends Component {
 
     let isValid = false
     var newArray = errors.filter(function (element) {
-      if (element != '') return element
+      if (element !== '') return element
     })
     if (newArray.length < 1) {
       isValid = true
@@ -113,10 +109,7 @@ class SignupContainer extends Component {
 
   handleSignupSubmit (e) {
     e.preventDefault()
-    var newUser = this.state.newUser
     this.setState({ showProgress: true })
-    console.log(this.state.newUser)
-
     createFAWithEmailAndPassword(this.state.newUser, (err, res) => {
       this.setState({ showProgress: false })
       if (err) {

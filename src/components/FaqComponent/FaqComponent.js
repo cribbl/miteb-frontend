@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, hashHistory } from 'react-router'
 import Paper from 'material-ui/Paper'
 import Collapsible from 'react-collapsible'
 import { faqData } from './faqData'
 
 class FaqComponent extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>

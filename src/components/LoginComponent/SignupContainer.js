@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
 import { createClubWithEmailAndPassword } from '../../Services/firebaseAuthService'
-import { sendPush, sendEmail, sendSMS } from '../../Services/NotificationService'
+import { sendEmail, sendSMS } from '../../Services/NotificationService'
 
 import { Link, hashHistory } from 'react-router'
 
@@ -50,7 +49,7 @@ class SignupContainer extends Component {
     var interval = setInterval(function () {
       let c = scope.state.counter - 1
       scope.setState({ counter: c })
-      if (c == 0) {
+      if (c === 0) {
         window.clearInterval(interval)
         hashHistory.push('/auth')
       }
@@ -75,7 +74,6 @@ class SignupContainer extends Component {
     let errors = this.state.errors
     let newUser = this.state.newUser
     let value = newUser[field]
-    let fieldTouch = this.state.fieldTouch[field]
     let errorText = ''
     switch (field) {
       case 'name':
@@ -87,11 +85,11 @@ class SignupContainer extends Component {
         errors[0] = errorText
         break
       case 'email':
-        errorText = value.length >= 1 ? (!/^(([^[<>()\[\]\\.,;:@"]+(\.[^<>()\[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\.-0-9])+[a-zA-Z]))$/.test(value)) ? 'Email is not valid' : '' : 'Cannot be empty'
+        errorText = value.length >= 1 ? (!/^(([^[<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z.-0-9])+[a-zA-Z]))$/.test(value)) ? 'Email is not valid' : '' : 'Cannot be empty'
         errors[1] = errorText
         break
       case 'abbrv':
-        if (this.state.tabIndex == 1) { break }
+        if (this.state.tabIndex === 1) { break }
         errorText = value.length < 1 ? 'Cannot be empty' : ''
         errors[3] = errorText
         break
@@ -100,7 +98,7 @@ class SignupContainer extends Component {
 
     let isValid = false
     var newArray = errors.filter(function (element) {
-      if (element != '') return element
+      if (element !== '') return element
     })
     if (newArray.length < 1) {
       isValid = true
@@ -113,7 +111,6 @@ class SignupContainer extends Component {
 
   handleSignupSubmit (e) {
     e.preventDefault()
-    var newUser = this.state.newUser
     this.setState({ showProgress: true })
     console.log(this.state.newUser)
 
@@ -121,14 +118,13 @@ class SignupContainer extends Component {
       this.setState({ showProgress: false })
       if (err) {
         this.setState({ errorMessage: err.message })
-      } else {
         console.log(res)
         this.setState({ signupSuccess: true, newUser: res })
         // this.handleCounter();
         sendEmail('SENDER', 'SENDER-EMAIL', res.email, 'PURPOSE', 'Signup Request Received', '', `Hey ${res.name},<br /><br />We have received your request for signup.<br />Kindly ask your Faculty Advisor to Sign Up using Club ID as <strong>${res.uid}</strong>.<br /><br />The Student Council will review your request and get back at the earliest. You shall be notified via email and an SMS on +91${res.primaryContact}<br /><br />Regards, <br />Cribbl Services`)
         let num = (res.primaryContact).substr((res.primaryContact).length - 10)
         sendSMS('+91' + num, `Signup request received.\nKindly ask your Faculty Advisor to Sign Up using Club ID : ${res.uid}.\n\nRegards,\nCribbl Services`)
-        // sendPush("SC", "Club Approval Requested", `${res.name} has requested your approval!`);
+        // SC", "Club Approval Requested", `${res.name} has requested your approval!`);
       }
     }, this)
   }

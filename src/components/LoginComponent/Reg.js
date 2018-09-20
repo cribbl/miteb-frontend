@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
 import './LoginComponent.css'
-import LoginComponent from './LoginComponent'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
-
-import { userActions } from './../../actions/userActions'
-import { firebaseAuth } from '../../firebaseConfig'
 
 const paperStyle = {
   padding: 30,
