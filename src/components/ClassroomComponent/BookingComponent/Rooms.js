@@ -40,7 +40,7 @@ class RoomsContainer extends Component {
       if (temp.length >= 4) {
         console.log('Max 4 rooms allowed')
         const { dispatch } = this.props
-        dispatch({ type: 'TOASTER', message: 'Maximum 4 rooms allowed!', toast_open: true })
+        dispatch({ type: 'TOASTER', message: 'Maximum 4 rooms allowed!', toastOpen: true })
         return
       }
       temp.push(id)

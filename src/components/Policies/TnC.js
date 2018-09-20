@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, hashHistory } from 'react-router'
 import Footer from '../LandingPage/Footer'
 
 class TnC extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left' }}>

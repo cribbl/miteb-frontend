@@ -1,5 +1,3 @@
-import { getUser } from '../Services/firebaseAuthService'
-
 const initialState = { sessionCheck: true }
 
 export function authentication (state = initialState, action) {

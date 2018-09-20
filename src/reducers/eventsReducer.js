@@ -1,5 +1,3 @@
-import { getUser } from '../Services/firebaseAuthService'
-
 const initialState = {}
 
 export function eventsReducer (state = initialState, action) {

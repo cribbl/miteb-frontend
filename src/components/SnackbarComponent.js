@@ -8,7 +8,7 @@ class SnackbarComponent extends React.Component {
     super(props)
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
     this.state = {
-    	message: props.toast_message
+      message: props.toastMessage
     }
   }
 
@@ -25,8 +25,8 @@ class SnackbarComponent extends React.Component {
     return (
       <span>
         <Snackbar
-          open={this.props.toast_open}
-          message={this.props.toast_message}
+          open={this.props.toastOpen}
+          message={this.props.toastMessage}
           autoHideDuration={3000}
           onRequestClose={this.handleSnackBarClose}
         />
@@ -36,10 +36,10 @@ class SnackbarComponent extends React.Component {
 }
 
 function mapStateToProps (state) {
-  const { toast_open, toast_message, isMobile } = state.toggler
+  const { toastOpen, toastMessage, isMobile } = state.toggler
   return {
-    toast_open,
-    toast_message,
+    toastOpen,
+    toastMessage,
     isMobile
   }
 }

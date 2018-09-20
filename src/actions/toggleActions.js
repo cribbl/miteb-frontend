@@ -34,6 +34,6 @@ function toggleToaster (msg, open) {
   return {
     type: 'TOASTER',
     message: msg,
-    toast_open: open
+    toastOpen: open
   }
 }

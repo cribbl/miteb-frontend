@@ -41,23 +41,15 @@ class EventExportDialog extends Component {
 
   export () {
     const { dispatch } = this.props
-    dispatch({ type: 'TOASTER', message: 'Events will be expoted shortly!', toast_open: true })
+    dispatch({ type: 'TOASTER', message: 'Events will be expoted shortly!', toastOpen: true })
     this.props.handleClose()
     exportEvents(this.props.view, this.props.user.uid, this.state.exportMode, moment(this.state.startDate).format('DD-MM-YYYY'), moment(this.state.endDate).format('DD-MM-YYYY'))
       .then(res => {
-        // dispatch({type: "TOASTER", message: "Sheet downloaded", toast_open: true})
-        })
+        // dispatch({type: "TOASTER", message: "Sheet downloaded", toastOpen: true})
+      })
   }
 
   render () {
-    
-		let value = {
-		    width: '70%',
-		    display: 'inline-block',
-		    padding: 7
-		  }
-    
-
     const viewActions = [
       <FlatButton
         label='Cancel'
@@ -84,28 +76,27 @@ class EventExportDialog extends Component {
         contentStyle={{ width: this.props.isMobile ? '97%' : '30%', maxWidth: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         actionsContainerStyle={{ backgroundColor: 'rgb(248, 248, 248)' }}
         titleStyle={{ backgroundColor: 'rgb(240, 240, 240)' }}
-        bodyStyle={{ marginTop: 15 }}
-	    >
+        bodyStyle={{ marginTop: 15 }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div>
-            <RadioButtonGroup style={{ margin: 20 }}
+            <RadioButtonGroup
               name='Workshop'
               defaultSelected={this.state.exportMode}
               onChange={this.handleRadio}
-              style={{ display: 'flex' }}>
+              style={{ display: 'flex', margin: 20 }}>
               <RadioButton
                 value='CUSTOM'
                 label='Custom'
                 labelStyle={{ width: '100%' }}
                 style={{ width: '40%' }}
-	        	    />
+              />
 
               <RadioButton
                 value='ALL'
                 label='All'
                 labelStyle={{ width: '100%' }}
                 style={{ width: '40%' }}
-	        	    />
+              />
             </RadioButtonGroup>
           </div>
           <div style={{ display: 'flex' }}>
@@ -119,7 +110,7 @@ class EventExportDialog extends Component {
               formatDate={this.formatDate}
               errorStyle={{ position: 'absolute', bottom: -8 }}
               disabled={this.state.exportMode === 'ALL'}
-              required={this.state.exportMode != 'ALL'}
+              required={this.state.exportMode !== 'ALL'}
               textFieldStyle={{ width: '60%' }}
             />
 
@@ -134,7 +125,7 @@ class EventExportDialog extends Component {
               formatDate={this.formatDate}
               errorStyle={{ position: 'absolute', bottom: -8 }}
               disabled={this.state.exportMode === 'ALL'}
-              required={this.state.exportMode != 'ALL'}
+              required={this.state.exportMode !== 'ALL'}
               textFieldStyle={{ width: '60%' }}
             />
 

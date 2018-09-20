@@ -72,7 +72,7 @@ class DeveloperApplicationDialog extends Component {
     }
 
     if (fields['email'].length >= 1) {
-      if (!/^(([^[<>()\[\]\\.,;:@"]+(\.[^<>()\[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\.-0-9])+[a-zA-Z]))$/.test(fields['email'])) {
+      if (!/^(([^[<>()[\]\\.,;:@"]+(\.[^<>()[\]\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z.-0-9])+[a-zA-Z]))$/.test(fields['email'])) {
         isFormValid = false
         errors['email'] = 'Email is not valid'
       }
@@ -96,7 +96,7 @@ class DeveloperApplicationDialog extends Component {
     }
 
     if (fields['cvLink'].length >= 1) {
-      if (!/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/.test(fields['cvLink'])) {
+      if (!/[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/.test(fields['cvLink'])) {
         isFormValid = false
         errors['cvLink'] = 'URL is not valid'
       }
@@ -106,7 +106,7 @@ class DeveloperApplicationDialog extends Component {
   }
 
   render () {
-    const DA_actions = [
+    const Actions = [
       <FlatButton
         label='Close'
         primary={false}
@@ -127,7 +127,7 @@ class DeveloperApplicationDialog extends Component {
       <div>
         <Dialog
           title={<div><p style={{ fontWeight: 700 }}>{this.props.developer.name}</p><p hidden={this.props.isMobile} style={{ fontSize: 15, lineHeight: '20px', color: 'rgb(100, 100, 100)' }}>{this.props.developer.description}</p></div>}
-          actions={DA_actions}
+          actions={Actions}
           open={this.props.open}
           modal
           autoScrollBodyContent

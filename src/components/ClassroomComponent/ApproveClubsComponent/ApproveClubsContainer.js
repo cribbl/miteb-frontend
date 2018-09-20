@@ -153,7 +153,7 @@ class ApproveClubsContainer extends Component {
     const { dispatch } = this.props
     // let msg = mode ? "Approved" + " successfully": "Disapproved" + " successfully"
     let msg = "'" + club.name + "' marked as " + (mode ? 'Approved!' : 'Disapproved!')
-    dispatch({ type: 'TOASTER', message: msg, toast_open: true })
+    dispatch({ type: 'TOASTER', message: msg, toastOpen: true })
 
     this.nextClub()
   }
