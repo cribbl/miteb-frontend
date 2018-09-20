@@ -1,11 +1,11 @@
-importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js')
-importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js')
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js') // eslint-disable-line
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js') // eslint-disable-line
 
-firebase.initializeApp({
+firebase.initializeApp({ // eslint-disable-line
   'messagingSenderId': '330445707440'
 })
 
-const messaging = firebase.messaging()
+const messaging = firebase.messaging() // eslint-disable-line
 
 messaging.setBackgroundMessageHandler(function (payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload)
@@ -32,10 +32,10 @@ messaging.setBackgroundMessageHandler(function (payload) {
       icon: 'http://wiki.augmensys.com/images/1/12/IC_Cross_Mark.png' }
   ]
 
-  return self.registration.showNotification(payload.notification.title, notificationOptions)
+  return self.registration.showNotification(payload.notification.title, notificationOptions) // eslint-disable-line
 })
 
-self.addEventListener('notificationclick', function (e) {
+self.addEventListener('notificationclick', function (e) { // eslint-disable-line
   var notification = e.notification
   var action = e.action
 
@@ -43,10 +43,10 @@ self.addEventListener('notificationclick', function (e) {
     notification.close()
   }
   if (action === 'open') {
-    clients.openWindow('https://bookings.cribblservices.com/#/dashboard/myEvents')
+    clients.openWindow('https://bookings.cribblservices.com/#/dashboard/myEvents') // eslint-disable-line
     notification.close()
   } else {
-    clients.openWindow('https://bookings.cribblservices.com')
+    clients.openWindow('https://bookings.cribblservices.com') // eslint-disable-line
     notification.close()
   }
 })
