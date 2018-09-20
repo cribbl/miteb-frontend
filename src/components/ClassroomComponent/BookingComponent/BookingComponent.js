@@ -260,7 +260,7 @@ class HorizontalLinearStepper extends React.Component {
           scope.setState({ fetchingRooms: false })
           if (flag) {
             scope.setState({ SnackBarmessage: 'Rooms were changed. Please rebook', openSnackBar: true })
-            reject()
+            reject(new Error('Rooms changed'))
           }
           resolve()
         })
@@ -437,7 +437,7 @@ class HorizontalLinearStepper extends React.Component {
           </div>
 
         </div>)
-      case 2: { var self = this }
+      case 2: var self = this
         return (<div className='locationContainer' style={{ marginBottom: 50 }}>
           <div style={{ backgroundColor: '', display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <DatePicker
@@ -517,7 +517,7 @@ class HorizontalLinearStepper extends React.Component {
                     label={this.state.stepIndex === 2 ? 'Submit' : 'Next'}
                     primary
                     onClick={this.state.stepIndex === 2 ? this.handleSubmit : this.handleNext}
-                    disabled={!this.state.isFormValid || this.state.stepIndex === 2 && this.state.selectedRooms.length === 0}
+                    disabled={!this.state.isFormValid || (this.state.stepIndex === 2 && this.state.selectedRooms.length === 0)}
                   />
                 </div>
               </div>

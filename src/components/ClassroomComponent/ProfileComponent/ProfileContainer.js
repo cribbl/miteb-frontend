@@ -207,7 +207,7 @@ class ProfileContainer extends Component {
                 required
               />
             </div>
-            <input ref={input => this.inputElement = input} type='file' id='media-upload' onChange={(e) => this._handleImageChange(e)} accept='video/*,image/*' style={{ display: 'none' }} />
+            <input ref={input => { this.inputElement = input }} type='file' id='media-upload' onChange={(e) => this._handleImageChange(e)} accept='video/*,image/*' style={{ display: 'none' }} />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
