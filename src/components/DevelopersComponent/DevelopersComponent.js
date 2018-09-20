@@ -1,16 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton'
 import { firebaseDB } from '../../firebaseConfig'
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card'
-import { List, ListItem } from 'material-ui/List'
-import IconMenu from 'material-ui/IconMenu'
-import IconButton from 'material-ui/IconButton'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import CardComponent from './CardComponent'
 
 class DevelopersComponent extends Component {

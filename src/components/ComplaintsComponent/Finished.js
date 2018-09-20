@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, hashHistory } from 'react-router'
+import { hashHistory } from 'react-router'
 
 class Finished extends Component {
   constructor (props) {
@@ -15,7 +15,7 @@ class Finished extends Component {
     var interval = setInterval(function () {
       let c = scope.state.counter - 1
       scope.setState({ counter: c })
-      if (c == 0) {
+      if (c === 0) {
         window.clearInterval(interval)
         hashHistory.push('/')
       }

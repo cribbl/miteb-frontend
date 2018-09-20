@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   Table,
   TableBody,
-  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
@@ -13,10 +12,7 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import TextField from 'material-ui/TextField'
-import Toggle from 'material-ui/Toggle'
 import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
 // import IconButton from 'material-ui/IconButton'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
@@ -25,8 +21,6 @@ import ViewComplaintDialog from '../../Dialogs/ViewComplaintDialogComponent'
 import SortIcon from 'material-ui/svg-icons/content/sort'
 import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
-import Visibility from 'material-ui/svg-icons/action/visibility'
-import VisibilityOff from 'material-ui/svg-icons/action/visibility-off'
 import moment from 'moment'
 import { toggleActions } from '../../../actions/toggleActions'
 import StatusIcon from 'material-ui/svg-icons/av/fiber-manual-record'
@@ -78,7 +72,7 @@ class ViewComplaintsComponent extends Component {
     if (this.state.dateSort === 'des') { this.setState({ dateSort: 'asc' }) } else { this.setState({ dateSort: 'des' }) }
     var scope = this
     var tempArr
-    if (this.state.filterChoice == 'resolved') { tempArr = this.state.resolvedArr } else if (this.state.filterChoice == 'unresolved') { tempArr = this.state.unresolvedArr } else { tempArr = this.state.originalArr }
+    if (this.state.filterChoice === 'resolved') { tempArr = this.state.resolvedArr } else if (this.state.filterChoice === 'unresolved') { tempArr = this.state.unresolvedArr } else { tempArr = this.state.originalArr }
 
     tempArr = Object.values(tempArr).sort(function (a, b) {
       var aDate = moment(a.dated, 'DD-MM-YYYY')
@@ -91,33 +85,28 @@ class ViewComplaintsComponent extends Component {
 
   resolveComplaint (complaint, mode) { // mode is the boolean value which needs to be set -> isResolved = mode
     firebaseDB.ref('complaints/' + complaint.key + '/isResolved').set(mode)
-    if (this.state.filterChoice == 'resolved') {
-      var resolvedArr = this.state.resolvedArr
+    if (this.state.filterChoice === 'resolved') {
+      let resolvedArr = this.state.resolvedArr
       delete resolvedArr[complaint.key]
       this.setState({ resolvedArr: resolvedArr })
-    } else if (this.state.filterChoice == 'unresolved') {
-      var unresolvedArr = this.state.unresolvedArr
+    } else if (this.state.filterChoice === 'unresolved') {
+      let unresolvedArr = this.state.unresolvedArr
       delete unresolvedArr[complaint.key]
       this.setState({ unresolvedArr: unresolvedArr })
     } else {
-      if (!mode == false) {
-        var unresolvedArr = this.state.unresolvedArr
+      if (!mode === false) {
+        let unresolvedArr = this.state.unresolvedArr
         delete unresolvedArr[complaint.key]
-        console.log('unresolved array is')
-        console.log(unresolvedArr)
         this.setState({ unresolvedArr: unresolvedArr })
       } else {
-        var resolvedArr = this.state.resolvedArr
+        let resolvedArr = this.state.resolvedArr
         delete resolvedArr[complaint.key]
-        console.log('resolved array is')
-        console.log(resolvedArr)
       }
     }
 
-    if (complaint.goAnonymous == false) {
+    if (complaint.goAnonymous === false) {
       if (mode) {
         resolveComplaintNotif(complaint)
-        // console.log("sending email")
       }
     }
 
@@ -129,12 +118,12 @@ class ViewComplaintsComponent extends Component {
 
   nextComplaint () {
     let keys = Object.keys(this.state.tempArr)
-    if (keys.length == 0) {
+    if (keys.length === 0) {
       this.handleDialogClose()
       return
     }
     let pos = keys.indexOf(this.state.currentComplaint.key) + 1
-    if (pos == Object.keys(this.state.tempArr).length) {
+    if (pos === Object.keys(this.state.tempArr).length) {
       pos = 0
     }
     let nextKey = keys[pos]
@@ -145,7 +134,7 @@ class ViewComplaintsComponent extends Component {
   handleSearch (content) {
     this.setState({ searchContent: content })
     var tempArr
-    if (this.state.filterChoice == 'resolved') { tempArr = this.state.resolvedArr } else if (this.state.filterChoice == 'unresolved') { tempArr = this.state.unresolvedArr } else { tempArr = this.state.originalArr }
+    if (this.state.filterChoice === 'resolved') { tempArr = this.state.resolvedArr } else if (this.state.filterChoice === 'unresolved') { tempArr = this.state.unresolvedArr } else { tempArr = this.state.originalArr }
 
     tempArr = Object.values(tempArr).filter(_complaint => _complaint.subject.toLowerCase().includes(content.toLowerCase()))
     this.setState({ tempArr: tempArr })
@@ -175,7 +164,7 @@ class ViewComplaintsComponent extends Component {
         scope.setState({ fetching: false })
         snapshot.forEach(function (child) {
           scope.setState({ fetching: false })
-          if (child.val().isResolved == true) {
+          if (child.val().isResolved === true) {
             resolvedArr[child.key] = child.val()
             resolvedArr[child.key].key = child.key
           } else {

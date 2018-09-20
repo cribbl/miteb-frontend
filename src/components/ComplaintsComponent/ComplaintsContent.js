@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
-import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import Paper from 'material-ui/Paper'
