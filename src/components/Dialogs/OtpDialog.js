@@ -21,7 +21,7 @@ class OtpDialog extends Component {
     this.setState({ otp: e.target.value })
   }
 
-  _confirmOTP = () => {
+    let _confirmOTP = () => {
     var scope = this;
     console.log('here');
     confirmOTP(this.state.otp, this.props.userDetails, (err) => {

@@ -33,12 +33,12 @@ class ViewEventDialog extends Component {
   getRoomsString (rooms) {
     var roomlist = ''
     // determines the academic block according to the first digit as array index
-    var room_block = ['AB-1', 'AB-2', 'NLH', 'IC', 'AB-5']
+    var roomBlock = ['AB-1', 'AB-2', 'NLH', 'IC', 'AB-5']
     rooms.forEach(function (room) {
       var block = Math.floor(room / 1000) - 1
-      var room_no = room % 1000
-      block = room_block[block]
-      roomlist += block + '-' + room_no + ', '
+      var roomNo = room % 1000
+      block = roomBlock[block]
+      roomlist += block + '-' + roomNo + ', '
     })
     roomlist = roomlist.replace(/,\s*$/, '')
 
@@ -53,7 +53,7 @@ class ViewEventDialog extends Component {
   }
 
   render () {
-    const FA_actions = [
+    const faActions = [
       <FlatButton
         label='Close'
         primary={false}
@@ -86,7 +86,7 @@ class ViewEventDialog extends Component {
       />
     ]
 
-    const Club_actions = [
+    const clubActions = [
       <FlatButton
         label='Close'
         primary={false}
@@ -112,7 +112,7 @@ class ViewEventDialog extends Component {
       <div>
         <Dialog
           title={this.props.currentEvent.clubName}
-          actions={this.props.user && this.props.user.isClub ? Club_actions : FA_actions}
+          actions={this.props.user && this.props.user.isClub ? clubActions : faActions}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent
@@ -166,17 +166,17 @@ class ViewEventDialog extends Component {
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Timings</p>
-              <p style={styles.value}>{(moment(this.props.currentEvent.start_date, 'DD-MM-YYYY').format('dddd')) == 'Sunday' ? '9:00 AM to 5:00 PM' : '5:45 PM to 8:00 PM'}</p>
+              <p style={styles.value}>{(moment(this.props.currentEvent.start_date, 'DD-MM-YYYY').format('dddd')) === 'Sunday' ? '9:00 AM to 5:00 PM' : '5:45 PM to 8:00 PM'}</p>
             </div>
-            <div hidden={!((this.props.currentEvent.FA_appr == 'flagged') || (this.props.currentEvent.FA_appr == 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
+            <div hidden={!((this.props.currentEvent.FA_appr === 'flagged') || (this.props.currentEvent.FA_appr === 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>{this.props.currentEvent.FA_appr} by FA</p>
               <p style={styles.value}>{this.props.currentEvent.FA_msg}</p>
             </div>
-            <div hidden={!((this.props.currentEvent.AD_appr == 'flagged') || (this.props.currentEvent.AD_appr == 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
+            <div hidden={!((this.props.currentEvent.AD_appr === 'flagged') || (this.props.currentEvent.AD_appr === 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>{this.props.currentEvent.AD_appr} by AD</p>
               <p style={styles.value}>{this.props.currentEvent.AD_msg}</p>
             </div>
-            <div hidden={!((this.props.currentEvent.SO_appr == 'flagged') || (this.props.currentEvent.SO_appr == 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
+            <div hidden={!((this.props.currentEvent.SO_appr === 'flagged') || (this.props.currentEvent.SO_appr === 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>{this.props.currentEvent.SO_appr} by SO</p>
               <p style={styles.value}>{this.props.currentEvent.SO_msg}</p>
             </div>

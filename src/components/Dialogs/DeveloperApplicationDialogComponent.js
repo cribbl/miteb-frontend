@@ -4,35 +4,8 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import { connect } from 'react-redux'
-import moment from 'moment'
-
-import { Link } from 'react-router'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import Paper from 'material-ui/Paper'
 import { firebaseDB } from '../../firebaseConfig'
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card'
-import { List, ListItem } from 'material-ui/List'
-import IconMenu from 'material-ui/IconMenu'
-import IconButton from 'material-ui/IconButton'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import ApplyIcon from 'material-ui/svg-icons/content/send'
 import { sendEmail } from '../../Services/NotificationService'
-
-const styles = {
-  label: {
-    maxWidth: '30%',
-    width: '30%',
-    display: 'inline-block',
-    padding: 7
-  },
-
-  value: {
-    width: '70%',
-    display: 'inline-block',
-    padding: 7
-  }
-}
 
 class DeveloperApplicationDialog extends Component {
   constructor (props) {
@@ -107,7 +80,7 @@ class DeveloperApplicationDialog extends Component {
 
     if (fields['primaryContact'].length < 1) {
       isFormValid = false
-      errors['primaryContact'] = 'Cannot be empty'
+      errors['primaryContact'] = 'Cannot be empty' //eslint-disable-line
     }
 
     if (fields['primaryContact'].length >= 1) {

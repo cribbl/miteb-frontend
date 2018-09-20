@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
 import { connect } from 'react-redux'
 
 class FlagRejectDialog extends Component {
@@ -25,7 +24,7 @@ class FlagRejectDialog extends Component {
   }
 
   render () {
-    const Flag_actions = [
+    const flagActions = [
       <FlatButton
         label='Cancel'
         primary={false}
@@ -33,7 +32,7 @@ class FlagRejectDialog extends Component {
         style={{ margin: '0px 5px' }}
       />,
       <RaisedButton
-        label={this.props.mode == 'flag' ? 'Flag' : 'Reject'}
+        label={this.props.mode === 'flag' ? 'Flag' : 'Reject'}
         primary
         onClick={() => this.props.flagRejectHandler(this.props.currentEvent, this.state.message, this.props.mode)}
         style={{ margin: '0px 5px' }}
@@ -45,7 +44,7 @@ class FlagRejectDialog extends Component {
       <div>
         <Dialog
           title={this.props.currentEvent.title}
-          actions={Flag_actions}
+          actions={flagActions}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent

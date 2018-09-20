@@ -18,8 +18,8 @@ class EventExportDialog extends Component {
     this.export = this.export.bind(this)
     this.state = {
       exportMode: 'CUSTOM',
-      start_date: null,
-      end_date: null
+      startDate: null,
+      endDate: null
     }
   }
 
@@ -31,39 +31,32 @@ class EventExportDialog extends Component {
     return moment(date).format('DD MMM YYYY')
   }
 
-  handleStartDate (event, start_date) {
-    this.setState({ start_date: start_date })
+  handleStartDate (event, startDate) {
+    this.setState({ startDate: startDate })
   }
 
-  handleEndDate (event, end_date) {
-    this.setState({ end_date: end_date })
+  handleEndDate (event, endDate) {
+    this.setState({ endDate: endDate })
   }
 
   export () {
-  	const { dispatch } = this.props
-  	dispatch({ type: 'TOASTER', message: 'Events will be exported shortly!', toast_open: true })
-  	this.props.handleClose()
-  	exportEvents(this.props.view, this.props.user.uid, this.state.exportMode, moment(this.state.start_date).format('DD-MM-YYYY'), moment(this.state.end_date).format('DD-MM-YYYY'))
-  	.then(res => {
-  		// dispatch({type: "TOASTER", message: "Sheet downloaded", toast_open: true})
-  	})
+    const { dispatch } = this.props
+    dispatch({ type: 'TOASTER', message: 'Events will be expoted shortly!', toast_open: true })
+    this.props.handleClose()
+    exportEvents(this.props.view, this.props.user.uid, this.state.exportMode, moment(this.state.startDate).format('DD-MM-YYYY'), moment(this.state.endDate).format('DD-MM-YYYY'))
+      .then(res => {
+        // dispatch({type: "TOASTER", message: "Sheet downloaded", toast_open: true})
+        })
   }
 
   render () {
-    const styles = {
-		  label: {
-		    maxWidth: '30%',
-		    width: '30%',
-		    display: 'inline-block',
-		    padding: 7
-		  },
-
-		  value: {
+    
+		let value = {
 		    width: '70%',
 		    display: 'inline-block',
 		    padding: 7
 		  }
-    }
+    
 
     const viewActions = [
       <FlatButton
@@ -121,7 +114,7 @@ class EventExportDialog extends Component {
               mode={this.props.isMobile ? 'portrait' : 'landscape'}
               autoOk
               onChange={this.handleStartDate}
-              value={this.state.start_date}
+              value={this.state.startDate}
               disableYearSelection
               formatDate={this.formatDate}
               errorStyle={{ position: 'absolute', bottom: -8 }}
@@ -135,9 +128,9 @@ class EventExportDialog extends Component {
               mode={this.props.isMobile ? 'portrait' : 'landscape'}
               autoOk
               onChange={this.handleEndDate}
-              value={this.state.end_date}
+              value={this.state.endDate}
               disableYearSelection
-              minDate={this.state.start_date}
+              minDate={this.state.startDate}
               formatDate={this.formatDate}
               errorStyle={{ position: 'absolute', bottom: -8 }}
               disabled={this.state.exportMode === 'ALL'}

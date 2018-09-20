@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
-import IconButton from 'material-ui/IconButton'
-import ReplyIcon from 'material-ui/svg-icons/content/reply'
 import { connect } from 'react-redux'
 
 const styles = {
@@ -34,7 +32,7 @@ class ViewComplaintDialog extends Component {
   }
 
   render () {
-    const Club_actions = [
+    const clubActions = [
       <FlatButton
         label='Close'
         primary={false}
@@ -57,7 +55,7 @@ class ViewComplaintDialog extends Component {
       <div>
         <Dialog
           title={this.props.currentComplaint.dated}
-          actions={Club_actions}
+          actions={clubActions}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent

@@ -39,18 +39,18 @@ class ClubDialog extends Component {
 
   render () {
     const styles = {
-		  label: {
-		    maxWidth: '30%',
-		    width: '30%',
-		    display: 'inline-block',
-		    padding: 7
-		  },
+      label: {
+        maxWidth: '30%',
+        width: '30%',
+        display: 'inline-block',
+        padding: 7
+      },
 
-		  value: {
-		    width: '70%',
-		    display: 'inline-block',
-		    padding: 7
-		  }
+      value: {
+        width: '70%',
+        display: 'inline-block',
+        padding: 7
+      }
     }
 
     const viewActions = [
@@ -81,7 +81,7 @@ class ClubDialog extends Component {
         onRequestClose={this.props.handleClose}
         autoScrollBodyContent
         contentStyle={{ width: this.props.isMobile ? '97%' : '60%', maxWidth: 'none' }}
-	    >
+      >
         <div>
           <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
             <p style={styles.label}>Club Email Verified</p>
