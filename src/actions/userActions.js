@@ -1,3 +1,4 @@
+/* global localStorage */
 import { authenticateUser, signOut, fetchUser } from '../Services/firebaseAuthService'
 import { getMyEvents, getUserDetails } from '../Services/firebaseDBService'
 import { hashHistory } from 'react-router'
