@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   Table,
   TableBody,
-  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
@@ -12,13 +11,10 @@ import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle'
 import CrossCircleIcon from 'material-ui/svg-icons/action/highlight-off'
 import IconButton from 'material-ui/IconButton'
 import CircularProgress from 'material-ui/CircularProgress'
-import TextField from 'material-ui/TextField'
-import Toggle from 'material-ui/Toggle'
 import Paper from 'material-ui/Paper'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import RaisedButton from 'material-ui/RaisedButton'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { firebaseDB } from '../../../firebaseConfig'
@@ -65,12 +61,12 @@ class MyEventsComponent extends Component {
   }
 
   handleIcon (event, state, msg) {
-    if (state == 'pending') { return <PendingIcon style={{ color: '#FBC02D' }} hoverColor={'#F57F17'} data-tip='Pending' /> }
-    if (state == 'approved') { return <CheckCircleIcon style={{ color: '#558B2F' }} hoverColor={'#33691E'} data-tip='Approved' /> }
-    if (state == 'flagged') { return <FlagIcon style={{ color: '#D50000', cursor: 'pointer' }} onClick={() => { this.showDialog(event) }} data-multiline data-tip={'Flagged - ' + msg} hoverColor={'red'} /> }
-    if (state == 'rejected') { return <CrossCircleIcon style={{ color: '#D50000' }} data-tip={'Rejected - ' + msg} /> }
-    if (state == 'NA') { return <NAIcon style={{ color: '#00BCD4' }} data-tip='Yet to reach' /> }
-    if (state == 'prevRejected') { return <DashIcon style={{ color: '#b71c1c' }} data-tip='Previously rejected' /> }
+    if (state === 'pending') { return <PendingIcon style={{ color: '#FBC02D' }} hoverColor={'#F57F17'} data-tip='Pending' /> }
+    if (state === 'approved') { return <CheckCircleIcon style={{ color: '#558B2F' }} hoverColor={'#33691E'} data-tip='Approved' /> }
+    if (state === 'flagged') { return <FlagIcon style={{ color: '#D50000', cursor: 'pointer' }} onClick={() => { this.showDialog(event) }} data-multiline data-tip={'Flagged - ' + msg} hoverColor={'red'} /> }
+    if (state === 'rejected') { return <CrossCircleIcon style={{ color: '#D50000' }} data-tip={'Rejected - ' + msg} /> }
+    if (state === 'NA') { return <NAIcon style={{ color: '#00BCD4' }} data-tip='Yet to reach' /> }
+    if (state === 'prevRejected') { return <DashIcon style={{ color: '#b71c1c' }} data-tip='Previously rejected' /> }
   }
 
   showDialog (event) {
@@ -85,7 +81,7 @@ class MyEventsComponent extends Component {
   nextEvent () {
     let keys = Object.keys(this.state.myArrx)
     let pos = keys.indexOf(this.state.currentEvent.key) + 1
-    if (pos == Object.keys(this.state.myArrx).length) {
+    if (pos === Object.keys(this.state.myArrx).length) {
       pos = 0
     }
     let nextKey = keys[pos]
@@ -115,7 +111,6 @@ class MyEventsComponent extends Component {
 
   filterAndStore (arr) {
     for (let [key, value] of Object.entries(arr)) {
-      var x = key
       if (value.FA_appr && value.AD_appr && value.SO_appr) {
         this.state.approvedArr[key] = value
       } else if (!value.FA_appr || !value.AD_appr || !value.SO_appr) {
@@ -126,13 +121,13 @@ class MyEventsComponent extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.filter == 'pending') {
+    if (newProps.filter === 'pending') {
       const { pendingArr } = this.state
       this.setState({ myArr: pendingArr })
-    } else if (newProps.filter == 'approved') {
+    } else if (newProps.filter === 'approved') {
       const { approvedArr } = this.state
       this.setState({ myArr: approvedArr })
-    } else if (newProps.filter == 'all') {
+    } else if (newProps.filter === 'all') {
       const { allArr } = this.state
       this.setState({ myArr: allArr })
     }

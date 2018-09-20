@@ -3,7 +3,6 @@ import DrawerComponent from '../DrawerComponent/DrawerComponent'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleActions } from '../../actions/toggleActions'
-import { userActions } from '../../actions/userActions'
 
 const astyle = {
   minWidth: '100%',

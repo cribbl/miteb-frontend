@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import FaceIcon from 'material-ui/svg-icons/action/face'
-import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import LogoutIcon from 'material-ui/svg-icons/action/exit-to-app'
-import ComplaintIcon from 'material-ui/svg-icons/av/new-releases'
-import IconTest from 'material-ui/svg-icons/editor/mode-edit'
-import DashboardIcon from 'material-ui/svg-icons/action/dashboard'
-import CatalogueIcon from 'material-ui/svg-icons/av/library-books'
 import HomeIcon from 'material-ui/svg-icons/action/home'
-
 import Divider from 'material-ui/Divider'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'

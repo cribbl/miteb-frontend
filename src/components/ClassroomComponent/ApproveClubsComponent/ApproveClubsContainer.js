@@ -9,9 +9,7 @@ import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
 import SearchSortContainer from './SearchSortContainer'
-import { toggleActions } from '../../../actions/toggleActions'
 import {
   Table,
   TableBody,
@@ -100,7 +98,7 @@ class ApproveClubsContainer extends Component {
 
   handleSearch (content) {
     var tempArr
-    if (this.state.filterChoice == 'approved') { tempArr = this.state.approvedArr } else if (this.state.filterChoice == 'unapproved') { tempArr = this.state.unapprovedArr } else { tempArr = this.state.originalArr }
+    if (this.state.filterChoice === 'approved') { tempArr = this.state.approvedArr } else if (this.state.filterChoice === 'unapproved') { tempArr = this.state.unapprovedArr } else { tempArr = this.state.originalArr }
 
     tempArr = Object.values(tempArr).filter(_club => _club.name.toLowerCase().includes(content.toLowerCase()))
     this.setState({ tempArr: tempArr })
@@ -108,12 +106,12 @@ class ApproveClubsContainer extends Component {
 
   nextClub () {
     let keys = Object.keys(this.state.tempArr)
-    if (keys.length == 0) {
+    if (keys.length === 0) {
       this.handleClose()
       return
     }
     let pos = keys.indexOf(this.state.currentClub.key) + 1
-    if (pos == Object.keys(this.state.tempArr).length) {
+    if (pos === Object.keys(this.state.tempArr).length) {
       pos = 0
     }
     let nextKey = keys[pos]
@@ -123,23 +121,23 @@ class ApproveClubsContainer extends Component {
 
   approveClub (club, mode) {
     firebaseDB.ref('users/' + club.key + '/isApproved').set(mode)
-    if (this.state.filterChoice == 'approved') {
-      var approvedArr = this.state.approvedArr
+    if (this.state.filterChoice === 'approved') {
+      let approvedArr = this.state.approvedArr
       delete approvedArr[club.key]
       this.setState({ approvedArr: approvedArr })
-    } else if (this.state.filterChoice == 'unapproved') {
-      var unapprovedArr = this.state.unapprovedArr
+    } else if (this.state.filterChoice === 'unapproved') {
+      let unapprovedArr = this.state.unapprovedArr
       delete unapprovedArr[club.key]
       this.setState({ unapprovedArr: unapprovedArr })
     } else {
-      if (club.isApproved == false) {
-        var unapprovedArr = this.state.unapprovedArr
+      if (club.isApproved === false) {
+        let unapprovedArr = this.state.unapprovedArr
         delete unapprovedArr[club.key]
         console.log('unapproved array is')
         console.log(unapprovedArr)
         this.setState({ unapprovedArr: unapprovedArr })
       } else {
-        var approvedArr = this.state.approvedArr
+        let approvedArr = this.state.approvedArr
         delete approvedArr[club.key]
         console.log('approved array is')
         console.log(approvedArr)
@@ -185,7 +183,7 @@ class ApproveClubsContainer extends Component {
                   deselectOnClickaway={false}
                   showRowHover={false}
                   stripedRows={false}
-							  >
+                >
 
                   {this.state.fetching &&
                   <div style={{ textAlign: 'center', marginTop: '10%' }}>
@@ -194,26 +192,26 @@ class ApproveClubsContainer extends Component {
                   }
 
                   {
-						      	Object.keys(this.state.tempArr).length > 0 ? (Object.values(this.state.tempArr).map(function (club, index) {
-						      		return (
+                    Object.keys(this.state.tempArr).length > 0 ? (Object.values(this.state.tempArr).map(function (club, index) {
+                      return (
                         <TableRow key={index}>
-    <TableRowColumn style={{ width: '10%' }}><StatusIcon style={{ color: club.isApproved ? '#558B2F' : '#b71c1c' }} data-tip='dfdsf' /></TableRowColumn>
-    <TableRowColumn style={{ width: '30%' }}>{club.name}</TableRowColumn>
-    <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{club.category}</TableRowColumn>
-    <TableRowColumn hidden={this.props.isMobile} style={{ width: '30%' }}>{club.fa.name}</TableRowColumn>
-    <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%', textOverflow: 'clip' }}>
+                          <TableRowColumn style={{ width: '10%' }}><StatusIcon style={{ color: club.isApproved ? '#558B2F' : '#b71c1c' }} data-tip='dfdsf' /></TableRowColumn>
+                          <TableRowColumn style={{ width: '30%' }}>{club.name}</TableRowColumn>
+                          <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{club.category}</TableRowColumn>
+                          <TableRowColumn hidden={this.props.isMobile} style={{ width: '30%' }}>{club.fa.name}</TableRowColumn>
+                          <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%', textOverflow: 'clip' }}>
                             {<IconMenu
-        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-        useLayerForClickAway
-			                      >
-        <MenuItem primaryText='View' onClick={() => this.showDialog(club)} />
-        <MenuItem primaryText={club.isApproved ? 'Mark as Unapproved' : 'Mark as Approved'} onClick={() => this.approveClub(club, !club.isApproved)} />
-      </IconMenu>}
+                              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                              targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                              useLayerForClickAway
+                            >
+                              <MenuItem primaryText='View' onClick={() => this.showDialog(club)} />
+                              <MenuItem primaryText={club.isApproved ? 'Mark as Unapproved' : 'Mark as Approved'} onClick={() => this.approveClub(club, !club.isApproved)} />
+                            </IconMenu>}
                           </TableRowColumn>
-  </TableRow>
-									    )
+                        </TableRow>
+                      )
                     }, this)) : (
 
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250 }} hidden={this.state.fetching}>
@@ -221,7 +219,7 @@ class ApproveClubsContainer extends Component {
                         <p>{this.state.searchContent.length > 0 ? 'No clubs for this search' : 'No clubs here'}</p>
                       </div>
                     )
-						      }
+                  }
                 </TableBody>
               </Table>
             </div>

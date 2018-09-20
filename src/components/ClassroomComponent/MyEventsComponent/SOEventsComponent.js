@@ -2,17 +2,13 @@ import React, { Component } from 'react'
 import {
   Table,
   TableBody,
-  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
   TableRowColumn
 } from 'material-ui/Table'
 import CircularProgress from 'material-ui/CircularProgress'
-import TextField from 'material-ui/TextField'
-import Toggle from 'material-ui/Toggle'
 import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { firebaseDB } from '../../../firebaseConfig'
@@ -27,7 +23,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconButton from 'material-ui/IconButton'
 import moment from 'moment'
 
-class AD_EventsComponent extends Component {
+class SOEventsComponent extends Component {
   constructor (props) {
     super(props)
     this.approve = this.approve.bind(this)
@@ -76,7 +72,7 @@ class AD_EventsComponent extends Component {
 
   approve (event) {
     let scope = this
-    approveEvent(event, 'AD', this.props.user)
+    approveEvent(event, 'SO', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -84,17 +80,15 @@ class AD_EventsComponent extends Component {
     this.nextEvent()
   }
 
-  // confirmation dialog for flag/reject
   flagRejectConfirm (event, mode) {
     this.setState({ FlagDialogOpen: true })
     this.setState({ currentEvent: event })
     this.setState({ flagRejectMode: mode })
   }
 
-  // do flag/reject call to dbService
   flagReject (event, message, mode) {
     let scope = this
-    flagRejectEvent(event, message, mode, 'AD', this.props.user)
+    flagRejectEvent(event, message, mode, 'SO', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -115,12 +109,12 @@ class AD_EventsComponent extends Component {
 
   nextEvent () {
     let keys = Object.keys(this.state.myArrx)
-    if (keys.length == 0) {
+    if (keys.length === 0) {
       this.handleDialogClose()
       return
     }
     let pos = keys.indexOf(this.state.currentEvent.key) + 1
-    if (pos == Object.keys(this.state.myArrx).length) {
+    if (pos === Object.keys(this.state.myArrx).length) {
       pos = 0
     }
     let nextKey = keys[pos]
@@ -129,17 +123,17 @@ class AD_EventsComponent extends Component {
   }
 
   componentWillMount () {
-    if (!(this.props.user && this.props.user.isAD)) {
+    if (!(this.props.user && this.props.user.isSO)) {
       hashHistory.push('/auth')
       return
     }
     this.setState({ fetching: true })
     var scope = this
-    firebaseDB.ref('events').orderByChild('AD_appr').equalTo('pending').on('value',
+    firebaseDB.ref('events').orderByChild('SO_appr').equalTo('pending').on('value',
       function (snapshot) {
         scope.setState({ fetching: false })
         snapshot.forEach(function (child) {
-          if (child.val().AD_appr == 'pending') {
+          if (child.val().SO_appr === 'pending') {
             const { myArrx } = scope.state
             myArrx[child.key] = child.val()
             myArrx[child.key].key = child.key
@@ -184,7 +178,7 @@ class AD_EventsComponent extends Component {
               adjustForCheckbox={this.state.showCheckboxes}
               enableSelectAll={this.state.enableSelectAll}
             >
-              <TableRow style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
+              <TableRow style={{ backgroundColor: '#EFF0F2' }}>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>CLUB NAME</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }} hidden={this.props.isMobile}>TITLE</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>START DATE</TableHeaderColumn>
@@ -255,4 +249,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(AD_EventsComponent)
+export default connect(mapStateToProps)(SOEventsComponent)

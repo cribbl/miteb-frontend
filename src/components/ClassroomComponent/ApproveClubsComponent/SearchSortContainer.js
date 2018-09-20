@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Toolbar, ToolbarGroup, ToolbarSeparator/*, ToolbarTitle */ } from 'material-ui/Toolbar'
-// import {hashHistory} from 'react-router'
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 
@@ -30,11 +29,11 @@ class SearchClubContainer extends Component {
       <div>
         <Toolbar style={{ minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)' }}>
           <ToolbarGroup>
-            <span className='hoverPointer' onClick={() => this.filterClicked('approved')} style={{ fontWeight: this.state.filterChoice == 'approved' && !(this.state.search) ? 700 : 100 }}>Approved ({this.props.approvedLength})</span>
+            <span className='hoverPointer' onClick={() => this.filterClicked('approved')} style={{ fontWeight: this.state.filterChoice === 'approved' && !(this.state.search) ? 700 : 100 }}>Approved ({this.props.approvedLength})</span>
             <ToolbarSeparator style={{ marginLeft: 10, marginRight: 10, height: 20 }} />
-            <span className='hoverPointer' onClick={() => this.filterClicked('unapproved')} style={{ fontWeight: this.state.filterChoice == 'unapproved' && !(this.state.search) ? 700 : 100 }}>Unapproved ({this.props.unapprovedLength})</span>
+            <span className='hoverPointer' onClick={() => this.filterClicked('unapproved')} style={{ fontWeight: this.state.filterChoice === 'unapproved' && !(this.state.search) ? 700 : 100 }}>Unapproved ({this.props.unapprovedLength})</span>
             <ToolbarSeparator style={{ marginLeft: 10, marginRight: 10, height: 20 }} />
-            <span className='hoverPointer' onClick={() => this.filterClicked('all')} style={{ fontWeight: this.state.filterChoice == 'all' || this.state.search ? 700 : 100 }}>All ({this.props.allLength})</span>
+            <span className='hoverPointer' onClick={() => this.filterClicked('all')} style={{ fontWeight: this.state.filterChoice === 'all' || this.state.search ? 700 : 100 }}>All ({this.props.allLength})</span>
           </ToolbarGroup>
           {!this.props.isMobile
             ? <ToolbarGroup>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './MyEventsComponent'
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar'
-import { hashHistory } from 'react-router'
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import ExportIcon from 'material-ui/svg-icons/file/cloud-download'

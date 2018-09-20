@@ -1,27 +1,10 @@
 import React, { Component } from 'react'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
-import FlatButton from 'material-ui/FlatButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
-import AvatarIcon from 'material-ui/svg-icons/navigation/expand-more'
-import FaceIcon from 'material-ui/svg-icons/action/face'
-import SettingsIcon from 'material-ui/svg-icons/action/settings'
-import LogoutIcon from 'material-ui/svg-icons/action/exit-to-app'
-
-import Divider from 'material-ui/Divider'
-import Avatar from 'material-ui/Avatar'
-import Paper from 'material-ui/Paper'
-import Menu from 'material-ui/Menu'
-import MenuItem from 'material-ui/MenuItem'
-import Popover, { PopoverAnimationVertical } from 'material-ui/Popover'
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar'
-import axios from 'axios'
 import { Link, hashHistory } from 'react-router'
-import DrawerComponent from './../DrawerComponent/DrawerComponent'
-
 import { connect } from 'react-redux'
 import { userActions } from '../../actions/userActions'
 import { toggleActions } from '../../actions/toggleActions'
@@ -68,7 +51,7 @@ class AppBarComponent extends Component {
       const { dispatch } = this.props
       dispatch(userActions.errorNuller())
       console.log(location.pathname)
-      if (['/home', '/pricing', '/auth', '/complaints'].indexOf(location.pathname) > -1 || location.pathname == '/') {
+      if (['/home', '/pricing', '/auth', '/complaints'].indexOf(location.pathname) > -1 || location.pathname === '/') {
         this.setState({ showMenuIcon: false })
       } else { this.setState({ showMenuIcon: true }) }
     })

@@ -1,28 +1,12 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import { firebaseDB } from '../../../firebaseConfig'
-
-import firebase from 'firebase'
 import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
-import { getUserDetails, updateUser } from '../../../Services/firebaseDBService'
-import { sendPasswordResetEmail } from '../../../Services/firebaseAuthService'
-import { uploadProfilePic } from '../../../Services/firebaseStorageService'
-import { requestOTP } from '../../../Services/NotificationService'
-
+import { updateUser } from '../../../Services/firebaseDBService'
 import { connect } from 'react-redux'
-import Avatar from 'material-ui/Avatar'
-import { Tabs, Tab } from 'material-ui/Tabs'
-import Slider from 'material-ui/Slider'
 import Divider from 'material-ui/Divider'
 import Toggle from 'material-ui/Toggle'
-import Snackbar from 'material-ui/Snackbar'
 import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
-import Checkbox from 'material-ui/Checkbox'
-
-import OtpDialog from '../../Dialogs/OtpDialog'
 
 class NotificationsContainer extends Component {
   constructor (props) {
@@ -49,7 +33,7 @@ class NotificationsContainer extends Component {
     temp[field] = isChecked ? 1 : 0
     this.setState({ tempSettings: temp })
 
-    if (this.state.tempSettings[field] != this.props.user.notificationSettings[field]) {
+    if (this.state.tempSettings[field] !== this.props.user.notificationSettings[field]) {
       this.setState({ hasChanged: true })
     } else {
       this.setState({ hasChanged: false })
@@ -72,7 +56,7 @@ class NotificationsContainer extends Component {
           <List>
             <Subheader>Email Notifications</Subheader>
             <ListItem
-              rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email == 1} onToggle={(event, isChecked) => this.handleChange(event, isChecked, 'email')} />}
+              rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.email === 1} onToggle={(event, isChecked) => this.handleChange(event, isChecked, 'email')} />}
               primaryText='Every Stage'
               secondaryText='Otherwise, only at final approval'
             />
@@ -80,7 +64,7 @@ class NotificationsContainer extends Component {
 
             <Subheader>SMS Notifications</Subheader>
             <ListItem
-              rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms == 1} onToggle={(event, isChecked) => this.handleChange(event, isChecked, 'sms')} />}
+              rightToggle={<Toggle defaultToggled={this.props.user && this.props.user.notificationSettings.sms === 1} onToggle={(event, isChecked) => this.handleChange(event, isChecked, 'sms')} />}
               primaryText='Every Stage'
               secondaryText='Otherwise, only at final approval'
             />

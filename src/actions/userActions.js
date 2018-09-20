@@ -2,8 +2,6 @@ import { authenticateUser, signOut, fetchUser } from '../Services/firebaseAuthSe
 import { getMyEvents, getUserDetails } from '../Services/firebaseDBService'
 import { hashHistory } from 'react-router'
 
-import { store } from '../store'
-
 export const userActions = {
   login,
   logout,
@@ -61,7 +59,6 @@ function errorNuller () {
 }
 
 function getUser () {
-  var arr = []
   var obj = {}
   var clubID = ''
   return dispatch => {
@@ -88,10 +85,10 @@ function getUser () {
         // user is not logged in
         console.log('User is not logged in')
         if (err) {
-          let error = {
-            code: 'unapproved',
-            message: 'Email not verified!'
-          }
+          // let error = {
+          //   code: 'unapproved',
+          //   message: 'Email not verified!'
+          // }
           // dispatch(failure(error))
         }
         // hashHistory.push('/auth');
@@ -100,6 +97,6 @@ function getUser () {
   }
   function successUser (result) { return { type: 'SUCCESS_LOGIN', result } }
   function success (result) { return { type: 'SUCCESS_FETCH', result } }
-  function failure (error) { return { type: 'FAILURE_LOGIN', error } }
+  // function failure (error) { return { type: 'FAILURE_LOGIN', error } }
   function sessionCheck (result) { return { type: 'SESSION_CHECK', result } }
 }

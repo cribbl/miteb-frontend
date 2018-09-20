@@ -37,15 +37,14 @@ messaging.setBackgroundMessageHandler(function (payload) {
 
 self.addEventListener('notificationclick', function (e) {
   var notification = e.notification
-  var primaryKey = notification.data.primaryKey
   var action = e.action
 
   if (action === 'close') {
     notification.close()
   }
   if (action === 'open') {
-  	clients.openWindow('https://bookings.cribblservices.com/#/dashboard/myEvents')
-  	notification.close()
+    clients.openWindow('https://bookings.cribblservices.com/#/dashboard/myEvents')
+    notification.close()
   } else {
     clients.openWindow('https://bookings.cribblservices.com')
     notification.close()

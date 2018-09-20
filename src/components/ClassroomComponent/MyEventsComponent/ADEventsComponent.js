@@ -2,17 +2,13 @@ import React, { Component } from 'react'
 import {
   Table,
   TableBody,
-  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
   TableRowColumn
 } from 'material-ui/Table'
 import CircularProgress from 'material-ui/CircularProgress'
-import TextField from 'material-ui/TextField'
-import Toggle from 'material-ui/Toggle'
 import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { firebaseDB } from '../../../firebaseConfig'
@@ -27,7 +23,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconButton from 'material-ui/IconButton'
 import moment from 'moment'
 
-class FA_MyEventsComponent extends Component {
+class ADEventsComponent extends Component {
   constructor (props) {
     super(props)
     this.approve = this.approve.bind(this)
@@ -76,7 +72,7 @@ class FA_MyEventsComponent extends Component {
 
   approve (event) {
     let scope = this
-    approveEvent(event, 'FA', this.props.user)
+    approveEvent(event, 'AD', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -84,15 +80,17 @@ class FA_MyEventsComponent extends Component {
     this.nextEvent()
   }
 
+  // confirmation dialog for flag/reject
   flagRejectConfirm (event, mode) {
     this.setState({ FlagDialogOpen: true })
     this.setState({ currentEvent: event })
     this.setState({ flagRejectMode: mode })
   }
 
+  // do flag/reject call to dbService
   flagReject (event, message, mode) {
     let scope = this
-    flagRejectEvent(event, message, mode, 'FA', this.props.user)
+    flagRejectEvent(event, message, mode, 'AD', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -113,12 +111,12 @@ class FA_MyEventsComponent extends Component {
 
   nextEvent () {
     let keys = Object.keys(this.state.myArrx)
-    if (keys.length == 0) {
+    if (keys.length === 0) {
       this.handleDialogClose()
       return
     }
     let pos = keys.indexOf(this.state.currentEvent.key) + 1
-    if (pos == Object.keys(this.state.myArrx).length) {
+    if (pos === Object.keys(this.state.myArrx).length) {
       pos = 0
     }
     let nextKey = keys[pos]
@@ -126,55 +124,26 @@ class FA_MyEventsComponent extends Component {
     this.setState({ currentEvent: nextEvent })
   }
 
-  filterAndStore (arr) {
-    for (let [key, value] of Object.entries(arr)) {
-      var x = key
-      if (value.FA_appr && value.AD_appr && value.SO_appr) {
-        this.state.approvedArr[key] = value
-      } else if (!value.FA_appr || !value.AD_appr || !value.SO_appr) {
-        this.state.pendingArr[key] = value
-      }
-      this.state.allArr[key] = value
-    }
-  }
-
-  componentWillReceiveProps (newProps) {
-    if (newProps.filter == 'pending') {
-      const { pendingArr } = this.state
-      this.setState({ myArr: pendingArr })
-    } else if (newProps.filter == 'approved') {
-      const { approvedArr } = this.state
-      this.setState({ myArr: approvedArr })
-    } else if (newProps.filter == 'all') {
-      const { allArr } = this.state
-      this.setState({ myArr: allArr })
-    }
-  }
-
   componentWillMount () {
-    if (!(this.props.user && this.props.user.isFA)) {
+    if (!(this.props.user && this.props.user.isAD)) {
       hashHistory.push('/auth')
       return
     }
     this.setState({ fetching: true })
-
-    firebaseDB.ref('/users/' + this.props.user.clubID).on('value',
+    var scope = this
+    firebaseDB.ref('events').orderByChild('AD_appr').equalTo('pending').on('value',
       function (snapshot) {
-        this.setState({ fetching: false })
-        let events = snapshot.val().my_events
-        for (let event in events) {
-          firebaseDB.ref('events/' + events[event]).on('value',
-            function (snapshot) {
-              if (snapshot.val().FA_appr == 'pending') {
-                const { myArrx } = this.state
-                myArrx[snapshot.key] = snapshot.val()
-                myArrx[snapshot.key].key = snapshot.key
-                this.setState({ myArrx })
-                this.setState({ originalArr: myArrx })
-                this.filterAndStore(myArrx)
-              }
-            }, this)
-        }
+        scope.setState({ fetching: false })
+        snapshot.forEach(function (child) {
+          if (child.val().AD_appr === 'pending') {
+            const { myArrx } = scope.state
+            myArrx[child.key] = child.val()
+            myArrx[child.key].key = child.key
+            scope.setState({ myArrx })
+            scope.setState({ originalArr: myArrx })
+            console.log(scope.state.myArrx)
+          }
+        })
       }, this)
   }
 
@@ -211,10 +180,10 @@ class FA_MyEventsComponent extends Component {
               adjustForCheckbox={this.state.showCheckboxes}
               enableSelectAll={this.state.enableSelectAll}
             >
-              <TableRow style={{ backgroundColor: '#EFF0F2' }}>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>TITLE</TableHeaderColumn>
+              <TableRow style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>CLUB NAME</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }} hidden={this.props.isMobile}>TITLE</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>START DATE</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }} hidden={this.props.isMobile}>END DATE</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%' }}>ACTIONS</TableHeaderColumn>
               </TableRow>
             </TableHeader>
@@ -234,9 +203,9 @@ class FA_MyEventsComponent extends Component {
               { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function (event, index) {
                 return (
                   <TableRow key={index}>
-                    <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn>{event.clubName}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.title}</TableRowColumn>
                     <TableRowColumn>{moment(event.start_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
                     <TableRowColumn style={{ width: this.props.isMobile ? 'auto' : '10%', textOverflow: 'clip' }}>
                       {<IconMenu
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -282,4 +251,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(FA_MyEventsComponent)
+export default connect(mapStateToProps)(ADEventsComponent)

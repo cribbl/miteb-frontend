@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, hashHistory } from 'react-router'
 
 class DashboardComponent extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center' }}>

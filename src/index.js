@@ -12,9 +12,9 @@ import DevelopersComponent from './components/DevelopersComponent/DevelopersComp
 
 import ClassroomComponent from './components/ClassroomComponent/ClassroomComponent'
 import MyEventsComponent from './components/ClassroomComponent/MyEventsComponent/MyEventsComponent'
-import FAmyEventsComponent from './components/ClassroomComponent/MyEventsComponent/FA_MyEventsComponent'
-import ADeventsComponent from './components/ClassroomComponent/MyEventsComponent/AD_EventsComponent'
-import SOeventsComponent from './components/ClassroomComponent/MyEventsComponent/SO_EventsComponent'
+import FAmyEventsComponent from './components/ClassroomComponent/MyEventsComponent/FAMyEventsComponent'
+import ADeventsComponent from './components/ClassroomComponent/MyEventsComponent/ADEventsComponent'
+import SOeventsComponent from './components/ClassroomComponent/MyEventsComponent/SOEventsComponent'
 import DashboardComponent from './components/ClassroomComponent/DashboardComponent/DashboardComponent'
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'

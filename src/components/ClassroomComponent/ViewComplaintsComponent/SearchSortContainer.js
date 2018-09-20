@@ -9,7 +9,7 @@ import EventExportDialog from '../../Dialogs/EventExportDialog'
 class SearchSortContainer extends Component {
   constructor (props) {
     super(props)
-	  this.filterClicked = this.filterClicked.bind(this)
+    this.filterClicked = this.filterClicked.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.showExportDialog = this.showExportDialog.bind(this)
     this.state = {
@@ -38,11 +38,11 @@ class SearchSortContainer extends Component {
       <div>
         <Toolbar style={{ minWidth: '100%', backgroundColor: 'rgb(248, 248, 248)', padding: '0px 10px' }}>
           <ToolbarGroup>
-            <span className='hoverPointer' onClick={() => { this.filterClicked('resolved') }} style={{ fontWeight: this.state.filterChoice == 'resolved' ? 700 : 100 }}>Resolved ({this.props.resolvedLength})</span>
+            <span className='hoverPointer' onClick={() => { this.filterClicked('resolved') }} style={{ fontWeight: this.state.filterChoice === 'resolved' ? 700 : 100 }}>Resolved ({this.props.resolvedLength})</span>
             <ToolbarSeparator style={{ marginLeft: 6, marginRight: 6, height: 20 }} />
-            <span className='hoverPointer' onClick={() => { this.filterClicked('unresolved') }} style={{ fontWeight: this.state.filterChoice == 'unresolved' ? 700 : 100 }}>Unresolved ({this.props.unresolvedLength})</span>
+            <span className='hoverPointer' onClick={() => { this.filterClicked('unresolved') }} style={{ fontWeight: this.state.filterChoice === 'unresolved' ? 700 : 100 }}>Unresolved ({this.props.unresolvedLength})</span>
             <ToolbarSeparator style={{ marginLeft: 6, marginRight: 6, height: 20 }} />
-            <span className='hoverPointer' onClick={() => { this.filterClicked('all') }} style={{ fontWeight: this.state.filterChoice == 'all' ? 700 : 100 }}>All ({this.props.allLength})</span>
+            <span className='hoverPointer' onClick={() => { this.filterClicked('all') }} style={{ fontWeight: this.state.filterChoice === 'all' ? 700 : 100 }}>All ({this.props.allLength})</span>
             <ToolbarSeparator style={{ marginLeft: 6, marginRight: 6, height: 20 }} />
             <IconButton tooltip='Export Complaints' tooltipPosition='top-right' onClick={this.showExportDialog}>
               <ExportIcon />

@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
-import Divider from 'material-ui/Divider'
 import CircularProgress from 'material-ui/CircularProgress'
-import { updateDatesDBx } from '../../../Services/firebaseDBService'
 
 class RoomsContainer extends Component {
   constructor (props) {
