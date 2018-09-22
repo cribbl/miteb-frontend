@@ -1,39 +1,39 @@
 export const toggleActions = {
-    toggleSideNav,
-    toggleProfileMenu,
-    closeProfileMenu,
-    closeSideNav,
-    toggleToaster
-};
-
-function toggleSideNav() {
-    return  {
-        type: "TOGGLE_SIDE_NAV"
-    }
+  toggleSideNav,
+  toggleProfileMenu,
+  closeProfileMenu,
+  closeSideNav,
+  toggleToaster
 }
 
-function closeSideNav() {
-    return {
-        type: "CLOSE_SIDE_NAV"
-    }
+function toggleSideNav () {
+  return {
+    type: 'TOGGLE_SIDE_NAV'
+  }
 }
 
-function toggleProfileMenu() {
-    return {
-        type: "TOGGLE_PROFILE_MENU"
-    }
+function closeSideNav () {
+  return {
+    type: 'CLOSE_SIDE_NAV'
+  }
 }
 
-function closeProfileMenu() {
-    return {
-        type: "CLOSE_PROFILE_MENU"
-    }
+function toggleProfileMenu () {
+  return {
+    type: 'TOGGLE_PROFILE_MENU'
+  }
 }
 
-function toggleToaster(msg, open) {
-    return {
-        type: "TOASTER",
-        message: msg,
-        toast_open: open
-    }
+function closeProfileMenu () {
+  return {
+    type: 'CLOSE_PROFILE_MENU'
+  }
+}
+
+function toggleToaster (msg, open) {
+  return {
+    type: 'TOASTER',
+    message: msg,
+    toastOpen: open
+  }
 }
