@@ -189,7 +189,6 @@ class DeveloperApplicationDialog extends Component {
               </form>
               )}
           </div>
-
         </Dialog>
       </div>
     )
