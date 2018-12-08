@@ -39,4 +39,4 @@ export const faqData = [
     que: 'hat is the process for clarification of doubts?',
     ans: 'Doubts can be clarified through email or whatsapp. Typically we respond within few hours.'
   }
-];
+]

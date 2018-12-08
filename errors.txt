@@ -1,0 +1,20 @@
+
+> CribblPortal@0.1.0 test /home/bhawesh96/git/MIT-Event-Booking
+> standard --fix
+
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:1:1: 'importScripts' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:2:1: 'importScripts' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:4:1: 'firebase' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:8:19: 'firebase' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:35:10: 'self' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:38:1: 'self' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:46:5: 'clients' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/public/firebase-messaging-sw.js:49:5: 'clients' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:30:11: 'localStorage' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:48:3: 'localStorage' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/src/actions/userActions.js:73:9: 'localStorage' is not defined.
+  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/BookingComponent.js:263:13: Expected the Promise rejection reason to be an Error.
+  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/BookingComponent.js:440:15: Block is redundant.
+  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/BookingComponent.js:520:55: Unexpected mix of '||' and '&&'.
+  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/BookingComponent/BookingComponent.js:520:85: Unexpected mix of '||' and '&&'.
+  /home/bhawesh96/git/MIT-Event-Booking/src/components/ClassroomComponent/ProfileComponent/ProfileContainer.js:210:25: Arrow function should not return assignment.
