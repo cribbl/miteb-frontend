@@ -1,25 +1,13 @@
 import firebase from 'firebase'
 
-var dev = {
-  apiKey: '***REMOVED***',
-  authDomain: '***REMOVED***',
-  databaseURL: '***REMOVED***',
-  projectId: '***REMOVED***',
-  storageBucket: '***REMOVED***.appspot.com',
-  messagingSenderId: '***REMOVED***'
+var config = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
 }
-
-var prod = {
-  apiKey: '***REMOVED***',
-  authDomain: '***REMOVED***',
-  databaseURL: '***REMOVED***',
-  projectId: '***REMOVED***',
-  storageBucket: '***REMOVED***.appspot.com',
-  messagingSenderId: '***REMOVED***'
-}
-
-// const config = process.env.REACT_APP_NODE_ENV === 'production' ? prod : dev;
-const config = window.location.host.indexOf('prod') > -1 ? prod : dev
 
 firebase.initializeApp(config)
 
