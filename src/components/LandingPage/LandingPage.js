@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Footer from './Footer'
 import Features from './Features'
 import Statistics from './Statistics'
 import ComingSoon from './ComingSoon'
 import Support from './Support'
+import Sponsors from './Sponsors'
+import Footer from './Footer'
 
 import './LandingPage.css'
 class LandingPage extends Component {
@@ -32,6 +33,8 @@ class LandingPage extends Component {
         <ComingSoon />
 
         <Support />
+
+        <Sponsors />
 
         <Footer />
         <p style={{ backgroundColor: 'rgb(60, 60, 60)', width: '100%', color: 'white', fontSize: 12, padding: 5, textAlign: 'center' }}>All Rights Reserved @ <a href='https://cribblservices.com' style={{ textDecoration: 'none', color: 'white' }}>Cribbl Services</a></p>
