@@ -31,4 +31,11 @@ git:
 before_install:
 - openssl aes-256-cbc -K $encrypted_10aae5acea6a_key -iv $encrypted_10aae5acea6a_iv
   -in secrets.tar.enc -out secrets.tar -d
-- tar xvf secrets.tar  
+- tar xvf secrets.tar
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/04c35213e58932123cc0
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
