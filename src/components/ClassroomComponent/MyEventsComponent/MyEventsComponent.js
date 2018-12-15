@@ -1,22 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   Table,
   TableBody,
+  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn
-} from 'material-ui/Table'
-import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle'
-import CrossCircleIcon from 'material-ui/svg-icons/action/highlight-off'
+  TableRowColumn,
+} from 'material-ui/Table';
+import { connect } from 'react-redux'
+import { Link, hashHistory } from 'react-router'
+import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
+import CrossCircleIcon from 'material-ui/svg-icons/action/highlight-off';
 import IconButton from 'material-ui/IconButton'
 import CircularProgress from 'material-ui/CircularProgress'
+import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import { hashHistory } from 'react-router'
-import { connect } from 'react-redux'
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import RaisedButton from 'material-ui/RaisedButton'
 import { firebaseDB } from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 import ViewEventDialog from '../../Dialogs/ViewEventDialogComponent'
@@ -29,9 +33,10 @@ import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
 import ReactTooltip from 'react-tooltip'
 import moment from 'moment'
+import postEventComponent from '../PostEventComponent/postEventContainer.js'
 
 class MyEventsComponent extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.showDialog = this.showDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
@@ -39,6 +44,7 @@ class MyEventsComponent extends Component {
     this.handleIcon = this.handleIcon.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleSort = this.handleSort.bind(this)
+    this.handlePostEvent = this.handlePostEvent.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -56,88 +62,109 @@ class MyEventsComponent extends Component {
       currentEvent: {},
       fetching: true,
       searchContent: '',
-      dateSort: null
+      dateSort: null,
     }
   }
 
-  handleIcon (event, state, msg) {
-    if (state === 'pending') { return <PendingIcon style={{ color: '#FBC02D' }} hoverColor={'#F57F17'} data-tip='Pending' /> }
-    if (state === 'approved') { return <CheckCircleIcon style={{ color: '#558B2F' }} hoverColor={'#33691E'} data-tip='Approved' /> }
-    if (state === 'flagged') { return <FlagIcon style={{ color: '#D50000', cursor: 'pointer' }} onClick={() => { this.showDialog(event) }} data-multiline data-tip={'Flagged - ' + msg} hoverColor={'red'} /> }
-    if (state === 'rejected') { return <CrossCircleIcon style={{ color: '#D50000' }} data-tip={'Rejected - ' + msg} /> }
-    if (state === 'NA') { return <NAIcon style={{ color: '#00BCD4' }} data-tip='Yet to reach' /> }
-    if (state === 'prevRejected') { return <DashIcon style={{ color: '#b71c1c' }} data-tip='Previously rejected' /> }
+  handleIcon(event, state, msg) {
+    if (state == 'pending')
+      return <PendingIcon style={{ color: '#FBC02D' }} hoverColor={'#F57F17'} data-tip="Pending" />
+    if (state == 'approved')
+      return <CheckCircleIcon style={{ color: '#558B2F' }} hoverColor={'#33691E'} data-tip="Approved" />
+    if (state == 'flagged')
+      return <FlagIcon style={{ color: '#D50000', cursor: 'pointer' }} onClick={() => { this.showDialog(event) }} data-multiline={true} data-tip={"Flagged - " + msg} hoverColor={'red'} />
+    if (state == 'rejected')
+      return <CrossCircleIcon style={{ color: '#D50000' }} data-tip={"Rejected - " + msg} />
+    if (state == 'NA')
+      return <NAIcon style={{ color: '#00BCD4' }} data-tip="Yet to reach" />
+    if (state == 'prevRejected')
+      return <DashIcon style={{ color: '#b71c1c' }} data-tip="Previously rejected" />
   }
 
-  showDialog (event) {
+  showDialog(event) {
     this.setState({ dialogOpen: true })
     this.setState({ currentEvent: event })
   }
 
-  handleDialogClose () {
+  handleDialogClose() {
     this.setState({ dialogOpen: false })
   }
 
-  nextEvent () {
+  nextEvent() {
     let keys = Object.keys(this.state.myArrx)
     let pos = keys.indexOf(this.state.currentEvent.key) + 1
-    if (pos === Object.keys(this.state.myArrx).length) {
-      pos = 0
+    if (pos == Object.keys(this.state.myArrx).length) {
+      pos = 0;
     }
     let nextKey = keys[pos]
     let nextEvent = this.state.myArrx[nextKey]
     this.setState({ currentEvent: nextEvent })
   }
 
-  handleSearch (content) {
+  handleSearch(content) {
     this.setState({ searchContent: content })
     var myArrx = this.state.originalArr
-    myArrx = Object.values(myArrx).filter(_event => _event.title.toLowerCase().includes(content.toLowerCase()))
+    myArrx = Object.values(myArrx).filter(_event => _event.title.toLowerCase().includes(content.toLowerCase()));
     this.setState({ myArrx })
   }
 
-  handleSort () {
-    if (this.state.dateSort === 'des') { this.setState({ dateSort: 'asc' }) } else { this.setState({ dateSort: 'des' }) }
+  handleSort() {
+    if (this.state.dateSort === 'des')
+      this.setState({ dateSort: 'asc' })
+    else
+      this.setState({ dateSort: 'des' })
     var scope = this
     var myArrx = this.state.originalArr
     myArrx = Object.values(myArrx).sort(function (a, b) {
-      var aDate = moment(a.start_date, 'DD-MM-YYYY')
-      var bDate = moment(b.start_date, 'DD-MM-YYYY')
-      if (scope.state.dateSort === 'des') { return (aDate - bDate) }
-      return (bDate - aDate)
-    })
+      var aDate = moment(a.start_date, 'DD-MM-YYYY');
+      var bDate = moment(b.start_date, 'DD-MM-YYYY');
+      if (scope.state.dateSort === 'des')
+        return (aDate - bDate);
+      return (bDate - aDate);
+    });
     this.setState({ myArrx })
   }
 
-  filterAndStore (arr) {
+  handlePostEvent(currEvent) {
+    const { dispatch } = this.props;
+    dispatch({ type: "POST_EVENT", currEvent: currEvent })
+    hashHistory.push("/dashboard/postEventDetails")
+  }
+
+  filterAndStore(arr) {
     for (let [key, value] of Object.entries(arr)) {
+      var x = key
       if (value.FA_appr && value.AD_appr && value.SO_appr) {
         this.state.approvedArr[key] = value
-      } else if (!value.FA_appr || !value.AD_appr || !value.SO_appr) {
+      }
+      else if (!value.FA_appr || !value.AD_appr || !value.SO_appr) {
         this.state.pendingArr[key] = value
       }
       this.state.allArr[key] = value
     }
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.filter === 'pending') {
+  componentWillReceiveProps(newProps) {
+    if (newProps.filter == 'pending') {
       const { pendingArr } = this.state
       this.setState({ myArr: pendingArr })
-    } else if (newProps.filter === 'approved') {
+    }
+    else if (newProps.filter == 'approved') {
       const { approvedArr } = this.state
       this.setState({ myArr: approvedArr })
-    } else if (newProps.filter === 'all') {
+    }
+    else if (newProps.filter == 'all') {
       const { allArr } = this.state
       this.setState({ myArr: allArr })
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     if (!this.props.user) {
-      hashHistory.push('/auth')
+      hashHistory.push('/auth');
       return
-    } else {
+    }
+    else {
       if (this.props.user.isFA) {
         hashHistory.replace('/dashboard/faEvents')
         return
@@ -168,14 +195,15 @@ class MyEventsComponent extends Component {
               myArrx[snapshot.key].key = snapshot.key
               this.setState({ myArrx })
               this.setState({ originalArr: myArrx })
-              this.filterAndStore(myArrx)
+              this.filterAndStore(myArrx);
               // console.log(this.state.myArrx)
             }, this)
         }
       }, this)
   }
 
-  render () {
+  render() {
+
     return (
       <div style={{ display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%' }}>
 
@@ -200,20 +228,20 @@ class MyEventsComponent extends Component {
               enableSelectAll={this.state.enableSelectAll}
             >
               <TableRow style={{ backgroundColor: '#EFF0F2' }}>
-                <TableHeaderColumn data-tip='' style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '41%' : '20%' }}>TITLE</TableHeaderColumn>
+                <TableHeaderColumn data-tip="" style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '41%' : '20%' }}>TITLE</TableHeaderColumn>
                 <TableHeaderColumn
                   style={{ color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '20%' }}
                   hidden={this.props.isMobile}
                 >
-                START DATE
-                  <IconButton data-tip='Sort by date' onClick={this.handleSort} style={{ padding: 0, height: 20, width: 20, marginLeft: 5 }}>{this.state.dateSort != null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
+                  START DATE
+                <IconButton data-tip="Sort by date" onClick={this.handleSort} style={{ padding: 0, height: 20, width: 20, marginLeft: 5 }}>{this.state.dateSort != null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
                 </TableHeaderColumn>
                 <TableHeaderColumn
                   style={{ color: '#000', fontWeight: 700, alignItems: 'center', width: '20%' }}
                   hidden={this.props.isMobile}
                 >
-                END DATE
-                </TableHeaderColumn>
+                  END DATE
+              </TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>FA</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>AD</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>SO</TableHeaderColumn>
@@ -228,9 +256,9 @@ class MyEventsComponent extends Component {
             >
 
               {this.state.fetching &&
-              <div style={{ textAlign: 'center', marginTop: '10%' }}>
-                <CircularProgress size={60} />
-              </div>
+                <div style={{ textAlign: 'center', marginTop: '10%' }}>
+                  <CircularProgress size={60} />
+                </div>
               }
 
               {
@@ -248,33 +276,38 @@ class MyEventsComponent extends Component {
                           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                          useLayerForClickAway
+                          useLayerForClickAway={true}
                         >
-                          <MenuItem primaryText='View' onClick={() => this.showDialog(event)} />
-                          <MenuItem hidden={!event.receiptURL} primaryText='Download Receipt' onClick={() => { window.location = (event.receiptURL) }} />
+                          <MenuItem primaryText="View" onClick={() => this.showDialog(event)} />
+                          <MenuItem hidden={!event.receiptURL} primaryText="Download Receipt" onClick={() => { window.location = (event.receiptURL) }} />
+                          <MenuItem
+                            hidden={!event.receiptURL}
+                            primaryText="Post Event Detail"
+                            onClick={() => this.handlePostEvent(event)}
+                          />
                         </IconMenu>}
                       </TableRowColumn>
                     </TableRow>
                   )
                 }, this)) : (
 
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250 }} hidden={this.state.fetching}>
-                    <img src={require(this.state.searchContent.length > 0 ? '../../../assets/empty-state.gif' : '../../../assets/empty-state.gif')} style={{ width: this.props.isMobile ? '70%' : '30%', marginBottom: 10 }} />
-                    <p>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No events found'}</p>
-                  </div>
-                )
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250 }} hidden={this.state.fetching}>
+                      <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.gif")} style={{ width: this.props.isMobile ? '70%' : '30%', marginBottom: 10 }} />
+                      <p>{this.state.searchContent.length > 0 ? "No events for this search" : "No events found"}</p>
+                    </div>
+                  )
               }
 
             </TableBody>
           </Table>
         </Paper>
-        <ReactTooltip effect='solid' />
+        <ReactTooltip effect="solid" />
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   const { openSideNav, isMobile, filter } = state.toggler
   const { user, verified, vals } = state.authentication
   return {
