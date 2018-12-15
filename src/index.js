@@ -28,7 +28,7 @@ import Reg from './components/LoginComponent/Reg'
 import FaqComponent from './components/FaqComponent/FaqComponent'
 import PrivacyPolicy from './components/Policies/PrivacyPolicy'
 import TnC from './components/Policies/TnC'
-import postEventDetails from './components/ClassroomComponent/PostEventComponent/postEventContainer';
+import postEventDetails from './components/ClassroomComponent/PostEventComponent/postEventContainer'
 
 import { store } from './store'
 
