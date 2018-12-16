@@ -71,7 +71,7 @@ class AppBarComponent extends Component {
         console.log('APP BAR WORKING')
         hashHistory.push('auth')
       }
-      this.setState({ showMenuIcon: true })
+      this.setState({ showMenuIcon: false })
     }
 
     hashHistory.listen(location => {
@@ -80,7 +80,7 @@ class AppBarComponent extends Component {
       console.log(location.pathname)
       if (['/home', '/complaints', '/auth', '/'].indexOf(location.pathname) > -1) {
         this.setState({ showMenuIcon: false })
-      } else { this.setState({ showMenuIcon: true }) }
+      } 
     })
   }
 
