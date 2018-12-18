@@ -80,7 +80,7 @@ class AppBarComponent extends Component {
       console.log(location.pathname)
       if (['/home', '/complaints', '/auth', '/'].indexOf(location.pathname) > -1) {
         this.setState({ showMenuIcon: false })
-      } 
+      }
     })
   }
 
