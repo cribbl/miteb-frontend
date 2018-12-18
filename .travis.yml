@@ -1,41 +1,32 @@
 language: node_js
-
 node_js:
 - '9'
-
 cache:
   directories:
   - node_modules
-
 sudo: enabled
-
 install:
 - npm install
-
-script:
+before_deploy:
 - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run build:stage; fi
 - if [ "$TRAVIS_BRANCH" = "prod" ]; then npm run build:prod; fi
-
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: bash deploy.sh
-    local_dir: build
-    on:
-      all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^master|prod$
-
+- provider: script
+  skip_cleanup: true
+  script: bash deploy.sh
+  local_dir: build
+  on:
+    all_branches: true
+    condition: "$TRAVIS_BRANCH =~ ^master|prod$"
 git:
   depth: 3
-
-before_install:
-- openssl aes-256-cbc -K $encrypted_10aae5acea6a_key -iv $encrypted_10aae5acea6a_iv
-  -in secrets.tar.enc -out secrets.tar -d
-- tar xvf secrets.tar
-
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/04c35213e58932123cc0
-    on_success: always  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
+    - https://webhooks.gitter.im/e/04c35213e58932123cc0
+    on_success: always
+    on_failure: always
+before_install:
+- openssl aes-256-cbc -K $encrypted_eaaad43bb409_key -iv $encrypted_eaaad43bb409_iv
+  -in secrets.tar.enc -out secrets.tar -d
+- tar xvf secrets.tar
