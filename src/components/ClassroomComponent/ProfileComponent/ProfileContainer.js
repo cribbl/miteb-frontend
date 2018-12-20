@@ -186,7 +186,7 @@ class ProfileContainer extends Component {
               <TextField
                 floatingLabelText='Name Abbreviation'
                 type='text'
-                value={this.state.tempUser && this.state.tempUser.abbrv}
+                value={this.props.user && this.props.user.abbrv}
                 disabled
               />
 
