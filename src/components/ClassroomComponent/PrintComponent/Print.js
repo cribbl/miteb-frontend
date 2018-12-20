@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
-//import Paper from 'material-ui/Paper'
-//import AppBar from 'material-ui/AppBar';
-//import Typography from 'material-ui/Typography';
-//import classes from './Print.css';
 import RaisedButton from 'material-ui/RaisedButton';
-import { withStyles } from '@material-ui/core/styles';
+//import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { printEvents } from '../../../Services/firebaseStorageService'
 import { connect } from 'react-redux'
+import { printEvents } from '../../../Services/firebaseStorageService'
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+
 class PrintComponent extends Component {
 
 
 constructor (props) {
     super(props)
     this.handlePrintButton = this.handlePrintButton.bind(this)
-     this.state = {
-      exportMode: ''
-    }
   }
 
-handlePrintButton (value) {
+handlePrintButton () {
     console.log('click');
-  
+    printEvents(this.props.view)
+      .then(res => {
+        console.log('Export successful');
+      })
 };
 
 

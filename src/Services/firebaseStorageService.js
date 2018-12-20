@@ -52,3 +52,19 @@ export const exportEvents = (view, uid, mode, start_date = null, end_date = null
     link.click()
   })
 }
+
+export const printEvents = (view, callback) => {
+  
+  return axios({
+    url: baseUrl + '/' + view + '/generate-sheet',
+    method: 'GET',
+    responseType: 'blob' // important
+  }).then((response) => {
+    const url = window.URL.createObjectURL(new Blob([response.data])) // eslint-disable-line
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('print', 'print.xlsx')
+    document.body.appendChild(link)
+    link.click()
+  })
+}
