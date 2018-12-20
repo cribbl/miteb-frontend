@@ -18,6 +18,7 @@ import SOeventsComponent from './components/ClassroomComponent/MyEventsComponent
 import DashboardComponent from './components/ClassroomComponent/DashboardComponent/DashboardComponent'
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
+import PrintComponent from './components/ClassroomComponent/PrintComponent/Print'
 import ApproveClubsComponent from './components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer'
 
 import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
@@ -64,6 +65,7 @@ ReactDOM.render(
           <Route path='profile' component={ProfileComponent} />
           <Route path='approveClubs' component={ApproveClubsComponent} />
           <Route path='viewComplaints' component={ViewComplaintsComponent} />
+          <Route path='print' component={PrintComponent} />
         </Route>
         <Route path='*' component={NotFound} />
       </Route>

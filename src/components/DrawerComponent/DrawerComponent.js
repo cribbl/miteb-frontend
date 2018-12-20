@@ -5,6 +5,7 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import IconDashboard from 'material-ui/svg-icons/action/dashboard'
+import IconPrint from 'material-ui/svg-icons/action/print'
 import IconAnalytics from 'material-ui/svg-icons/editor/insert-chart'
 import IconTest from 'material-ui/svg-icons/editor/mode-edit'
 import IconProfile from 'material-ui/svg-icons/social/person'
@@ -105,6 +106,16 @@ class DrawerComponent extends Component {
                 leftIcon={<ComplaintIcon color={'#FFFFFF'} />}
               />
               : null}
+
+            {this.props.user && this.props.user.isSO
+              ? <MenuItem
+                style={Object.assign(this.state.activeItem === '/dashboard/print' ? active : '', menuItemStyle)}
+                key='/dashboard/print'
+                primaryText='Print'
+                leftIcon={<IconPrint color={'#FFFFFF'} />}
+              />
+              : null}
+
 
             <MenuItem
               style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active : '', menuItemStyle)}
