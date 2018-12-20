@@ -187,7 +187,7 @@ class ProfileContainer extends Component {
                 floatingLabelText='Name Abbreviation'
                 type='text'
                 value={this.state.tempUser && this.state.tempUser.abbrv}
-                onChange={(event) => this.handleChange(event, 'abbrv')}
+                disabled
               />
 
               <TextField
@@ -195,7 +195,6 @@ class ProfileContainer extends Component {
                 type='text'
                 value={this.props.user && this.props.user.email}
                 disabled
-                errorText={this.state.errors[1]}
               />
 
               <TextField
