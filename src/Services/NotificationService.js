@@ -4,12 +4,7 @@ import { store } from '../store'
 import { toggleActions } from '../actions/toggleActions'
 import { updateToken } from './firebaseDBService'
 
-let baseUrl
-if (window.location.host.indexOf('prod') > -1) {
-  baseUrl = 'https://app-miteventbooking.herokuapp.com'
-} else {
-  baseUrl = 'https://dev-miteventbooking.herokuapp.com'
-}
+const baseUrl = process.env.REACT_APP_BACKEND_API
 
 export const sendEmail = (senderName, senderEmail, to, defaultPurpose, subject = null, text = null, html = null) => {
   let params = {
