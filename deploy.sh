@@ -2,7 +2,11 @@
 set -x
 # Initialize a new git repo in _site, and push it to our server.
 
-if [ "$TRAVIS_BRANCH" = "prod" ]; then server_ip=$PROD_SERVER_IP; folder=prod; fi
+
+
+
+if [ "$TRAVIS_BRANCH" = "prod" ]; then server_ip=$PROD_SERVER_IP; folder=production; fi
+
 if [ "$TRAVIS_BRANCH" = "master" ]; then server_ip=$STAGING_SERVER_IP; folder=staging; fi
 
 ls

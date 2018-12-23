@@ -9,7 +9,9 @@ install:
 - npm install
 before_deploy:
 - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run build:stage; fi
-- if [ "$TRAVIS_BRANCH" = "prod" ]; then npm run build:prod; fi
+
+- if [ "$TRAVIS_BRANCH" = "prod" ]; then npm run build:production; fi
+
 deploy:
 - provider: script
   skip_cleanup: true
@@ -23,10 +25,12 @@ git:
 notifications:
   webhooks:
     urls:
-    - https://webhooks.gitter.im/e/04c35213e58932123cc0
+
+    - https://webhooks.gitter.im/e/a72e8b6a596be04dcb83
     on_success: always
     on_failure: always
 before_install:
-- openssl aes-256-cbc -K $encrypted_eaaad43bb409_key -iv $encrypted_eaaad43bb409_iv
+- openssl aes-256-cbc -K $encrypted_10aae5acea6a_key -iv $encrypted_10aae5acea6a_iv
+
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
