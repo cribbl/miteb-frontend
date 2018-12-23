@@ -46,4 +46,14 @@ You may install other dependencies with `npm`:
 
 ```sh
 npm install --save react-router
+npm install --save material-ui
+npm install --save react-loading
+npm install --save redux
+npm install --save react-redux
+npm install --save redux-thunk
+npm install --save redux-logger   
+npm install --save axios
+npm install --save moment
+npm install --save react-collapsible
+npm install --save react-tooltip
 ```
