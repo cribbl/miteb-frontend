@@ -9,6 +9,7 @@ import {getDisabledDates} from '../../../Services/firebaseDBService'
 class EventContainer extends React.Component {
 	constructor(props){
 		super(props);
+
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 1);
     maxDate.setHours(0, 0, 0, 0);
@@ -32,20 +33,23 @@ class EventContainer extends React.Component {
       },
       errors: {
         title: ''
-      },
-        isFormValid: false,
+      }
     }
 	}
     componentWillMount(){
+      var result=(this.props.fields['title']).length===0? false : true; 
       this.setState({
-        isFormValid:false,
+        isFormValid: result,
         fields:this.props.fields
       })
+      this.props.updateFormState(null,result);
     }
-      componentWillReceiveProps(nextProps){
+    
+    componentWillReceiveProps(nextProps){
       var fields = nextProps.fields;
       this.callFunction(fields);
     }
+
     callFunction(fields){
       this.setState({
         fields:fields
@@ -58,7 +62,7 @@ class EventContainer extends React.Component {
     this.setState({fields});
     let result = this.handleValidation(field);
     this.props.updateFormState(null,result);
-  };
+  }
 
   handleBlur(field, e) {
     let fieldTouch = this.state.fieldTouch;
@@ -66,10 +70,11 @@ class EventContainer extends React.Component {
     this.setState({fieldTouch})
     let result = this.handleValidation(field);
     this.props.updateFormState(null,result);
-  };
+  }
+
    handleStartDate(event, start_date) {
     var field = this.state.fields;
-    field['start_date'] = moment(start_date).format('DD-MM-YYYY')
+    field['start_date'] = start_date;
     this.setState({
       fields: field,
       start_date: start_date
@@ -79,22 +84,25 @@ class EventContainer extends React.Component {
 
   handleEndDate(event, end_date) {
     var field = this.state.fields;
-    field['end_date'] = moment(end_date).format('DD-MM-YYYY')
+    field['end_date'] = end_date;
       this.setState({
       fields: field,
       end_date: end_date
     })
     this.props.updateFields(field)
   }
+
   shouldDisableDate(day) {
     let date = moment(day).format('DD-MM-YYYY');
     if((this.state.disabledDates).includes(date))
       return true
     return false
   }
+
   formatDate(date) {
     return moment(date).format("ddd, DD MMM YYYY")
   }
+
   handleValidation(field) {
     let fields = this.state.fields;
     let errors = {
@@ -111,72 +119,71 @@ class EventContainer extends React.Component {
     return isFormValid;
   }
 
-
-
 		render() {
       var self=this;
 			return (
-    		<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <h6> Publicity Dates </h6>
-            <DatePicker
-              floatingLabelText="Start Date"
-              mode={this.props.isMobile ? 'portrait' : 'landscape'}
-              autoOk={true}
-              onChange={this.handleStartDate}
-              value={this.state.start_date}
-              shouldDisableDate={this.day}
-              disableYearSelection={true}
-              minDate={this.state.minDate}
-              maxDate={this.state.maxDate}
-              formatDate={this.formatDate}
-              shouldDisableDate={this.shouldDisableDate}
-              errorText={this.state.end_date && this.state.start_date > this.state.end_date && "Start date should be less than end date"}
-              errorStyle={{position: 'absolute', bottom: -8}}
-              required
-            />
-            <DatePicker
-              floatingLabelText="End Date" 
-              mode={this.props.isMobile ? 'portrait' : 'landscape'}
-              autoOk={true}   
-              onChange={this.handleEndDate}
-              value={this.state.end_date} 
-              shouldDisableDate={this.day}
-              disableYearSelection={true}
-              minDate={self.state.start_date?self.state.start_date:self.state.minDate}
-              maxDate={this.state.maxDate}
-              formatDate={this.formatDate}
-              shouldDisableDate={this.shouldDisableDate}
-              required
-            />
-          <br/>
+      <div style={{backgroundColor: '', display: 'flex', flexDirection: this.props.isMobile ? 'column': 'row' , justifyContent: 'space-between', alignItems: 'center'}}>
+        <div style={{marginTop:16}}>
+          <h6> Publicity Dates </h6>
+          <DatePicker
+                floatingLabelText="Start Date"
+                mode={this.props.isMobile ? 'portrait' : 'landscape'}
+                autoOk={true}
+                onChange={this.handleStartDate}
+                value={this.props.fields['start_date']}
+                shouldDisableDate={this.day}
+                disableYearSelection={true}
+                minDate={this.state.minDate}
+                maxDate={this.state.maxDate}
+                formatDate={this.formatDate}
+                shouldDisableDate={this.shouldDisableDate}
+                errorText={this.state.end_date && this.state.start_date > this.state.end_date && "Start date should be less than end date"}
+                errorStyle={{position: 'absolute', bottom: -8}}
+                required
+           />
+          <DatePicker
+                floatingLabelText="End Date" 
+                mode={this.props.isMobile ? 'portrait' : 'landscape'}
+                autoOk={true}   
+                onChange={this.handleEndDate}
+                value={this.props.fields['end_date']} 
+                shouldDisableDate={this.day}
+                disableYearSelection={true}
+                minDate={self.state.start_date?self.state.start_date:self.state.minDate}
+                maxDate={this.state.maxDate}
+                formatDate={this.formatDate}
+                shouldDisableDate={this.shouldDisableDate}
+                required
+           />
+        </div>
+        <div style={{marginTop:16}}>
           <h6> Event Details </h6>
           <TextField 
-            floatingLabelText="Title *"
-            key={1}
-            onChange={this.handleChange.bind(this, "title")}
-            onBlur={this.handleBlur.bind(this,"title")}
-            type="text" 
-            value={this.state.fields["title"]}
-            errorText={this.state.fieldTouch["title"] && this.state.errors["title"]}
-            errorStyle={{position: 'absolute', bottom: -8}}
-            required
+              floatingLabelText="Title *"
+              key={1}
+              onChange={this.handleChange.bind(this, "title")}
+              onBlur={this.handleBlur.bind(this,"title")}
+              type="text" 
+              value={this.state.fields["title"]}
+              errorText={this.state.fieldTouch["title"] && this.state.errors["title"]}
+              errorStyle={{position: 'absolute', bottom: -8}}
+              required
           />
-          
+          <br/>
           <TextField 
-            multiLine={true}
-            rows={1}
-            rowsMax={this.props.isMobile ? 3 : 5}
-            style={{textAlign: 'left'}}
-            floatingLabelText="Notes" 
-            type="text"
-            onChange={this.handleChange.bind(this, "notes")}
-            value={this.state.fields["notes"]}
-            errorText={this.state.errors["notes"]} 
-            errorStyle={{position: 'absolute', bottom: -8}}
+              multiLine={true}
+              rows={1}
+              rowsMax={this.props.isMobile ? 3 : 5}
+              style={{textAlign: 'left'}}
+              floatingLabelText="Notes" 
+              type="text"
+              onChange={this.handleChange.bind(this, "notes")}
+              value={this.state.fields["notes"]}
+              errorText={this.state.errors["notes"]} 
+              errorStyle={{position: 'absolute', bottom: -8}}
           />
-          
-                      
-        </div>
+        </div>        
+      </div>
 			);
 		}
 	}

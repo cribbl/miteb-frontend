@@ -28,6 +28,9 @@ import PendingIcon from 'material-ui/svg-icons/action/bookmark'
 import SortIcon from 'material-ui/svg-icons/content/sort' 
 import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ReactTooltip from 'react-tooltip'
 import moment from 'moment'
 
@@ -169,14 +172,14 @@ class MyPublicityComponent extends Component {
         return
       }
     }
-    firebaseDB.ref('/clubs/' + this.props.user.uid).on('value',
+    firebaseDB.ref('/users/' + this.props.user.uid).on('value',
     function(snapshot) {
       let events = snapshot.val().my_publicity
       if(!events) {
           this.setState({fetching: false})
       }
       for(let event in events) {
-        firebaseDB.ref('/events/publicity/' + events[event]).on('value',
+        firebaseDB.ref('/publicity/' + events[event]).on('value',
         function(snapshot) {
           this.setState({fetching: false})
           console.log(snapshot.val())
@@ -195,11 +198,14 @@ class MyPublicityComponent extends Component {
   render() {
 
     return (
-     <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
+      <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
+      
       <div style={{minWidth: '98%', backgroundColor: '', marginTop: 20}}>
-        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
+        <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch}  disableExport={Object.keys(this.state.myArrx).length < 1}/>
       </div>
+      
       <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent}/>
+      
       <Paper style={{width: '98%', height: 500, overflow: 'hidden', marginTop: 20}} zDepth={2}>
         <Table
           style={{backgroundColor: ''}}
@@ -215,17 +221,23 @@ class MyPublicityComponent extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor: '#EFF0F2'}}>
-              <TableHeaderColumn data-tip="" style={{color: '#000', fontWeight: 700}}>TITLE</TableHeaderColumn>
+              <TableHeaderColumn data-tip="" style={{color: '#000', fontWeight: 700, width:this.props.isMobile?'41%':'20%'}}>TITLE</TableHeaderColumn>
               <TableHeaderColumn
-                style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center'}}
+                style={{color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width:'20%'}}
                 hidden={this.props.isMobile}>
                 START DATE
-                <IconButton onClick={this.handleSort} style={{padding: 0, height: 20, width: 20}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
+                <IconButton data-tip="Sort by date" onClick={this.handleSort} style={{padding: 0, height: 20, width: 20, marginLeft: 5}}>{this.state.dateSort!=null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
               </TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>FA</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>AD</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}} hidden={this.props.isMobile}>SO</TableHeaderColumn>
-              <TableHeaderColumn style={{color: '#000', fontWeight: 700}}>Actions</TableHeaderColumn>
+              <TableHeaderColumn
+                style={{color: '#000', fontWeight: 700, alignItems: 'center',width:'20%'}}
+                hidden={this.props.isMobile}
+                >
+                END DATE
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700,width:this.props.isMobile?'13%':'10%'}}>FA</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700,width:this.props.isMobile?'13%':'10%'}}>AD</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width:this.props.isMobile?'13%':'10%'}}>SO</TableHeaderColumn>
+              <TableHeaderColumn style={{color: '#000', fontWeight: 700, width: this.props.isMobile?'auto':'10%'}}>{this.props.isMobile?' ':'Actions'}</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -241,14 +253,31 @@ class MyPublicityComponent extends Component {
              Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
               return(
                   <TableRow key={index}>
-                    <TableRowColumn>{event.title}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.start_date}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
-                    <TableRowColumn>{<RaisedButton label="View" primary={true} onClick={() => this.showDialog(event)}/>}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'38%':'20%'}}>{event.title}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{moment(event.start_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile} style={{width: '20%'}}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'14%':'10%'}}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', textOverflow: 'clip'}}>
+                      {<IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      useLayerForClickAway={true}
+                      >
+                      <MenuItem primaryText="View" onClick={() => this.showDialog(event)}/>
+                      <MenuItem hidden={!event.receiptURL} primaryText="Download Receipt" onClick={() => {window.location=(event.receiptURL)}}/>
+                      </IconMenu>}
+                    </TableRowColumn>
                   </TableRow>
-              )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No Events Yet'}</p>
+              )}, this)) :  (
+
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.gif")} style={{width: this.props.isMobile ? '70%' : '30%', marginBottom: 10}} />
+                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "No events found"}</p>
+                </div>
+              )
           }
 
           </TableBody>
