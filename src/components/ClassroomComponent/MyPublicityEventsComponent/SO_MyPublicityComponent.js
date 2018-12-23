@@ -21,6 +21,12 @@ import FlagDialog from '../../Dialogs/FlagRejectDialog'
 import Snackbar from 'material-ui/Snackbar';
 import SearchSortContainer from './SearchSortContainer'
 import {approvePublicity, flagRejectPublicity} from '../../../Services/firebaseDBService'
+import moment from 'moment';
+import IconMenu from 'material-ui/IconMenu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconButton from 'material-ui/IconButton';
+import MenuItem from 'material-ui/MenuItem';
+
 
 class SO_MyPublicityComponent extends Component {
   constructor(props) {
@@ -52,7 +58,8 @@ class SO_MyPublicityComponent extends Component {
       autoHideDuration: 3000,
       dialogOpen: false,
       FlagDialogOpen: false,
-      currentEvent: {}
+      currentEvent: {},
+      searchContent: ''
     }
 }
 
@@ -128,7 +135,7 @@ class SO_MyPublicityComponent extends Component {
     }
     this.setState({fetching: true})
         var scope = this;
-        firebaseDB.ref('events/publicity/').orderByChild('SO_appr').equalTo('pending').on('value',
+        firebaseDB.ref('publicity/').orderByChild('SO_appr').equalTo('pending').on('value',
         function(snapshot) {
           snapshot.forEach(function(child) {
             scope.setState({fetching: false})
@@ -148,9 +155,11 @@ class SO_MyPublicityComponent extends Component {
 
     return (
       <div style={{display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%'}}>
+
       <div style={{minWidth: '98%', backgroundColor: '', marginTop: 20}}>
         <SearchSortContainer allLength={Object.keys(this.state.allArr).length} approvedLength={Object.keys(this.state.approvedArr).length} pendingLength={Object.keys(this.state.pendingArr).length} handleSearch={this.handleSearch} />
       </div>
+      
       <Snackbar
           open={this.state.openSnackBar}
           message={this.state.SnackBarmessage}
@@ -162,7 +171,7 @@ class SO_MyPublicityComponent extends Component {
 
       <FlagDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} mode={this.state.flagRejectMode} flagRejectHandler={this.flagReject} />
       
-      <Paper style={{width: '98%', height: 500, overflow: 'hidden'}} zDepth={2}>
+      <Paper style={{width: '98%', height: 500, overflow: 'hidden',marginTop: 20}} zDepth={2}>
         <Table
           style={{backgroundColor: ''}}
           height={'440px'}
@@ -190,17 +199,39 @@ class SO_MyPublicityComponent extends Component {
             stripedRows={this.state.stripedRows}
           >
 
-          {this.state.fetching && <CircularProgress />}
+          {this.state.fetching &&
+            <div style={{textAlign: 'center', marginTop: '10%'}}>
+              <CircularProgress size={60} />
+            </div>
+          }
 
           { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {
-              return (
+            return(
                   <TableRow key={index}>
-                    <TableRowColumn>{event.clubName}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{event.title}</TableRowColumn>
-                    <TableRowColumn>{event.start_date}</TableRowColumn>
-                    <TableRowColumn>{<div><RaisedButton label="View" primary={true} style={{marginRight: 10}} onClick={() => this.showDialog(event)}/><RaisedButton hidden={this.props.isMobile} label="Approve" primary={true} onClick={() => this.approve(event)}/></div>}</TableRowColumn>
+                   <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn>{moment(event.start_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn style={{width: this.props.isMobile?'auto':'10%', textOverflow: 'clip'}}>
+                      {<IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      useLayerForClickAway={true}
+                      >
+                      <MenuItem primaryText="View" onClick={() => this.showDialog(event)}/>
+                      <MenuItem primaryText="Approve" onClick={() => this.approve(event)}/>
+                      <MenuItem primaryText="Reject" onClick={() => this.flagRejectConfirm(event, "reject")}/>
+                      <MenuItem primaryText="Flag" onClick={() => this.flagRejectConfirm(event, "flag")}/>
+                      </IconMenu>}
+                    </TableRowColumn>
                   </TableRow>
-            )}, this)) : <p style={{textAlign: 'center', fontSize: '3rem'}}>NO EVENTS PENDING</p>
+            )}, this)) : (
+
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250}} hidden={this.state.fetching}>
+                <img src={require(this.state.searchContent.length > 0 ? "../../../assets/empty-state.gif" : "../../../assets/empty-state.jpeg")} style={{width: this.props.isMobile ? '70%' : '30%', marginBottom: 10}} />
+                <p>{this.state.searchContent.length > 0 ? "No events for this search" : "Yay! You have no Pending Events"}</p>
+                </div>
+              )
           }
           
           </TableBody>

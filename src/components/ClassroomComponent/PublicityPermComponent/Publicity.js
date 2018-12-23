@@ -16,9 +16,9 @@ import Checkbox from 'material-ui/Checkbox';
 import {firebaseDB} from '../../../firebaseConfig'
 import firebase from 'firebase';
 import {connect} from 'react-redux';
-import {List,ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import MediumContainer from './MediumContainer';
+import {storage} from '../../../firebaseConfig'
 import BookerContainer from './BookerContainer';
 import EventContainer from './EventContainer';
 import Snackbar from 'material-ui/Snackbar';
@@ -32,9 +32,9 @@ class PublicityComponent extends React.Component {
 		super(props);
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
 		this.state =  {
-      checked: [true,false,false,false],
+      checked: [false,false,false,false],
       shouldCheck: false,
-      stepIndex:2,
+      stepIndex:0,
       finished: false,
       isFormValid:false,
       booker_fields:  {
@@ -60,37 +60,26 @@ class PublicityComponent extends React.Component {
 		
     }
 	};
-    componentWillMount(){
+  
+  componentWillMount(){
       this.setState({
-        checked: [true,false,false,false]
+        checked: [false,false,false,false]
       })
     }
-    handleNext = () => {
-    const {stepIndex} = this.state;
-    if(this.state.stepIndex+1 < 2){
-      this.setState({
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 2,
-        isFormValid:false
-      });
-   }
-    else {
-        this.setState({
-        isFormValid:true,
-        stepIndex: stepIndex +1,
-        finished: stepIndex >=2
-      })
-    if(this.state.stepIndex === 2) {
+  
+  handleNext = () => {
+    if(this.state.stepIndex < 2){
+      const {stepIndex} = this.state;
+      this.setState({stepIndex: stepIndex + 1});
+    }
+    if(this.state.stepIndex == 2)
       this.handleSubmit();
-    }
-   
-  }
   };
 
   handlePrev = () => {
     const {stepIndex} = this.state;
     if (stepIndex > 0) {
-      this.setState({stepIndex: stepIndex - 1,isFormValid:true});
+      this.setState({stepIndex: stepIndex - 1, isFormValid: true});
     }
   };
 
@@ -98,47 +87,53 @@ class PublicityComponent extends React.Component {
     this.setState({openSnackBar: false}) 
   }
 
-
   handleSubmit() {
     var result = this.parseMediums();
-    var file = this.state.files;
-    console.log(result);
-    uploadPoster(this.props.user.uid, file, (err, res) => {
-      if(err) {
-        console.log(err)
-      }
-      else {
-        //updateUser(this.props.user.uid, {profilePicURL: res.downloadURL});
-      }
-    })
-    // var newData = {
-    //   "AD_appr":"NA",
-    //   "FA_appr":"pending",
-    //   "SO_appr":"NA",
-    //   "clubName": this.props.user.name,
-    //   "clubID": localStorage.getItem('clubID'),
-    //   "FA_name": this.props.user.fa.name
-    // }
-    // var booker_fields={
-    //   'booker_fields':this.state.booker_fields
-    // }
-    // var obj = Object.assign({},booker_fields,this.state.event_fields,result,newData);
-    // console.log('obj = ',obj);
-    // var myRef = firebaseDB.ref('/events/'+'/publicity/').push(obj);
-    // var key = myRef.key;
-    // var scope = this;
-    // firebaseDB.ref('/clubs/'+ scope.props.user.uid +'/my_publicity/').push(key,
-    //   function(res, err) {
-    //     if(err)
-    //       console.log("couldn't be booked ", err);
-    //     else {
-    //       sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
-    //       scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
-    //       scope.setState({finished: true})
-    //     }
-    //   });
+    var files = this.state.files;
+    var newData = {
+      "AD_appr":this.props.user.isSC ? "pending" : "NA",
+      "FA_appr":this.props.user.isSC ? "approved" : "pending",
+      "SO_appr":"NA",
+      "clubName": this.props.user.name,
+      "clubID": this.props.user.uid,
+      "FA_name": this.props.user.fa.name,
+      "FA_date": this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null
+    }
+    var booker_fields={
+      'booker_fields':this.state.booker_fields
+    }
+    var fields = this.state.event_fields;
+    fields['start_date'] = moment(this.state.event_fields['start_date'], 'DD-MM-YYYY').format('DD-MM-YYYY');
+    fields['end_date'] = moment(this.state.event_fields['end_date'], 'DD-MM-YYYY').format('DD-MM-YYYY');
 
-      
+    newData = Object.assign({},newData,booker_fields,fields);
+    var publicityID = newData.clubID.slice(0,4);
+    publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0,4));
+    publicityID = publicityID.concat(new Date().getTime()%1000000);
+    var files_poster = {};
+    var obj = Object.assign({},result,newData);
+
+    Promise.all(files.map(file => storage.ref().child(`uid/${publicityID}/${file.name}`).put(file).then(response => response.downloadURL))).then(
+      urls => {
+        obj['files'] = urls;
+        this.handleDBSubmit(obj,publicityID);
+      })
+  }
+
+  handleDBSubmit(obj,publicityID) {
+    firebaseDB.ref('/publicity/').child(publicityID).set(obj);
+    var scope = this;
+    firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(publicityID,
+      function(res, err) {
+        if(err)
+          console.log("couldn't be booked ", err);
+        else {
+          sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
+          scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
+          scope.setState({finished: true})
+        }
+      });
+
   }
 
   parseMediums(){
@@ -171,6 +166,7 @@ class PublicityComponent extends React.Component {
    }
   return result;
   }
+
   updateFormState(bookForm,eventForm){
     if(bookForm===false || eventForm===false){
       this.setState({
@@ -185,36 +181,44 @@ class PublicityComponent extends React.Component {
       })
     }
   }
-  updateShared(shared_value){
-    this.setState({checked: shared_value})
+
+  updateShared(checked){
+    this.setState({checked: checked})
   }
+
+  updateValidation(isFormValid){
+    this.setState({isFormValid: isFormValid});
+  }
+
   updateFiles(files){
     this.setState({files: files})
   }
+
   updateBooker(fields){
-    this.setState({
-      booker_fields:fields
-    })
+    this.setState({booker_fields:fields})
   }
+
   updateEvent(fields){
     this.setState({
-      event_fields:fields
+      event_fields:fields,
+      start_date: fields['start_date'],
+      end_date: fields['end_date']
     })
   }
+
   updateToggle(toggle){
-    this.setState({
-      indexes: toggle
-    })
+    this.setState({indexes: toggle});
   }
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <BookerContainer fields={this.state.booker_fields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
+        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <BookerContainer fields={this.state.booker_fields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 1:
-        return (<div style = {{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
+        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} isFormValid={this.state.isFormValid} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
-        return  (<div>
-                 <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} />      
+        return  (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
+                 <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} updateValidation={this.updateValidation.bind(this)}/>      
         
           </div>);
       default:

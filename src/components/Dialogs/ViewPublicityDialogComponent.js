@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar'
 import {connect} from 'react-redux'
 
 const styles = {
@@ -29,6 +30,9 @@ class Dialogxx extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({open: nextProps.open})
   }
+  handleFileDownload(file) {
+    window.open(file);
+  }
   renderLocation(location){
     if(location){
       return (<div>
@@ -40,6 +44,19 @@ class Dialogxx extends Component {
     </div>)
     }
     else return <div> </div>
+  }
+  renderPosters(){
+    console.log(this.props.currentEvent.files);
+
+    return (<div> 
+     {this.props.currentEvent.files.map(file=>
+                  <Avatar
+                    src={file}
+                    size={100}
+                    onClick={this.handleFileDownload.bind(this,file)}
+                  />
+      ) }
+     </div>)
   }
   render() {
     const FA_actions = [
@@ -92,14 +109,16 @@ class Dialogxx extends Component {
     return (
       <div>
         <Dialog
-          title={this.props.currentEvent.title}
+          title={this.props.currentEvent.clubName}
           actions={this.props.user && this.props.user.isClub ? Club_actions : FA_actions}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
-          contentStyle={{width: this.props.isMobile ? '97%' : '60%', maxWidth: 'none'}}
+          contentStyle={{width: this.props.isMobile ? '97%' : '60%'}}
+          actionsContainerStyle={{backgroundColor: 'rgb(248, 248, 248)'}}
+          titleStyle={{backgroundColor: 'rgb(240, 240, 240)', fontWeight: 700}}
+          bodyStyle={{marginTop: 15}}
         >
-        
         <div>
           <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Title</p>
@@ -113,10 +132,24 @@ class Dialogxx extends Component {
             <p style={styles.label}>End Date</p>
             <p style={styles.value}>{this.props.currentEvent.end_date}</p>
           </div>
-
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Name</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_name}</p>
+          </div>
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Email</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_email}</p>
+          </div>
+          <div style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+            <p style={styles.label}>Booker Contact</p>
+            <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_contact}</p>
+          </div>
           <div hidden={!(this.props.currentEvent.Poster)} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>Poster</p>
             <p style={styles.value}>{this.renderLocation(this.props.currentEvent.Poster)} </p>
+          </div>
+          <div hidden={!(this.props.currentEvent.Poster)} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
+              {this.props.currentEvent.files && this.renderPosters()}
           </div>
 
           <div hidden={!(this.props.currentEvent['Digital Board'])} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
@@ -133,7 +166,6 @@ class Dialogxx extends Component {
             <p style={styles.value}>{this.renderLocation(this.props.currentEvent.Banner)} </p>
           </div>
 
-
           <div hidden={!((this.props.currentEvent.FA_appr == 'flagged') || (this.props.currentEvent.FA_appr == 'rejected'))} style={{border: '1px solid black', display: 'flex', alignItems: 'center'}}>
             <p style={styles.label}>{this.props.currentEvent.FA_appr} by FA</p>
             <p style={styles.value}>{this.props.currentEvent.FA_msg}</p>
@@ -146,6 +178,7 @@ class Dialogxx extends Component {
             <p style={styles.label}>{this.props.currentEvent.SO_appr} by SO</p>
             <p style={styles.value}>{this.props.currentEvent.SO_msg}</p>
           </div>
+
         </div>
 
         </Dialog>
