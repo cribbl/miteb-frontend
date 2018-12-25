@@ -87,7 +87,7 @@ export const sendPush = (uid, title, body, icon) => {
         title: title,
         body: body,
         icon: icon || 'https://laracasts.com/images/series/circles/do-you-react.png',
-        click_action: process.env.NODE_ENV === 'production' ? 'https://prod.cribblservices.com' : null
+        click_action: process.env.REACT_APP_SERVER === 'production' ? 'https://prod.cribblservices.com' : 'https://staging.cribblservices.com'
       }
     }
   }
