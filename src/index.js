@@ -12,6 +12,7 @@ import DevelopersComponent from './components/DevelopersComponent/DevelopersComp
 
 import ClassroomComponent from './components/ClassroomComponent/ClassroomComponent'
 import MyEventsComponent from './components/ClassroomComponent/MyEventsComponent/MyEventsComponent'
+import SCEventsComponent from './components/ClassroomComponent/MyEventsComponent/SCEventsComponent'
 import FAmyEventsComponent from './components/ClassroomComponent/MyEventsComponent/FAMyEventsComponent'
 import ADeventsComponent from './components/ClassroomComponent/MyEventsComponent/ADEventsComponent'
 import SOeventsComponent from './components/ClassroomComponent/MyEventsComponent/SOEventsComponent'
@@ -57,6 +58,7 @@ ReactDOM.render(
         <Route path='dashboard' component={ClassroomComponent}>
           <IndexRoute component={DashboardComponent} />
           <Route path='myEvents' component={MyEventsComponent} />
+          <Route path='scEvents' component={SCEventsComponent} />
           <Route path='faEvents' component={FAmyEventsComponent} />
           <Route path='adEvents' component={ADeventsComponent} />
           <Route path='soEvents' component={SOeventsComponent} />
