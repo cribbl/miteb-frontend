@@ -122,7 +122,6 @@ class PublicityComponent extends React.Component {
   }
 
   handleDBSubmit(obj,publicityID) {
-    console.log(obj);
     firebaseDB.ref('/publicity/').child(publicityID).set(obj);
     var scope = this;
     firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(publicityID,

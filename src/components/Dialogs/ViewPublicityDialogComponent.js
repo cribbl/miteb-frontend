@@ -46,8 +46,6 @@ class Dialogxx extends Component {
     else return <div> </div>
   }
   renderPosters(){
-    console.log(this.props.currentEvent.files);
-
     return (<div> 
      {this.props.currentEvent.files.map(file=>
                   <Avatar

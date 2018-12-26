@@ -189,7 +189,6 @@ class MyPublicityComponent extends Component {
           this.setState({myArrx})
           this.setState({originalArr: myArrx})
           this.filterAndStore(myArrx);
-           console.log(this.state.myArrx)
         }, this)
       }
     }, this)
