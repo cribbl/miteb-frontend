@@ -20,10 +20,12 @@ class PublicityComponent extends React.Component {
   constructor (props) {
     super(props)
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
+    this.handleNext = this.handleNext.bind(this)
+    this.handlePrev = this.handlePrev.bind(this)
     this.state = {
       checked: [false, false, false, false],
       shouldCheck: false,
-      stepIndex: 2,
+      stepIndex: 0,
       finished: false,
       isFormValid: false,
       bookerFields: {
