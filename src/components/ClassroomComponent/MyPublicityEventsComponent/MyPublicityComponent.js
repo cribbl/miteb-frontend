@@ -247,7 +247,11 @@ class MyPublicityComponent extends Component {
             stripedRows={this.state.stripedRows}
           >
 
-          {this.state.fetching && <CircularProgress />}
+            {this.state.fetching &&
+              <div style={{ textAlign: 'center', marginTop: '10%' }}>
+                <CircularProgress size={60} />
+              </div>
+            }
 
           {
              Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function(event, index) {

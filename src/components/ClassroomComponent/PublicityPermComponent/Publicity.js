@@ -26,6 +26,7 @@ import moment from 'moment'
 import {sendPush} from '../../../Services/NotificationService';
 import Dropzone from 'react-dropzone';
 import {uploadPoster} from '../../../Services/firebaseStorageService';
+import FinishedContainer from './FinishedContainer';
 
 class PublicityComponent extends React.Component {
 	constructor(props){
@@ -48,7 +49,6 @@ class PublicityComponent extends React.Component {
         start_date: null,
         end_date: null
       },
-      //indexes: [],
       SnackBarmessage: '',
       openSnackBar: false,
       autoHideDuration: 3000,
@@ -56,7 +56,8 @@ class PublicityComponent extends React.Component {
               { '0':false, '1':false,'2':false,'3':false},
               { '0':false, '1':false,'2':false,'3':false},
               { '0':false, '1':false,'2':false,'3':false }],
-      files: []
+      files: [],
+      bookedEvent: null
 		
     }
 	};
@@ -121,6 +122,7 @@ class PublicityComponent extends React.Component {
   }
 
   handleDBSubmit(obj,publicityID) {
+    console.log(obj);
     firebaseDB.ref('/publicity/').child(publicityID).set(obj);
     var scope = this;
     firebaseDB.ref('/users/'+ scope.props.user.uid +'/my_publicity/').push(publicityID,
@@ -130,7 +132,7 @@ class PublicityComponent extends React.Component {
         else {
           sendPush(scope.props.user.fa_uid, "Mr. FA, Approval requested!", "Please approve the event titled "+scope.state.event_fields.title+"'")
           scope.setState({SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {}})
-          scope.setState({finished: true})
+          scope.setState({ bookedEvent: obj, finished: true })
         }
       });
 
@@ -242,29 +244,10 @@ class PublicityComponent extends React.Component {
             <StepLabel>Location</StepLabel>
           </Step>
         </Stepper>
-          <div  style={{backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center'}} >
-          {finished ? (
-              <div>
-                <div>
-                  Sit back and relax! Your event titled '{this.state.event_fields.title}' has been sent for approvals from the 
-                  authorities concerned.
-                  You can track your application under 'Publicity Requests' and we'll notify you via email and sms.
-                </div>
-                <div style = {{marginTop: 20, marginBottom:20}}>
-                <Link to = "dashboard/myPublicity"><RaisedButton label="Publicity Requests" primary={true} style = {{marginRight: (this.props.isMobile?5:'10%')}} /></Link>
-                <Link to = "dashboard/publicity_perm"><RaisedButton label="Request Publicity Permissions"
-                  primary={true} onClick={(event) => {
-                    this.setState({stepIndex: 0, finished: false});
-                    }} /></Link>
-                </div>
-                <Snackbar
-                open={this.state.openSnackBar}
-                message={this.state.SnackBarmessage}
-                autoHideDuration={this.state.autoHideDuration}
-                onRequestClose={this.handleSnackBarClose}
-                />
-              </div>
-          ) : ( 
+        <div style={{ backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+            {this.state.finished ? (
+              <FinishedContainer event={this.state.bookedEvent} />
+            ) : ( 
                 <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
                   <div>{this.getStepContent(this.state.stepIndex)}</div>
                   <div style={{marginBottom:20}}>
