@@ -73,7 +73,7 @@ class MediumContainer extends React.Component {
       };
 
       return(  
-        <a style={{cursor: this.state.checked[3]? 'pointer' : ''}}>
+        <a style={{cursor: this.state.checked[3]? 'pointer' : 'not-allowed'}}>
         <div className="dropzone" style={{marginLeft:50,marginRight:50,border: !this.state.checked[3]? '1px dotted grey' : '1px dotted blue', minHeight:100}}>
          <Dropzone style={{"width" : "100%", "height" : "100%"}} disabled={!this.state.checked[3]} accept="image/*" onDrop={this.onPreviewDrop} multiple={true}>
             <div style={{color: !this.state.checked[3]? 'grey' : 'black'}} > Upload your posters here </div>
