@@ -10,8 +10,8 @@ class FinishedContainer extends Component {
           <img src={require('../../../assets/rocket-loader.gif')} style={{ width: this.props.isMobile ? '98%' : '50%' }} />
         </div>
 
-        <p>{this.props.event && this.props.event.booker_fields.booker_name}, your publicity request titled "<span style={{ fontWeight: 700 }}>{this.props.event && this.props.event.title}</span>" has been requested for approval.</p>
-        <p>We'll notify you via email ({this.props.event && this.props.event.booker_fields.booker_email}) and SMS ({this.props.event && this.props.event.booker_fields.booker_contact})</p>
+        <p>{this.props.event && this.props.event.bookerFields.booker_name}, your publicity request titled "<span style={{ fontWeight: 700 }}>{this.props.event && this.props.event.title}</span>" has been requested for approval.</p>
+        <p>We'll notify you via email ({this.props.event && this.props.event.bookerFields.booker_email}) and SMS ({this.props.event && this.props.event.bookerFields.booker_contact})</p>
         <p>Check live status under <Link to='dashboard/myEvents'>My Events</Link></p>
 
       </div>

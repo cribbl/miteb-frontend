@@ -1,14 +1,25 @@
 import firebase from 'firebase'
 
-var config = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
+var dev = {
+  apiKey: 'AIzaSyAhKIXmaPGeHw_7hX9qfjGecaLCGsLDn4g',
+  authDomain: 'mit-clubs-management.firebaseapp.com',
+  databaseURL: 'https://mit-clubs-management.firebaseio.com',
+  projectId: 'mit-clubs-management',
+  storageBucket: 'mit-clubs-management.appspot.com',
+  messagingSenderId: '330445707440'
 }
 
+var prod = {
+  apiKey: 'AIzaSyDJJdMZ2_0tk4iPEvjEWxc30BgQhJ4kwXw',
+  authDomain: 'staging-mit-event-booking.firebaseapp.com',
+  databaseURL: 'https://staging-mit-event-booking.firebaseio.com',
+  projectId: 'staging-mit-event-booking',
+  storageBucket: 'staging-mit-event-booking.appspot.com',
+  messagingSenderId: '215459692984'
+}
+
+// const config = process.env.REACT_APP_NODE_ENV === 'production' ? prod : dev;
+const config = window.location.host.indexOf('prod') > -1 ? prod : dev
 firebase.initializeApp(config)
 
 export const firebaseDB = firebase.database()
