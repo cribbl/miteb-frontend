@@ -145,7 +145,6 @@ class SO_MyPublicityComponent extends Component {
                 myArrx[child.key].key = child.key
                 scope.setState({myArrx})
                 scope.setState({originalArr: myArrx})                
-                console.log(scope.state.myArrx)
               }
           })
         }, this)
