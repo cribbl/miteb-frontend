@@ -20,6 +20,7 @@ import { connect } from 'react-redux'
 import { firebaseDB } from '../../../firebaseConfig'
 import SearchSortContainer from './SearchSortContainer'
 import ViewEventDialog from '../../Dialogs/ViewEventDialogComponent'
+import PostEventDetailDialog from '../../Dialogs/PostEventDetailDialogComponent'
 import FlagIcon from 'material-ui/svg-icons/action/report-problem'
 import NAIcon from 'material-ui/svg-icons/action/restore'
 import DashIcon from 'material-ui/svg-icons/content/remove'
@@ -34,11 +35,13 @@ class MyEventsComponent extends Component {
   constructor (props) {
     super(props)
     this.showDialog = this.showDialog.bind(this)
+    this.showPostEventDetailDialog = this.showPostEventDetailDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.nextEvent = this.nextEvent.bind(this)
     this.handleIcon = this.handleIcon.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleSort = this.handleSort.bind(this)
+    this.uploadPostEventDetail = this.uploadPostEventDetail.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -53,6 +56,7 @@ class MyEventsComponent extends Component {
       pendingArr: {},
       approvedArr: {},
       dialogOpen: false,
+      postEventDetailDialogOpen: false,
       currentEvent: {},
       fetching: true,
       searchContent: '',
@@ -74,8 +78,19 @@ class MyEventsComponent extends Component {
     this.setState({ currentEvent: event })
   }
 
+  showPostEventDetailDialog (event) {
+    this.setState({ postEventDetailDialogOpen: true, currentEvent: event })
+  }
+
   handleDialogClose () {
-    this.setState({ dialogOpen: false })
+    this.setState({ dialogOpen: false, postEventDetailDialogOpen: false })
+  }
+
+  uploadPostEventDetail (event, message) {
+    this.handleDialogClose()
+    firebaseDB.ref('/events/').child(event.key + '/postEventDetail').set(message)
+    const { dispatch } = this.props
+    dispatch({ type: 'TOASTER', message: 'Post event details updated', toastOpen: true })
   }
 
   nextEvent () {
@@ -189,6 +204,8 @@ class MyEventsComponent extends Component {
 
         <ViewEventDialog open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} />
 
+        <PostEventDetailDialog open={this.state.postEventDetailDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} uploadPostEventDetail={this.uploadPostEventDetail} />
+
         <Paper style={{ width: '98%', height: 500, overflow: 'hidden', marginTop: 20 }} zDepth={2}>
           <Table
             style={{ backgroundColor: '' }}
@@ -257,6 +274,7 @@ class MyEventsComponent extends Component {
                           useLayerForClickAway
                         >
                           <MenuItem primaryText='View' onClick={() => this.showDialog(event)} />
+                          <MenuItem hidden={!event.receiptURL} primaryText='Post Event Details' onClick={() => this.showPostEventDetailDialog(event)} />
                           <MenuItem hidden={!event.receiptURL} primaryText='Download Receipt' onClick={() => { window.location = (event.receiptURL) }} />
                         </IconMenu>}
                       </TableRowColumn>
