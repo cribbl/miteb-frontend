@@ -168,6 +168,10 @@ class ViewEventDialog extends Component {
               <p style={styles.label}>Timings</p>
               <p style={styles.value}>{(moment(this.props.currentEvent.startDate, 'DD-MM-YYYY').format('dddd')) === 'Sunday' ? '9:00 AM to 5:00 PM' : '5:45 PM to 8:00 PM'}</p>
             </div>
+            <div hidden={!this.props.currentEvent.postEventDetail} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
+              <p style={styles.label}>Post Event Details</p>
+              <p style={styles.value}>{this.props.currentEvent.postEventDetail}</p>
+            </div>
             <div hidden={!((this.props.currentEvent.SC_appr === 'flagged') || (this.props.currentEvent.SC_appr === 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>{this.props.currentEvent.SC_appr} by SC</p>
               <p style={styles.value}>{this.props.currentEvent.SC_msg}</p>
@@ -193,15 +197,11 @@ class ViewEventDialog extends Component {
 }
 
 function mapStateToProps (state) {
-  const { openSideNav, isMobile, filter } = state.toggler
-  const { user, verified, vals } = state.authentication
+  const { isMobile } = state.toggler
+  const { user } = state.authentication
   return {
     user,
-    openSideNav,
-    verified,
-    isMobile,
-    vals,
-    filter
+    isMobile
   }
 }
 
