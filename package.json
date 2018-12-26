@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",
-    "babel-core": "6.22.1",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^7.2.3",
     "babel-jest": "18.0.0",
     "babel-loader": "6.2.10",
@@ -43,14 +43,14 @@
     "eslint-config-react-app": "^0.6.2",
     "eslint-loader": "1.6.0",
     "eslint-plugin-flowtype": "2.21.0",
-    "eslint-plugin-import": "2.0.1",
+    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.4.1",
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.10.0",
     "fs-extra": "0.30.0",
     "html-webpack-plugin": "2.24.0",
-    "http-proxy-middleware": "0.17.3",
+    "http-proxy-middleware": "^0.19.1",
     "jest": "18.1.0",
     "json-loader": "0.5.4",
     "object-assign": "4.1.1",
@@ -69,7 +69,9 @@
     "start": "node scripts/start.js",
     "build:stage": "env-cmd .env.staging node scripts/build.js",
     "build:prod": "env-cmd .env.production node scripts/build.js",
-    "test": "standard"
+    "test": "standard",
+    "standard": "standard",
+    "standard::fix": "standard --fix"
   },
   "jest": {
     "collectCoverageFrom": [

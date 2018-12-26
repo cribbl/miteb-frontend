@@ -20,11 +20,10 @@ import BookingComponent from './components/ClassroomComponent/BookingComponent/B
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
 import ApproveClubsComponent from './components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer'
 import PublicityPermComponent from './components/ClassroomComponent/PublicityPermComponent/Publicity'
-import MyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/MyPublicityComponent';
-import FA_MyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/FA_MyPublicityComponent';
-import SO_MyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/SO_MyPublicityComponent';
-import AD_MyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/AD_MyPublicityComponent';
-
+import MyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/MyPublicityComponent'
+import FAMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/FAMyPublicityComponent'
+import SOMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/SOMyPublicityComponent'
+import ADMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/ADMyPublicityComponent'
 
 import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
 import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
@@ -70,11 +69,11 @@ ReactDOM.render(
           <Route path='profile' component={ProfileComponent} />
           <Route path='approveClubs' component={ApproveClubsComponent} />
           <Route path='viewComplaints' component={ViewComplaintsComponent} />
-          <Route path="publicity_perm" component={PublicityPermComponent}></Route>
-          <Route path="myPublicity" component={MyPublicityComponent}></Route>
-          <Route path="faPublicity" component={FA_MyPublicityComponent}></Route>
-          <Route path="adPublicity" component={AD_MyPublicityComponent}></Route>
-          <Route path="soPublicity" component={SO_MyPublicityComponent}></Route>
+          <Route path='publicity_perm' component={PublicityPermComponent} />
+          <Route path='myPublicity' component={MyPublicityComponent} />
+          <Route path='faPublicity' component={FAMyPublicityComponent} />
+          <Route path='adPublicity' component={ADMyPublicityComponent} />
+          <Route path='soPublicity' component={SOMyPublicityComponent} />
         </Route>
         <Route path='*' component={NotFound} />
       </Route>

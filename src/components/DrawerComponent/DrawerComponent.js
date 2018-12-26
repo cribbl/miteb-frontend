@@ -83,11 +83,11 @@ class DrawerComponent extends Component {
               leftIcon={<IconTest color={'#FFFFFF'} />}
               hidden={this.props.user && !this.props.user.isClub} />
 
-            <MenuItem 
-              style = {Object.assign(this.state.activeItem === '/dashboard/publicity_perm'? active: '', menuItemStyle)}
-              key = "/dashboard/publicity_perm"
-              primaryText = "Publicity Permission"
-              leftIcon = {<IconPublicity color = {'#FFFFFF'} />} />
+            <MenuItem
+              style={Object.assign(this.state.activeItem === '/dashboard/publicity_perm' ? active : '', menuItemStyle)}
+              key='/dashboard/publicity_perm'
+              primaryText='Publicity Permission'
+              leftIcon={<IconPublicity color={'#FFFFFF'} />} />
 
             <MenuItem
               style={Object.assign(this.state.activeItem.toLowerCase().indexOf('event') !== -1 ? active : '', menuItemStyle)}
@@ -95,11 +95,11 @@ class DrawerComponent extends Component {
               primaryText='My Events'
               leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
 
-            <MenuItem 
-              style = {Object.assign(this.state.activeItem === '/dashboard/myPublicity'? active: '', menuItemStyle)}
-              key = "/dashboard/myPublicity"
-              primaryText = "Publicity Requests"
-              leftIcon = {<IconAnalytics color = {'#FFFFFF'} />} />
+            <MenuItem
+              style={Object.assign(this.state.activeItem === '/dashboard/myPublicity' ? active : '', menuItemStyle)}
+              key='/dashboard/myPublicity'
+              primaryText='Publicity Requests'
+              leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
 
             {this.props.user && this.props.user.isSC
               ? <MenuItem
