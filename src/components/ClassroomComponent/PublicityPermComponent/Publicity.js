@@ -57,7 +57,8 @@ class PublicityComponent extends React.Component {
               { '0':false, '1':false,'2':false,'3':false},
               { '0':false, '1':false,'2':false,'3':false }],
       files: [],
-      bookedEvent: null
+      bookedEvent: null,
+      disableSubmit: false
 		
     }
 	};
@@ -89,6 +90,7 @@ class PublicityComponent extends React.Component {
   }
 
   handleSubmit() {
+    this.setState({ disableSubmit: true})
     var result = this.parseMediums();
     var files = this.state.files;
     var newData = {
@@ -260,7 +262,7 @@ class PublicityComponent extends React.Component {
                       label={this.state.stepIndex === 2 ? 'Submit' : 'Next'}
                       primary={true}
                       onClick={this.handleNext}
-                      disabled={!this.state.isFormValid || !this.state.stepIndex === 2}
+                      disabled={!this.state.isFormValid || !this.state.stepIndex === 2 || this.state.disableSubmit}
                     />
                   </div>
                </div>
