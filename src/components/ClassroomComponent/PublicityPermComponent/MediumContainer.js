@@ -132,7 +132,7 @@ class MediumContainer extends React.Component {
     var list_sec = ["NLH,AB1,AB2,AB5,IC","XI,XII,XCI,XVII,XVIII","IX,XIII,XIV","FC,Annapoorna,Apoorva"]
       return (<div>
          <List>
-         <Subheader> {medium} </Subheader>
+         <Subheader style={{textAlign: 'center'}}> {medium} </Subheader>
                 {steps.map((step,index) =>  {
                   var a = "" + value + index;
                   return (<ListItem style={{textAlign:'left'}} key={a} secondaryText={list_sec[index]} primaryText={step} rightToggle={<Toggle style={{marginRight:0}} key={a} toggled={(this.state.indexes[value])[index]} onToggle={this.handleToggle.bind(this,value,index)} />} /> 
@@ -145,7 +145,7 @@ class MediumContainer extends React.Component {
   renderMedia() {
     return(<div>
         <List>
-          <Subheader> Media </Subheader>
+          <Subheader style={{textAlign:'center'}}> Media </Subheader>
            <div style={{display:'flex', flexDirection: 'row'}}>
              <Checkbox value={0} checked={this.state.checked[0]} style={{width: 48,height: 48, paddingTop:20, paddingBottom:15}}onCheck={this.updateCheck.bind(this,0)}/>
              <ListItem
