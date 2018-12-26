@@ -245,7 +245,7 @@ class PublicityComponent extends React.Component {
             <StepLabel>Location</StepLabel>
           </Step>
         </Stepper>
-        <div style={{ backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+        <div style={{ backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', justifyContent: 'center' }}>
             {this.state.finished ? (
               <FinishedContainer event={this.state.bookedEvent} />
             ) : ( 
