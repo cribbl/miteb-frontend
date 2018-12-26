@@ -216,9 +216,9 @@ class PublicityComponent extends React.Component {
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <BookerContainer fields={this.state.booker_fields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
+        return (<div style={{width: '100%',minHeight:400,justifyContent:'center',textAlign:'center'}}> <BookerContainer fields={this.state.booker_fields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 1:
-        return (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}> <EventContainer fields={this.state.event_fields} isFormValid={this.state.isFormValid} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
+        return (<div style={{width: '100%',minHeight:400,justifyContent:'center',textAlign:'center'}}> <EventContainer fields={this.state.event_fields} isFormValid={this.state.isFormValid} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)}/></div>);
       case 2:
         return  (<div style={{width: '100%',minHeight:400,justifyContent:'center'}}>
                  <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} updateValidation={this.updateValidation.bind(this)}/>      
@@ -251,7 +251,7 @@ class PublicityComponent extends React.Component {
             ) : ( 
                 <div style={{width: this.props.isMobile ? '95%' : '85%'}}>
                   <div>{this.getStepContent(this.state.stepIndex)}</div>
-                  <div style={{marginBottom:20}}>
+                  <div style={{marginBottom:20, textAlign: 'center'}}>
                     <FlatButton
                       label="Back"
                       hidden={this.state.stepIndex === 0}
