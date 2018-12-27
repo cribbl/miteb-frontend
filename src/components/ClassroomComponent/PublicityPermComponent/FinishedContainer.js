@@ -12,7 +12,7 @@ class FinishedContainer extends Component {
 
         <p>{this.props.event && this.props.event.bookerFields.booker_name}, your publicity request titled "<span style={{ fontWeight: 700 }}>{this.props.event && this.props.event.title}</span>" has been requested for approval.</p>
         <p>We'll notify you via email ({this.props.event && this.props.event.bookerFields.booker_email}) and SMS ({this.props.event && this.props.event.bookerFields.booker_contact})</p>
-        <p>Check live status under <Link to='dashboard/myEvents'>My Events</Link></p>
+        <p>Check live status under <Link to='dashboard/myPublicity'>My Publicity</Link></p>
 
       </div>
     )
