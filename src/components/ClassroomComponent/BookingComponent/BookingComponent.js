@@ -36,7 +36,7 @@ class HorizontalLinearStepper extends React.Component {
     this.handlePrev = this.handlePrev.bind(this)
 
     const maxDate = new Date()
-    maxDate.setMonth(maxDate.getMonth() + 1)
+    maxDate.setDate(maxDate.getDate() + 20)
     maxDate.setHours(0, 0, 0, 0)
 
     this.state = {
