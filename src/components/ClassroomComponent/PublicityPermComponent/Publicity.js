@@ -49,7 +49,6 @@ class PublicityComponent extends React.Component {
       files: [],
       bookedEvent: null,
       disableSubmit: false
-
     }
   };
 
