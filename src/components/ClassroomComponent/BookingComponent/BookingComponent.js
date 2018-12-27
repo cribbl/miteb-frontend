@@ -280,8 +280,9 @@ class BookingComponent extends React.Component {
           'startDate': moment(field['startDate']).format('DD-MM-YYYY'),
           'endDate': moment(field['endDate']).format('DD-MM-YYYY'),
           'rooms': this.state.selectedRooms,
+          'SC_appr': this.props.user.isSC ? 'approved' : 'pending',
+          'FA_appr': this.props.user.isSC ? 'approved' : 'NA',
           'AD_appr': this.props.user.isSC ? 'pending' : 'NA',
-          'FA_appr': this.props.user.isSC ? 'approved' : 'pending',
           'SO_appr': 'NA',
           'booker_name': field['booker_name'],
           'booker_contact': field['booker_contact'],
@@ -311,7 +312,7 @@ class BookingComponent extends React.Component {
           function (res, err) {
             if (err) { console.log("couldn't be booked ", err) } else {
               updateDates(field['startDate'], field['endDate'], scope.state.selectedRooms.concat(scope.state.takenRooms), eventID)
-              sendPush(scope.props.user.fa_uid, 'Dear FA, Approval requested!', 'Please approve the event titled ' + scope.state.fields.title + "'")
+              sendPush('SC', 'Dear SC, Approval requested!', 'Please approve the event by ' + scope.props.user.name + "'")
               scope.setState({ SnackBarmessage: 'Request for booking room successful', openSnackBar: true })
               scope.setState({ bookedEvent: newData, finished: true })
             }

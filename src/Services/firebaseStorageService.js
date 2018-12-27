@@ -1,12 +1,7 @@
 import { storage } from '../firebaseConfig'
 import axios from 'axios'
 
-let baseUrl
-if (window.location.host.indexOf('prod') > -1) {
-  baseUrl = 'https://app-miteventbooking.herokuapp.com'
-} else {
-  baseUrl = 'https://dev-miteventbooking.herokuapp.com'
-}
+const baseUrl = process.env.REACT_APP_BACKEND_API
 
 export const uploadProfilePic = (uid, file, callback) => {
   storage.ref().child(uid + '/profilePic').put(file)
@@ -35,12 +30,12 @@ export const generatePDF = (eventID) => {
     })
 }
 
-export const exportEvents = (view, uid, mode, start_date = null, end_date = null, callback) => {
+export const exportEvents = (view, uid, mode, startDate = null, endDate = null, callback) => {
   let params = {
     uid: uid,
     mode: mode,
-    from: start_date,
-    to: end_date
+    from: startDate,
+    to: endDate
   }
   return axios({
     url: baseUrl + '/' + view + '/generate-sheet',

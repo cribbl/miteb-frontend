@@ -30,14 +30,14 @@ class PublicityComponent extends React.Component {
       isFormValid: false,
       bookerFields: {
         booker_name: '',
-        booker_email: 'random@email.com',
-        booker_contact: '9898989898',
-        booker_reg_no: '150911111'
+        booker_email: '',
+        booker_contact: '',
+        booker_reg_no: ''
       },
       event_fields: {
         title: '',
-        start_date: null,
-        end_date: null
+        startDate: null,
+        endDate: null
       },
       SnackBarmessage: '',
       openSnackBar: false,
@@ -49,7 +49,6 @@ class PublicityComponent extends React.Component {
       files: [],
       bookedEvent: null,
       disableSubmit: false
-
     }
   };
 
@@ -95,8 +94,8 @@ class PublicityComponent extends React.Component {
       'bookerFields': this.state.bookerFields
     }
     var fields = this.state.event_fields
-    fields['start_date'] = moment(this.state.event_fields['start_date'], 'DD-MM-YYYY').format('DD-MM-YYYY')
-    fields['end_date'] = moment(this.state.event_fields['end_date'], 'DD-MM-YYYY').format('DD-MM-YYYY')
+    fields['startDate'] = moment(this.state.event_fields['startDate'], 'DD-MM-YYYY').format('DD-MM-YYYY')
+    fields['endDate'] = moment(this.state.event_fields['endDate'], 'DD-MM-YYYY').format('DD-MM-YYYY')
 
     newData = Object.assign({}, newData, bookerFields, fields)
     var publicityID = newData.clubID.slice(0, 4)
@@ -186,8 +185,8 @@ class PublicityComponent extends React.Component {
   updateEvent (fields) {
     this.setState({
       event_fields: fields,
-      start_date: fields['start_date'],
-      end_date: fields['end_date']
+      startDate: fields['startDate'],
+      endDate: fields['endDate']
     })
   }
 
@@ -198,7 +197,7 @@ class PublicityComponent extends React.Component {
   getStepContent (stepIndex) {
     switch (stepIndex) {
       case 0:
-        return (<div style={{ width: '100%', minHeight: 400, justifyContent: 'center', textAlign: 'center' }}> <BookerContainer fields={this.state.bookerFields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)} /></div>)
+        return (<div style={{ width: '100%', minHeight:400, justifyContent: 'center', textAlign: 'center' }}> <BookerContainer fields={this.state.bookerFields} updateFields={this.updateBooker.bind(this)} updateFormState={this.updateFormState.bind(this)} /></div>)
       case 1:
         return (<div style={{ width: '100%', minHeight: 400, justifyContent: 'center', textAlign: 'center' }}> <EventContainer fields={this.state.event_fields} isFormValid={this.state.isFormValid} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)} /></div>)
       case 2:

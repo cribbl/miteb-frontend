@@ -137,11 +137,11 @@ class ViewEventDialog extends Component {
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Start Date</p>
-              <p style={styles.value}>{moment(this.props.currentEvent.start_date, 'DD-MM-YYYY').format('dddd, DD MMMM YYYY')}</p>
+              <p style={styles.value}>{moment(this.props.currentEvent.startDate, 'DD-MM-YYYY').format('dddd, DD MMMM YYYY')}</p>
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>End Date</p>
-              <p style={styles.value}>{moment(this.props.currentEvent.end_date, 'DD-MM-YYYY').format('dddd, DD MMMM YYYY')}</p>
+              <p style={styles.value}>{moment(this.props.currentEvent.endDate, 'DD-MM-YYYY').format('dddd, DD MMMM YYYY')}</p>
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Rooms</p>
@@ -166,7 +166,11 @@ class ViewEventDialog extends Component {
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Timings</p>
-              <p style={styles.value}>{(moment(this.props.currentEvent.start_date, 'DD-MM-YYYY').format('dddd')) === 'Sunday' ? '9:00 AM to 5:00 PM' : '5:45 PM to 8:00 PM'}</p>
+              <p style={styles.value}>{(moment(this.props.currentEvent.startDate, 'DD-MM-YYYY').format('dddd')) === 'Sunday' ? '9:00 AM to 5:00 PM' : '5:45 PM to 8:00 PM'}</p>
+            </div>
+            <div hidden={!((this.props.currentEvent.SC_appr === 'flagged') || (this.props.currentEvent.SC_appr === 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
+              <p style={styles.label}>{this.props.currentEvent.SC_appr} by SC</p>
+              <p style={styles.value}>{this.props.currentEvent.SC_msg}</p>
             </div>
             <div hidden={!((this.props.currentEvent.FA_appr === 'flagged') || (this.props.currentEvent.FA_appr === 'rejected'))} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>{this.props.currentEvent.FA_appr} by FA</p>

@@ -23,7 +23,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconButton from 'material-ui/IconButton'
 import moment from 'moment'
 
-class SOEventsComponent extends Component {
+class SCEventsComponent extends Component {
   constructor (props) {
     super(props)
     this.approve = this.approve.bind(this)
@@ -72,7 +72,7 @@ class SOEventsComponent extends Component {
 
   approve (event) {
     let scope = this
-    approveEvent(event, 'SO', this.props.user)
+    approveEvent(event, 'SC', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -80,15 +80,17 @@ class SOEventsComponent extends Component {
     this.nextEvent()
   }
 
+  // confirmation dialog for flag/reject
   flagRejectConfirm (event, mode) {
     this.setState({ FlagDialogOpen: true })
     this.setState({ currentEvent: event })
     this.setState({ flagRejectMode: mode })
   }
 
+  // do flag/reject call to dbService
   flagReject (event, message, mode) {
     let scope = this
-    flagRejectEvent(event, message, mode, 'SO', this.props.user)
+    flagRejectEvent(event, message, mode, 'SC', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -123,17 +125,17 @@ class SOEventsComponent extends Component {
   }
 
   componentWillMount () {
-    if (!(this.props.user && this.props.user.isSO)) {
+    if (!(this.props.user && this.props.user.isSC)) {
       hashHistory.push('/auth')
       return
     }
     this.setState({ fetching: true })
     var scope = this
-    firebaseDB.ref('events').orderByChild('SO_appr').equalTo('pending').on('value',
+    firebaseDB.ref('events').orderByChild('SC_appr').equalTo('pending').on('value',
       function (snapshot) {
         scope.setState({ fetching: false })
         snapshot.forEach(function (child) {
-          if (child.val().SO_appr === 'pending') {
+          if (child.val().SC_appr === 'pending') {
             const { myArrx } = scope.state
             myArrx[child.key] = child.val()
             myArrx[child.key].key = child.key
@@ -178,7 +180,7 @@ class SOEventsComponent extends Component {
               adjustForCheckbox={this.state.showCheckboxes}
               enableSelectAll={this.state.enableSelectAll}
             >
-              <TableRow style={{ backgroundColor: '#EFF0F2' }}>
+              <TableRow style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>CLUB NAME</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }} hidden={this.props.isMobile}>TITLE</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>START DATE</TableHeaderColumn>
@@ -249,4 +251,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(SOEventsComponent)
+export default connect(mapStateToProps)(SCEventsComponent)

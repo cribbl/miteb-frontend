@@ -9,15 +9,6 @@ class BookerContainer extends React.Component {
     this.handleBlur = this.handleBlur.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.state = {
-      // fields: {
-      //   booker_name: '',
-      //   booker_email: 'random@email.com',
-      //   booker_contact: '9898989898',
-      //   booker_reg_no: '150911111',
-      //   title: '',
-      //   desc: 'Some random description of a random event of this random Dummy MIT Club',
-      //   workshop: 'External'
-      // },
       fieldTouch: {
         booker_name: false,
         booker_email: false,
@@ -123,7 +114,7 @@ class BookerContainer extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div style={{ marginBottom: 60 }}>
         <TextField
           floatingLabelText='Name *'
           type='text'

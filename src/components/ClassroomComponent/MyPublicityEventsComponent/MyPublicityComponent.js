@@ -102,8 +102,8 @@ class MyPublicityComponent extends Component {
     var scope = this
     var myArrx = this.state.originalArr
     myArrx = Object.values(myArrx).sort(function (a, b) {
-      var aDate = moment(a.start_date, 'DD-MM-YYYY')
-      var bDate = moment(b.start_date, 'DD-MM-YYYY')
+      var aDate = moment(a.startDate, 'DD-MM-YYYY')
+      var bDate = moment(b.startDate, 'DD-MM-YYYY')
       if (scope.state.dateSort === 'des') { return (aDate - bDate) }
       return (bDate - aDate)
     })
@@ -236,8 +236,8 @@ class MyPublicityComponent extends Component {
                   return (
                     <TableRow key={index}>
                       <TableRowColumn style={{ width: this.props.isMobile ? '38%' : '20%' }}>{event.title}</TableRowColumn>
-                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.start_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.startDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.endDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
                       <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
                       <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
                       <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>

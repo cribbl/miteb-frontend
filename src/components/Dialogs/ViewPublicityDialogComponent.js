@@ -56,6 +56,7 @@ class Dialogxx extends Component {
     </div>)
   }
   render () {
+    console.log(this.props.currentEvent)
     const FAActions = [
       <FlatButton
         label='Cancel'
@@ -123,23 +124,23 @@ class Dialogxx extends Component {
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Start Date</p>
-              <p style={styles.value}>{this.props.currentEvent.start_date}</p>
+              <p style={styles.value}>{this.props.currentEvent.startDate}</p>
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>End Date</p>
-              <p style={styles.value}>{this.props.currentEvent.end_date}</p>
+              <p style={styles.value}>{this.props.currentEvent.endDate}</p>
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Booker Name</p>
-              <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_name}</p>
+              <p style={styles.value}>{this.props.currentEvent.bookerFields && this.props.currentEvent.bookerFields.booker_name}</p>
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Booker Email</p>
-              <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_email}</p>
+              <p style={styles.value}>{this.props.currentEvent.bookerFields && this.props.currentEvent.bookerFields.booker_email}</p>
             </div>
             <div style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Booker Contact</p>
-              <p style={styles.value}>{this.props.currentEvent.booker_fields && this.props.currentEvent.booker_fields.booker_contact}</p>
+              <p style={styles.value}>{this.props.currentEvent.bookerFields && this.props.currentEvent.bookerFields.booker_contact}</p>
             </div>
             <div hidden={!(this.props.currentEvent.Poster)} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>Poster</p>
@@ -185,15 +186,11 @@ class Dialogxx extends Component {
 }
 
 function mapStateToProps (state) {
-  const { openSideNav, isMobile, filter } = state.toggler
-  const { user, verified, vals } = state.authentication
+  const { isMobile } = state.toggler
+  const { user } = state.authentication
   return {
     user,
-    openSideNav,
-    verified,
     isMobile,
-    vals,
-    filter
   }
 }
 
