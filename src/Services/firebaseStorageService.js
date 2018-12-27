@@ -26,12 +26,12 @@ export const generatePDF = (eventID) => {
     })
 }
 
-export const exportEvents = (view, uid, mode, start_date = null, end_date = null, callback) => {
+export const exportEvents = (view, uid, mode, startDate = null, endDate = null, callback) => {
   let params = {
     uid: uid,
     mode: mode,
-    from: start_date,
-    to: end_date
+    from: startDate,
+    to: endDate
   }
   return axios({
     url: baseUrl + '/' + view + '/generate-sheet',
