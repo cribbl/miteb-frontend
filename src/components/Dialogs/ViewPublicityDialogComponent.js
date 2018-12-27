@@ -184,7 +184,7 @@ class Dialogxx extends Component {
 }
 
 function mapStateToProps (state) {
-  const { openSideNav, isMobile, filter } = state.toggler
+  const { isMobile } = state.toggler
   const { user } = state.authentication
   return {
     user,
