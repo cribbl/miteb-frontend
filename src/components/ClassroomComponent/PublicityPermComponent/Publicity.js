@@ -71,7 +71,7 @@ class PublicityComponent extends React.Component {
     if (stepIndex > 0) {
       this.setState({ stepIndex: stepIndex - 1, isFormValid: true })
     }
-  };
+  }
 
   handleSnackBarClose () {
     this.setState({ openSnackBar: false })
