@@ -153,7 +153,6 @@ class Dialogxx extends Component {
               <p style={styles.label}>Digital Board</p>
               <p style={styles.value}>{this.renderLocation(this.props.currentEvent['Digital Board'])} </p>
             </div>
-
             <div hidden={!(this.props.currentEvent.InfoDesk)} style={{ border: '1px solid black', display: 'flex', alignItems: 'center' }}>
               <p style={styles.label}>InfoDesk</p>
               <p style={styles.value}>{this.renderLocation(this.props.currentEvent.InfoDesk)} </p>
