@@ -34,10 +34,9 @@ class RoomsContainer extends Component {
       let index = temp.indexOf(id)
       temp.splice(index, 1)
     } else {
-      if (temp.length >= 4) {
-        console.log('Max 4 rooms allowed')
+      if (temp.length >= 3) {
         const { dispatch } = this.props
-        dispatch({ type: 'TOASTER', message: 'Maximum 4 rooms allowed!', toastOpen: true })
+        dispatch({ type: 'TOASTER', message: 'Maximum 3 rooms allowed at once!', toastOpen: true })
         return
       }
       temp.push(id)
@@ -221,14 +220,11 @@ class RoomsContainer extends Component {
 }
 
 function mapStateToProps (state) {
-  const { openSideNav, isMobile, filter } = state.toggler
-  const { user, verified } = state.authentication
+  const { isMobile } = state.toggler
+  const { user } = state.authentication
   return {
     user,
-    openSideNav,
-    verified,
-    isMobile,
-    filter
+    isMobile
   }
 }
 
