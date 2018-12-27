@@ -31,7 +31,7 @@ class PublicityComponent extends React.Component {
       bookerFields: {
         booker_name: '',
         booker_email: '',
-        booker_contact: '9898989898',
+        booker_contact: '',
         booker_reg_no: ''
       },
       event_fields: {
