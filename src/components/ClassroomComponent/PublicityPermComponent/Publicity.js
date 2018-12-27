@@ -30,7 +30,7 @@ class PublicityComponent extends React.Component {
       isFormValid: false,
       bookerFields: {
         booker_name: '',
-        booker_email: 'random@email.com',
+        booker_email: '',
         booker_contact: '9898989898',
         booker_reg_no: ''
       },
