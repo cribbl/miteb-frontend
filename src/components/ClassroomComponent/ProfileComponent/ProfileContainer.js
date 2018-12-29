@@ -39,8 +39,7 @@ class ProfileContainer extends Component {
     this.props.user && this.setState({
       tempUser: {
         name: this.props.user.name,
-        primaryContact: this.props.user.primaryContact,
-        abbrv: this.props.user.abbrv
+        primaryContact: this.props.user.primaryContact
       },
       defaultProfilePic: !(this.props.user.profilePicURL)
     })
@@ -186,8 +185,8 @@ class ProfileContainer extends Component {
               <TextField
                 floatingLabelText='Name Abbreviation'
                 type='text'
-                value={this.state.tempUser && this.state.tempUser.abbrv}
-                onChange={(event) => this.handleChange(event, 'abbrv')}
+                value={this.state.tempUser && this.props.user.abbrv}
+                disabled
               />
 
               <TextField
