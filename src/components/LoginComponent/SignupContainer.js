@@ -118,6 +118,7 @@ class SignupContainer extends Component {
       this.setState({ showProgress: false })
       if (err) {
         this.setState({ errorMessage: err.message })
+      } else {
         console.log(res)
         this.setState({ signupSuccess: true, newUser: res })
         // this.handleCounter();
