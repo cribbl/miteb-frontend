@@ -39,8 +39,7 @@ class ProfileContainer extends Component {
     this.props.user && this.setState({
       tempUser: {
         name: this.props.user.name,
-        primaryContact: this.props.user.primaryContact,
-        abbrv: this.props.user.abbrv
+        primaryContact: this.props.user.primaryContact
       },
       defaultProfilePic: !(this.props.user.profilePicURL)
     })
@@ -177,17 +176,17 @@ class ProfileContainer extends Component {
 
             <div style={{ backgroundColor: '', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%' }}>
               <TextField
-                floatingLabelText='Name'
+                floatingLabelText='Club Name'
                 type='text'
                 value={this.state.tempUser && this.state.tempUser.name}
                 onChange={(event) => this.handleChange(event, 'name')}
               />
 
               <TextField
-                floatingLabelText='Name Abbreviation'
+                floatingLabelText='Club Name Abbreviation'
                 type='text'
-                value={this.state.tempUser && this.state.tempUser.abbrv}
-                onChange={(event) => this.handleChange(event, 'abbrv')}
+                value={this.state.tempUser && this.props.user.abbrv}
+                disabled
               />
 
               <TextField
@@ -195,7 +194,6 @@ class ProfileContainer extends Component {
                 type='text'
                 value={this.props.user && this.props.user.email}
                 disabled
-                errorText={this.state.errors[1]}
               />
 
               <TextField
