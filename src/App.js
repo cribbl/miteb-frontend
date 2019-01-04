@@ -16,7 +16,6 @@ class App extends Component {
     if (process.env.NODE_ENV === 'production') {
       console.log = noop
       console.warn = noop
-      console.error = noop
     }
   }
 
