@@ -26,7 +26,7 @@ export const sendEmail = (senderName, senderEmail, to, defaultPurpose, subject =
     })
 }
 
-export const sendEmailTemplate = (authority = null, mode, message, clubName, clubEmail, bookerName, bookerEmail, eventName, receipt_url = null) => {
+export const sendEmailTemplate = (authority = null, mode, message, clubName, clubEmail, bookerName, bookerEmail, eventName, eventId) => {
   let params = {
     authority: authority,
     mode: mode,
@@ -36,7 +36,7 @@ export const sendEmailTemplate = (authority = null, mode, message, clubName, clu
     booker_name: bookerName,
     booker_email: bookerEmail,
     event_name: eventName,
-    receipt_url: receipt_url
+    event_id: eventId
   }
 
   axios.get(baseUrl + '/notif/send-email-template', { params })

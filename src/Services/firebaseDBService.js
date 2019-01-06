@@ -171,8 +171,6 @@ export const approveEvent = (event, approver, user) => {
     case 'SO': {
       // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Approved by Security Officer", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Security Officer, "+user.name+".</p>");
 
-      sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, 'https://s3.amazonaws.com/miteb/' + event.key + '.pdf')
-
       // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Cribbl Services</p>");
       let num = (event.booker_contact).substr((event.booker_contact).length - 10)
       sendSMS('+91' + num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services")
@@ -181,6 +179,7 @@ export const approveEvent = (event, approver, user) => {
       firebaseDB.ref('/events/').child(event.key + '/SO_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('approved')
       generatePDF(event.key)
+      sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
     }
   }
 }
@@ -195,7 +194,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
       }
       // sendEmail("SC", user.email, event.booker_email, "FA_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Faculty Advisor", "Uh-huh! Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('SC', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, 'https://s3.amazonaws.com/miteb/' + event.key + '.pdf')
+      sendEmailTemplate('SC', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
       sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by SC', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by SC')
       firebaseDB.ref('/events/').child(event.key + '/SC_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/SC_appr').set(_mode)
@@ -208,7 +207,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
       }
       // sendEmail("FA", user.email, event.booker_email, "FA_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Faculty Advisor", "Uh-huh! Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('FA', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, 'https://s3.amazonaws.com/miteb/' + event.key + '.pdf')
+      sendEmailTemplate('FA', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
       sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by FA', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by FA')
       firebaseDB.ref('/events/').child(event.key + '/FA_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/FA_appr').set(_mode)
@@ -220,7 +219,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
       }
       // sendEmail("AD", user.email, event.booker_email, "AD_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Associate Director", "Uh-huh! Your event has been "+_mode+" by the Associate Director, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Associate Director, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('AD', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, 'https://s3.amazonaws.com/miteb/' + event.key + '.pdf')
+      sendEmailTemplate('AD', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
       sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by AD', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by AD')
       firebaseDB.ref('/events/').child(event.key + '/AD_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/AD_appr').set(_mode)
@@ -229,7 +228,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
     }
     case 'SO': {
       // sendEmail("FA", user.email, event.booker_email, "SO_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Security Officer", "Uh-huh! Your event has been "+_mode+" by the Security Officer, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Security Officer, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('SO', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, 'https://s3.amazonaws.com/miteb/' + event.key + '.pdf')
+      sendEmailTemplate('SO', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
       sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by SO', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by SO')
       firebaseDB.ref('/events/').child(event.key + '/SO_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/SO_appr').set(_mode)
