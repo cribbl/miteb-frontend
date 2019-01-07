@@ -121,16 +121,16 @@ class RoomsContainer extends Component {
               <MyRaisedButton id={3105} />
             </div> */}
             <div style={styles.buttonsRow}>
-              {/* <MyRaisedButton id={3202} />
-              <MyRaisedButton id={3203} />
+              <MyRaisedButton id={3202} />
+              {/* <MyRaisedButton id={3203} /> DIRECTOR */}
               <MyRaisedButton id={3204} />
-              <MyRaisedButton id={3205} /> SC */}
+              <MyRaisedButton id={3205} />
             </div>
             <div style={styles.buttonsRow}>
               {/* <MyRaisedButton id={3302} /> PARIKSHIT */}
               <MyRaisedButton id={3303} />
-              {/* <MyRaisedButton id={3304} />
-              <MyRaisedButton id={3305} /> SC */}
+              <MyRaisedButton id={3304} />
+              <MyRaisedButton id={3305} />
             </div>
             <div style={styles.buttonsRow}>
               <MyRaisedButton id={3402} />
