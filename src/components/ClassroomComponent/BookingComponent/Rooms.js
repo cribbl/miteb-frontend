@@ -114,12 +114,12 @@ class RoomsContainer extends Component {
 
           <div style={{ width: this.props.isMobile ? '100%' : '35%', backgroundColor: '', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
             <h4>NLH</h4>
-            <div style={styles.buttonsRow}>
+            {/* <div style={styles.buttonsRow}>
               <MyRaisedButton id={3102} />
               <MyRaisedButton id={3103} />
               <MyRaisedButton id={3104} />
               <MyRaisedButton id={3105} />
-            </div>
+            </div> */}
             <div style={styles.buttonsRow}>
               {/* <MyRaisedButton id={3202} />
               <MyRaisedButton id={3203} />
