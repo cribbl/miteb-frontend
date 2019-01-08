@@ -6,9 +6,11 @@ import Toggle from 'material-ui/Toggle'
 import Divider from 'material-ui/Divider'
 import Badge from 'material-ui/Badge'
 import Subheader from 'material-ui/Subheader'
-import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/content/remove-circle'
 import Dropzone from 'react-dropzone'
+import TextField from 'material-ui/TextField'
+import IconButton from 'material-ui/IconButton'
+
 
 class MediumContainer extends React.Component {
   constructor (props) {
@@ -22,8 +24,8 @@ class MediumContainer extends React.Component {
       clickedValue: 0,
       indexes: this.props.indexesMediums,
       object: { 0: 'Banner', 1: 'InfoDesk', 2: 'Digital Board', 3: 'Poster' },
-      files: this.props.filesMediums
-
+      files: this.props.filesMediums,
+      fields: this.props.fields
     }
   }
 
@@ -41,9 +43,9 @@ class MediumContainer extends React.Component {
     })
   }
 
-  onPreviewDrop (files) {
+  onPreviewDrop = (files) => {
     this.setState({
-      files: this.state.files.concat(files)
+      files: this.state.files.concat(files),
     })
     this.props.updateFiles(this.state.files)
   }
@@ -117,25 +119,49 @@ class MediumContainer extends React.Component {
     this.setState({ checkedArray })
     this.validationMedia()
     this.props.updateShared(this.state.checked)
-  };
+  }
+
+  handleChange(field,e) {
+    let fields = this.state.fields
+    fields[field] = e.target.value
+    this.setState({ fields })
+    this.props.updateInfo(fields)
+  }
 
   renderCard () {
     var value = this.state.clickedValue
     var medium = this.state.object[value]
-    var steps = ['Academic Blocks', 'First Years Hostel Blocks', 'Senior Hostel Blocks', 'Mess']
+    var steps = ['Academics Blocks', 'First Years Hostel Blocks', 'Senior Hostel Blocks', 'Mess']
     var listSec = ['NLH,AB1,AB2,AB5,IC', 'XI,XII,XCI,XVII,XVIII', 'IX,XIII,XIV', 'FC,Annapoorna,Apoorva']
     return (<div>
       <List>
         <Subheader style={{ textAlign: 'center' }}> {medium} </Subheader>
         {steps.map((step, index) => {
           var a = '' + value + index
-          return (<ListItem style={{ textAlign: 'left' }} key={a} secondaryText={listSec[index]} primaryText={step} rightToggle={<Toggle style={{ marginRight: 0 }} key={a} toggled={(this.state.indexes[value])[index]} onToggle={this.handleToggle.bind(this, value, index)} />} />
+          return (<ListItem style={{ textAlign: 'left' }} key={a} hidden={medium === 'InfoDesk' && (index === 1 || index === 2)} secondaryText={listSec[index]} primaryText={step} rightToggle={<Toggle style={{ marginRight: 0 }} key={a} toggled={(this.state.indexes[value])[index]} onToggle={this.handleToggle.bind(this, value, index)} />} />
           )
         })}
+        {medium === 'InfoDesk' && 
+          <div style={{marginLeft:20,marginTop:0, position:'relative'}}>
+            <TextField
+                floatingLabelText='Number of desks'
+                type="number"
+                onChange={this.handleChange.bind(this, 'noDesks')}
+                underlineShow={true}
+                required
+              />
+            <TextField
+              floatingLabelText="Others"
+              onChange={this.handleChange.bind(this, 'otherInfo')}
+              type="text"
+              required
+              />
+          </div>
+        }
       </List>
     </div>)
   }
-
+  
   renderMedia () {
     return (<div>
       <List>
@@ -156,7 +182,6 @@ class MediumContainer extends React.Component {
             onClick={this.handleClick.bind(this, 1)}
             primaryText='InfoDesk'
           />
-
         </div>
         <Divider />
         <div style={{ display: 'flex', flexDirection: 'row' }}>

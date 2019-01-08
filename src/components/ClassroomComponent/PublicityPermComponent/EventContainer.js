@@ -143,7 +143,6 @@ class EventContainer extends React.Component {
             autoOk
             onChange={this.handleEndDate}
             value={this.props.fields['endDate']}
-            shouldDisableDate={this.day}
             disableYearSelection
             minDate={self.state.startDate ? self.state.startDate : self.state.minDate}
             maxDate={this.state.maxDate}

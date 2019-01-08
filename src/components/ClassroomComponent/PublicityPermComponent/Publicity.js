@@ -39,6 +39,7 @@ class PublicityComponent extends React.Component {
         startDate: null,
         endDate: null
       },
+      fields: {},
       SnackBarmessage: '',
       openSnackBar: false,
       autoHideDuration: 3000,
@@ -50,7 +51,7 @@ class PublicityComponent extends React.Component {
       bookedEvent: null,
       disableSubmit: false
     }
-  };
+  }
 
   componentWillMount () {
     this.setState({
@@ -64,7 +65,7 @@ class PublicityComponent extends React.Component {
       this.setState({ stepIndex: stepIndex + 1 })
     }
     if (this.state.stepIndex === 2) { this.handleSubmit() }
-  };
+  }
 
   handlePrev () {
     const { stepIndex } = this.state
@@ -97,7 +98,7 @@ class PublicityComponent extends React.Component {
     fields['startDate'] = moment(this.state.event_fields['startDate'], 'DD-MM-YYYY').format('DD-MM-YYYY')
     fields['endDate'] = moment(this.state.event_fields['endDate'], 'DD-MM-YYYY').format('DD-MM-YYYY')
 
-    newData = Object.assign({}, newData, bookerFields, fields)
+    newData = Object.assign({}, newData, bookerFields, fields, this.state.fields)
     var publicityID = newData.clubID.slice(0, 4)
     publicityID = publicityID.concat(this.state.event_fields['title'].toLowerCase().slice(0, 4))
     publicityID = publicityID.concat(new Date().getTime() % 1000000)
@@ -182,6 +183,10 @@ class PublicityComponent extends React.Component {
     this.setState({ bookerFields: fields })
   }
 
+  updateInfo (fields) {
+    this.setState({ fields: fields })
+  }
+
   updateEvent (fields) {
     this.setState({
       event_fields: fields,
@@ -202,13 +207,14 @@ class PublicityComponent extends React.Component {
         return (<div style={{ width: '100%', minHeight: 400, justifyContent: 'center', textAlign: 'center' }}> <EventContainer fields={this.state.event_fields} isFormValid={this.state.isFormValid} updateFields={this.updateEvent.bind(this)} updateFormState={this.updateFormState.bind(this)} /></div>)
       case 2:
         return (<div style={{ width: '100%', minHeight: 400, justifyContent: 'center' }}>
-          <MediumContainer indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} updateValidation={this.updateValidation.bind(this)} />
+          <MediumContainer fields={this.state.fields} indexesMediums={this.state.indexes} filesMediums={this.state.files} checkedMediums={this.state.checked} updateInfo={this.updateInfo.bind(this)} updateFiles={this.updateFiles.bind(this)} updateShared={this.updateShared.bind(this)} updateToggle={this.updateToggle.bind(this)} updateValidation={this.updateValidation.bind(this)} />
 
         </div>)
       default:
         return ''
     }
   }
+
   render () {
     var stepIndex = this.state.stepIndex
     return (
