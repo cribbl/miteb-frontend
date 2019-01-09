@@ -38,9 +38,9 @@ class ViewEventDialog extends Component {
     rooms.forEach(function (room) {
       let block
       let roomNo
-      if (room === '53101' || room === '53102') {
+      if (room === 53101 || room === 53102) {
         block = roomBlock[4]
-        roomNo = room === '53101' ? '310A' : '310B'
+        roomNo = room === 53101 ? '310A' : '310B'
       } else {
         block = Math.floor(room / 1000) - 1
         roomNo = room % 1000
