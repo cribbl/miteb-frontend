@@ -9,6 +9,7 @@ import IconAnalytics from 'material-ui/svg-icons/editor/insert-chart'
 import IconTest from 'material-ui/svg-icons/editor/mode-edit'
 import IconProfile from 'material-ui/svg-icons/social/person'
 import ComplaintIcon from 'material-ui/svg-icons/av/new-releases'
+import VisibilityIcon from 'material-ui/svg-icons/action/visibility'
 
 import { connect } from 'react-redux'
 import { toggleActions } from '../../actions/toggleActions'
@@ -94,6 +95,15 @@ class DrawerComponent extends Component {
                 key='/dashboard/approveClubs'
                 primaryText='Approve Clubs'
                 leftIcon={<ActionCheckCircle color={'#FFFFFF'} />}
+              />
+              : null}
+
+            {this.props.user && (this.props.user.isSC || this.props.user.uid === 'ops8704')
+              ? <MenuItem
+                style={Object.assign(this.state.activeItem === '/dashboard/bookings' ? active : '', menuItemStyle)}
+                key='/dashboard/bookings'
+                primaryText='View Bookings'
+                leftIcon={<VisibilityIcon color={'#FFFFFF'} />}
               />
               : null}
 
