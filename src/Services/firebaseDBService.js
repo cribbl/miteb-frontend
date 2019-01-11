@@ -88,6 +88,7 @@ export const getBookingDetails = (date, room) => {
               resolve(x)
             }
           }
+          reject(new Error('Event not found in database'))
         }
       )
       .catch((err) => {
