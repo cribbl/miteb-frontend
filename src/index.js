@@ -20,6 +20,7 @@ import DashboardComponent from './components/ClassroomComponent/DashboardCompone
 import BookingComponent from './components/ClassroomComponent/BookingComponent/BookingComponent'
 import ProfileComponent from './components/ClassroomComponent/ProfileComponent/Profile'
 import ApproveClubsComponent from './components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer'
+import ViewBookingsComponent from './components/ClassroomComponent/ViewBookings/ViewBookingsComponent'
 
 import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
 import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
@@ -63,6 +64,7 @@ ReactDOM.render(
           <Route path='adEvents' component={ADeventsComponent} />
           <Route path='soEvents' component={SOeventsComponent} />
           <Route path='book_room' component={BookingComponent} />
+          <Route path='bookings' component={ViewBookingsComponent} />
           <Route path='profile' component={ProfileComponent} />
           <Route path='approveClubs' component={ApproveClubsComponent} />
           <Route path='viewComplaints' component={ViewComplaintsComponent} />
