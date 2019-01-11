@@ -43,7 +43,7 @@ export const getMyEvents = (clubID, callback) => {
   }
   firebaseDB.ref('/users/' + clubID).on('value',
     function (snapshot) {
-    // console.log('outer snapshot')
+      // console.log('outer snapshot')
       let user = snapshot.val()
       user['uid'] = snapshot.key
       // store.dispatch({type: "USER_UPDATE", user})
@@ -71,6 +71,29 @@ export const getDisabledDates = (callback) => {
       }
       callback(temp)
     })
+}
+
+export const getBookingDetails = (date, room) => {
+  return new Promise((resolve, reject) => {
+    firebaseDB.ref('/events/').once('value')
+      .then(
+        function (snapshot) {
+          let events = snapshot.val()
+          for (let event in snapshot.val()) {
+            let x = events[event]
+            let startDate = moment(x.startDate, 'DD-MM-YYYY')
+            let endDate = moment(x.endDate, 'DD-MM-YYYY')
+            date = moment(date)
+            if (x.rooms.includes(room) && date.isSameOrAfter(startDate) && date.isSameOrBefore(endDate)) {
+              resolve(x)
+            }
+          }
+        }
+      )
+      .catch((err) => {
+        reject(err)
+      })
+  })
 }
 
 function fetch (dateArr) {
