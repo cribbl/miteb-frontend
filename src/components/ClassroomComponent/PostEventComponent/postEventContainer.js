@@ -40,11 +40,13 @@ function makeData (len = 5553) {
 class postEventContainer extends React.Component {
   constructor (props) {
     super(props)
+    this.cols = ['category', 'amount']
     this.state = {
       disableNext: false,
       finished: false,
       stepIndex: 0,
-      creditArray: []
+      creditArray: [],
+      debitArray: []
     }
     this.handlePrev = this.handlePrev.bind(this)
     this.handleNext = this.handleNext.bind(this)
@@ -136,37 +138,38 @@ class postEventContainer extends React.Component {
     }
   }
   handleNext () {
+    console.log('claaddedd')
     const { stepIndex } = this.state
     var flagCred = false
     var flagDeb = false
     this.state.creditArray.forEach((val) => {
       this.cols.forEach((field) => {
-        if (val[field['fieldName']] === '') {
+        if (val[field] === '') {
           flagCred = true
         }
       })
     })
     this.state.debitArray.forEach((val) => {
       this.cols.forEach((field) => {
-        if (val[field['fieldName']] === '') {
+        if (val[field] === '') {
           flagDeb = true
         }
       })
     })
     if ((stepIndex === 0 && this.state.creditArray.length === 0) || flagCred) {
       if (flagCred) {
-        this.setState({ creditErr: '1 or more fields are not filled' })
+        this.setState({ err: '1 or more fields are not filled' })
       } else {
-        this.setState({ creditErr: 'Please Enter atleast one field' })
+        this.setState({ err: 'Please Enter atleast one field' })
       }
     } else if ((stepIndex === 1 && this.state.debitArray.length === 0) || flagDeb) {
       if (flagDeb) {
-        this.setState({ debitErr: '1 or more fields are not filled' })
+        this.setState({ err: '1 or more fields are not filled' })
       } else {
-        this.setState({ debitErr: 'Please Enter atleast one field' })
+        this.setState({ err: 'Please Enter atleast one field' })
       }
     } else {
-      this.setState({ creditErr: '', debitErr: '' })
+      this.setState({ err: '' })
       if (stepIndex < 2) {
         this.setState({ stepIndex: stepIndex + 1 })
       }
@@ -236,6 +239,7 @@ class postEventContainer extends React.Component {
                       <StepLabel>Participation</StepLabel>
                     </Step>
                   </Stepper>
+                  <p style={{ color: '#E30022', margin: '0.25rem auto' }}>{this.state.err}</p>
                   {this.getStepContent(this.state.stepIndex)}
                 </div>
               )
