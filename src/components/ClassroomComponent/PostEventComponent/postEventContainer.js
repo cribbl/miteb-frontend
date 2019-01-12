@@ -2,9 +2,9 @@ import React from 'react'
 import {
   Step,
   Stepper,
-  StepLabel,
-  StepContent
+  StepLabel
 } from 'material-ui/Stepper'
+import { firebaseDB } from '../../../firebaseConfig'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
@@ -65,7 +65,16 @@ class postEventContainer extends React.Component {
   renderEditable (name, cellInfo) {
     return (
       <div
-        style={{ height: '100%', backgroundColor: '#fafafa' }}
+        style={{
+          margin: 0,
+          padding: 0,
+          height: '100%',
+          width: '100%',
+          backgroundColor: '#fafafa',
+          wordWrap: 'break-word',
+          wordBreak: 'break-all',
+          whiteSpace: 'normal'
+        }}
         contentEditable
         suppressContentEditableWarning
         onBlur={e => {
@@ -80,11 +89,13 @@ class postEventContainer extends React.Component {
     )
   }
   getStepContent (index) {
+    const { isMobile } = this.props
     switch (index) {
       case 0:
         return (
-          <div style={{ margin: 'auto', width: '100%' }} >
+          <div key={'creditTable'} style={{ margin: 'auto', maxHeight: '100%', width: '100%', overflow: 'auto' }} >
             <ReactTable
+              resizable={false}
               showPageSizeOptions={false}
               data={this.state.creditArray}
               columns={[
@@ -95,17 +106,18 @@ class postEventContainer extends React.Component {
                 },
                 {
                   Header: 'Amount',
+                  width: isMobile ? 60 : 100,
                   accessor: 'amount',
                   Cell: this.renderEditable.bind(this, 'creditArray')
                 },
                 {
                   Header: '',
-                  width: 100,
+                  width: isMobile ? 60 : 100,
                   accessor: 'del',
                   id: 'del',
                   Cell: (info) => {
                     return (
-                      <IconButton onClick={this.handleDelete(info.index, 'creditArray')} >
+                      <IconButton iconStyle={{ width: 25, height: 25 }} onClick={this.handleDelete(info.index, 'creditArray')} >
                         <Clear />
                       </IconButton>
                     )
@@ -130,7 +142,54 @@ class postEventContainer extends React.Component {
           </div>
         )
       case 1:
-        return 'Hello'
+        return (
+          <div key={'debitTable'} style={{ margin: 'auto', width: '100%' }} >
+            <ReactTable
+              showPageSizeOptions={false}
+              data={this.state.debitArray}
+              columns={[
+                {
+                  Header: 'Category',
+                  accessor: 'category',
+                  Cell: this.renderEditable.bind(this, 'debitArray')
+                },
+                {
+                  Header: 'Amount',
+                  accessor: 'amount',
+                  width: isMobile ? 60 : 100,
+                  Cell: this.renderEditable.bind(this, 'debitArray')
+                },
+                {
+                  Header: '',
+                  width: isMobile ? 60 : 100,
+                  accessor: 'del',
+                  id: 'del',
+                  Cell: (info) => {
+                    return (
+                      <IconButton onClick={this.handleDelete(info.index, 'debitArray')} >
+                        <Clear />
+                      </IconButton>
+                    )
+                  }
+                }
+              ]}
+              defaultPageSize={10}
+              className='-striped -highlight'
+            />
+            <FlatButton
+              label='Add Row'
+              onClick={() => {
+                this.setState((prev) => ({ debitArray: prev.debitArray.concat(makeData(1)) }))
+              }}
+              style={{
+                color: 'white',
+                backgroundColor: '#00BCD4',
+                display: 'block',
+                margin: '1em auto'
+              }}
+            />
+          </div>
+        )
       case 2:
         return 'Hello'
       default:
@@ -183,52 +242,43 @@ class postEventContainer extends React.Component {
     }
   }
   handleSubmit () {
-    console.log('Submit')
+    this.setState((state) => {
+      return { finished: true, tParticipantsError: '', eParticipantsError: '' }
+    })
+    this.setState({ tParticipantsError: '', eParticipantsError: '' })
+    var eventID = this.props.currEvent.key
+    var updates = {}
+    console.log(eventID)
+    updates['/events/' + eventID + '/postEventDetails/creditArray'] = this.state.creditArray
+    updates['/events/' + eventID + '/postEventDetails/debitArray'] = this.state.debitArray
+    // updates['/events/' + eventID + '/postEventDetails/totalParticipants'] = this.state.totalParticipants
+    // updates['/events/' + eventID + '/postEventDetails/externalParticipants'] = this.state.externalParticipants
+    // updates['/events/' + eventID + '/postEventDetails/notes'] = this.state.notes
+    updates['/events/' + eventID + '/postEventFlag'] = true
+    firebaseDB.ref().update(updates)
   }
   render () {
+    console.log(this.state.finished)
     let { isMobile } = this.props
     return (
       <Paper zDepth={2} style={{
         margin: '1em',
-        minHeight: '80vh'
+        minHeight: '80vh',
+        padding: '1em'
       }} >
         <div style={{
           position: 'relative',
           width: '90%',
-          height: '78vh',
-          margin: 'auto',
+          minHeight: '78vh',
+          margin: '1em auto',
           overflow: 'auto',
           padding: '1em 0em'
         }}>
           {this.state.finished ? (<FinishedContainer event={this.props.currEvent} />)
             : (
-              isMobile ? (
+              (
                 <div>
-                  <Stepper activeStep={this.state.stepIndex} orientation='vertical' >
-                    <Step>
-                      <StepLabel>Credit</StepLabel>
-                      <StepContent>
-                        {this.getStepContent(0)}
-                      </StepContent>
-                    </Step>
-                    <Step>
-                      <StepLabel>Debit</StepLabel>
-                      <StepContent>
-                        {this.getStepContent(1)}
-                      </StepContent>
-                    </Step>
-                    <Step>
-                      <StepLabel>Participation</StepLabel>
-                      <StepContent>
-                        {this.getStepContent(2)}
-                      </StepContent>
-                    </Step>
-                  </Stepper>
-
-                </div>
-              ) : (
-                <div>
-                  <Stepper activeStep={this.state.stepIndex} style={{ width: '100%', margin: '0 auto' }}>
+                  <Stepper activeStep={this.state.stepIndex} style={{ width: '100%', margin: '0 auto' }} orientation={isMobile ? 'vertical' : 'horizontal'} >
                     <Step>
                       <StepLabel>Credit</StepLabel>
                     </Step>
