@@ -7,6 +7,10 @@ import {
 import { firebaseDB } from '../../../firebaseConfig'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import DatePicker from 'material-ui/DatePicker'
 import IconButton from 'material-ui/IconButton'
 import Clear from 'material-ui/svg-icons/content/clear'
 import Paper from 'material-ui/Paper'
@@ -46,12 +50,22 @@ class postEventContainer extends React.Component {
       finished: false,
       stepIndex: 0,
       creditArray: [],
-      debitArray: []
+      debitArray: [],
+      clubName: '',
+      totalParticipants: '',
+      externalParticipants: '',
+      eventName: '',
+      eventType: null,
+      scale: null,
+      eventDate: new Date()
     }
     this.handlePrev = this.handlePrev.bind(this)
     this.handleNext = this.handleNext.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.renderEditable = this.renderEditable.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.handleFieldChange = this.handleFieldChange.bind(this)
   }
   handleDelete (index, name) {
     return () => {
@@ -60,6 +74,22 @@ class postEventContainer extends React.Component {
         arr.splice(index, 1)
         return { [name]: arr }
       })
+    }
+  }
+  handleChange (name) {
+    return (e) => {
+      this.setState({ [name]: e.target.value })
+    }
+  }
+  handleSelectChange (name) {
+    return (event, index, value) => {
+      this.setState({ [name]: value })
+    }
+  }
+  handleFieldChange (name) {
+    return (e, value) => {
+      console.log(value)
+      this.setState({ [name]: new Date(value) })
     }
   }
   renderEditable (name, cellInfo) {
@@ -73,7 +103,8 @@ class postEventContainer extends React.Component {
           backgroundColor: '#fafafa',
           wordWrap: 'break-word',
           wordBreak: 'break-all',
-          whiteSpace: 'normal'
+          whiteSpace: 'normal',
+          textAlign: 'left'
         }}
         contentEditable
         suppressContentEditableWarning
@@ -191,13 +222,88 @@ class postEventContainer extends React.Component {
           </div>
         )
       case 2:
-        return 'Hello'
+        return (
+          <div style={{ display: 'inline-block', margin: '1em auto', padding: '1em', width: isMobile ? '90%' : '50%' }} >
+            <TextField
+              fullWidth
+              floatingLabelText={'Club Name*'}
+              value={this.state.clubName}
+              onBlur={this.handleChange('clubName')}
+              onChange={this.handleChange('clubName')}
+              required
+            />
+            <br />
+            <TextField
+              fullWidth
+              floatingLabelText={'Event Name*'}
+              value={this.state.eventName}
+              onBlur={this.handleChange('eventName')}
+              onChange={this.handleChange('eventName')}
+              required
+            />
+            <br />
+            <SelectField
+              fullWidth
+              style={{ textAlign: 'left' }}
+              floatingLabelText={'Type*'}
+              value={this.state.eventType}
+              onChange={this.handleSelectChange('eventType')}
+            >
+              <MenuItem value={'technical'} primaryText='Technical' />
+              <MenuItem value={'cultural'} primaryText='Cultural' />
+              <MenuItem value={'social'} primaryText='Social' />
+              <MenuItem value={'financial'} primaryText='Financial' />
+            </SelectField>
+            <br />
+            <SelectField
+              fullWidth
+              style={{ textAlign: 'left' }}
+              floatingLabelText={'Scale*'}
+              value={this.state.scale}
+              onChange={this.handleSelectChange('scale')}
+            >
+              <MenuItem value={'local'} primaryText='Local' />
+              <MenuItem value={'cultural'} primaryText='National' />
+              <MenuItem value={'social'} primaryText='Interntional' />
+            </SelectField>
+            <br />
+            <DatePicker fullWidth hintText='Date*' mode='landscape' value={this.state.eventDate} onChange={this.handleFieldChange('eventDate')} />
+            <TextField
+              fullWidth
+              floatingLabelText={'Total participants*'}
+              value={this.state.totalParticipants}
+              onBlur={this.handleChange('totalParticipants')}
+              onChange={this.handleChange('totalParticipants')}
+              required
+            />
+            <br />
+            <TextField
+              fullWidth
+              floatingLabelText={'External participants*'}
+              value={this.state.externalParticipants}
+              onBlur={this.handleChange('externalParticipants')}
+              onChange={this.handleChange('externalParticipants')}
+              required
+            />
+            <br />
+            <TextField
+              fullWidth
+              multiLine
+              rows={1}
+              style={{ textAlign: 'left' }}
+              floatingLabelText='Notes'
+              type='text'
+              onChange={this.handleNotes}
+              value={this.state.notes}
+            />
+          </div>
+
+        )
       default:
         return 'Hello'
     }
   }
   handleNext () {
-    console.log('claaddedd')
     const { stepIndex } = this.state
     var flagCred = false
     var flagDeb = false
@@ -242,23 +348,32 @@ class postEventContainer extends React.Component {
     }
   }
   handleSubmit () {
-    this.setState((state) => {
-      return { finished: true, tParticipantsError: '', eParticipantsError: '' }
-    })
-    this.setState({ tParticipantsError: '', eParticipantsError: '' })
-    var eventID = this.props.currEvent.key
-    var updates = {}
-    console.log(eventID)
-    updates['/events/' + eventID + '/postEventDetails/creditArray'] = this.state.creditArray
-    updates['/events/' + eventID + '/postEventDetails/debitArray'] = this.state.debitArray
-    // updates['/events/' + eventID + '/postEventDetails/totalParticipants'] = this.state.totalParticipants
-    // updates['/events/' + eventID + '/postEventDetails/externalParticipants'] = this.state.externalParticipants
-    // updates['/events/' + eventID + '/postEventDetails/notes'] = this.state.notes
-    updates['/events/' + eventID + '/postEventFlag'] = true
-    firebaseDB.ref().update(updates)
+    if (this.state.totalParticipants === 0 || this.state.externalParticipants === 0) {
+      this.setState({ err: 'All * fields are mandatory' })
+    } else if (!this.state.clubName || !this.state.eventName || !this.state.eventType || !this.state.scale || !this.state.eventDate) {
+      this.setState({ err: 'All * fields are mandatory' })
+    } else {
+      this.setState((state) => {
+        return { finished: true, tParticipantsError: '', eParticipantsError: '' }
+      })
+      this.setState({ tParticipantsError: '', eParticipantsError: '' })
+      var eventID = this.props.currEvent.key
+      var updates = {}
+      updates['/events/' + eventID + '/postEventDetails/creditArray'] = this.state.creditArray
+      updates['/events/' + eventID + '/postEventDetails/debitArray'] = this.state.debitArray
+      updates['/events/' + eventID + '/postEventDetails/totalParticipants'] = this.state.totalParticipants
+      updates['/events/' + eventID + '/postEventDetails/externalParticipants'] = this.state.externalParticipants
+      updates['/events/' + eventID + '/postEventDetails/clubName'] = this.state.clubName
+      updates['/events/' + eventID + '/postEventDetails/eventName'] = this.state.eventName
+      updates['/events/' + eventID + '/postEventDetails/eventType'] = this.state.eventType
+      updates['/events/' + eventID + '/postEventDetails/scale'] = this.state.scale
+      updates['/events/' + eventID + '/postEventDetails/eventDate'] = this.state.eventDate.toUTCString()
+      updates['/events/' + eventID + '/postEventDetails/notes'] = this.state.notes
+      updates['/events/' + eventID + '/postEventFlag'] = true
+      firebaseDB.ref().update(updates)
+    }
   }
   render () {
-    console.log(this.state.finished)
     let { isMobile } = this.props
     return (
       <Paper zDepth={2} style={{
@@ -277,7 +392,7 @@ class postEventContainer extends React.Component {
           {this.state.finished ? (<FinishedContainer event={this.props.currEvent} />)
             : (
               (
-                <div>
+                <div style={{ textAlign: 'center' }} >
                   <Stepper activeStep={this.state.stepIndex} style={{ width: '100%', margin: '0 auto' }} orientation={isMobile ? 'vertical' : 'horizontal'} >
                     <Step>
                       <StepLabel>Credit</StepLabel>
@@ -291,29 +406,29 @@ class postEventContainer extends React.Component {
                   </Stepper>
                   <p style={{ color: '#E30022', margin: '0.25rem auto' }}>{this.state.err}</p>
                   {this.getStepContent(this.state.stepIndex)}
+                  <div style={{
+                    width: '100%',
+                    position: 'absolute',
+                    bottom: 0
+                  }}
+                  >
+                    <FlatButton
+                      label='Back'
+                      disabled={this.state.stepIndex === 0}
+                      onClick={this.handlePrev}
+                      style={{ float: 'left' }}
+                    />
+                    <RaisedButton
+                      disabled={this.state.disableNext}
+                      label={this.state.stepIndex === 2 ? 'Submit' : 'Next'}
+                      primary
+                      onClick={this.state.stepIndex === 2 ? this.handleSubmit : this.handleNext}
+                      style={{ float: 'right' }}
+                    />
+                  </div>
                 </div>
               )
             )}
-          <div style={{
-            width: '100%',
-            position: 'absolute',
-            bottom: 0
-          }}
-          >
-            <FlatButton
-              label='Back'
-              disabled={this.state.stepIndex === 0}
-              onClick={this.handlePrev}
-              style={{ float: 'left' }}
-            />
-            <RaisedButton
-              disabled={this.state.disableNext}
-              label={this.state.stepIndex === 2 ? 'Submit' : 'Next'}
-              primary
-              onClick={this.state.stepIndex === 2 ? this.handleSubmit : this.handleNext}
-              style={{ float: 'right' }}
-            />
-          </div>
         </div>
       </Paper>
     )
