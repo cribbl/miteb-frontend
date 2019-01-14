@@ -125,7 +125,7 @@ class PrivacyPolicy extends Component {
           <h6 style={{ fontWeight: 700 }}>Contact Us</h6>
           <p style={{ margin: '10px 0px', lineHeight: '20px' }}>If you have any questions about this Privacy Policy, please contact us:</p>
           <p style={{ margin: '10px 0px', lineHeight: '20px' }}>By email: support@cribblservices.com</p>
-          <p style={{ margin: '10px 0px', lineHeight: '20px' }}>By phone number: +91 77606 27296</p>
+          <p style={{ margin: '10px 0px', lineHeight: '20px' }}>By phone number: +91 82965 38324</p>
         </div>
 
         <Footer />

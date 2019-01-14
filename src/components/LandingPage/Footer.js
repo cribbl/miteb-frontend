@@ -32,7 +32,7 @@ class Footer extends Component {
           <p style={{ marginBottom: 15, fontSize: 18 }}>Contact us</p>
           <div style={{ display: 'flex', alignItems: 'center', color: '#BFBFBF', marginLeft: -10, height: 30 }}>
             <IconButton style={{ width: 38, height: 38 }}><PhoneIcon color='#BFBFBF' viewBox='0 0 30 30' /></IconButton>
-            <p>+91 77606 27296</p>
+            <p>+91 82965 38324</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', color: '#BFBFBF', marginLeft: -10, height: 30 }}>
             <IconButton style={{ width: 38, height: 38 }}><EmailIcon color='#BFBFBF' viewBox='0 0 30 30' /></IconButton>
