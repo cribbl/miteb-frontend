@@ -311,7 +311,7 @@ class HorizontalLinearStepper extends React.Component {
         firebaseDB.ref('/users/' + scope.props.user.uid + '/my_events/').push(eventID,
           function (res, err) {
             if (err) { console.log("couldn't be booked ", err) } else {
-              updateDates(field['startDate'], field['endDate'], scope.state.selectedRooms.concat(scope.state.takenRooms), eventID)
+              updateDates(field['startDate'], field['endDate'], scope.state.selectedRooms, eventID)
               sendPush('SC', 'Dear SC, Approval requested!', 'Please approve the event by ' + scope.props.user.name + "'")
               scope.setState({ SnackBarmessage: 'Request for booking room successful', openSnackBar: true })
               scope.setState({ bookedEvent: newData, finished: true })
