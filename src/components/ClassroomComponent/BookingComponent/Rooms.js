@@ -203,7 +203,6 @@ class RoomsContainer extends Component {
               <MyRaisedButton id={5503} />
               <MyRaisedButton id={5504} />
               <MyRaisedButton id={5505} />
-              <MyRaisedButton id={5505} />
               <MyRaisedButton id={5506} />
               <MyRaisedButton id={5507} />
               <MyRaisedButton id={5508} />
