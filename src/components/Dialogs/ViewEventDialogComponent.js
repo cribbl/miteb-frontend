@@ -34,10 +34,18 @@ class ViewEventDialog extends Component {
     var roomlist = ''
     // determines the academic block according to the first digit as array index
     var roomBlock = ['AB-1', 'AB-2', 'NLH', 'IC', 'AB-5']
+    // Handle 53101 (5310A) and 53102 (5310B) as special cases.
     rooms.forEach(function (room) {
-      var block = Math.floor(room / 1000) - 1
-      var roomNo = room % 1000
-      block = roomBlock[block]
+      let block
+      let roomNo
+      if (room === 53101 || room === 53102) {
+        block = roomBlock[4]
+        roomNo = room === 53101 ? '310A' : '310B'
+      } else {
+        block = Math.floor(room / 1000) - 1
+        roomNo = room % 1000
+        block = roomBlock[block]
+      }
       roomlist += block + '-' + roomNo + ', '
     })
     roomlist = roomlist.replace(/,\s*$/, '')

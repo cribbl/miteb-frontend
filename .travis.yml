@@ -9,7 +9,7 @@ install:
 - npm install
 before_deploy:
 - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run build:stage; fi
-- if [ "$TRAVIS_BRANCH" = "prod" ]; then npm run build:production; fi
+- if [ "$TRAVIS_BRANCH" = "prod" ]; then npm run build:prod; fi
 deploy:
 - provider: script
   skip_cleanup: true

@@ -7,42 +7,14 @@ import CircularProgress from 'material-ui/CircularProgress'
 class RoomsContainer extends Component {
   constructor (props) {
     super(props)
-    this.handleRoomSelection = this.handleRoomSelection.bind(this)
     this.state = {
-      selectedRooms: this.props && this.props.selectedRooms,
       takenRooms: this.props && this.props.takenRooms
     }
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.takenRooms) {
-      let selRooms = this.state.selectedRooms
-      for (let room of newProps.takenRooms) {
-        if ((selRooms).includes(room)) {
-          let index = selRooms.indexOf(room)
-          selRooms.splice(index, 1)
-        }
-      }
-      this.setState({ takenRooms: newProps.takenRooms, selectedRooms: selRooms })
-    }
-  }
-
-  handleRoomSelection (id) {
-    let temp = this.state.selectedRooms
-
-    if (temp.includes(id)) {
-      let index = temp.indexOf(id)
-      temp.splice(index, 1)
-    } else {
-      if (temp.length >= 3) {
-        const { dispatch } = this.props
-        dispatch({ type: 'TOASTER', message: 'Maximum 3 rooms allowed at once!', toastOpen: true })
-        return
-      }
-      temp.push(id)
-    }
-    this.setState({ selectedRooms: temp })
-    this.props.handleSelectedRooms(temp)
+    let temp = newProps.takenRooms ? newProps.takenRooms : this.state.takenRooms
+    this.setState({ takenRooms: temp })
   }
 
   render () {
@@ -84,10 +56,11 @@ class RoomsContainer extends Component {
           label={label}
           style={styles.roomButton}
           labelStyle={styles.roomButtonLabel}
-          disabledBackgroundColor={'#FAE0DE'}
-          disabled={(scope.state.takenRooms).includes(props.id)}
-          primary={(scope.state.selectedRooms).includes(props.id)}
-          onClick={() => this.handleRoomSelection(props.id)}
+          // disabledBackgroundColor={'#FAE0DE'}
+          disabled={!(scope.state.takenRooms).includes(props.id)}
+          // color={(scope.state.takenRooms).includes(props.id) ? 'default' : 'secondary'}
+          secondary={(scope.state.takenRooms).includes(props.id)}
+          onClick={() => this.props.handleSelectedRoom(props.id)}
         />
       )
     }
@@ -202,6 +175,7 @@ class RoomsContainer extends Component {
               <MyRaisedButton id={5502} />
               <MyRaisedButton id={5503} />
               <MyRaisedButton id={5504} />
+              <MyRaisedButton id={5505} />
               <MyRaisedButton id={5505} />
               <MyRaisedButton id={5506} />
               <MyRaisedButton id={5507} />
