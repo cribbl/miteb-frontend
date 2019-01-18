@@ -10,7 +10,8 @@ class RoomsContainer extends Component {
     this.handleRoomSelection = this.handleRoomSelection.bind(this)
     this.state = {
       selectedRooms: this.props && this.props.selectedRooms,
-      takenRooms: this.props && this.props.takenRooms
+      takenRooms: this.props && this.props.takenRooms,
+      bookedRooms: [3202,3205]
     }
   }
 
@@ -85,7 +86,7 @@ class RoomsContainer extends Component {
           style={styles.roomButton}
           labelStyle={styles.roomButtonLabel}
           disabledBackgroundColor={'#FAE0DE'}
-          disabled={(scope.state.takenRooms).includes(props.id)}
+           disabled={(scope.state.takenRooms).includes(props.id) || (scope.state.bookedRooms).includes(props.id)}
           primary={(scope.state.selectedRooms).includes(props.id)}
           onClick={() => this.handleRoomSelection(props.id)}
         />
