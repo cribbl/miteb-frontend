@@ -22,6 +22,12 @@ import ProfileComponent from './components/ClassroomComponent/ProfileComponent/P
 import ApproveClubsComponent from './components/ClassroomComponent/ApproveClubsComponent/ApproveClubsContainer'
 import ViewBookingsComponent from './components/ClassroomComponent/ViewBookingsComponent/ViewBookingsComponent'
 
+import PublicityPermComponent from './components/ClassroomComponent/PublicityPermComponent/Publicity'
+import MyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/MyPublicityComponent'
+import FAMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/FAMyPublicityComponent'
+import SOMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/SOMyPublicityComponent'
+import ADMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/ADMyPublicityComponent'
+
 import ComplaintsComponent from './components/ComplaintsComponent/ComplaintsComponent'
 import ViewComplaintsComponent from './components/ClassroomComponent/ViewComplaintsComponent/ViewComplaintsComponent'
 import NotFound from './components/NotFound/NotFound'
@@ -68,6 +74,11 @@ ReactDOM.render(
           <Route path='profile' component={ProfileComponent} />
           <Route path='approveClubs' component={ApproveClubsComponent} />
           <Route path='viewComplaints' component={ViewComplaintsComponent} />
+          <Route path='publicity_perm' component={PublicityPermComponent} />
+          <Route path='myPublicity' component={MyPublicityComponent} />
+          <Route path='faPublicity' component={FAMyPublicityComponent} />
+          <Route path='adPublicity' component={ADMyPublicityComponent} />
+          <Route path='soPublicity' component={SOMyPublicityComponent} />
         </Route>
         <Route path='*' component={NotFound} />
       </Route>
