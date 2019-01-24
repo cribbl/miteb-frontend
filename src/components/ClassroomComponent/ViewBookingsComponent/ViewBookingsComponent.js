@@ -4,7 +4,7 @@ import DatePicker from 'material-ui/DatePicker'
 import RoomsContainer from './Rooms'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { fetchRooms, getDisabledDates, getBookingDetails } from '../../../Services/firebaseDBService'
+import { fetchRooms, getDisabledDates, getBookingDetails, fetchApprovedRooms } from '../../../Services/firebaseDBService'
 import { EventDetails } from './EventDetailsComponent'
 
 class ViewBooking extends React.Component {
@@ -20,6 +20,7 @@ class ViewBooking extends React.Component {
       selectedDate: null,
       dateSelected: false,
       takenRooms: [],
+      approvedRooms: [],
       fetchingRooms: true,
       isRoomSelected: false,
       selectedRoom: null,
@@ -29,7 +30,7 @@ class ViewBooking extends React.Component {
 
     this.handleDate = this.handleDate.bind(this)
     this.formatDate = this.formatDate.bind(this)
-    this.getTakenRooms = this.getTakenRooms.bind(this)
+    this.getRooms = this.getRooms.bind(this)
   }
 
   componentDidMount () {
@@ -45,7 +46,7 @@ class ViewBooking extends React.Component {
     })
   }
 
-  getTakenRooms () {
+  getRooms () {
     let scope = this
     this.setState({ dateSelected: true, fetchingRooms: true })
     fetchRooms(this.state.selectedDate, this.state.selectedDate)
@@ -55,11 +56,19 @@ class ViewBooking extends React.Component {
       .catch(function (error) {
         console.log(error)
       })
+    fetchApprovedRooms(this.state.startDate, this.state.endDate)
+      .then(function (res) {
+        scope.setState({ approvedRooms: res })
+        console.log('hello', scope.state.approvedRooms)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 
   handleDate (event, date) {
     this.setState({ selectedDate: date, isRoomSelected: false })
-    this.getTakenRooms()
+    this.getRooms()
   }
 
   fetchBookingDetails () {
@@ -99,7 +108,7 @@ class ViewBooking extends React.Component {
                     required
                   />
                 </div>
-                <RoomsContainer datesSelected={this.state.dateSelected} fetchingRooms={this.state.fetchingRooms} takenRooms={this.state.takenRooms} handleSelectedRoom={(temp) => this.handleSelectedRoom(temp)} />
+                <RoomsContainer datesSelected={this.state.dateSelected} fetchingRooms={this.state.fetchingRooms} takenRooms={this.state.takenRooms} approvedRooms={this.state.approvedRooms} handleSelectedRoom={(temp) => this.handleSelectedRoom(temp)} />
                 <div style={{ marginTop: '20px', textAlign: 'left' }}>
                   <EventDetails isRoomSelected={this.state.isRoomSelected} fetchingEventData={this.state.fetchingEventData} eventDetails={this.state.eventDetails} />
                 </div>

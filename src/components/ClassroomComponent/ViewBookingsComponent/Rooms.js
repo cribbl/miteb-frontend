@@ -8,13 +8,15 @@ class RoomsContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      takenRooms: this.props && this.props.takenRooms
+      takenRooms: this.props && this.props.takenRooms,
+      approvedRooms: this.props && this.props.approvedRooms
     }
   }
 
   componentWillReceiveProps (newProps) {
-    let temp = newProps.takenRooms ? newProps.takenRooms : this.state.takenRooms
-    this.setState({ takenRooms: temp })
+    let tempTaken = newProps.takenRooms ? newProps.takenRooms : this.state.takenRooms
+    let tempApproved = newProps.approvedRooms ? newProps.approvedRooms : this.state.approvedRooms
+    this.setState({ takenRooms: tempTaken, approvedRooms: tempApproved })
   }
 
   render () {
@@ -59,7 +61,8 @@ class RoomsContainer extends Component {
           // disabledBackgroundColor={'#FAE0DE'}
           disabled={!(scope.state.takenRooms).includes(props.id)}
           // color={(scope.state.takenRooms).includes(props.id) ? 'default' : 'secondary'}
-          secondary={(scope.state.takenRooms).includes(props.id)}
+          default={(scope.state.takenRooms).includes(props.id)}
+          secondary={(scope.state.approvedRooms).includes(props.id)}
           onClick={() => this.props.handleSelectedRoom(props.id)}
         />
       )
