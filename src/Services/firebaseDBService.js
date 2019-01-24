@@ -157,18 +157,22 @@ export const updateDates = (startDate, endDate, rooms, eventID) => {
 function updateDatesDBx (dateArr, roomArr, eventID) {
   for (let date of dateArr) {
     let dateRef = firebaseDB.ref('/roomsx').child(date)
-    let data = []
-    dateRef.once('value')
-      .then((snapshot) => {
-        if (snapshot.val() !== null) {
-          data = data.concat(snapshot.val()).concat(roomArr)
-        } else {
-          data = data.concat(roomArr)
-        }
-        dateRef.set(data)
-      })
+    addRoomsToDB(dateRef, roomArr)
     firebaseDB.ref('/to-be-held').child(date).push(eventID)
   }
+}
+
+function addRoomsToDB (dateRef, roomArr) {
+  let data = []
+  dateRef.once('value')
+    .then((snapshot) => {
+      if (snapshot.val() !== null) {
+        data = data.concat(snapshot.val()).concat(roomArr)
+      } else {
+        data = data.concat(roomArr)
+      }
+      dateRef.set(data)
+    })
 }
 
 export const approveEvent = (event, approver, user) => {
