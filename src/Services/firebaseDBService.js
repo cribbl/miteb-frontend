@@ -141,7 +141,7 @@ export const fetchRooms = (startDate, endDate, callback) => {
   return (fetch(dateArr).then(res => prm(res)))
 }
 
-export const updateDates = (startDate, endDate, rooms, eventID) => {
+function getDateArr (startDate, endDate) {
   var date = startDate
   var dateArr = []
 
@@ -150,7 +150,10 @@ export const updateDates = (startDate, endDate, rooms, eventID) => {
     date = moment(date).add(1, 'days')
     dateArr.push(datex)
   } while (moment(date).format('DD-MM-YYYY') !== moment(endDate).add(1, 'days').format('DD-MM-YYYY'))
-
+  return dateArr
+}
+export const updateDates = (startDate, endDate, rooms, eventID) => {
+  let dateArr = getDateArr(startDate, endDate)
   updateDatesDBx(dateArr, rooms, eventID)
 }
 
