@@ -113,36 +113,39 @@ function fetch (dateArr) {
   )
 }
 
-function prm (avl) {
+function extractRooms (avl) {
   return new Promise(function (resolve, reject) {
     console.log(avl)
-    let takenRooms = []
+    let rooms = []
     for (let date in avl) {
       if (avl[date] != null) {
         for (let roomArr of avl[date]) {
-          if (!takenRooms.includes(roomArr)) { takenRooms.push(roomArr) }
+          if (!rooms.includes(roomArr)) { rooms.push(roomArr) }
         }
       }
     }
-    resolve(takenRooms)
+    resolve(rooms)
   })
 }
 
 export const fetchRooms = (startDate, endDate, callback) => {
-  var date = startDate
-  var dateArr = []
+  let dateArr = getDateArr(startDate, endDate)
+  return (fetch(dateArr).then(res => extractRooms(res)))
+}
 
-  do {
-    var datex = moment(date).format('DD-MM-YYYY')
-    date = moment(date).add(1, 'days')
-    dateArr.push(datex)
-  } while (moment(date).format('DD-MM-YYYY') !== moment(endDate).add(1, 'days').format('DD-MM-YYYY'))
-
-  return (fetch(dateArr).then(res => prm(res)))
+export const fetchApprovedRooms = () => {
+  return firebaseDB.ref('approved/').once('value')
+    .then(function (snapshot) {
+      return extractRooms(snapshot.val())
+    })
 }
 
 function getDateArr (startDate, endDate) {
-  var date = startDate
+  let date = moment(startDate)
+  if (date === 'Invalid date') {
+    date = moment(startDate, 'DD-MM-YYYY')
+    endDate = moment(endDate, 'DD-MM-YYYY')
+  }
   var dateArr = []
 
   do {
@@ -162,6 +165,16 @@ function updateDatesDBx (dateArr, roomArr, eventID) {
     let dateRef = firebaseDB.ref('/roomsx').child(date)
     addRoomsToDB(dateRef, roomArr)
     firebaseDB.ref('/to-be-held').child(date).push(eventID)
+  }
+}
+
+function addApprovedRooms (event) {
+  console.log(event.startDate + ' ' + event.endDate)
+  let dateArr = getDateArr(event.startDate, event.endDate)
+  for (let date of dateArr) {
+    console.log('---' + date)
+    let dateRef = firebaseDB.ref('/approved').child(date)
+    addRoomsToDB(dateRef, event.rooms)
   }
 }
 
@@ -219,6 +232,7 @@ export const approveEvent = (event, approver, user) => {
 
       firebaseDB.ref('/events/').child(event.key + '/SO_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('approved')
+      addApprovedRooms(event)
       generatePDF(event.key)
       sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
     }
