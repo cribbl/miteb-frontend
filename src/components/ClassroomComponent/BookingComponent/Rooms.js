@@ -11,7 +11,7 @@ class RoomsContainer extends Component {
     this.state = {
       selectedRooms: this.props && this.props.selectedRooms,
       takenRooms: this.props && this.props.takenRooms,
-      bookedRooms: [3202,3205]
+      bookedRooms: [3202, 3205]
     }
   }
 
