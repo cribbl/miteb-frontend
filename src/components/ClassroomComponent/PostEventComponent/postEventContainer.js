@@ -19,7 +19,7 @@ import { connect } from 'react-redux'
 import FinishedContainer from './FinishedContainer'
 import 'react-table/react-table.css'
 
-function makeData (len = 5553) {
+function makeData(len = 5553) {
   const range = len => {
     const arr = []
     for (let i = 0; i < len; i++) {
@@ -42,7 +42,7 @@ function makeData (len = 5553) {
 }
 
 class postEventContainer extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.cols = ['category', 'amount']
     this.state = {
@@ -57,7 +57,8 @@ class postEventContainer extends React.Component {
       eventName: '',
       eventType: null,
       scale: null,
-      eventDate: new Date()
+      eventDate: new Date(),
+      notes: ''
     }
     this.handlePrev = this.handlePrev.bind(this)
     this.handleNext = this.handleNext.bind(this)
@@ -67,7 +68,7 @@ class postEventContainer extends React.Component {
     this.handleSelectChange = this.handleSelectChange.bind(this)
     this.handleFieldChange = this.handleFieldChange.bind(this)
   }
-  handleDelete (index, name) {
+  handleDelete(index, name) {
     return () => {
       this.setState((prev) => {
         let arr = prev[name]
@@ -76,23 +77,23 @@ class postEventContainer extends React.Component {
       })
     }
   }
-  handleChange (name) {
+  handleChange(name) {
     return (e) => {
       this.setState({ [name]: e.target.value })
     }
   }
-  handleSelectChange (name) {
+  handleSelectChange(name) {
     return (event, index, value) => {
       this.setState({ [name]: value })
     }
   }
-  handleFieldChange (name) {
+  handleFieldChange(name) {
     return (e, value) => {
       console.log(value)
       this.setState({ [name]: new Date(value) })
     }
   }
-  renderEditable (name, cellInfo) {
+  renderEditable(name, cellInfo) {
     return (
       <div
         style={{
@@ -119,7 +120,7 @@ class postEventContainer extends React.Component {
       />
     )
   }
-  getStepContent (index) {
+  getStepContent(index) {
     const { isMobile } = this.props
     switch (index) {
       case 0:
@@ -293,7 +294,7 @@ class postEventContainer extends React.Component {
               style={{ textAlign: 'left' }}
               floatingLabelText='Notes'
               type='text'
-              onChange={this.handleNotes}
+              onChange={this.handleChange('notes')}
               value={this.state.notes}
             />
           </div>
@@ -303,7 +304,7 @@ class postEventContainer extends React.Component {
         return 'Hello'
     }
   }
-  handleNext () {
+  handleNext() {
     const { stepIndex } = this.state
     var flagCred = false
     var flagDeb = false
@@ -340,15 +341,15 @@ class postEventContainer extends React.Component {
       }
     }
   }
-  handlePrev () {
+  handlePrev() {
     const { stepIndex } = this.state
 
     if (stepIndex > 0) {
       this.setState({ stepIndex: stepIndex - 1 })
     }
   }
-  handleSubmit () {
-    if (this.state.totalParticipants === 0 || this.state.externalParticipants === 0) {
+  handleSubmit() {
+    if (!this.state.totalParticipants || !this.state.externalParticipants) {
       this.setState({ err: 'All * fields are mandatory' })
     } else if (!this.state.clubName || !this.state.eventName || !this.state.eventType || !this.state.scale || !this.state.eventDate) {
       this.setState({ err: 'All * fields are mandatory' })
@@ -359,6 +360,14 @@ class postEventContainer extends React.Component {
       this.setState({ tParticipantsError: '', eParticipantsError: '' })
       var eventID = this.props.currEvent.key
       var updates = {}
+      let creditArr = [];
+      this.state.creditArray.forEach((val) => {
+        creditArr.push({ category: val['category'], amount: val['amount'] });
+      })
+      let debitArr = [];
+      this.state.debitArray.forEach((val) => {
+        debitArr.push({ category: val['category'], amount: val['amount'] });
+      })
       updates['/events/' + eventID + '/postEventDetails/creditArray'] = this.state.creditArray
       updates['/events/' + eventID + '/postEventDetails/debitArray'] = this.state.debitArray
       updates['/events/' + eventID + '/postEventDetails/totalParticipants'] = this.state.totalParticipants
@@ -373,7 +382,7 @@ class postEventContainer extends React.Component {
       firebaseDB.ref().update(updates)
     }
   }
-  render () {
+  render() {
     let { isMobile } = this.props
     return (
       <Paper zDepth={2} style={{
@@ -435,7 +444,7 @@ class postEventContainer extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   const { isMobile } = state.toggler
   const { user, currEvent } = state.authentication
   return {
