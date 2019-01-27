@@ -128,7 +128,8 @@ function extractRooms (avl) {
   })
 }
 
-async function getBlockedRooms (dates) {
+export const getBlockedRooms = async (startDate, endDate) => {
+  let dates = getDateArr(startDate, endDate)
   let rooms = []
   let blocked
   await firebaseDB.ref('blocked/').once('value')
@@ -147,7 +148,7 @@ async function getBlockedRooms (dates) {
 export const fetchRooms = async (startDate, endDate, callback) => {
   let dateArr = getDateArr(startDate, endDate)
   let blockedRooms
-  await getBlockedRooms(dateArr).then(rooms => {
+  await getBlockedRooms(startDate, endDate).then(rooms => {
     blockedRooms = rooms
   })
   return new Promise((resolve, reject) => {
