@@ -16,7 +16,8 @@ class RoomsContainer extends Component {
   componentWillReceiveProps (newProps) {
     let tempTaken = newProps.takenRooms ? newProps.takenRooms : this.state.takenRooms
     let tempApproved = newProps.approvedRooms ? newProps.approvedRooms : this.state.approvedRooms
-    this.setState({ takenRooms: tempTaken, approvedRooms: tempApproved })
+    let tempBlocked = newProps.blockedRooms ? newProps.blockedRooms : this.state.blockedRooms
+    this.setState({ takenRooms: tempTaken, approvedRooms: tempApproved, blockedRooms: tempBlocked })
   }
 
   render () {
@@ -58,8 +59,8 @@ class RoomsContainer extends Component {
           label={label}
           style={styles.roomButton}
           labelStyle={styles.roomButtonLabel}
-          // disabledBackgroundColor={'#FAE0DE'}
-          disabled={!(scope.state.takenRooms).includes(props.id)}
+          disabledBackgroundColor={(scope.state.blockedRooms).includes(props.id) ? '#FAE0DE' : ''}
+          disabled={!(scope.state.takenRooms).includes(props.id) || (scope.state.blockedRooms).includes(props.id)}
           // color={(scope.state.takenRooms).includes(props.id) ? 'default' : 'secondary'}
           default={(scope.state.takenRooms).includes(props.id)}
           secondary={(scope.state.approvedRooms).includes(props.id)}
