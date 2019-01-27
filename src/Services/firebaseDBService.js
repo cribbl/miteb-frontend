@@ -133,19 +133,17 @@ export const fetchRooms = (startDate, endDate, callback) => {
   return (fetch(dateArr).then(res => extractRooms(res)))
 }
 
-export const fetchApprovedRooms = () => {
-  return firebaseDB.ref('approved/').once('value')
+export const fetchApprovedRooms = (date) => {
+  date = moment(date).format('DD-MM-YYYY')
+  let rooms = []
+  return firebaseDB.ref('approved/' + date).once('value')
     .then(function (snapshot) {
-      return extractRooms(snapshot.val())
+      return rooms.concat(snapshot.val())
     })
 }
 
 function getDateArr (startDate, endDate) {
   let date = moment(startDate)
-  if (date === 'Invalid date') {
-    date = moment(startDate, 'DD-MM-YYYY')
-    endDate = moment(endDate, 'DD-MM-YYYY')
-  }
   var dateArr = []
 
   do {
