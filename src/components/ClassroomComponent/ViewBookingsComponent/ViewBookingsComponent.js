@@ -56,10 +56,10 @@ class ViewBooking extends React.Component {
       .catch(function (error) {
         console.log(error)
       })
-    fetchApprovedRooms(this.state.startDate, this.state.endDate)
+    fetchApprovedRooms(this.state.selectedDate)
       .then(function (res) {
         scope.setState({ approvedRooms: res })
-        console.log('hello', scope.state.approvedRooms)
+        console.log('approved rooms: ', scope.state.approvedRooms)
       })
       .catch(function (error) {
         console.log(error)
