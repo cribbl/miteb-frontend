@@ -90,20 +90,20 @@ class RoomsContainer extends Component {
 
           <div style={{ width: this.props.isMobile ? '100%' : '35%', backgroundColor: '', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
             <h4>NLH</h4>
-            {/* <div style={styles.buttonsRow}>
+            <div style={styles.buttonsRow}>
               <MyRaisedButton id={3102} />
               <MyRaisedButton id={3103} />
               <MyRaisedButton id={3104} />
               <MyRaisedButton id={3105} />
-            </div> */}
+            </div>
             <div style={styles.buttonsRow}>
               <MyRaisedButton id={3202} />
-              {/* <MyRaisedButton id={3203} /> DIRECTOR */}
+              <MyRaisedButton id={3203} />
               <MyRaisedButton id={3204} />
               <MyRaisedButton id={3205} />
             </div>
             <div style={styles.buttonsRow}>
-              {/* <MyRaisedButton id={3302} /> PARIKSHIT */}
+              <MyRaisedButton id={3302} />
               <MyRaisedButton id={3303} />
               <MyRaisedButton id={3304} />
               <MyRaisedButton id={3305} />
@@ -126,7 +126,7 @@ class RoomsContainer extends Component {
               <MyRaisedButton id={5203} />
               <MyRaisedButton id={5205} />
               <MyRaisedButton id={5206} />
-              {/* <MyRaisedButton id={5207} /> SC */}
+              <MyRaisedButton id={5207} />
               <MyRaisedButton id={5208} />
             </div>
             <div style={styles.buttonsRow}>

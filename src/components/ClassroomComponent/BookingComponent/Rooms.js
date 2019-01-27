@@ -150,7 +150,7 @@ class RoomsContainer extends Component {
               <MyRaisedButton id={5203} />
               <MyRaisedButton id={5205} />
               <MyRaisedButton id={5206} />
-              {/* <MyRaisedButton id={5207} /> SC */}
+              <MyRaisedButton id={5207} />
               <MyRaisedButton id={5208} />
             </div>
             <div style={styles.buttonsRow}>
