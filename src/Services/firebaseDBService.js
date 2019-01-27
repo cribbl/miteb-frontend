@@ -194,9 +194,8 @@ function updateDatesDBx (dateArr, roomArr, eventID) {
 
 function addApprovedRooms (event) {
   console.log(event.startDate + ' ' + event.endDate)
-  let dateArr = getDateArr(event.startDate, event.endDate)
+  let dateArr = getDateArr(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'))
   for (let date of dateArr) {
-    console.log('---' + date)
     let dateRef = firebaseDB.ref('/approved').child(date)
     addRoomsToDB(dateRef, event.rooms)
   }
