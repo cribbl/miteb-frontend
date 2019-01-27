@@ -10,8 +10,7 @@ class RoomsContainer extends Component {
     this.handleRoomSelection = this.handleRoomSelection.bind(this)
     this.state = {
       selectedRooms: this.props && this.props.selectedRooms,
-      takenRooms: this.props && this.props.takenRooms,
-      bookedRooms: [3202, 3205]
+      takenRooms: this.props && this.props.takenRooms
     }
   }
 
@@ -86,7 +85,7 @@ class RoomsContainer extends Component {
           style={styles.roomButton}
           labelStyle={styles.roomButtonLabel}
           disabledBackgroundColor={'#FAE0DE'}
-          disabled={(scope.state.takenRooms).includes(props.id) || (scope.state.bookedRooms).includes(props.id)}
+          disabled={(scope.state.takenRooms).includes(props.id)}
           primary={(scope.state.selectedRooms).includes(props.id)}
           onClick={() => this.handleRoomSelection(props.id)}
         />
@@ -115,20 +114,20 @@ class RoomsContainer extends Component {
 
           <div style={{ width: this.props.isMobile ? '100%' : '35%', backgroundColor: '', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
             <h4>NLH</h4>
-            {/* <div style={styles.buttonsRow}>
+            <div style={styles.buttonsRow}>
               <MyRaisedButton id={3102} />
               <MyRaisedButton id={3103} />
               <MyRaisedButton id={3104} />
               <MyRaisedButton id={3105} />
-            </div> */}
+            </div>
             <div style={styles.buttonsRow}>
               <MyRaisedButton id={3202} />
-              {/* <MyRaisedButton id={3203} /> DIRECTOR */}
+              <MyRaisedButton id={3203} />
               <MyRaisedButton id={3204} />
               <MyRaisedButton id={3205} />
             </div>
             <div style={styles.buttonsRow}>
-              {/* <MyRaisedButton id={3302} /> PARIKSHIT */}
+              <MyRaisedButton id={3302} />
               <MyRaisedButton id={3303} />
               <MyRaisedButton id={3304} />
               <MyRaisedButton id={3305} />
