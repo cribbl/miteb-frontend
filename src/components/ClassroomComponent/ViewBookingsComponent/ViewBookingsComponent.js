@@ -4,7 +4,7 @@ import DatePicker from 'material-ui/DatePicker'
 import RoomsContainer from './Rooms'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { fetchRooms, getDisabledDates, getBookingDetails, fetchApprovedRooms } from '../../../Services/firebaseDBService'
+import { fetchRooms, getDisabledDates, getBookingDetails, fetchApprovedRooms, getBlockedRooms } from '../../../Services/firebaseDBService'
 import { EventDetails } from './EventDetailsComponent'
 
 class ViewBooking extends React.Component {
@@ -21,6 +21,7 @@ class ViewBooking extends React.Component {
       dateSelected: false,
       takenRooms: [],
       approvedRooms: [],
+      blockedRooms: [],
       fetchingRooms: true,
       isRoomSelected: false,
       selectedRoom: null,
@@ -64,6 +65,10 @@ class ViewBooking extends React.Component {
       .catch(function (error) {
         console.log(error)
       })
+    getBlockedRooms(this.state.selectedDate, this.state.selectedDate)
+      .then(function (res) {
+        scope.setState({ blockedRooms: res })
+      })
   }
 
   handleDate (event, date) {
@@ -93,7 +98,7 @@ class ViewBooking extends React.Component {
           <div style={{ backgroundColor: '', width: '100%', alignSelf: 'center', display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
             <div style={{ width: this.props.isMobile ? '95%' : '85%' }}>
               <div className='locationContainer' style={{ marginBottom: 50 }}>
-                <div style={{ backgroundColor: '', display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ backgroundColor: '', display: 'flex', flexDirection: this.props.isMobile ? 'column' : 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <DatePicker
                     floatingLabelText='Date'
                     mode={this.props.isMobile ? 'portrait' : 'landscape'}
@@ -108,9 +113,9 @@ class ViewBooking extends React.Component {
                     required
                   />
                 </div>
-                <RoomsContainer datesSelected={this.state.dateSelected} fetchingRooms={this.state.fetchingRooms} takenRooms={this.state.takenRooms} approvedRooms={this.state.approvedRooms} handleSelectedRoom={(temp) => this.handleSelectedRoom(temp)} />
+                <RoomsContainer datesSelected={this.state.dateSelected} fetchingRooms={this.state.fetchingRooms} takenRooms={this.state.takenRooms} approvedRooms={this.state.approvedRooms} blockedRooms={this.state.blockedRooms} handleSelectedRoom={(temp) => this.handleSelectedRoom(temp)} />
                 <div style={{ marginTop: '20px', textAlign: 'left' }}>
-                  <EventDetails isRoomSelected={this.state.isRoomSelected} fetchingEventData={this.state.fetchingEventData} eventDetails={this.state.eventDetails} />
+                  <EventDetails isMobile={this.props.isMobile} isRoomSelected={this.state.isRoomSelected} fetchingEventData={this.state.fetchingEventData} eventDetails={this.state.eventDetails} />
                 </div>
               </div>
             </div>
