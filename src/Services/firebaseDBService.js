@@ -128,9 +128,35 @@ function extractRooms (avl) {
   })
 }
 
-export const fetchRooms = (startDate, endDate, callback) => {
+async function getBlockedRooms (dates) {
+  let rooms = []
+  let blocked
+  await firebaseDB.ref('blocked/').once('value')
+    .then((snapshot) => {
+      blocked = snapshot.val()
+    })
+  dates.forEach(date => {
+    let day = moment(date, 'DD-MM-YYYY').day()
+    rooms = rooms.concat(blocked[day])
+  })
+  return new Promise((resolve, reject) => {
+    resolve(rooms)
+  })
+}
+
+export const fetchRooms = async (startDate, endDate, callback) => {
   let dateArr = getDateArr(startDate, endDate)
-  return (fetch(dateArr).then(res => extractRooms(res)))
+  let blockedRooms
+  await getBlockedRooms(dateArr).then(rooms => {
+    blockedRooms = rooms
+  })
+  return new Promise((resolve, reject) => {
+    resolve(
+      fetch(dateArr)
+        .then(res => extractRooms(res))
+        .then(rooms => rooms.concat(blockedRooms))
+    )
+  })
 }
 
 export const fetchApprovedRooms = (date) => {
