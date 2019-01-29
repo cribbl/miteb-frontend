@@ -100,7 +100,7 @@ class DrawerComponent extends Component {
               />
               : null}
 
-            {this.props.user && (this.props.user.isSC || this.props.user.uid === 'ops8704' || this.props.user.isFI)
+            {this.props.user && (this.props.user.isSC || this.props.user.uid === 'ops8704' || this.props.user.isFI || this.props.user.isSO)
               ? <MenuItem
                 style={Object.assign(this.state.activeItem === '/dashboard/bookings' ? active : '', menuItemStyle)}
                 key='/dashboard/bookings'
