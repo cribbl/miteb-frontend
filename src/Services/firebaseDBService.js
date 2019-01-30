@@ -215,6 +215,29 @@ function addRoomsToDB (dateRef, roomArr) {
     })
 }
 
+function unblockRooms (event, eventrooms) {
+  let roomRef = firebaseDB.ref('/roomsx/')
+  roomRef.on('value', function (snapshot) {
+    let allDates = snapshot.val()
+    allDates.forEach((date) => {
+      if (moment(date, 'DD-MM-YYYY').isBetween(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'), null, '[]')) {
+        let dateRef = roomRef.child(date)
+        dateRef.on('value', function (snapshot) {
+          let roomsThatDay = snapshot.val()
+          for (let j = 0; j < eventrooms.length; j++) {
+            if (roomsThatDay) {
+              let i = roomsThatDay.indexOf(eventrooms[j])
+              if (i >= 0) {
+                dateRef.child(i).remove()
+              }
+            }
+          }
+        })
+      }
+    })
+  })
+}
+
 export const approveEvent = (event, approver, user) => {
   switch (approver) {
     case 'SC': {
@@ -265,9 +288,11 @@ export const approveEvent = (event, approver, user) => {
 
 export const flagRejectEvent = (event, message, mode, approver, user) => {
   let _mode = mode === 'flag' ? 'flagged' : 'rejected'
+  let eventrooms = event.rooms
   switch (approver) {
     case 'SC': {
       if (_mode === 'rejected') {
+        unblockRooms(event, eventrooms)
         firebaseDB.ref('/events/').child(event.key + '/FA_appr').set('prevRejected')
         firebaseDB.ref('/events/').child(event.key + '/AD_appr').set('prevRejected')
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
@@ -282,6 +307,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
     }
     case 'FA': {
       if (_mode === 'rejected') {
+        unblockRooms(event, eventrooms)
         firebaseDB.ref('/events/').child(event.key + '/AD_appr').set('prevRejected')
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
       }
@@ -295,6 +321,7 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
     }
     case 'AD': {
       if (_mode === 'rejected') {
+        unblockRooms(event, eventrooms)
         firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
       }
       // sendEmail("AD", user.email, event.booker_email, "AD_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Associate Director", "Uh-huh! Your event has been "+_mode+" by the Associate Director, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Associate Director, "+user.name+".<br /><br />Reason: "+message+"</p>");
@@ -306,6 +333,9 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
       return
     }
     case 'SO': {
+      if (_mode === 'rejected') {
+        unblockRooms(event, eventrooms)
+      }
       // sendEmail("FA", user.email, event.booker_email, "SO_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Security Officer", "Uh-huh! Your event has been "+_mode+" by the Security Officer, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Security Officer, "+user.name+".<br /><br />Reason: "+message+"</p>");
       sendEmailTemplate('SO', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
       sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by SO', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by SO')
