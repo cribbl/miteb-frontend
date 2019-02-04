@@ -36,7 +36,7 @@ class CancelEventDialog extends Component {
     let userRef = firebaseDB.ref('/users/').child(event.clubID + '/my_events/')
     userRef.on('value', function (snapshot) {
       Object.entries(snapshot.val()).forEach(([key, value]) => {
-        if (`${value}` == event.key) {
+        if (`${value}` === event.key) {
           userRef.child(`${key}`).remove()
         }
       })
@@ -96,7 +96,7 @@ class CancelEventDialog extends Component {
           dateReftbh.on('value', function (snapshot) {
             if (event.key && snapshot.val()) {
               Object.entries(snapshot.val()).forEach(([key, value]) => {
-                if (`${value}` == event.key) {
+                if (`${value}` === event.key) {
                   dateReftbh.child(`${key}`).remove()
                 }
               })
