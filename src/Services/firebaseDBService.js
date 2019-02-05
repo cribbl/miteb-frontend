@@ -219,7 +219,7 @@ function unblockRooms (event, eventrooms) {
   let roomRef = firebaseDB.ref('/roomsx/')
   roomRef.on('value', function (snapshot) {
     let allDates = snapshot.val()
-    allDates.forEach((date) => {
+    for (let date in allDates) {
       if (moment(date, 'DD-MM-YYYY').isBetween(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'), null, '[]')) {
         let dateRef = roomRef.child(date)
         dateRef.on('value', function (snapshot) {
@@ -234,7 +234,7 @@ function unblockRooms (event, eventrooms) {
           }
         })
       }
-    })
+    }
   })
 }
 
