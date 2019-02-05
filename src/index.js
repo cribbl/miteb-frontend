@@ -39,6 +39,20 @@ import './index.css'
 
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 
+import Raven from 'raven-js'
+
+Raven.config('https://2f0fec57a8da462db1301ea38ef0790b@sentry.io/1364120', {
+  collectWindowErrors: true,
+  fetchContext: true,
+  linesOfContext: 40
+}).install()
+
+var originalConsoleError = console.error
+console.error = function (message, error) {
+  Raven.captureException(error)
+  originalConsoleError.apply(this, arguments)
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
