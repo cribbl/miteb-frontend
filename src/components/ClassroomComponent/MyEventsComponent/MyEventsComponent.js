@@ -297,6 +297,7 @@ class MyEventsComponent extends Component {
                           <MenuItem primaryText='View' onClick={() => this.showDialog(event)} />
                           <MenuItem hidden={!event.receiptURL} primaryText='Post Event Details' onClick={() => this.showPostEventDetailDialog(event)} />
                           <MenuItem hidden={!event.receiptURL} primaryText='Download Receipt' onClick={() => { window.location = (event.receiptURL) }} />
+                          <MenuItem hidden={moment(new Date(), 'DD-MM-YYYY').isAfter(moment(event.startDate, 'DD-MM-YYYY'))} primaryText='Cancel Event' onClick={() => this.showCancelEventDialog(event)} />
                         </IconMenu>}
                       </TableRowColumn>
                     </TableRow>
