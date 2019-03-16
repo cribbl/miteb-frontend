@@ -258,7 +258,13 @@ export const approveEvent = (event, approver, user) => {
       firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('approved')
       addApprovedRooms(event)
       generatePDF(event.key)
-      sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
+        .then((res) => {
+          console.log(res)
+          sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
+        })
+        .catch((err) => {
+          console.err('Error occured while generating pdf.' + err)
+        })
     }
   }
 }
