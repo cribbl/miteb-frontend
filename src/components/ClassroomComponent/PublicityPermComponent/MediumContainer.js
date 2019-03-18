@@ -67,7 +67,7 @@ class MediumContainer extends React.Component {
       width: 100,
       height: 100
     }
-
+    
     return (
       <a style={{ cursor: this.state.checked[3] ? 'pointer' : 'not-allowed' }}>
         <div className='dropzone' style={{ marginLeft: 50, marginRight: 50, border: !this.state.checked[3] ? '1px dotted grey' : '1px dotted blue', minHeight: 100 }}>
@@ -109,12 +109,22 @@ class MediumContainer extends React.Component {
     let indexes = this.state.indexes;
     (indexes[s])[i] = !(indexes[s])[i]
     this.setState({ indexes })
+    let index = Object.values(indexes[s]);
     this.validationMedia()
     this.props.updateToggle(indexes)
+    index.filter(i => i == true).length == 1? this.checkAutomatically(s, true) : null
+    index.every(i => i == false) ? this.checkAutomatically(s, false) : null;
   }
 
+  checkAutomatically(value, state) {
+    let checkedArray = this.state.checked;
+    checkedArray[value] = state;
+    this.setState({ checkedArray });
+  }
+
+
   updateCheck (value) {
-    var checkedArray = this.state.checked
+    let checkedArray = this.state.checked
     checkedArray[value] = !checkedArray[value]
     this.setState({ checkedArray })
     this.validationMedia()
@@ -168,8 +178,8 @@ class MediumContainer extends React.Component {
         <Subheader style={{ textAlign: 'center' }}> Media </Subheader>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={0} checked={this.state.checked[0]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }}onCheck={this.updateCheck.bind(this, 0)} />
-          <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10 }}
+            <ListItem
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 0? 'lightgray' : null}}
             onClick={this.handleClick.bind(this, 0)}
             primaryText='Banner'
           />
@@ -178,7 +188,7 @@ class MediumContainer extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={1} checked={this.state.checked[1]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }} onCheck={this.updateCheck.bind(this, 1)} />
           <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10 }}
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 1? 'lightgray' : null}}
             onClick={this.handleClick.bind(this, 1)}
             primaryText='InfoDesk'
           />
@@ -187,7 +197,7 @@ class MediumContainer extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={2} checked={this.state.checked[2]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }} onCheck={this.updateCheck.bind(this, 2)} />
           <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10 }}
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 2? 'lightgray' : null }}
             onClick={this.handleClick.bind(this, 2)}
             primaryText='Digital Board'
           />
@@ -196,7 +206,7 @@ class MediumContainer extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={3} checked={this.state.checked[3]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }} onCheck={this.updateCheck.bind(this, 3)} />
           <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10 }}
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 3? 'lightgray' : null}}
             onClick={this.handleClick.bind(this, 3)}
             primaryText='Poster'
           />
