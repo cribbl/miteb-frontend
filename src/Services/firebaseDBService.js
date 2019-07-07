@@ -2,7 +2,14 @@ import { firebaseDB } from '../firebaseConfig'
 import moment from 'moment'
 import { store } from '../store'
 import { toggleActions } from '../actions/toggleActions'
-import { sendEmail, sendPush, sendSMS, sendEmailTemplate, sendComplaintTemplate, sendApproveClubTemplate } from './NotificationService'
+import {
+  sendEmail,
+  sendPush,
+  sendSMS,
+  sendEmailTemplate,
+  sendComplaintTemplate,
+  sendApproveClubTemplate
+} from './NotificationService'
 import { generatePDF } from './firebaseStorageService'
 
 export const getUserDetails = (clubID, callback) => {
@@ -10,30 +17,26 @@ export const getUserDetails = (clubID, callback) => {
     console.log('return since no clubID')
     return
   }
-  firebaseDB.ref('/users/' + clubID).once('value',
-    function (snapshot) {
-      let user = snapshot.val()
-      user['uid'] = snapshot.key
-      if (user.isClub) {
-        firebaseDB.ref('/users/' + user.fa_uid).once('value',
-          function (snap) {
-            user['fa'] = snap.val()
-          })
-      }
-      callback(user)
-    })
-  firebaseDB.ref('/users/' + clubID).on('value',
-    function (snapshot) {
-      let user = snapshot.val()
-      user['uid'] = snapshot.key
-      if (user.isClub) {
-        firebaseDB.ref('/users/' + user.fa_uid).once('value',
-          function (snap) {
-            user['fa'] = snap.val()
-          })
-      }
-      store.dispatch({ type: 'USER_UPDATE', user })
-    })
+  firebaseDB.ref('/users/' + clubID).once('value', function (snapshot) {
+    let user = snapshot.val()
+    user['uid'] = snapshot.key
+    if (user.isClub) {
+      firebaseDB.ref('/users/' + user.fa_uid).once('value', function (snap) {
+        user['fa'] = snap.val()
+      })
+    }
+    callback(user)
+  })
+  firebaseDB.ref('/users/' + clubID).on('value', function (snapshot) {
+    let user = snapshot.val()
+    user['uid'] = snapshot.key
+    if (user.isClub) {
+      firebaseDB.ref('/users/' + user.fa_uid).once('value', function (snap) {
+        user['fa'] = snap.val()
+      })
+    }
+    store.dispatch({ type: 'USER_UPDATE', user })
+  })
 }
 
 export const getMyEvents = (clubID, callback) => {
@@ -41,71 +44,76 @@ export const getMyEvents = (clubID, callback) => {
     console.log('return since no clubID')
     return
   }
-  firebaseDB.ref('/users/' + clubID).on('value',
-    function (snapshot) {
-      // console.log('outer snapshot')
-      let user = snapshot.val()
-      user['uid'] = snapshot.key
-      // store.dispatch({type: "USER_UPDATE", user})
-      let events = snapshot.val().my_events
-      if (!events) {
-        callback(null, null)
-      }
-      for (let event in events) {
-        firebaseDB.ref('/events/' + events[event]).on('value',
-          function (snapshot) {
-            // console.log('inner snapshot')
-            // console.log(snapshot.val())
-            callback(snapshot.key, snapshot.val())
-          })
-      }
-    })
+  firebaseDB.ref('/users/' + clubID).on('value', function (snapshot) {
+    // console.log('outer snapshot')
+    let user = snapshot.val()
+    user['uid'] = snapshot.key
+    // store.dispatch({type: "USER_UPDATE", user})
+    let events = snapshot.val().my_events
+    if (!events) {
+      callback(null, null)
+    }
+    for (let event in events) {
+      firebaseDB
+        .ref('/events/' + events[event])
+        .on('value', function (snapshot) {
+          // console.log('inner snapshot')
+          // console.log(snapshot.val())
+          callback(snapshot.key, snapshot.val())
+        })
+    }
+  })
 }
 
-export const getDisabledDates = (callback) => {
+export const getDisabledDates = callback => {
   let temp = []
-  firebaseDB.ref('/disabledDates/').on('value',
-    function (snapshot) {
-      for (let date of snapshot.val()) {
-        temp.push(date)
-      }
-      callback(temp)
-    })
+  firebaseDB.ref('/disabledDates/').on('value', function (snapshot) {
+    for (let date of snapshot.val()) {
+      temp.push(date)
+    }
+    callback(temp)
+  })
 }
 
 export const getBookingDetails = (date, room) => {
   return new Promise((resolve, reject) => {
-    firebaseDB.ref('/events/').once('value')
-      .then(
-        function (snapshot) {
-          let events = snapshot.val()
-          for (let event in snapshot.val()) {
-            let x = events[event]
-            let startDate = moment(x.startDate, 'DD-MM-YYYY')
-            let endDate = moment(x.endDate, 'DD-MM-YYYY')
-            date = moment(date)
-            if (x.rooms.includes(room) && date.isSameOrAfter(startDate) && date.isSameOrBefore(endDate)) {
-              resolve(x)
-            }
+    firebaseDB
+      .ref('/events/')
+      .once('value')
+      .then(function (snapshot) {
+        let events = snapshot.val()
+        for (let event in snapshot.val()) {
+          let x = events[event]
+          let startDate = moment(x.startDate, 'DD-MM-YYYY')
+          let endDate = moment(x.endDate, 'DD-MM-YYYY')
+          date = moment(date)
+          if (
+            x.rooms.includes(room) &&
+            date.isSameOrAfter(startDate) &&
+            date.isSameOrBefore(endDate)
+          ) {
+            resolve(x)
           }
-          reject(new Error('Event not found in database'))
         }
-      )
-      .catch((err) => {
+        reject(new Error('Event not found in database'))
+      })
+      .catch(err => {
         reject(err)
       })
   })
 }
 
 function fetch (dateArr) {
-  return Promise.all(dateArr.map(date =>
-    new Promise((resolve, reject) =>
-      firebaseDB.ref('roomsx/' + date).on('value', function (snapshot) {
-        resolve([date, snapshot.val()])
-      }
-      )
+  return Promise.all(
+    dateArr.map(
+      date =>
+        new Promise((resolve, reject) =>
+          firebaseDB.ref('roomsx/' + date).on('value', function (snapshot) {
+            resolve([date, snapshot.val()])
+          })
+        )
     )
-  )).then(results =>
+  ).then(results =>
     results.reduce((result, [key, value]) => {
       result[key] = value
       return result
@@ -120,7 +128,9 @@ function extractRooms (avl) {
     for (let date in avl) {
       if (avl[date] != null) {
         for (let roomArr of avl[date]) {
-          if (!rooms.includes(roomArr)) { rooms.push(roomArr) }
+          if (!rooms.includes(roomArr)) {
+            rooms.push(roomArr)
+          }
         }
       }
     }
@@ -132,8 +142,10 @@ export const getBlockedRooms = async (startDate, endDate) => {
   let dates = getDateArr(startDate, endDate)
   let rooms = []
   let blocked
-  await firebaseDB.ref('blocked/').once('value')
-    .then((snapshot) => {
+  await firebaseDB
+    .ref('blocked/')
+    .once('value')
+    .then(snapshot => {
       blocked = snapshot.val()
     })
   dates.forEach(date => {
@@ -160,10 +172,12 @@ export const fetchRooms = async (startDate, endDate, callback) => {
   })
 }
 
-export const fetchApprovedRooms = (date) => {
+export const fetchApprovedRooms = date => {
   date = moment(date).format('DD-MM-YYYY')
   let rooms = []
-  return firebaseDB.ref('approved/' + date).once('value')
+  return firebaseDB
+    .ref('approved/' + date)
+    .once('value')
     .then(function (snapshot) {
       return rooms.concat(snapshot.val())
     })
@@ -177,7 +191,12 @@ function getDateArr (startDate, endDate) {
     var datex = moment(date).format('DD-MM-YYYY')
     date = moment(date).add(1, 'days')
     dateArr.push(datex)
-  } while (moment(date).format('DD-MM-YYYY') !== moment(endDate).add(1, 'days').format('DD-MM-YYYY'))
+  } while (
+    moment(date).format('DD-MM-YYYY') !==
+    moment(endDate)
+      .add(1, 'days')
+      .format('DD-MM-YYYY')
+  )
   return dateArr
 }
 export const updateDates = (startDate, endDate, rooms, eventID) => {
@@ -189,13 +208,19 @@ function updateDatesDBx (dateArr, roomArr, eventID) {
   for (let date of dateArr) {
     let dateRef = firebaseDB.ref('/roomsx').child(date)
     addRoomsToDB(dateRef, roomArr)
-    firebaseDB.ref('/to-be-held').child(date).push(eventID)
+    firebaseDB
+      .ref('/to-be-held')
+      .child(date)
+      .push(eventID)
   }
 }
 
 function addApprovedRooms (event) {
   console.log(event.startDate + ' ' + event.endDate)
-  let dateArr = getDateArr(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'))
+  let dateArr = getDateArr(
+    moment(event.startDate, 'DD-MM-YYYY'),
+    moment(event.endDate, 'DD-MM-YYYY')
+  )
   for (let date of dateArr) {
     let dateRef = firebaseDB.ref('/approved').child(date)
     addRoomsToDB(dateRef, event.rooms)
@@ -204,22 +229,21 @@ function addApprovedRooms (event) {
 
 function addRoomsToDB (dateRef, roomArr) {
   let data = []
-  dateRef.once('value')
-    .then((snapshot) => {
-      if (snapshot.val() !== null) {
-        data = data.concat(snapshot.val()).concat(roomArr)
-      } else {
-        data = data.concat(roomArr)
-      }
-      dateRef.set(data)
-    })
+  dateRef.once('value').then(snapshot => {
+    if (snapshot.val() !== null) {
+      data = data.concat(snapshot.val()).concat(roomArr)
+    } else {
+      data = data.concat(roomArr)
+    }
+    dateRef.set(data)
+  })
 }
 
 function unblockRooms (event, eventrooms) {
   let roomRef = firebaseDB.ref('/roomsx/')
   roomRef.on('value', function (snapshot) {
     let allDates = snapshot.val()
-    for (let date in allDates) {
+    Object.keys(allDates).forEach(function (date) {
       if (moment(date, 'DD-MM-YYYY').isBetween(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'), null, '[]')) {
         let dateRef = roomRef.child(date)
         dateRef.on('value', function (snapshot) {
@@ -234,7 +258,7 @@ function unblockRooms (event, eventrooms) {
           }
         })
       }
-    }
+    })
   })
 }
 
@@ -242,46 +266,122 @@ export const approveEvent = (event, approver, user) => {
   switch (approver) {
     case 'SC': {
       // sendEmail("FA", user.email, event.booker_email, "FA_APPROVED", "Approved by Faculty Advisor", "Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".", "<p>Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".</p>");
-      sendPush(event.clubID + 'FA', 'Mr. FA, Request Approval', 'A new event titled ' + event.title + ' requires your approval')
-      sendPush(event.clubID, 'Yay! Approved by SC', "Your event titled '" + event.title + "' has been approved by SC")
+      sendPush(
+        event.clubID + 'FA',
+        'Mr. FA, Request Approval',
+        'A new event titled ' + event.title + ' requires your approval'
+      )
+      sendPush(
+        event.clubID,
+        'Yay! Approved by SC',
+        "Your event titled '" + event.title + "' has been approved by SC"
+      )
 
-      firebaseDB.ref('/events/').child(event.key + '/SC_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/SC_appr').set('approved')
-      firebaseDB.ref('/events/').child(event.key + '/FA_appr').set('pending')
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SC_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SC_appr')
+        .set('approved')
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/FA_appr')
+        .set('pending')
       return
     }
     case 'FA': {
       // sendEmail("FA", user.email, event.booker_email, "FA_APPROVED", "Approved by Faculty Advisor", "Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".", "<p>Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".</p>");
-      sendPush('AD', 'Mr. AD, Request Approval', 'A new event titled ' + event.title + ' requires your approval')
-      sendPush(event.clubID, 'Yay! Approved by FA', "Your event titled '" + event.title + "' has been approved by FA")
+      sendPush(
+        'AD',
+        'Mr. AD, Request Approval',
+        'A new event titled ' + event.title + ' requires your approval'
+      )
+      sendPush(
+        event.clubID,
+        'Yay! Approved by FA',
+        "Your event titled '" + event.title + "' has been approved by FA"
+      )
 
-      firebaseDB.ref('/events/').child(event.key + '/FA_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/FA_appr').set('approved')
-      firebaseDB.ref('/events/').child(event.key + '/AD_appr').set('pending')
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/FA_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/FA_appr')
+        .set('approved')
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/AD_appr')
+        .set('pending')
       return
     }
     case 'AD': {
       // sendEmail("AD", user.email, event.booker_email, "AD_APPROVED", "Approved by Associate Director", "Congratulations! Your event has been approved by the Associate Director, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Associate Director, "+user.name+".</p>");
-      sendPush('SO', 'Mr. SO, Request Approval', 'A new event titled ' + event.title + ' requires your approval')
-      sendPush(event.clubID, 'Yay! Approved by AD', "Your event titled '" + event.title + "' has been approved by AD")
-      firebaseDB.ref('/events/').child(event.key + '/AD_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/AD_appr').set('approved')
-      firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('pending')
+      sendPush(
+        'SO',
+        'Mr. SO, Request Approval',
+        'A new event titled ' + event.title + ' requires your approval'
+      )
+      sendPush(
+        event.clubID,
+        'Yay! Approved by AD',
+        "Your event titled '" + event.title + "' has been approved by AD"
+      )
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/AD_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/AD_appr')
+        .set('approved')
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SO_appr')
+        .set('pending')
       return
     }
     case 'SO': {
       // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Approved by Security Officer", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Security Officer, "+user.name+".</p>");
 
       // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Cribbl Services</p>");
-      let num = (event.booker_contact).substr((event.booker_contact).length - 10)
-      sendSMS('+91' + num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services")
-      sendPush(event.clubID, 'Yay! Approved by SO', "Your event titled '" + event.title + "' has been approved by SO")
+      let num = event.booker_contact.substr(event.booker_contact.length - 10)
+      sendSMS(
+        '+91' + num,
+        "Congratulations!\nYour event titled '" +
+        event.title +
+        "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services"
+      )
+      sendPush(
+        event.clubID,
+        'Yay! Approved by SO',
+        "Your event titled '" + event.title + "' has been approved by SO"
+      )
 
-      firebaseDB.ref('/events/').child(event.key + '/SO_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('approved')
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SO_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SO_appr')
+        .set('approved')
       addApprovedRooms(event)
       generatePDF(event.key)
-      sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
+      sendEmailTemplate(
+        'SO',
+        'APPROVED',
+        '',
+        event.clubName,
+        event.clubEmail,
+        event.booker_name,
+        event.booker_email,
+        event.title,
+        event.key
+      )
     }
   }
 }
@@ -293,43 +393,145 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
     case 'SC': {
       if (_mode === 'rejected') {
         unblockRooms(event, eventrooms)
-        firebaseDB.ref('/events/').child(event.key + '/FA_appr').set('prevRejected')
-        firebaseDB.ref('/events/').child(event.key + '/AD_appr').set('prevRejected')
-        firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
+        firebaseDB
+          .ref('/events/')
+          .child(event.key + '/FA_appr')
+          .set('prevRejected')
+        firebaseDB
+          .ref('/events/')
+          .child(event.key + '/AD_appr')
+          .set('prevRejected')
+        firebaseDB
+          .ref('/events/')
+          .child(event.key + '/SO_appr')
+          .set('prevRejected')
       }
       // sendEmail("SC", user.email, event.booker_email, "FA_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Faculty Advisor", "Uh-huh! Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('SC', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
-      sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by SC', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by SC')
-      firebaseDB.ref('/events/').child(event.key + '/SC_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/SC_appr').set(_mode)
-      firebaseDB.ref('/events/').child(event.key + '/SC_msg').set(message)
+      sendEmailTemplate(
+        'SC',
+        _mode.toUpperCase(),
+        message,
+        event.clubName,
+        event.clubEmail,
+        event.booker_name,
+        event.booker_email,
+        event.title,
+        event.key
+      )
+      sendPush(
+        event.clubID,
+        'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by SC',
+        "Your event titled '" +
+        event.title +
+        "' has been " +
+        _mode.charAt(0).toUpperCase() +
+        _mode.slice(1) +
+        ' by SC'
+      )
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SC_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SC_appr')
+        .set(_mode)
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SC_msg')
+        .set(message)
       return
     }
     case 'FA': {
       if (_mode === 'rejected') {
         unblockRooms(event, eventrooms)
-        firebaseDB.ref('/events/').child(event.key + '/AD_appr').set('prevRejected')
-        firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
+        firebaseDB
+          .ref('/events/')
+          .child(event.key + '/AD_appr')
+          .set('prevRejected')
+        firebaseDB
+          .ref('/events/')
+          .child(event.key + '/SO_appr')
+          .set('prevRejected')
       }
       // sendEmail("FA", user.email, event.booker_email, "FA_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Faculty Advisor", "Uh-huh! Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by your Faculty Advisor, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('FA', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
-      sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by FA', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by FA')
-      firebaseDB.ref('/events/').child(event.key + '/FA_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/FA_appr').set(_mode)
-      firebaseDB.ref('/events/').child(event.key + '/FA_msg').set(message)
+      sendEmailTemplate(
+        'FA',
+        _mode.toUpperCase(),
+        message,
+        event.clubName,
+        event.clubEmail,
+        event.booker_name,
+        event.booker_email,
+        event.title,
+        event.key
+      )
+      sendPush(
+        event.clubID,
+        'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by FA',
+        "Your event titled '" +
+        event.title +
+        "' has been " +
+        _mode.charAt(0).toUpperCase() +
+        _mode.slice(1) +
+        ' by FA'
+      )
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/FA_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/FA_appr')
+        .set(_mode)
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/FA_msg')
+        .set(message)
       return
     }
     case 'AD': {
       if (_mode === 'rejected') {
         unblockRooms(event, eventrooms)
-        firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('prevRejected')
+        firebaseDB
+          .ref('/events/')
+          .child(event.key + '/SO_appr')
+          .set('prevRejected')
       }
       // sendEmail("AD", user.email, event.booker_email, "AD_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Associate Director", "Uh-huh! Your event has been "+_mode+" by the Associate Director, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Associate Director, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('AD', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
-      sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by AD', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by AD')
-      firebaseDB.ref('/events/').child(event.key + '/AD_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/AD_appr').set(_mode)
-      firebaseDB.ref('/events/').child(event.key + '/AD_msg').set(message)
+      sendEmailTemplate(
+        'AD',
+        _mode.toUpperCase(),
+        message,
+        event.clubName,
+        event.clubEmail,
+        event.booker_name,
+        event.booker_email,
+        event.title,
+        event.key
+      )
+      sendPush(
+        event.clubID,
+        'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by AD',
+        "Your event titled '" +
+        event.title +
+        "' has been " +
+        _mode.charAt(0).toUpperCase() +
+        _mode.slice(1) +
+        ' by AD'
+      )
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/AD_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/AD_appr')
+        .set(_mode)
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/AD_msg')
+        .set(message)
       return
     }
     case 'SO': {
@@ -337,46 +539,136 @@ export const flagRejectEvent = (event, message, mode, approver, user) => {
         unblockRooms(event, eventrooms)
       }
       // sendEmail("FA", user.email, event.booker_email, "SO_"+_mode.toUpperCase(),  _mode.charAt(0).toUpperCase()+_mode.slice(1)+" by Security Officer", "Uh-huh! Your event has been "+_mode+" by the Security Officer, "+user.name+".", "<p><strong>Uh-huh!</strong><br /> Your event has been "+_mode+" by the Security Officer, "+user.name+".<br /><br />Reason: "+message+"</p>");
-      sendEmailTemplate('SO', _mode.toUpperCase(), message, event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
-      sendPush(event.clubID, 'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by SO', "Your event titled '" + event.title + "' has been " + _mode.charAt(0).toUpperCase() + _mode.slice(1) + ' by SO')
-      firebaseDB.ref('/events/').child(event.key + '/SO_date').set(moment(new Date()).format('DD-MM-YYYY'))
-      firebaseDB.ref('/events/').child(event.key + '/SO_appr').set(_mode)
-      firebaseDB.ref('/events/').child(event.key + '/SO_msg').set(message)
+      sendEmailTemplate(
+        'SO',
+        _mode.toUpperCase(),
+        message,
+        event.clubName,
+        event.clubEmail,
+        event.booker_name,
+        event.booker_email,
+        event.title,
+        event.key
+      )
+      sendPush(
+        event.clubID,
+        'Oops! ' + _mode.charAt(0).toUpperCase() + _mode.slice(1) + 'by SO',
+        "Your event titled '" +
+        event.title +
+        "' has been " +
+        _mode.charAt(0).toUpperCase() +
+        _mode.slice(1) +
+        ' by SO'
+      )
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SO_date')
+        .set(moment(new Date()).format('DD-MM-YYYY'))
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SO_appr')
+        .set(_mode)
+      firebaseDB
+        .ref('/events/')
+        .child(event.key + '/SO_msg')
+        .set(message)
     }
   }
 }
 
 export const approveClubNotif = (club, mode, clubID) => {
-  var greeting = (mode === 'approved' ? 'Congratulations!' : 'Sorry!')
+  var greeting = mode === 'approved' ? 'Congratulations!' : 'Sorry!'
 
   // sendEmail("SC", "mitstudentcouncil@gmail.com", club.email, "club_"+"mode", "Club " + mode, greeting + "Your event has been " + mode + " by the Student Council","<p><strong>"+greeting+"</strong><br /> Your club titled <strong>'"+club.name+"'</strong> has been "+mode+".<br/>Regards,<br/>Cribbl Services</p>");
-  if (mode === 'approved') { sendApproveClubTemplate(club.email, club.name) } else { sendEmail('SC', 'mitstudentcouncil@gmail.com', club.email, 'club_' + 'mode', 'Club ' + mode, greeting + 'Your event has been ' + mode + ' by the Student Council', '<p><strong>' + greeting + "</strong><br /> Your club titled <strong>'" + club.name + "'</strong> has been " + mode + '.<br/>Regards,<br/>Cribbl Services</p>') }
+  if (mode === 'approved') {
+    sendApproveClubTemplate(club.email, club.name)
+  } else {
+    sendEmail(
+      'SC',
+      'mitstudentcouncil@gmail.com',
+      club.email,
+      'club_' + 'mode',
+      'Club ' + mode,
+      greeting + 'Your event has been ' + mode + ' by the Student Council',
+      '<p><strong>' +
+      greeting +
+      "</strong><br /> Your club titled <strong>'" +
+      club.name +
+      "'</strong> has been " +
+      mode +
+      '.<br/>Regards,<br/>Cribbl Services</p>'
+    )
+  }
 
-  let num = (club.primaryContact).substr((club.primaryContact).length - 10)
-  sendSMS('+91' + num, greeting + "\n\nYour club titled '" + club.name + "' has been " + mode + ' by the Student Council.\n\nRegards,\nCribbl Services')
+  let num = club.primaryContact.substr(club.primaryContact.length - 10)
+  sendSMS(
+    '+91' + num,
+    greeting +
+    "\n\nYour club titled '" +
+    club.name +
+    "' has been " +
+    mode +
+    ' by the Student Council.\n\nRegards,\nCribbl Services'
+  )
 
-  sendPush(clubID, greeting, "Your club named '" + club.name + "' has been " + mode)
+  sendPush(
+    clubID,
+    greeting,
+    "Your club named '" + club.name + "' has been " + mode
+  )
 }
 
-export const resolveComplaintNotif = (complaint) => {
-  sendComplaintTemplate(complaint.fields.email, complaint.fields.name, complaint.subject)
-  sendEmail('SC', 'mitstudentcouncil@gmail.com', complaint.fields.email, 'complaint_' + 'resolved', 'Complaint resolved', 'Hey ' + complaint.fields.name + '\nYour complaint titled ' + complaint.subject + 'has been resolved', '<p><strong>Hey ' + complaint.fields.name + "</strong><br /> Your complaint titled <strong>'" + complaint.subject + "'</strong> has been resolved.<br/>Regards,<br/>Cribbl Services</p>")
+export const resolveComplaintNotif = complaint => {
+  sendComplaintTemplate(
+    complaint.fields.email,
+    complaint.fields.name,
+    complaint.subject
+  )
+  sendEmail(
+    'SC',
+    'mitstudentcouncil@gmail.com',
+    complaint.fields.email,
+    'complaint_' + 'resolved',
+    'Complaint resolved',
+    'Hey ' +
+    complaint.fields.name +
+    '\nYour complaint titled ' +
+    complaint.subject +
+    'has been resolved',
+    '<p><strong>Hey ' +
+    complaint.fields.name +
+    "</strong><br /> Your complaint titled <strong>'" +
+    complaint.subject +
+    "'</strong> has been resolved.<br/>Regards,<br/>Cribbl Services</p>"
+  )
   // let num = (complaint.fields.contactNo).substr((event.booker_contact).length - 10)
   // sendSMS('+91'+num, "Hey "+complaint.fields.name+"\nYour complaint titled '" + complaint.subject + "' has been resolved.\n\nRegards,\nCribbl Services" );
 }
 
 export const newComplaintNotif = () => {
-  sendEmail('Portal', 'mitstudentcouncil@gmail.com', 'dummymitsc@gmail.com', 'new_complaint', 'new complaint',
-    'A new coplaint has been lodged.', '<p>A new complaint has been lodged.<br/>Regards, <br/>Cribbl Services</p>')
+  sendEmail(
+    'Portal',
+    'mitstudentcouncil@gmail.com',
+    'dummymitsc@gmail.com',
+    'new_complaint',
+    'new complaint',
+    'A new coplaint has been lodged.',
+    '<p>A new complaint has been lodged.<br/>Regards, <br/>Cribbl Services</p>'
+  )
 
   sendPush('SC', 'New Complaint', 'A new complaint has been lodged.')
 }
 
 export const updateToken = (uid, token, bool) => {
-  firebaseDB.ref('/fcmTokens/' + uid).child(token).set(bool)
+  firebaseDB
+    .ref('/fcmTokens/' + uid)
+    .child(token)
+    .set(bool)
 }
 
 export const updateUser = (uid, tempUser) => {
   firebaseDB.ref('users/' + uid).update(tempUser)
-  store.dispatch(toggleActions.toggleToaster('Profile updated successfully!', true))
+  store.dispatch(
+    toggleActions.toggleToaster('Profile updated successfully!', true)
+  )
 }
