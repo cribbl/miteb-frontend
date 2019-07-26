@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { fetchRooms, getDisabledDates, getBookingDetails, fetchApprovedRooms, getBlockedRooms } from '../../../Services/firebaseDBService'
 import { EventDetails } from './EventDetailsComponent'
+import axios from 'axios'
 
 class ViewBooking extends React.Component {
   constructor (props) {
@@ -87,6 +88,35 @@ class ViewBooking extends React.Component {
       })
   }
 
+  exportApprovedRooms (e) {
+    // TODO: Handle case where no approved events present. Make a separate component for this? Similar to 'Export Events' in 'my events' tab.
+    e.preventDefault()
+    let formattedDate = moment().format('DD-MM-YYYY')
+    let param = {
+      date: formattedDate
+    }
+    axios({
+      url: process.env.REACT_APP_BACKEND_API + '/event/generate-daily-events',
+      params: param,
+      method: 'GET',
+      responseType: 'blob'
+    })
+      .then((response) => {
+        if (response.data) {
+          const url = window.URL.createObjectURL(new Blob([response.data])) // eslint-disable-line
+          // TODO: Hacky. Refactor in firebaseStorageService.js:exportEvents also
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'export.pdf')
+          document.body.appendChild(link)
+          link.click()
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   formatDate (date) {
     return moment(date).format('ddd, DD MMM YYYY')
   }
@@ -112,6 +142,7 @@ class ViewBooking extends React.Component {
                     shouldDisableDate={this.shouldDisableDate}
                     required
                   />
+                  <a href='#' onClick={this.exportApprovedRooms}>Today's Approved Events</a>
                 </div>
                 <RoomsContainer datesSelected={this.state.dateSelected} fetchingRooms={this.state.fetchingRooms} takenRooms={this.state.takenRooms} approvedRooms={this.state.approvedRooms} blockedRooms={this.state.blockedRooms} handleSelectedRoom={(temp) => this.handleSelectedRoom(temp)} />
                 <div style={{ marginTop: '20px', textAlign: 'left' }}>
