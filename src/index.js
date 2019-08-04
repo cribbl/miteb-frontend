@@ -30,6 +30,7 @@ import Reg from './components/LoginComponent/Reg'
 import FaqComponent from './components/FaqComponent/FaqComponent'
 import PrivacyPolicy from './components/Policies/PrivacyPolicy'
 import TnC from './components/Policies/TnC'
+import postEventDetails from './components/ClassroomComponent/PostEventComponent/postEventContainer'
 
 import { store } from './store'
 
@@ -68,6 +69,7 @@ ReactDOM.render(
           <Route path='profile' component={ProfileComponent} />
           <Route path='approveClubs' component={ApproveClubsComponent} />
           <Route path='viewComplaints' component={ViewComplaintsComponent} />
+          <Route path='postEventDetails' component={postEventDetails} />
         </Route>
         <Route path='*' component={NotFound} />
       </Route>

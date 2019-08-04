@@ -108,6 +108,10 @@ export function authentication (state = initialState, action) {
       return Object.assign({}, state, {
         error: null
       })
+    case 'POST_EVENT':
+      return Object.assign({}, state, {
+        currEvent: action.currEvent
+      })
     default:
       return state
   }

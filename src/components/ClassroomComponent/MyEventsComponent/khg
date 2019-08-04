@@ -29,21 +29,16 @@ import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
 import ReactTooltip from 'react-tooltip'
 import moment from 'moment'
-import CancelEventDialog from '../../Dialogs/CancelEventDialogComponent'
 
 class MyEventsComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.showDialog = this.showDialog.bind(this)
-    this.showPostEventDetailDialog = this.showPostEventDetailDialog.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.nextEvent = this.nextEvent.bind(this)
     this.handleIcon = this.handleIcon.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleSort = this.handleSort.bind(this)
-    this.uploadPostEventDetail = this.uploadPostEventDetail.bind(this)
-    this.showCancelEventDialog = this.showCancelEventDialog.bind(this)
-    this.onEventDelete = this.onEventDelete.bind(this)
     this.handlePostEvent = this.handlePostEvent.bind(this)
 
     this.state = {
@@ -59,16 +54,14 @@ class MyEventsComponent extends Component {
       pendingArr: {},
       approvedArr: {},
       dialogOpen: false,
-      postEventDetailDialogOpen: false,
       currentEvent: {},
       fetching: true,
       searchContent: '',
-      dateSort: null,
-      cancelDialogopen: false
+      dateSort: null
     }
   }
 
-  handleIcon(event, state, msg) {
+  handleIcon (event, state, msg) {
     if (state === 'pending') { return <PendingIcon style={{ color: '#FBC02D' }} hoverColor={'#F57F17'} data-tip='Pending' /> }
     if (state === 'approved') { return <CheckCircleIcon style={{ color: '#558B2F' }} hoverColor={'#33691E'} data-tip='Approved' /> }
     if (state === 'flagged') { return <FlagIcon style={{ color: '#D50000', cursor: 'pointer' }} onClick={() => { this.showDialog(event) }} data-multiline data-tip={'Flagged - ' + msg} hoverColor={'red'} /> }
@@ -77,35 +70,16 @@ class MyEventsComponent extends Component {
     if (state === 'prevRejected') { return <DashIcon style={{ color: '#b71c1c' }} data-tip='Previously rejected' /> }
   }
 
-  onEventDelete(myArrx) {
-    this.setState({ myArrx: myArrx })
-  }
-
-  showDialog(event) {
+  showDialog (event) {
     this.setState({ dialogOpen: true })
     this.setState({ currentEvent: event })
   }
 
-  showPostEventDetailDialog(event) {
-    this.setState({ postEventDetailDialogOpen: true, currentEvent: event })
+  handleDialogClose () {
+    this.setState({ dialogOpen: false })
   }
 
-  showCancelEventDialog(event) {
-    this.setState({ cancelDialogopen: true, currentEvent: event })
-  }
-
-  handleDialogClose() {
-    this.setState({ dialogOpen: false, postEventDetailDialogOpen: false, cancelDialogopen: false })
-  }
-
-  uploadPostEventDetail(event, message) {
-    this.handleDialogClose()
-    firebaseDB.ref('/events/').child(event.key + '/postEventDetail').set(message)
-    const { dispatch } = this.props
-    dispatch({ type: 'TOASTER', message: 'Post event details updated', toastOpen: true })
-  }
-
-  nextEvent() {
+  nextEvent () {
     let keys = Object.keys(this.state.myArrx)
     let pos = keys.indexOf(this.state.currentEvent.key) + 1
     if (pos === Object.keys(this.state.myArrx).length) {
@@ -116,33 +90,33 @@ class MyEventsComponent extends Component {
     this.setState({ currentEvent: nextEvent })
   }
 
-  handleSearch(content) {
+  handleSearch (content) {
     this.setState({ searchContent: content })
     var myArrx = this.state.originalArr
     myArrx = Object.values(myArrx).filter(_event => _event.title.toLowerCase().includes(content.toLowerCase()))
     this.setState({ myArrx })
   }
 
-  handleSort() {
+  handleSort () {
     if (this.state.dateSort === 'des') { this.setState({ dateSort: 'asc' }) } else { this.setState({ dateSort: 'des' }) }
     var scope = this
     var myArrx = this.state.originalArr
     myArrx = Object.values(myArrx).sort(function (a, b) {
-      var aDate = moment(a.startDate, 'DD-MM-YYYY')
-      var bDate = moment(b.startDate, 'DD-MM-YYYY')
+      var aDate = moment(a.start_date, 'DD-MM-YYYY')
+      var bDate = moment(b.start_date, 'DD-MM-YYYY')
       if (scope.state.dateSort === 'des') { return (aDate - bDate) }
       return (bDate - aDate)
     })
     this.setState({ myArrx })
   }
 
-  handlePostEvent(currEvent) {
+  handlePostEvent (currEvent) {
     const { dispatch } = this.props
     dispatch({ type: 'POST_EVENT', currEvent: currEvent })
     hashHistory.push('/dashboard/postEventDetails')
   }
 
-  filterAndStore(arr) {
+  filterAndStore (arr) {
     for (let [key, value] of Object.entries(arr)) {
       if (value.FA_appr && value.AD_appr && value.SO_appr) {
         this.state.approvedArr[key] = value
@@ -153,7 +127,7 @@ class MyEventsComponent extends Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps (newProps) {
     if (newProps.filter === 'pending') {
       const { pendingArr } = this.state
       this.setState({ myArr: pendingArr })
@@ -166,15 +140,11 @@ class MyEventsComponent extends Component {
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     if (!this.props.user) {
       hashHistory.push('/auth')
       return
     } else {
-      if (this.props.user.isSC) {
-        hashHistory.replace('/dashboard/scEvents')
-        return
-      }
       if (this.props.user.isFA) {
         hashHistory.replace('/dashboard/faEvents')
         return
@@ -199,21 +169,20 @@ class MyEventsComponent extends Component {
           firebaseDB.ref('/events/' + events[event]).on('value',
             function (snapshot) {
               this.setState({ fetching: false })
+              // console.log(snapshot.val())
               const { myArrx } = this.state
-              if (snapshot.val()) {
-                myArrx[snapshot.key] = snapshot.val()
-                myArrx[snapshot.key].key = snapshot.key
-                this.setState({ myArrx })
-                this.setState({ originalArr: myArrx })
-                this.filterAndStore(myArrx)
-                // console.log(this.state.myArrx)
-              }
+              myArrx[snapshot.key] = snapshot.val()
+              myArrx[snapshot.key].key = snapshot.key
+              this.setState({ myArrx })
+              this.setState({ originalArr: myArrx })
+              this.filterAndStore(myArrx)
+              // console.log(this.state.myArrx)
             }, this)
         }
       }, this)
   }
 
-  render() {
+  render () {
     return (
       <div style={{ display: 'flex', justifyContent: 'start', flexDirection: 'column', alignItems: 'center', backgroundColor: '', height: '100%' }}>
 
@@ -222,9 +191,6 @@ class MyEventsComponent extends Component {
         </div>
 
         <ViewEventDialog open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} />
-
-
-        <CancelEventDialog open={this.state.cancelDialogopen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} allevents={this.state.myArrx} onEventDelete={this.onEventDelete} />
 
         <Paper style={{ width: '98%', height: 500, overflow: 'hidden', marginTop: 20 }} zDepth={2}>
           <Table
@@ -241,25 +207,24 @@ class MyEventsComponent extends Component {
               enableSelectAll={this.state.enableSelectAll}
             >
               <TableRow style={{ backgroundColor: '#EFF0F2' }}>
-                <TableHeaderColumn data-tip='' style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '41%' : '19%' }}>TITLE</TableHeaderColumn>
+                <TableHeaderColumn data-tip='' style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '41%' : '20%' }}>TITLE</TableHeaderColumn>
                 <TableHeaderColumn
-                  style={{ color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '18%' }}
+                  style={{ color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', width: '20%' }}
                   hidden={this.props.isMobile}
                 >
                   START DATE
                   <IconButton data-tip='Sort by date' onClick={this.handleSort} style={{ padding: 0, height: 20, width: 20, marginLeft: 5 }}>{this.state.dateSort != null ? (this.state.dateSort === 'asc' ? <UpArrow viewBox='0 0 30 30' /> : <DownArrow viewBox='0 0 30 30' />) : <SortIcon viewBox='0 0 30 30' />}</IconButton>
                 </TableHeaderColumn>
                 <TableHeaderColumn
-                  style={{ color: '#000', fontWeight: 700, alignItems: 'center', width: '18%' }}
+                  style={{ color: '#000', fontWeight: 700, alignItems: 'center', width: '20%' }}
                   hidden={this.props.isMobile}
                 >
                   END DATE
                 </TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>SC</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>FA</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>AD</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>SO</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '9%' }}>{this.props.isMobile ? ' ' : 'Actions'}</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>FA</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>AD</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>SO</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%' }}>{this.props.isMobile ? ' ' : 'Actions'}</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody
@@ -279,14 +244,13 @@ class MyEventsComponent extends Component {
                 Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function (event, index) {
                   return (
                     <TableRow key={index}>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '38%' : '19%' }}>{event.title}</TableRowColumn>
-                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '18%' }}>{moment(event.startDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '18%' }}>{moment(event.endDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.SC_appr, event.SC_msg)}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? 'auto' : '9%', textOverflow: 'clip' }}>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '38%' : '20%' }}>{event.title}</TableRowColumn>
+                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.start_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? 'auto' : '10%', textOverflow: 'clip' }}>
                         {<IconMenu
                           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -295,7 +259,6 @@ class MyEventsComponent extends Component {
                         >
                           <MenuItem primaryText='View' onClick={() => this.showDialog(event)} />
                           <MenuItem hidden={!event.receiptURL} primaryText='Download Receipt' onClick={() => { window.location = (event.receiptURL) }} />
-                          <MenuItem hidden={moment(new Date(), 'DD-MM-YYYY').isAfter(moment(event.startDate, 'DD-MM-YYYY'))} primaryText='Cancel Event' onClick={() => this.showCancelEventDialog(event)} />
                           <MenuItem
                             hidden={!event.receiptURL}
                             primaryText='Post Event Detail'
@@ -307,11 +270,11 @@ class MyEventsComponent extends Component {
                   )
                 }, this)) : (
 
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250 }} hidden={this.state.fetching}>
-                      <img src={require(this.state.searchContent.length > 0 ? '../../../assets/empty-state.gif' : '../../../assets/empty-state.gif')} style={{ width: this.props.isMobile ? '70%' : '30%', marginBottom: 10 }} />
-                      <p>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No events found'}</p>
-                    </div>
-                  )
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: this.props.isMobile ? '15%' : '2%', textAlign: 'center', minHeight: 250 }} hidden={this.state.fetching}>
+                    <img src={require(this.state.searchContent.length > 0 ? '../../../assets/empty-state.gif' : '../../../assets/empty-state.gif')} style={{ width: this.props.isMobile ? '70%' : '30%', marginBottom: 10 }} />
+                    <p>{this.state.searchContent.length > 0 ? 'No events for this search' : 'No events found'}</p>
+                  </div>
+                )
               }
 
             </TableBody>
@@ -323,7 +286,7 @@ class MyEventsComponent extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   const { openSideNav, isMobile, filter } = state.toggler
   const { user, verified, vals } = state.authentication
   return {
