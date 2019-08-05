@@ -47,6 +47,7 @@ class ComplaintsComponent extends Component {
             onChange={this.handleSelectChange}
             style={{ width: this.props.isMobile ? '45%' : '20%', overflow: 'hidden' }}
           >
+            <MenuItem value={'Portal'} primaryText='Portal' />
             <MenuItem value={'Hostel'} primaryText='Hostel' />
             <MenuItem value={'Academics'} primaryText='Academics' />
             <MenuItem value={'Cab Share'} primaryText='Cab Share' />

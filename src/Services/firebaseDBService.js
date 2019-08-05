@@ -113,36 +113,64 @@ function fetch (dateArr) {
   )
 }
 
-function prm (avl) {
+function extractRooms (avl) {
   return new Promise(function (resolve, reject) {
     console.log(avl)
-    let takenRooms = []
+    let rooms = []
     for (let date in avl) {
       if (avl[date] != null) {
         for (let roomArr of avl[date]) {
-          if (!takenRooms.includes(roomArr)) { takenRooms.push(roomArr) }
+          if (!rooms.includes(roomArr)) { rooms.push(roomArr) }
         }
       }
     }
-    resolve(takenRooms)
+    resolve(rooms)
   })
 }
 
-export const fetchRooms = (startDate, endDate, callback) => {
-  var date = startDate
-  var dateArr = []
-
-  do {
-    var datex = moment(date).format('DD-MM-YYYY')
-    date = moment(date).add(1, 'days')
-    dateArr.push(datex)
-  } while (moment(date).format('DD-MM-YYYY') !== moment(endDate).add(1, 'days').format('DD-MM-YYYY'))
-
-  return (fetch(dateArr).then(res => prm(res)))
+export const getBlockedRooms = async (startDate, endDate) => {
+  let dates = getDateArr(startDate, endDate)
+  let rooms = []
+  let blocked
+  await firebaseDB.ref('blocked/').once('value')
+    .then((snapshot) => {
+      blocked = snapshot.val()
+    })
+  dates.forEach(date => {
+    let day = moment(date, 'DD-MM-YYYY').day()
+    rooms = rooms.concat(blocked[day])
+  })
+  return new Promise((resolve, reject) => {
+    resolve(rooms)
+  })
 }
 
-export const updateDates = (startDate, endDate, rooms, eventID) => {
-  var date = startDate
+export const fetchRooms = async (startDate, endDate, callback) => {
+  let dateArr = getDateArr(startDate, endDate)
+  let blockedRooms
+  await getBlockedRooms(startDate, endDate).then(rooms => {
+    blockedRooms = rooms
+  })
+  return new Promise((resolve, reject) => {
+    resolve(
+      fetch(dateArr)
+        .then(res => extractRooms(res))
+        .then(rooms => rooms.concat(blockedRooms))
+    )
+  })
+}
+
+export const fetchApprovedRooms = (date) => {
+  date = moment(date).format('DD-MM-YYYY')
+  let rooms = []
+  return firebaseDB.ref('approved/' + date).once('value')
+    .then(function (snapshot) {
+      return rooms.concat(snapshot.val())
+    })
+}
+
+function getDateArr (startDate, endDate) {
+  let date = moment(startDate)
   var dateArr = []
 
   do {
@@ -150,25 +178,41 @@ export const updateDates = (startDate, endDate, rooms, eventID) => {
     date = moment(date).add(1, 'days')
     dateArr.push(datex)
   } while (moment(date).format('DD-MM-YYYY') !== moment(endDate).add(1, 'days').format('DD-MM-YYYY'))
-
+  return dateArr
+}
+export const updateDates = (startDate, endDate, rooms, eventID) => {
+  let dateArr = getDateArr(startDate, endDate)
   updateDatesDBx(dateArr, rooms, eventID)
 }
 
 function updateDatesDBx (dateArr, roomArr, eventID) {
   for (let date of dateArr) {
     let dateRef = firebaseDB.ref('/roomsx').child(date)
-    let data = []
-    dateRef.once('value')
-      .then((snapshot) => {
-        if (snapshot.val() !== null) {
-          data = data.concat(snapshot.val()).concat(roomArr)
-        } else {
-          data = data.concat(roomArr)
-        }
-        dateRef.set(data)
-      })
+    addRoomsToDB(dateRef, roomArr)
     firebaseDB.ref('/to-be-held').child(date).push(eventID)
   }
+}
+
+function addApprovedRooms (event) {
+  console.log(event.startDate + ' ' + event.endDate)
+  let dateArr = getDateArr(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'))
+  for (let date of dateArr) {
+    let dateRef = firebaseDB.ref('/approved').child(date)
+    addRoomsToDB(dateRef, event.rooms)
+  }
+}
+
+function addRoomsToDB (dateRef, roomArr) {
+  let data = []
+  dateRef.once('value')
+    .then((snapshot) => {
+      if (snapshot.val() !== null) {
+        data = data.concat(snapshot.val()).concat(roomArr)
+      } else {
+        data = data.concat(roomArr)
+      }
+      dateRef.set(data)
+    })
 }
 
 export const approveEvent = (event, approver, user) => {
@@ -212,8 +256,15 @@ export const approveEvent = (event, approver, user) => {
 
       firebaseDB.ref('/events/').child(event.key + '/SO_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/SO_appr').set('approved')
+      addApprovedRooms(event)
       generatePDF(event.key)
-      sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
+        .then((res) => {
+          console.log(res)
+          sendEmailTemplate('SO', 'APPROVED', '', event.clubName, event.clubEmail, event.booker_name, event.booker_email, event.title, event.key)
+        })
+        .catch((err) => {
+          console.err('Error occured while generating pdf.' + err)
+        })
     }
   }
 }

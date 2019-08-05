@@ -17,13 +17,15 @@ export const generatePDF = (eventID) => {
   let params = {
     eventID: eventID
   }
-  axios.get(baseUrl + '/event/generate-pdf', { params })
-    .then(function (res) {
-      console.log(res)
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
+  return new Promise((resolve, reject) => {
+    axios.get(baseUrl + '/event/generate-pdf', { params })
+      .then(function (res) {
+        resolve(res)
+      })
+      .catch(function (err) {
+        reject(err)
+      })
+  })
 }
 
 export const exportEvents = (view, uid, mode, startDate = null, endDate = null, callback) => {
