@@ -30,6 +30,7 @@ import UpArrow from 'material-ui/svg-icons/navigation/arrow-upward'
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-downward'
 import ReactTooltip from 'react-tooltip'
 import moment from 'moment'
+import CancelEventDialog from '../../Dialogs/CancelEventDialogComponent'
 
 class MyEventsComponent extends Component {
   constructor (props) {
@@ -42,6 +43,8 @@ class MyEventsComponent extends Component {
     this.handleSearch = this.handleSearch.bind(this)
     this.handleSort = this.handleSort.bind(this)
     this.uploadPostEventDetail = this.uploadPostEventDetail.bind(this)
+    this.showCancelEventDialog = this.showCancelEventDialog.bind(this)
+    this.onEventDelete = this.onEventDelete.bind(this)
 
     this.state = {
       fixedHeader: true,
@@ -60,7 +63,8 @@ class MyEventsComponent extends Component {
       currentEvent: {},
       fetching: true,
       searchContent: '',
-      dateSort: null
+      dateSort: null,
+      cancelDialogopen: false
     }
   }
 
@@ -73,6 +77,10 @@ class MyEventsComponent extends Component {
     if (state === 'prevRejected') { return <DashIcon style={{ color: '#b71c1c' }} data-tip='Previously rejected' /> }
   }
 
+  onEventDelete (myArrx) {
+    this.setState({ myArrx: myArrx })
+  }
+
   showDialog (event) {
     this.setState({ dialogOpen: true })
     this.setState({ currentEvent: event })
@@ -82,8 +90,12 @@ class MyEventsComponent extends Component {
     this.setState({ postEventDetailDialogOpen: true, currentEvent: event })
   }
 
+  showCancelEventDialog (event) {
+    this.setState({ cancelDialogopen: true, currentEvent: event })
+  }
+
   handleDialogClose () {
-    this.setState({ dialogOpen: false, postEventDetailDialogOpen: false })
+    this.setState({ dialogOpen: false, postEventDetailDialogOpen: false, cancelDialogopen: false })
   }
 
   uploadPostEventDetail (event, message) {
@@ -181,14 +193,15 @@ class MyEventsComponent extends Component {
           firebaseDB.ref('/events/' + events[event]).on('value',
             function (snapshot) {
               this.setState({ fetching: false })
-              // console.log(snapshot.val())
               const { myArrx } = this.state
-              myArrx[snapshot.key] = snapshot.val()
-              myArrx[snapshot.key].key = snapshot.key
-              this.setState({ myArrx })
-              this.setState({ originalArr: myArrx })
-              this.filterAndStore(myArrx)
-              // console.log(this.state.myArrx)
+              if (snapshot.val()) {
+                myArrx[snapshot.key] = snapshot.val()
+                myArrx[snapshot.key].key = snapshot.key
+                this.setState({ myArrx })
+                this.setState({ originalArr: myArrx })
+                this.filterAndStore(myArrx)
+                // console.log(this.state.myArrx)
+              }
             }, this)
         }
       }, this)
@@ -205,6 +218,8 @@ class MyEventsComponent extends Component {
         <ViewEventDialog open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} />
 
         <PostEventDetailDialog open={this.state.postEventDetailDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} uploadPostEventDetail={this.uploadPostEventDetail} />
+
+        <CancelEventDialog open={this.state.cancelDialogopen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} allevents={this.state.myArrx} onEventDelete={this.onEventDelete} />
 
         <Paper style={{ width: '98%', height: 500, overflow: 'hidden', marginTop: 20 }} zDepth={2}>
           <Table
@@ -276,6 +291,7 @@ class MyEventsComponent extends Component {
                           <MenuItem primaryText='View' onClick={() => this.showDialog(event)} />
                           <MenuItem hidden={!event.receiptURL} primaryText='Post Event Details' onClick={() => this.showPostEventDetailDialog(event)} />
                           <MenuItem hidden={!event.receiptURL} primaryText='Download Receipt' onClick={() => { window.location = (event.receiptURL) }} />
+                          <MenuItem hidden={moment(new Date(), 'DD-MM-YYYY').isAfter(moment(event.startDate, 'DD-MM-YYYY'))} primaryText='Cancel Event' onClick={() => this.showCancelEventDialog(event)} />
                         </IconMenu>}
                       </TableRowColumn>
                     </TableRow>

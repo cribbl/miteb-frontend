@@ -41,7 +41,7 @@ class EventExportDialog extends Component {
 
   export () {
     const { dispatch } = this.props
-    dispatch({ type: 'TOASTER', message: 'Events will be expoted shortly!', toastOpen: true })
+    dispatch({ type: 'TOASTER', message: 'Events will be exported shortly!', toastOpen: true })
     this.props.handleClose()
     exportEvents(this.props.view, this.props.user.uid, this.state.exportMode, moment(this.state.startDate).format('DD-MM-YYYY'), moment(this.state.endDate).format('DD-MM-YYYY'))
       .then(res => {

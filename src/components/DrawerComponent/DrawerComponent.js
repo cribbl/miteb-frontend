@@ -75,14 +75,15 @@ class DrawerComponent extends Component {
               style={Object.assign(this.state.activeItem === '/dashboard' ? active : '', menuItemStyle)}
               key='/dashboard'
               primaryText='Dashboard'
-              leftIcon={<IconDashboard color={'#FFFFFF'} />} />
+              leftIcon={<IconDashboard color={'#FFFFFF'} />}
+              hidden={this.props.user.isFI} />
 
             <MenuItem
               style={Object.assign(this.state.activeItem === '/dashboard/book_room' ? active : '', menuItemStyle)}
               key='/dashboard/book_room'
               primaryText='Room Booking'
               leftIcon={<IconTest color={'#FFFFFF'} />}
-              hidden={this.props.user && !this.props.user.isClub} />
+              hidden={this.props.user && !this.props.user.isClub && this.props.user.isFI} />
 
             <MenuItem
               style={Object.assign(this.state.activeItem === '/dashboard/publicity_perm' ? active : '', menuItemStyle)}
@@ -94,7 +95,8 @@ class DrawerComponent extends Component {
               style={Object.assign(this.state.activeItem.toLowerCase().indexOf('event') !== -1 ? active : '', menuItemStyle)}
               key='/dashboard/myEvents'
               primaryText={this.props.user.isClub ? 'My Events' : 'Approve Events'}
-              leftIcon={<IconAnalytics color={'#FFFFFF'} />} />
+              leftIcon={<IconAnalytics color={'#FFFFFF'} />}
+              hidden={this.props.user.isFI} />
 
             <MenuItem
               style={Object.assign(this.state.activeItem === '/dashboard/myPublicity' ? active : '', menuItemStyle)}
@@ -111,7 +113,7 @@ class DrawerComponent extends Component {
               />
               : null}
 
-            {this.props.user && (this.props.user.isSC || this.props.user.uid === 'ops8704')
+            {this.props.user && (this.props.user.isSC || this.props.user.uid === 'ops8704' || this.props.user.isFI || this.props.user.isSO)
               ? <MenuItem
                 style={Object.assign(this.state.activeItem === '/dashboard/bookings' ? active : '', menuItemStyle)}
                 key='/dashboard/bookings'
@@ -129,11 +131,12 @@ class DrawerComponent extends Component {
               />
               : null}
 
-            <MenuItem
-              style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active : '', menuItemStyle)}
-              key='/dashboard/profile'
-              primaryText='Profile'
-              leftIcon={<IconProfile color={'#FFFFFF'} />} />
+               <MenuItem
+               style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active : '', menuItemStyle)}
+               key='/dashboard/profile'
+               primaryText='Profile'
+               leftIcon={<IconProfile color={'#FFFFFF'} />} 
+               />
           </Menu>
         </Drawer>
       </div>
