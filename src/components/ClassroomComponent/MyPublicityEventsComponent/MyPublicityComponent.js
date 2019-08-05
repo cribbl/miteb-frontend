@@ -139,6 +139,10 @@ class MyPublicityComponent extends Component {
       hashHistory.push('/dashboard')
       return
     } else {
+      if (this.props.user.isSC) {
+        hashHistory.replace('/dashboard/scPublicity')
+        return
+      }
       if (this.props.user.isFA) {
         hashHistory.replace('/dashboard/faPublicity')
         return
@@ -212,10 +216,11 @@ class MyPublicityComponent extends Component {
                 >
                 END DATE
                 </TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>FA</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>AD</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '10%' }}>SO</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%' }}>{this.props.isMobile ? ' ' : 'Actions'}</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>SC</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>FA</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>AD</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? '13%' : '9%' }}>SO</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '9%' }}>{this.props.isMobile ? ' ' : 'Actions'}</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody
@@ -235,13 +240,14 @@ class MyPublicityComponent extends Component {
                 Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function (event, index) {
                   return (
                     <TableRow key={index}>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '38%' : '20%' }}>{event.title}</TableRowColumn>
-                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.startDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '20%' }}>{moment(event.endDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '10%' }}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
-                      <TableRowColumn style={{ width: this.props.isMobile ? 'auto' : '10%', textOverflow: 'clip' }}>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '38%' : '19%' }}>{event.title}</TableRowColumn>
+                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '18%' }}>{moment(event.startDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                      <TableRowColumn hidden={this.props.isMobile} style={{ width: '18%' }}>{moment(event.endDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.SC_appr, event.SC_msg)}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.FA_appr, event.FA_msg)}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.AD_appr, event.AD_msg)}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? '14%' : '9%' }}>{this.handleIcon(event, event.SO_appr, event.SO_msg)}</TableRowColumn>
+                      <TableRowColumn style={{ width: this.props.isMobile ? 'auto' : '9%', textOverflow: 'clip' }}>
                         {<IconMenu
                           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}

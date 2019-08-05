@@ -24,6 +24,7 @@ import ViewBookingsComponent from './components/ClassroomComponent/ViewBookingsC
 
 import PublicityPermComponent from './components/ClassroomComponent/PublicityPermComponent/Publicity'
 import MyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/MyPublicityComponent'
+import SCMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/SCMyPublicityComponent'
 import FAMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/FAMyPublicityComponent'
 import SOMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/SOMyPublicityComponent'
 import ADMyPublicityComponent from './components/ClassroomComponent/MyPublicityEventsComponent/ADMyPublicityComponent'
@@ -76,6 +77,7 @@ ReactDOM.render(
           <Route path='viewComplaints' component={ViewComplaintsComponent} />
           <Route path='publicity_perm' component={PublicityPermComponent} />
           <Route path='myPublicity' component={MyPublicityComponent} />
+          <Route path='scPublicity' component={SCMyPublicityComponent} />
           <Route path='faPublicity' component={FAMyPublicityComponent} />
           <Route path='adPublicity' component={ADMyPublicityComponent} />
           <Route path='soPublicity' component={SOMyPublicityComponent} />

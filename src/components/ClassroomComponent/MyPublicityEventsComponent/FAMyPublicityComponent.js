@@ -230,7 +230,7 @@ class FAMyPublicityComponent extends Component {
                   <TableRow key={index}>
                     <TableRowColumn>{event.title}</TableRowColumn>
                     <TableRowColumn>{moment(event.startDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{moment(event.end_date, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{moment(event.endDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
                     <TableRowColumn style={{ width: this.props.isMobile ? 'auto' : '10%', textOverflow: 'clip' }}>
                       {<IconMenu
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}

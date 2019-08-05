@@ -83,8 +83,9 @@ class PublicityComponent extends React.Component {
     var result = this.parseMediums()
     var files = this.state.files
     var newData = {
+      'SC_appr': this.props.user.isSC ? 'approved' : 'pending',
+      'FA_appr': this.props.user.isSC ? 'approved' : 'NA',
       'AD_appr': this.props.user.isSC ? 'pending' : 'NA',
-      'FA_appr': this.props.user.isSC ? 'approved' : 'pending',
       'SO_appr': 'NA',
       'clubName': this.props.user.name,
       'clubID': this.props.user.uid,
@@ -117,7 +118,8 @@ class PublicityComponent extends React.Component {
     firebaseDB.ref('/users/' + scope.props.user.uid + '/my_publicity/').push(publicityID,
       function (res, err) {
         if (err) { console.log("couldn't be booked ", err) } else {
-          sendPush(scope.props.user.fa_uid, 'Mr. FA, Approval requested!', 'Please approve the event titled ' + scope.state.event_fields.title + "'")
+        //  sendPush(scope.props.user.fa_uid, 'Mr. FA, Approval requested!', 'Please approve the event titled ' + scope.state.event_fields.title + "'")
+          sendPush('SC', 'Dear SC, Approval requested!', 'Please approve the event by ' + scope.props.user.name + "'")
           scope.setState({ SnackBarmessage: 'Request sent for review successfully', openSnackBar: true, fields: {} })
           scope.setState({ bookedEvent: obj, finished: true })
         }

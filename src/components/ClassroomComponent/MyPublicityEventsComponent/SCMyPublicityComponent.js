@@ -12,18 +12,18 @@ import Paper from 'material-ui/Paper'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { firebaseDB } from '../../../firebaseConfig'
-import Dialogxx from '../../Dialogs/ViewPublicityDialogComponent'
-import FlagDialog from '../../Dialogs/FlagRejectDialog'
-import Snackbar from 'material-ui/Snackbar'
 import SearchSortContainer from './SearchSortContainer'
+import ViewEventDialog from '../../Dialogs/ViewEventDialogComponent'
+import FlagRejectDialog from '../../Dialogs/FlagRejectDialog'
+import Snackbar from 'material-ui/Snackbar'
 import { approvePublicity, flagRejectPublicity } from '../../../Services/firebaseDBService'
-import moment from 'moment'
 import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconButton from 'material-ui/IconButton'
-import MenuItem from 'material-ui/MenuItem'
+import moment from 'moment'
 
-class SOMyPublicityComponent extends Component {
+class SCMyPublicityComponent extends Component {
   constructor (props) {
     super(props)
     this.approve = this.approve.bind(this)
@@ -72,7 +72,7 @@ class SOMyPublicityComponent extends Component {
 
   approve (event) {
     let scope = this
-    approvePublicity(event, 'SO', this.props.user)
+    approvePublicity(event, 'SC', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -80,15 +80,17 @@ class SOMyPublicityComponent extends Component {
     this.nextEvent()
   }
 
+  // confirmation dialog for flag/reject
   flagRejectConfirm (event, mode) {
     this.setState({ FlagDialogOpen: true })
     this.setState({ currentEvent: event })
     this.setState({ flagRejectMode: mode })
   }
 
+  // do flag/reject call to dbService
   flagReject (event, message, mode) {
     let scope = this
-    flagRejectPublicity(event, message, mode, 'SO', this.props.user)
+    flagRejectPublicity(event, message, mode, 'SC', this.props.user)
     const { myArrx } = scope.state
     delete myArrx[event.key]
     scope.setState({ myArrx })
@@ -122,23 +124,24 @@ class SOMyPublicityComponent extends Component {
     this.setState({ currentEvent: nextEvent })
   }
 
-  componentDidMount () {
-    if (!this.props.user) {
-      hashHistory.push('/dashboard')
+  componentWillMount () {
+    if (!(this.props.user && this.props.user.isSC)) {
+      hashHistory.push('/auth')
       return
     }
     this.setState({ fetching: true })
     var scope = this
-    firebaseDB.ref('publicity/').orderByChild('SO_appr').equalTo('pending').on('value',
+    firebaseDB.ref('publicity').orderByChild('SC_appr').equalTo('pending').on('value',
       function (snapshot) {
+        scope.setState({ fetching: false })
         snapshot.forEach(function (child) {
-          scope.setState({ fetching: false })
-          if (child.val().SO_appr === 'pending') {
+          if (child.val().SC_appr === 'pending') {
             const { myArrx } = scope.state
             myArrx[child.key] = child.val()
             myArrx[child.key].key = child.key
             scope.setState({ myArrx })
             scope.setState({ originalArr: myArrx })
+            console.log(scope.state.myArrx)
           }
         })
       }, this)
@@ -159,9 +162,9 @@ class SOMyPublicityComponent extends Component {
           onRequestClose={this.handleSnackBarClose}
         />
 
-        <Dialogxx open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject} flagRejectHandler={this.flagRejectConfirm} />
+        <ViewEventDialog open={this.state.dialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleDialogClose} nextEvent={this.nextEvent} approveHandler={this.approve} rejectHandler={this.reject} flagRejectHandler={this.flagRejectConfirm} />
 
-        <FlagDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} mode={this.state.flagRejectMode} flagRejectHandler={this.flagReject} />
+        <FlagRejectDialog open={this.state.FlagDialogOpen} currentEvent={this.state.currentEvent} handleClose={this.handleFlagDialogClose} mode={this.state.flagRejectMode} flagRejectHandler={this.flagReject} />
 
         <Paper style={{ width: '98%', height: 500, overflow: 'hidden', marginTop: 20 }} zDepth={2}>
           <Table
@@ -177,11 +180,11 @@ class SOMyPublicityComponent extends Component {
               adjustForCheckbox={this.state.showCheckboxes}
               enableSelectAll={this.state.enableSelectAll}
             >
-              <TableRow style={{ backgroundColor: '#EFF0F2' }}>
+              <TableRow style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>CLUB NAME</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }} hidden={this.props.isMobile}>TITLE</TableHeaderColumn>
                 <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>START DATE</TableHeaderColumn>
-                <TableHeaderColumn style={{ color: '#000', fontWeight: 700 }}>Actions</TableHeaderColumn>
+                <TableHeaderColumn style={{ color: '#000', fontWeight: 700, width: this.props.isMobile ? 'auto' : '10%' }}>ACTIONS</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody
@@ -200,9 +203,9 @@ class SOMyPublicityComponent extends Component {
               { Object.keys(this.state.myArrx).length > 0 ? (Object.values(this.state.myArrx).map(function (event, index) {
                 return (
                   <TableRow key={index}>
-                    <TableRowColumn>{event.title}</TableRowColumn>
+                    <TableRowColumn>{event.clubName}</TableRowColumn>
+                    <TableRowColumn hidden={this.props.isMobile}>{event.title}</TableRowColumn>
                     <TableRowColumn>{moment(event.startDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
-                    <TableRowColumn hidden={this.props.isMobile}>{moment(event.endDate, 'DD-MM-YYYY').format("ddd, DD MMM 'YY")}</TableRowColumn>
                     <TableRowColumn style={{ width: this.props.isMobile ? 'auto' : '10%', textOverflow: 'clip' }}>
                       {<IconMenu
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -236,12 +239,16 @@ class SOMyPublicityComponent extends Component {
 }
 
 function mapStateToProps (state) {
-  const { isMobile } = state.toggler
-  const { user } = state.authentication
+  const { openSideNav, isMobile, filter } = state.toggler
+  const { user, verified, vals } = state.authentication
   return {
     user,
-    isMobile
+    openSideNav,
+    verified,
+    isMobile,
+    vals,
+    filter
   }
 }
 
-export default connect(mapStateToProps)(SOMyPublicityComponent)
+export default connect(mapStateToProps)(SCMyPublicityComponent)
