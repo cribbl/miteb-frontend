@@ -25,7 +25,8 @@ class MediumContainer extends React.Component {
       indexes: this.props.indexesMediums,
       object: { 0: 'Banner', 1: 'InfoDesk', 2: 'Digital Board', 3: 'Poster' },
       files: this.props.filesMediums,
-      fields: this.props.fields
+      fields: this.props.fields,
+      deskTouch: false
     }
   }
 
@@ -48,6 +49,7 @@ class MediumContainer extends React.Component {
       files: this.state.files.concat(files),
     })
     this.props.updateFiles(this.state.files)
+    this.validationMedia()
   }
 
   removePicture (file) {
@@ -59,6 +61,7 @@ class MediumContainer extends React.Component {
     this.setState({
       files: files
     })
+    this.validationMedia()
   }
 
   renderPoster () {
@@ -98,11 +101,13 @@ class MediumContainer extends React.Component {
   }
 
   validationMedia () {
-    var checked = this.state.checked
-    var indexes = this.state.indexes
-    var isChecked = !(Object.values(checked).every(v => v === false))
-    var isFormValid = isChecked ? !checked.some((key, index) => key ? Object.values(indexes[index]).every(v => v === false) : false) : false
-    this.props.updateValidation(isFormValid)
+    let checked = this.state.checked
+    let indexes = this.state.indexes
+    let isChecked = !(Object.values(checked).every(v => v === false))
+    let isFormValid = isChecked ? !checked.some((key, index) => key ? Object.values(indexes[index]).every(v => v === false) : false) : false
+    let deskCheck = this.state.checked[1] ? (this.state.fields['noDesks'] > 0) : true
+    let posterCheck = this.state.checked[3] ? this.state.files.length > 0 : true
+    this.props.updateValidation(isFormValid && deskCheck && posterCheck)
   }
 
   handleToggle (s, i) {
@@ -122,7 +127,6 @@ class MediumContainer extends React.Component {
     this.setState({ checkedArray });
   }
 
-
   updateCheck (value) {
     let checkedArray = this.state.checked
     checkedArray[value] = !checkedArray[value]
@@ -135,7 +139,14 @@ class MediumContainer extends React.Component {
     let fields = this.state.fields
     fields[field] = e.target.value
     this.setState({ fields })
+    this.validationMedia()
     this.props.updateInfo(fields)
+  }
+
+  handleBlur(field, e) {
+    this.setState({
+      deskTouch: true
+    })
   }
 
   renderCard () {
@@ -157,7 +168,10 @@ class MediumContainer extends React.Component {
                 floatingLabelText='Number of desks'
                 type="number"
                 onChange={this.handleChange.bind(this, 'noDesks')}
+                onBlur={this.handleBlur.bind(this, 'noDesks')}
                 underlineShow={true}
+                value={this.state.fields['noDesks']}
+                errorText={ this.state.deskTouch && !(this.state.fields['noDesks'] > 0) && this.state.checked[1] && 'Enter a valid value'}
                 required
               />
             <TextField
