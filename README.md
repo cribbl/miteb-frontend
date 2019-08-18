@@ -8,14 +8,20 @@
 [![Open PRs](https://img.shields.io/github/issues-pr/cdnjs/cdnjs.svg)](https://github.com/cribbl/miteb-frontend/pulls?q=is%3Aopen+type%3Apr)
 [![Forks](https://img.shields.io/github/forks/badges/shields.svg?label=Fork&style=social)](https://github.com/cribbl/miteb-frontend/network/members)
 
-MIT Event Booking Portal is a web application to facilitate the process of booking classrooms, auditoriums and lecture halls for conducting events and workshops by different student run clubs or groups at MIT, Manipal. Until now, the 3 step pen-paper based procedure was cumbersome as it involved manual checking for available rooms and running behind college authorities seeking their permission. We have made an attempt to automate this process and go digital via our web portal. This is the frontend of this system.
+MIT Event Booking Portal is a web application to facilitate the process of booking classrooms, auditoriums and lecture halls for conducting events and workshops by different student run clubs or groups at MIT, Manipal. Until now, the 3 step pen-paper based procedure was cumbersome as it involved manual checking for available rooms and running behind college authorities seeking their permission. We have made an attempt to automate this process and go digital via our web portal. This is the frontend of this system. Checkout the backend [here](https://github.com/cribbl/miteb-backend/)
 
+## Contributing
+Be it critical bug fixes or fixing a typo we welcome all contributions!
 
-## Installation and Development Setup
+Here are some pages to get you started:
+- Read the [Contributing guide](https://github.com/cribbl/miteb-frontend/wiki/how-to-contribute).
+- [Room booking flow](https://github.com/cribbl/miteb-frontend/wiki/documentation)
+- Try your hand at one of the [open issues](https://github.com/cribbl/miteb-frontend/issues)
 
-Read the [Getting Started guide](https://github.com/cribbl/miteb-frontend/wiki/Getting-Started).
+We are in the process of adding more Documentation, if you have any questions that you want answered reach out to us [gitter](https://gitter.im/cribbl) or open a [new issue](https://github.com/cribbl/miteb-frontend/issues/new/choose) and we will get back to you asap!
 
+## Discussion
+Hang out with the community on [gitter](https://gitter.im/cribbl). You can also email us at hello@cribblservices.com.
 
-## Code of Conduct
-
-Please read our [Code of Conduct](https://github.com/cribbl/miteb-frontend/.github/code_of_conduct.md).
+## License
+[MIT](https://github.com/cribbl/miteb-frontend/blob/master/LICENSE)
