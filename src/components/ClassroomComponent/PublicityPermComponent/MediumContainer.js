@@ -11,7 +11,6 @@ import Dropzone from 'react-dropzone'
 import TextField from 'material-ui/TextField'
 import IconButton from 'material-ui/IconButton'
 
-
 class MediumContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -44,9 +43,9 @@ class MediumContainer extends React.Component {
     })
   }
 
-  onPreviewDrop = (files) => {
+  onPreviewDrop (files) {
     this.setState({
-      files: this.state.files.concat(files),
+      files: this.state.files.concat(files)
     })
     this.props.updateFiles(this.state.files)
     this.validationMedia()
@@ -70,7 +69,7 @@ class MediumContainer extends React.Component {
       width: 100,
       height: 100
     }
-    
+
     return (
       <a style={{ cursor: this.state.checked[3] ? 'pointer' : 'not-allowed' }}>
         <div className='dropzone' style={{ marginLeft: 50, marginRight: 50, border: !this.state.checked[3] ? '1px dotted grey' : '1px dotted blue', minHeight: 100 }}>
@@ -114,17 +113,17 @@ class MediumContainer extends React.Component {
     let indexes = this.state.indexes;
     (indexes[s])[i] = !(indexes[s])[i]
     this.setState({ indexes })
-    let index = Object.values(indexes[s]);
+    let index = Object.values(indexes[s])
     this.validationMedia()
     this.props.updateToggle(indexes)
-    index.filter(i => i == true).length == 1? this.checkAutomatically(s, true) : null
-    index.every(i => i == false) ? this.checkAutomatically(s, false) : null;
+    if (index.filter(i => i === true).length === 1) this.checkAutomatically(s, true)
+    if (index.every(i => i === false)) this.checkAutomatically(s, false)
   }
 
-  checkAutomatically(value, state) {
-    let checkedArray = this.state.checked;
-    checkedArray[value] = state;
-    this.setState({ checkedArray });
+  checkAutomatically (value, state) {
+    let checkedArray = this.state.checked
+    checkedArray[value] = state
+    this.setState({ checkedArray })
   }
 
   updateCheck (value) {
@@ -135,7 +134,7 @@ class MediumContainer extends React.Component {
     this.props.updateShared(this.state.checked)
   }
 
-  handleChange(field,e) {
+  handleChange (field, e) {
     let fields = this.state.fields
     fields[field] = e.target.value
     this.setState({ fields })
@@ -143,7 +142,7 @@ class MediumContainer extends React.Component {
     this.props.updateInfo(fields)
   }
 
-  handleBlur(field, e) {
+  handleBlur (field, e) {
     this.setState({
       deskTouch: true
     })
@@ -162,38 +161,38 @@ class MediumContainer extends React.Component {
           return (<ListItem style={{ textAlign: 'left' }} key={a} hidden={medium === 'InfoDesk' && (index === 1 || index === 2)} secondaryText={listSec[index]} primaryText={step} rightToggle={<Toggle style={{ marginRight: 0 }} key={a} toggled={(this.state.indexes[value])[index]} onToggle={this.handleToggle.bind(this, value, index)} />} />
           )
         })}
-        {medium === 'InfoDesk' && 
-          <div style={{marginLeft:20,marginTop:0, position:'relative'}}>
+        {medium === 'InfoDesk' &&
+          <div style={{ marginLeft: 20, marginTop: 0, position: 'relative' }}>
             <TextField
-                floatingLabelText='Number of desks'
-                type="number"
-                onChange={this.handleChange.bind(this, 'noDesks')}
-                onBlur={this.handleBlur.bind(this, 'noDesks')}
-                underlineShow={true}
-                value={this.state.fields['noDesks']}
-                errorText={ this.state.deskTouch && !(this.state.fields['noDesks'] > 0) && this.state.checked[1] && 'Enter a valid value'}
-                required
-              />
-            <TextField
-              floatingLabelText="Others"
-              onChange={this.handleChange.bind(this, 'otherInfo')}
-              type="text"
+              floatingLabelText='Number of desks'
+              type='number'
+              onChange={this.handleChange.bind(this, 'noDesks')}
+              onBlur={this.handleBlur.bind(this, 'noDesks')}
+              underlineShow
+              value={this.state.fields['noDesks']}
+              errorText={this.state.deskTouch && !(this.state.fields['noDesks'] > 0) && this.state.checked[1] && 'Enter a valid value'}
               required
-              />
+            />
+            <TextField
+              floatingLabelText='Others'
+              onChange={this.handleChange.bind(this, 'otherInfo')}
+              type='text'
+              required
+            />
           </div>
         }
       </List>
     </div>)
   }
-  
+
   renderMedia () {
     return (<div>
       <List>
         <Subheader style={{ textAlign: 'center' }}> Media </Subheader>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={0} checked={this.state.checked[0]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }}onCheck={this.updateCheck.bind(this, 0)} />
-            <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 0? 'lightgray' : null}}
+          <ListItem
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue === 0 ? 'lightgray' : null }}
             onClick={this.handleClick.bind(this, 0)}
             primaryText='Banner'
           />
@@ -202,7 +201,7 @@ class MediumContainer extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={1} checked={this.state.checked[1]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }} onCheck={this.updateCheck.bind(this, 1)} />
           <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 1? 'lightgray' : null}}
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue === 1 ? 'lightgray' : null }}
             onClick={this.handleClick.bind(this, 1)}
             primaryText='InfoDesk'
           />
@@ -211,7 +210,7 @@ class MediumContainer extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={2} checked={this.state.checked[2]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }} onCheck={this.updateCheck.bind(this, 2)} />
           <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 2? 'lightgray' : null }}
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue === 2 ? 'lightgray' : null }}
             onClick={this.handleClick.bind(this, 2)}
             primaryText='Digital Board'
           />
@@ -220,7 +219,7 @@ class MediumContainer extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Checkbox value={3} checked={this.state.checked[3]} style={{ width: 48, height: 48, paddingTop: 20, paddingBottom: 15 }} onCheck={this.updateCheck.bind(this, 3)} />
           <ListItem
-            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue == 3? 'lightgray' : null}}
+            style={{ minHeight: 65, textAlign: 'left', minWidth: 400, paddingTop: 10, backgroundColor: this.state.clickedValue === 3 ? 'lightgray' : null }}
             onClick={this.handleClick.bind(this, 3)}
             primaryText='Poster'
           />

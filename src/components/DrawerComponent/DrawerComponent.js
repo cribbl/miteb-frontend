@@ -131,12 +131,12 @@ class DrawerComponent extends Component {
               />
               : null}
 
-               <MenuItem
-               style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active : '', menuItemStyle)}
-               key='/dashboard/profile'
-               primaryText='Profile'
-               leftIcon={<IconProfile color={'#FFFFFF'} />} 
-               />
+            <MenuItem
+              style={Object.assign(this.state.activeItem === '/dashboard/profile' ? active : '', menuItemStyle)}
+              key='/dashboard/profile'
+              primaryText='Profile'
+              leftIcon={<IconProfile color={'#FFFFFF'} />}
+            />
           </Menu>
         </Drawer>
       </div>
