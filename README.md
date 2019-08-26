@@ -3,7 +3,6 @@
 
 [![Build Status](https://travis-ci.org/cribbl/miteb-frontend.svg?branch=master)](https://travis-ci.org/cribbl/miteb-frontend)
 [![Code Style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/cribbl/miteb-frontend)
 [![Open Issues](https://img.shields.io/github/issues/badges/shields.svg)](https://github.com/cribbl/miteb-frontend/issues?utf8=%E2%9C%93&q=is%3Aopen+type%3Aissue)
 [![Open PRs](https://img.shields.io/github/issues-pr/cdnjs/cdnjs.svg)](https://github.com/cribbl/miteb-frontend/pulls?q=is%3Aopen+type%3Apr)
 [![Forks](https://img.shields.io/github/forks/badges/shields.svg?label=Fork&style=social)](https://github.com/cribbl/miteb-frontend/network/members)
