@@ -21,7 +21,7 @@ Here are some pages to get you started:
 We are in the process of adding more Documentation, if you have any questions that you want answered reach out to us [gitter](https://gitter.im/cribbl) or open a [new issue](https://github.com/cribbl/miteb-frontend/issues/new/choose) and we will get back to you asap!
 
 ## Discussion
-Hang out with the community on [gitter](https://gitter.im/cribbl). You can also email us at hello@cribblservices.com.
+Hang out with the community on [slack](https://join.slack.com/t/mitroombooking/shared_invite/enQtNzQwMzEyMDQwNTM0LTUyODUyOTRmMzk2ODM0MTljNmE0M2RiYzgwZGZhNzM5NTViNjBmNzMyNGNiODE4YWM2MmIzNWVkYjU1ODVhZjE). You can also email us at hello@cribblservices.com.
 
 ## License
 [MIT](https://github.com/cribbl/miteb-frontend/blob/master/LICENSE)
