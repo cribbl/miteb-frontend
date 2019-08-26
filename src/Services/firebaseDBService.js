@@ -97,7 +97,7 @@ export const getBookingDetails = (date, room) => {
   })
 }
 
-function fetch (dateArr) {
+function fetch(dateArr) {
   return Promise.all(dateArr.map(date =>
     new Promise((resolve, reject) =>
       firebaseDB.ref('roomsx/' + date).on('value', function (snapshot) {
@@ -113,7 +113,7 @@ function fetch (dateArr) {
   )
 }
 
-function extractRooms (avl) {
+function extractRooms(avl) {
   return new Promise(function (resolve, reject) {
     console.log(avl)
     let rooms = []
@@ -136,10 +136,12 @@ export const getBlockedRooms = async (startDate, endDate) => {
     .then((snapshot) => {
       blocked = snapshot.val()
     })
-  dates.forEach(date => {
-    let day = moment(date, 'DD-MM-YYYY').day()
-    rooms = rooms.concat(blocked[day])
-  })
+  if (blocked != null) {
+    dates.forEach(date => {
+      let day = moment(date, 'DD-MM-YYYY').day()
+      rooms = rooms.concat(blocked[day])
+    })
+  }
   return new Promise((resolve, reject) => {
     resolve(rooms)
   })
@@ -169,7 +171,7 @@ export const fetchApprovedRooms = (date) => {
     })
 }
 
-function getDateArr (startDate, endDate) {
+function getDateArr(startDate, endDate) {
   let date = moment(startDate)
   var dateArr = []
 
@@ -185,7 +187,7 @@ export const updateDates = (startDate, endDate, rooms, eventID) => {
   updateDatesDBx(dateArr, rooms, eventID)
 }
 
-function updateDatesDBx (dateArr, roomArr, eventID) {
+function updateDatesDBx(dateArr, roomArr, eventID) {
   for (let date of dateArr) {
     let dateRef = firebaseDB.ref('/roomsx').child(date)
     addRoomsToDB(dateRef, roomArr)
@@ -193,7 +195,7 @@ function updateDatesDBx (dateArr, roomArr, eventID) {
   }
 }
 
-function addApprovedRooms (event) {
+function addApprovedRooms(event) {
   console.log(event.startDate + ' ' + event.endDate)
   let dateArr = getDateArr(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'))
   for (let date of dateArr) {
@@ -202,7 +204,7 @@ function addApprovedRooms (event) {
   }
 }
 
-function addRoomsToDB (dateRef, roomArr) {
+function addRoomsToDB(dateRef, roomArr) {
   let data = []
   dateRef.once('value')
     .then((snapshot) => {
