@@ -191,7 +191,6 @@ function updateDatesDBx (dateArr, roomArr, eventID) {
   for (let date of dateArr) {
     let dateRef = firebaseDB.ref('/roomsx').child(date)
     addRoomsToDB(dateRef, roomArr)
-    firebaseDB.ref('/to-be-held').child(date).push(eventID)
   }
 }
 
@@ -223,7 +222,7 @@ export const approveEvent = (event, approver, user) => {
       // sendEmail("FA", user.email, event.booker_email, "FA_APPROVED", "Approved by Faculty Advisor", "Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".", "<p>Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".</p>");
       sendPush(event.clubID + 'FA', 'Mr. FA, Request Approval', 'A new event titled ' + event.title + ' requires your approval')
       sendPush(event.clubID, 'Yay! Approved by SC', "Your event titled '" + event.title + "' has been approved by SC")
-
+      
       firebaseDB.ref('/events/').child(event.key + '/SC_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/SC_appr').set('approved')
       firebaseDB.ref('/events/').child(event.key + '/FA_appr').set('pending')
@@ -252,6 +251,10 @@ export const approveEvent = (event, approver, user) => {
       // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Approved by Security Officer", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event has been approved by the Security Officer, "+user.name+".</p>");
 
       // sendEmail("SO", user.email, event.booker_email, "SO_APPROVED", "Event Approved", "Congratulations! Your event has been approved by the Security Officer, "+user.name+".", "<p><strong>Congratulations!</strong><br /> Your event titled <strong>'"+event.title+"'</strong> has been approved.<br/>You may find the receipt <a href='https://s3.amazonaws.com/miteb/"+event.key+".pdf'>here</a><br/><br/>Regards,<br/>Cribbl Services</p>");
+      let dateArr = getDateArr(moment(event.startDate, 'DD-MM-YYYY'), moment(event.endDate, 'DD-MM-YYYY'))
+      dateArr.forEach((date) => {
+        firebaseDB.ref('/to-be-held').child(date).push(event.key)
+      })
       let num = (event.booker_contact).substr((event.booker_contact).length - 10)
       sendSMS('+91' + num, "Congratulations!\nYour event titled '" + event.title + "' has been approved.\n\nThe receipt has been emailed.\n\nRegards,\nCribbl Services")
       sendPush(event.clubID, 'Yay! Approved by SO', "Your event titled '" + event.title + "' has been approved by SO")
