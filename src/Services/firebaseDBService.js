@@ -222,7 +222,7 @@ export const approveEvent = (event, approver, user) => {
       // sendEmail("FA", user.email, event.booker_email, "FA_APPROVED", "Approved by Faculty Advisor", "Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".", "<p>Congratulations! Your event has been approved by your Faculty Advisor, "+user.name+".</p>");
       sendPush(event.clubID + 'FA', 'Mr. FA, Request Approval', 'A new event titled ' + event.title + ' requires your approval')
       sendPush(event.clubID, 'Yay! Approved by SC', "Your event titled '" + event.title + "' has been approved by SC")
-      
+
       firebaseDB.ref('/events/').child(event.key + '/SC_date').set(moment(new Date()).format('DD-MM-YYYY'))
       firebaseDB.ref('/events/').child(event.key + '/SC_appr').set('approved')
       firebaseDB.ref('/events/').child(event.key + '/FA_appr').set('pending')
