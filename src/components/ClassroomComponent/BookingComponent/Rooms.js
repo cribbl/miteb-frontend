@@ -34,7 +34,7 @@ class RoomsContainer extends Component {
       let index = temp.indexOf(id)
       temp.splice(index, 1)
     } else {
-      if (temp.length >= 3) {
+      if (temp.length >= 3 && !this.props.user.isSO) {
         const { dispatch } = this.props
         dispatch({ type: 'TOASTER', message: 'Maximum 3 rooms allowed at once!', toastOpen: true })
         return

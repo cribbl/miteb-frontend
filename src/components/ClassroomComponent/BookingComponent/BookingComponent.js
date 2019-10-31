@@ -170,7 +170,9 @@ class HorizontalLinearStepper extends React.Component {
     this.setState({ openSnackBar: false })
   }
 
-  handleValidation (n, field) {
+  handleValidation (stepIndex, field) {
+    let isSO = this.props.user.isSO ? 1 : 0
+    stepIndex = stepIndex + isSO // TODO : Hacky. Fix this.
     let fields = this.state.fields
     let errors = {
       booker_name: '',
@@ -182,7 +184,7 @@ class HorizontalLinearStepper extends React.Component {
     }
     let isFormValid = true
 
-    if (n === 0) {
+    if (stepIndex === 0) {
       if (fields['booker_name'].length < 1) {
         isFormValid = false
         errors['booker_name'] = 'Cannot be empty'
@@ -225,7 +227,7 @@ class HorizontalLinearStepper extends React.Component {
       }
     }
 
-    if (n === 1) {
+    if (stepIndex === 1) {
       if (fields['title'].length < 1) {
         isFormValid = false
         errors['title'] = 'Cannot be empty'
@@ -267,6 +269,12 @@ class HorizontalLinearStepper extends React.Component {
     })
   }
 
+  getADApprStatus () {
+    if (this.props.user.isSC) return 'pending'
+    else if (this.props.user.isSO) return 'approved'
+    else return 'NA'
+  }
+
   handleSubmit () {
     this.verifyRooms()
       .then(function () {
@@ -280,10 +288,10 @@ class HorizontalLinearStepper extends React.Component {
           'startDate': moment(field['startDate']).format('DD-MM-YYYY'),
           'endDate': moment(field['endDate']).format('DD-MM-YYYY'),
           'rooms': this.state.selectedRooms,
-          'SC_appr': this.props.user.isSC ? 'approved' : 'pending',
-          'FA_appr': this.props.user.isSC ? 'approved' : 'NA',
-          'AD_appr': this.props.user.isSC ? 'pending' : 'NA',
-          'SO_appr': 'NA',
+          'SC_appr': (this.props.user.isSC || this.props.user.isSO) ? 'approved' : 'pending',
+          'FA_appr': (this.props.user.isSC || this.props.user.isSO) ? 'approved' : 'NA',
+          'AD_appr': this.getADApprStatus(),
+          'SO_appr': this.props.user.isSO ? 'approved' : 'NA',
           'booker_name': field['booker_name'],
           'booker_contact': field['booker_contact'],
           'booker_reg_no': field['booker_reg_no'],
@@ -297,7 +305,7 @@ class HorizontalLinearStepper extends React.Component {
           'clubName': this.props.user.name,
           'clubEmail': this.props.user.email,
           'clubID': this.props.user.uid,
-          'FA_name': this.props.user.fa.name,
+          'FA_name': this.props.user.isSO ? 'NA' : this.props.user.fa.name,
           'FA_date': this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null
         }
 
@@ -324,7 +332,9 @@ class HorizontalLinearStepper extends React.Component {
   }
 
   getStepContent (stepIndex) {
-    switch (stepIndex) {
+    let isSO = this.props.user.isSO ? 1 : 0
+    // If the user is SO stepIndex 0 is case 1 and step index 1 is case 2
+    switch (stepIndex + isSO) {
       case 0:
         return (<div style={{ marginBottom: 60 }}>
           <TextField
@@ -477,7 +487,33 @@ class HorizontalLinearStepper extends React.Component {
     }
   }
 
+  getStepperContent () {
+    if (this.props.user.isSO) {
+      return <Stepper linear={false} activeStep={this.state.stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'} style={{ width: '80%', margin: '0 auto' }}>
+        <Step>
+          <StepLabel>Event Description</StepLabel>
+        </Step>
+        <Step>
+          <StepLabel>Choose your Location</StepLabel>
+        </Step>
+      </Stepper>
+    } else {
+      return <Stepper linear={false} activeStep={this.state.stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'} style={{ width: '80%', margin: '0 auto' }}>
+        <Step>
+          <StepLabel>Booker Details</StepLabel>
+        </Step>
+        <Step>
+          <StepLabel>Event Description</StepLabel>
+        </Step>
+        <Step>
+          <StepLabel>Choose your Location</StepLabel>
+        </Step>
+      </Stepper>
+    }
+  }
+
   render () {
+    let finalIndex = this.props.user.isSO ? 1 : 2
     return (
       <div>
         <Paper style={{ width: this.props.isMobile ? '98%' : '90%', height: '100%', margin: 'auto', marginTop: '2%', marginBottom: '2%', minHeight: 600 }} zDepth={3}>
@@ -493,19 +529,8 @@ class HorizontalLinearStepper extends React.Component {
             {this.state.finished ? (
               <FinishedContainer event={this.state.bookedEvent} />
             ) : (
-
               <div style={{ width: this.props.isMobile ? '95%' : '85%' }}>
-                <Stepper linear={false} activeStep={this.state.stepIndex} orientation={this.props.isMobile ? 'vertical' : 'horizontal'} style={{ width: '80%', margin: '0 auto' }}>
-                  <Step>
-                    <StepLabel>Booker Details</StepLabel>
-                  </Step>
-                  <Step>
-                    <StepLabel>Event Description</StepLabel>
-                  </Step>
-                  <Step>
-                    <StepLabel>Choose your Location</StepLabel>
-                  </Step>
-                </Stepper>
+                {this.getStepperContent()}
                 <div>{this.getStepContent(this.state.stepIndex)}</div>
                 <div style={{ marginBottom: 20 }}>
                   <FlatButton
@@ -515,10 +540,10 @@ class HorizontalLinearStepper extends React.Component {
                     style={{ marginRight: 60 }}
                   />
                   <RaisedButton
-                    label={this.state.stepIndex === 2 ? 'Submit' : 'Next'}
+                    label={this.state.stepIndex === finalIndex ? 'Submit' : 'Next'}
                     primary
-                    onClick={this.state.stepIndex === 2 ? this.handleSubmit : this.handleNext}
-                    disabled={!this.state.isFormValid || (this.state.stepIndex === 2 && this.state.selectedRooms.length === 0)}
+                    onClick={this.state.stepIndex === finalIndex ? this.handleSubmit : this.handleNext}
+                    disabled={!this.state.isFormValid || (this.state.stepIndex === finalIndex && this.state.selectedRooms.length === 0)}
                   />
                 </div>
               </div>
