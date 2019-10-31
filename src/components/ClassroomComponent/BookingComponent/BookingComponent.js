@@ -267,6 +267,12 @@ class HorizontalLinearStepper extends React.Component {
     })
   }
 
+  getADApprStatus () {
+    if (this.props.user.isSC) return 'pending'
+    else if (this.props.user.isSO) return 'approved'
+    else return 'NA'
+  }
+
   handleSubmit () {
     this.verifyRooms()
       .then(function () {
@@ -280,10 +286,10 @@ class HorizontalLinearStepper extends React.Component {
           'startDate': moment(field['startDate']).format('DD-MM-YYYY'),
           'endDate': moment(field['endDate']).format('DD-MM-YYYY'),
           'rooms': this.state.selectedRooms,
-          'SC_appr': this.props.user.isSC ? 'approved' : 'pending',
-          'FA_appr': this.props.user.isSC ? 'approved' : 'NA',
-          'AD_appr': this.props.user.isSC ? 'pending' : 'NA',
-          'SO_appr': 'NA',
+          'SC_appr': (this.props.user.isSC || this.props.user.isSO) ? 'approved' : 'pending',
+          'FA_appr': (this.props.user.isSC || this.props.user.isSO) ? 'approved' : 'NA',
+          'AD_appr': this.getADApprStatus(),
+          'SO_appr': this.props.user.isSO ? 'approved' : 'NA',
           'booker_name': field['booker_name'],
           'booker_contact': field['booker_contact'],
           'booker_reg_no': field['booker_reg_no'],
@@ -297,7 +303,7 @@ class HorizontalLinearStepper extends React.Component {
           'clubName': this.props.user.name,
           'clubEmail': this.props.user.email,
           'clubID': this.props.user.uid,
-          'FA_name': this.props.user.fa.name,
+          'FA_name': this.props.user.isSO ? 'NA' : this.props.user.fa.name,
           'FA_date': this.props.user.isSC ? moment(this.state.today, 'DD-MM-YYYY').format('DD-MM-YYYY') : null
         }
 
