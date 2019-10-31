@@ -20,7 +20,7 @@ import { sendPush } from '../../../Services/NotificationService'
 import FinishedContainer from './FinishedContainer'
 
 class HorizontalLinearStepper extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.handleBlur = this.handleBlur.bind(this)
@@ -86,28 +86,28 @@ class HorizontalLinearStepper extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     getDisabledDates((res) => {
       this.setState({ disabledDates: res })
     })
   }
 
-  shouldDisableDate(day) {
+  shouldDisableDate (day) {
     let date = moment(day).format('DD-MM-YYYY')
     if ((this.state.disabledDates).includes(date)) { return true }
     return false
   }
 
-  formatDate(date) {
+  formatDate (date) {
     return moment(date).format('ddd, DD MMM YYYY')
   }
 
-  handleSelectedRooms(temp) {
+  handleSelectedRooms (temp) {
     this.setState({ selectedRooms: temp })
     console.log(temp)
   }
 
-  handleNext() {
+  handleNext () {
     if (this.handleValidation(this.state.stepIndex)) {
       const { stepIndex } = this.state
       this.setState({ stepIndex: stepIndex + 1 })
@@ -115,14 +115,14 @@ class HorizontalLinearStepper extends React.Component {
     if (this.state.stepIndex === 2) { this.handleSubmit() }
   }
 
-  handlePrev() {
+  handlePrev () {
     const { stepIndex } = this.state
     if (stepIndex > 0) {
       this.setState({ stepIndex: stepIndex - 1 })
     }
   }
 
-  handleChange(field, e) {
+  handleChange (field, e) {
     let fields = this.state.fields
     fields[field] = e.target.value
     this.setState({ fields })
@@ -130,7 +130,7 @@ class HorizontalLinearStepper extends React.Component {
     this.handleValidation(this.state.stepIndex, field)
   }
 
-  handleBlur(field, e) {
+  handleBlur (field, e) {
     let fieldTouch = this.state.fieldTouch
     fieldTouch[field] = true
     this.setState({ fieldTouch })
@@ -138,19 +138,19 @@ class HorizontalLinearStepper extends React.Component {
     this.handleValidation(this.state.stepIndex, field)
   }
 
-  handleStartDate(event, startDate) {
+  handleStartDate (event, startDate) {
     this.setState({ startDate: startDate })
     if (this.state.endDate) {
       this.getTakenRooms()
     }
   }
 
-  handleEndDate(event, endDate) {
+  handleEndDate (event, endDate) {
     this.setState({ endDate: endDate })
     if (this.state.startDate) { this.getTakenRooms() }
   }
 
-  getTakenRooms() {
+  getTakenRooms () {
     let scope = this
     this.setState({ datesSelected: true, fetchingRooms: true })
 
@@ -166,7 +166,7 @@ class HorizontalLinearStepper extends React.Component {
     }
   }
 
-  handleSnackBarClose() {
+  handleSnackBarClose () {
     this.setState({ openSnackBar: false })
   }
 
@@ -243,7 +243,7 @@ class HorizontalLinearStepper extends React.Component {
     return isFormValid
   }
 
-  verifyRooms() {
+  verifyRooms () {
     var scope = this
     var flag = false
     let selRooms = this.state.selectedRooms
@@ -269,13 +269,13 @@ class HorizontalLinearStepper extends React.Component {
     })
   }
 
-  getADApprStatus() {
+  getADApprStatus () {
     if (this.props.user.isSC) return 'pending'
     else if (this.props.user.isSO) return 'approved'
     else return 'NA'
   }
 
-  handleSubmit() {
+  handleSubmit () {
     this.verifyRooms()
       .then(function () {
         let field = this.state.fields
@@ -512,7 +512,7 @@ class HorizontalLinearStepper extends React.Component {
     }
   }
 
-  render() {
+  render () {
     let finalIndex = this.props.user.isSO ? 1 : 2
     return (
       <div>
@@ -555,7 +555,7 @@ class HorizontalLinearStepper extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   const { isMobile } = state.toggler
   const { user } = state.authentication
   return {
