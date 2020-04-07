@@ -220,7 +220,7 @@ class HorizontalLinearStepper extends React.Component {
       }
 
       if (fields['booker_reg_no'].length >= 1) {
-        if (!/^1[1-9][0-9]{7}$/.test(fields['booker_reg_no'])) {
+        if (!/^[1-2][1-9][0-9]{7}$/.test(fields['booker_reg_no'])) {
           isFormValid = false
           errors['booker_reg_no'] = 'Registration number is not valid'
         }
