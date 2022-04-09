@@ -9,7 +9,7 @@
     "history": "^4.7.2",
     "material-ui": "^0.20.0",
     "material-ui-datatables": "^0.18.2",
-    "moment": "^2.19.4",
+    "moment": "^2.29.2",
     "react": "^15.4.2",
     "react-collapsible": "^2.0.3",
     "react-dom": "^15.4.2",
